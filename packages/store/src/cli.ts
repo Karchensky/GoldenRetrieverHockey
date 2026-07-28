@@ -6,34 +6,35 @@ import {
   searchBlueprints,
 } from "./api.ts";
 import { prepareLogo } from "./artwork.ts";
-import type { Reach } from "./artwork.ts";
-import { CLAIMS, loadSite } from "./line.ts";
+import { catalogue } from "./catalogue.ts";
+import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
+import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
+import { report } from "./report.ts";
 import { auditShop, sync } from "./sync.ts";
 
 /**
- * The lookup helper.
+ * The store's command line.
  *
- * Its entire job is to print numbers a human can read and paste into
- * apps/web/data/products.json. It writes nothing, creates nothing, and cannot:
- * every call it makes is a GET against the public catalog.
+ * Everything above `logos` is a GET and writes nothing. Everything below it
+ * touches shop 28277243 and only that shop — see api.ts, where the id is a
+ * constant and every path asserts itself before a socket opens.
  *
- * ⚠ NOT EXECUTED. There is no token in this repo, so this has never been run.
- * The endpoints it calls were transcribed from Printify's docs on 2026-07-15
- * and are documented rather than tested. First real run should be `shops`,
- * which is the smallest possible request and tells you whether auth works at
- * all before you go near the catalog.
- *
- *   node packages/store/src/cli.ts shops
- *   node packages/store/src/cli.ts blueprints "heavy cotton tee"
- *   node packages/store/src/cli.ts providers 6
- *   node packages/store/src/cli.ts variants 6 99
+ * Run against the live API since 2026-07-28. `shops` is still the right first
+ * call on a new token: smallest possible request, and it tells you whether auth
+ * works before you go near the catalog.
  */
 
 const USAGE = `
 @gr/store — Printify
 
-  Read-only
-    shops                    Shops this token can see. Start here.
+  Deciding what to sell
+    report                   Cost, margin, postage and take-home for every product. LIVE.
+    catalogue <query|bpId>   What else a garment could be, and who makes it.
+    marks                    Every logo on disk, and which are wired into the line.
+    line                     The matrix, as products, without calling anything.
+
+  Looking things up
+    shops                    Shops this token can see. Start here on a new token.
     blueprints [query]       Garment models, optionally filtered by substring.
     providers <blueprintId>  Print providers who make that blueprint.
     variants <bpId> <ppId>   Colour/size variants, with their ids.
@@ -41,9 +42,13 @@ const USAGE = `
     audit                    Every product on shop 28277243, and nothing else.
 
   Writes, to shop 28277243 only
-    logos                    Render the vector masters and take their ground off.
+    logos                    Render every mark in MARKS and take its ground off.
     sync --dry-run           Show placement and resolution. Sends nothing.
     sync                     Upload art, create the line as DRAFTS, read it back.
+
+The line is composed in src/matrix.ts: a list of marks, a list of items, and the
+matrix of which goes on which. Add a line there to add a product. docs/STORE.md
+is the manual.
 
 Token: PRINTIFY_API_TOKEN, or .secrets/printify_token.txt
 
@@ -132,17 +137,72 @@ async function main(argv: string[]): Promise<number> {
       return 0;
     }
 
+    case "report":
+      return report();
+
+    case "catalogue":
+    case "catalog":
+      return catalogue(argv[1]);
+
+    case "marks": {
+      const onDisk = await marksOnDisk();
+      console.log("Every logo on disk. A mark has to be in MARKS in matrix.ts to be printable.\n");
+      for (const f of onDisk) {
+        console.log(`  ${f.markId ? `[${f.markId}]`.padEnd(14) : "".padEnd(14)}${f.path}`);
+      }
+      console.log("\nWired into the line:\n");
+      for (const mark of MARKS) {
+        const used = MATRIX.filter((m) => m.mark === mark.id).map((m) => m.item);
+        console.log(
+          `  ${mark.id.padEnd(12)} ${mark.grounds.join("/").padEnd(6)} ${mark.press.padEnd(22)}` +
+            `on ${used.length ? used.join(", ") : "nothing"}`,
+        );
+        console.log(`  ${" ".repeat(12)} from ${mark.source}`);
+        console.log(`  ${" ".repeat(12)} press file written to ${LOGO_DIR} by \`cli.ts logos\``);
+      }
+      const unused = onDisk.filter((f) => !f.markId).length;
+      console.log(
+        `\n${MARKS.length} wired, ${unused} on disk and not wired. ` +
+          `Nothing prints until it is in MARKS and in MATRIX.`,
+      );
+      return 0;
+    }
+
+    case "line": {
+      const LINE = productLine();
+      const site = await loadSite();
+      for (const item of LINE) {
+        console.log(
+          `${item.id.padEnd(20)} ${`$${(item.priceCents / 100).toFixed(2)}`.padStart(7)}  ` +
+            `bp${item.blueprintId}/pp${item.printProviderId}  ` +
+            `${item.colors.length} colour${item.colors.length === 1 ? " " : "s"} x ${item.sizes.length} size${item.sizes.length === 1 ? " " : "s"} = ` +
+            `${item.colors.reduce((n, c) => n + c.variants.length, 0)} variants  ${item.title}`,
+        );
+        console.log(`${" ".repeat(20)} ${item.placements.map((p) => `${p.position} ${p.art} ${p.widthIn}in y${p.y}`).join(", ")}`);
+      }
+      console.log(
+        `\n${LINE.length} products from ${MARKS.length} marks and ${ITEMS.length} items. ` +
+          `Composed in matrix.ts; nothing was fetched.`,
+      );
+      // Prove the token substitution still resolves, since a description that
+      // ships an unresolved {{token}} is a printed defect.
+      const unresolved = LINE.filter((i) => /\{\{\w+\}\}/.test(fillTokens(i.description, site)));
+      if (unresolved.length) {
+        console.error(`\nUNRESOLVED TOKENS in: ${unresolved.map((i) => i.id).join(", ")}`);
+        return 1;
+      }
+      return 0;
+    }
+
     case "logos": {
       /**
-       * The two marks the line puts on a garment, and how each one's ground
-       * comes off.
+       * Render every mark in MARKS and take its ground off.
        *
-       * Both are `logo_one` and both come off the VECTOR masters, not the flat
-       * PNG beside them. That is the whole point of this command now: the flat
-       * is 948px of artwork, which is 158 dpi at a six-inch print and 95 at ten,
-       * and it is why the crest used to be sold at six inches. The vector
-       * renders at whatever is asked for — 6000px here, 4526px of artwork after
-       * the trim, which is 453 dpi at ten inches.
+       * **There is no job list here any more.** It used to be two hardcoded
+       * entries beside two hardcoded products, which meant adding a mark took
+       * an edit in two files and forgetting one produced a product pointing at
+       * a press file nothing wrote. MARKS carries the source, the press name,
+       * the reach and the render width, and this command is a loop over it.
        *
        * `reach` is not a style choice — see artwork.ts. The full-colour crest
        * must be flood-filled from the border or the fill eats the banner text
@@ -150,52 +210,31 @@ async function main(argv: string[]): Promise<number> {
        * banner lettering and the eyes stay cream and print as slugs on a black
        * shirt; on that mark cream is not ink, it is the garment showing through.
        *
-       * The output names say what the mark IS.
+       * The render width is per mark. 6000px is the size of the captain's own
+       * 600 dpi export and trims to 4526 x 5094 of artwork. Larger is free to
+       * render and not free to upload: the file goes to Printify base64-encoded.
        *
-       * NO WEB FILE COMES OUT OF THIS ANY MORE, and that is not an oversight.
+       * NO WEB FILE COMES OUT OF THIS, and that is not an oversight.
        * `prepareLogo` still writes one — press PNG and web WebP off one source
        * in one pass, so the mark on the page and the mark on the parcel cannot
        * drift — but /store is a placeholder as of 2026-07-28 and renders no
        * mark, so a WebP in apps/web/public/store would be a file shipped in the
        * static export that nothing points at. Add
-       * `web: { path: "apps/web/public/store/<name>.webp", width: 900 }` back to
-       * each job on the day the real store is listed.
+       * `web: { path: "apps/web/public/store/<name>.webp", width: 900 }` on the
+       * day the real store is listed.
        */
-      const jobs: {
-        source: string;
-        as: string;
-        reach: Reach | "trim";
-        why: string;
-      }[] = [
-        {
-          source: "vector/logo-one-transparent-600dpi.png",
-          as: "crest.png",
-          reach: "trim",
-          why: "full colour, ground already off — light garments",
-        },
-        {
-          source: "vector/logo-one-one-color-gold.svg",
-          as: "crest-gold.png",
-          reach: "everywhere",
-          why: "one ink, cream keyed to garment — dark garments",
-        },
-      ];
-
-      // 6000px square, which is the size of the captain's own 600 dpi export and
-      // trims to 4526 x 5094 of artwork. Larger is free to render and not free
-      // to upload: the file goes to Printify base64-encoded.
-      const RENDER_WIDTH = 6000;
-
-      for (const job of jobs) {
-        const r = await prepareLogo(`docs/logos/${job.source}`, "dist/print/logos", {
-          reach: job.reach,
-          as: job.as,
-          render: { width: RENDER_WIDTH },
+      for (const mark of MARKS) {
+        const as = mark.press.replace(/^logos\//, "");
+        const r = await prepareLogo(mark.source, "dist/print/logos", {
+          reach: mark.reach,
+          as,
+          render: { width: mark.renderWidth },
         });
         console.log(
-          `${job.as.padEnd(16)} ${`${r.width}x${r.height}`.padEnd(12)} ` +
-            `${(r.backgroundFraction * 100).toFixed(1).padStart(5)}% ground   ${job.why}\n` +
-            `${" ".repeat(16)} from  ${job.source}\n` +
+          `${as.padEnd(16)} ${`${r.width}x${r.height}`.padEnd(12)} ` +
+            `${(r.backgroundFraction * 100).toFixed(1).padStart(5)}% ground   ` +
+            `${mark.reach} · ${mark.grounds.join("/")} bodies\n` +
+            `${" ".repeat(16)} from  ${mark.source}\n` +
             `${" ".repeat(16)} press ${r.out}`,
         );
       }

@@ -1,10 +1,10 @@
 # @gr/store — Printify
 
-Creates and verifies the store's products on **shop 28277243** as drafts. It has
-been run against the live API and the eight products in
-`apps/web/data/products.json` were made by it. The shop is named "Golden
-Retrievers" in the dashboard now; the id is what matters and the id has not
-changed.
+Creates and verifies the store's products on **shop 28277243** as drafts, and
+reports what they cost and earn. It has been run against the live API and the
+eight products in `apps/web/data/products.json` were made by it. The shop is
+named "Golden Retrievers" in the dashboard now; the id is what matters and the
+id has not changed.
 
 **Nothing on the site renders any of this.** `/store` is a placeholder as of
 2026-07-28 — the captain's instruction was that none of it was a product yet and
@@ -12,11 +12,19 @@ the line would be listed all at once when it is finished. `products.json` stayed
 because it is not page copy: it is the record `sync` checks the live shop
 against, and deleting it would leave the sync with no witness.
 
-For the captain's side of this — opening the Pop-Up store, publishing, and what
-to look at first — see [`docs/store/POP-UP.md`](../../docs/store/POP-UP.md).
+**[`docs/STORE.md`](../../docs/STORE.md) is the manual** — where to change a
+brand, where cost and margin live, how shipping works and what is controllable,
+how to add a product, and what is left before anyone can buy. This file is the
+implementation notes underneath it.
 
 ```sh
-node packages/store/src/cli.ts shops        # start here; smallest possible request
+npm run store:report                        # cost, margin, postage, take-home. LIVE
+npm run store:catalogue "hoodie"            # what else it could be
+npm run store:catalogue 77                  # who makes it, and what they charge to post
+npm run store:line                          # the matrix as products; fetches nothing
+
+node packages/store/src/cli.ts shops        # start here on a new token; smallest request
+node packages/store/src/cli.ts marks        # every logo on disk, and which are wired in
 node packages/store/src/cli.ts claims       # re-derive every printed claim from site.json
 node packages/store/src/cli.ts audit        # every product on 28277243, and only that shop
 node packages/store/src/cli.ts logos        # render the vector masters for print
@@ -26,6 +34,84 @@ node packages/store/src/cli.ts sync         # upload art, create drafts, read th
 
 Token: `PRINTIFY_API_TOKEN`, or `.secrets/printify_token.txt`. It is a
 credential — never committed, never logged, never printed.
+
+## The line is composed, not listed
+
+`src/matrix.ts` holds three lists — `MARKS`, `ITEMS`, `MATRIX` — and
+`buildLine()` turns them into products. One line in `MATRIX` is one product; its
+id, title, colourways, description and placement are all derived, so a tee
+cannot be $28 in one place and $32 in another and the same paragraph cannot be
+spelled two ways.
+
+`buildLine()` refuses rather than guesses, and every refusal names both halves of
+the pairing:
+
+```
+crest-gold on sticker: the sticker is offered on light bodies and this mark can
+only sit on dark. Dark bodies only, and there cannot be a light one — on white
+the mark has nothing to cut into. Add a dark colourway to the item, or drop the
+line.
+```
+
+It also catches an unknown mark or item, a duplicate line, a colourway whose
+variant-id count does not match the item's sizes, and a placement position the
+garment does not offer. That last one found a real error the day it was written:
+this package had believed Bella+Canvas 3001 through Monster Digital took sleeve
+prints. All 299 of its variants offer front, back and neck only. The hoodie does
+take sleeves; the tee never did.
+
+`productLine()` is a function and not a constant so those messages arrive
+through the CLI's own error handler rather than as a module-loader stack.
+
+## What the report reads, and what does not exist to read
+
+`store:report` is live and read-only. Per product it prints blueprint id with
+brand and model, provider id with name and country, cost/profit/margin per cost
+tier, postage per method and region, printed size and dpi, and the take-home on
+one sale under two shipping policies. Then a total, then what is worth a
+decision, then how every figure was made.
+
+Four things about Printify's API that the report had to be built around, all
+checked live on 2026-07-28:
+
+- **There is no cost in the catalog.** `/v1/catalog/.../variants.json` returns
+  options and print areas and no price, and the v2 catalog tree 404s apart from
+  shipping. A variant's `cost` appears for the first time on a product that
+  exists. This is why `store:catalogue` can compare providers on postage, print
+  area and origin but not on cost, and says so.
+- **v1 shipping profiles are unlabelled and overlapping.** Blueprint 12 through
+  Monster Digital returns three separate US profiles at $4.29, $4.75 and $7.99
+  over the same variants with nothing to say which is which, and one blanket
+  10-day handling time. **v2 names the method** — standard, priority, express,
+  economy — and gives a handling range per method. The report uses v2; the
+  catalogue browser uses v1 because 7 KB per provider beats 6 MB when eighteen
+  of them are being compared.
+- **The v2 rate endpoint has no filter.** `?country=`, `?filter[country]=` and
+  `?variant_ids=` all return the whole set; standard shipping for a tee is
+  18,538 rows. It is cached per blueprint/provider and reduced locally. Caching
+  by variant list instead — which the first version did — misses on the second
+  tee and downloads the same 6 MB twice.
+- **`POST /shops/{id}/orders/shipping.json` prices a real basket** and creates
+  nothing. It returned standard $4.75 for a US tee, matching the catalog. That
+  is the call checkout will make.
+
+## The 300 dpi floor is a refusal, not a warning
+
+`sync` measures every placement in the whole line before it uploads a byte, and
+throws with every offender named:
+
+```
+Refusing to upload art that prints under 300 dpi at its largest size:
+  tiny-tee/front: 30 dpi at 10in, its largest size — logos/tiny-probe.png is
+  300px wide and would need 3000px
+Render the mark larger, or print it smaller. Do not ship it soft.
+```
+
+It used to print that as a line of commentary inside the create loop, which
+meant a soft design was flagged and then uploaded anyway, and every product
+earlier in the line was already on the shop by the time anyone read it. It is
+now a pre-flight, the same shape as the claims gate above it. Proven by pointing
+a mark at a 300 px file: it stops before the first upload.
 
 ## The one guard that matters
 
@@ -76,8 +162,18 @@ design — and fails on any disagreement. The drawing on the site and the file t
 printer receives cannot drift apart without the sync saying so.
 
 **`sync` only creates.** It will not update a product that already exists, so a
-description or price edited in `line.ts` after the fact has to be pushed with
-`updateProduct()`. Matching is on title: rename a product and you get a new one.
+description or price edited in `matrix.ts` after the fact has to be pushed with
+`updateProduct()`. Matching is on title, and titles are now DERIVED
+(`{mark.title} — {item.title}`): renaming a mark or an item renames every product
+carrying it, and `sync` would create new drafts beside the old ones rather than
+updating them. `store:report` lists anything on the shop the matrix no longer
+knows about, which is how that gets noticed.
+
+The eight drafts that exist were created before the line was composed, so their
+descriptions on Printify are the older hand-written prose rather than the text
+`matrix.ts` composes today. Nothing depends on the two matching; `sync` will not
+overwrite them and the report does not compare them. Push `updateProduct()` if
+they should agree.
 
 ## The geometry, now that it is known
 
@@ -112,8 +208,12 @@ landscape wordmark on it and would have cropped a portrait crest, so
 `place()` clamps against that instead of against whichever canvas it was given.
 
 Legal `position` strings come from the catalog, not the docs: each variant's
-`placeholders[].position`. Bella+Canvas 3001 and Gildan 18500 through Monster
-Digital accept `front`, `back`, `left_sleeve`, `right_sleeve`, `neck`.
+`placeholders[].position`. Through Monster Digital, Bella+Canvas 3001 accepts
+`front`, `back` and `neck` — **not** the sleeves, which this file claimed until
+`store:report` compared the declaration in `matrix.ts` against the catalog and
+disagreed. Gildan 18500 does accept `left_sleeve` and `right_sleeve`. Each item
+in `matrix.ts` declares its positions so a typo fails offline, and the report
+re-checks the declaration against the live catalog every run.
 
 ## Two things found the hard way
 
@@ -126,7 +226,13 @@ field here so that no future caller can make a live product by forgetting a line
 Stickers (blueprint 400) lists SPOKE Custom Products (provider 1), which rejects
 creation with `Decorator 1 not available for this blueprint 400`. Printify Choice
 (provider 99) works. There is nothing in the catalog response that predicts this;
-it was found by probing.
+it was found by probing, and it is the only one anyone has found because probing
+means creating a product on the live shop.
+
+`REJECTS_CREATION` in `matrix.ts` records it with Printify's own words, and
+`store:catalogue` marks any provider in that list. **It has one entry, and that
+is a floor rather than a count** — a provider absent from it has not been
+cleared, only never tried.
 
 ## The artwork, and where it comes from
 
@@ -138,15 +244,20 @@ the pixel retriever were 1254px flats carrying ~900px of artwork, which reaches
 300 dpi only by shrinking the print — the wordmark to 5.17 inches, the retriever
 to 2.85. Their source files are off disk. Do not restore them.
 
-`cli.ts logos` renders `docs/logos/vector/` at 6000px and writes two press files
-to `dist/print/logos/`. Both trim to **4526 × 5094** of artwork, which is 453 dpi
-at a ten-inch print. The flat `logo_one.png` beside them holds 948px and would be
-95 dpi at the same size; it is not used by anything any more.
+`cli.ts logos` is a loop over `MARKS` — there is no job list in the CLI any more.
+Each mark carries its source, its press name, its `reach` and its render width,
+so adding a logo is one entry rather than an edit in two files that can disagree.
+Both marks render at 6000px and trim to **4526 × 5094** of artwork, which is 453
+dpi at a ten-inch print. The flat `logo_one.png` beside them holds 948px and
+would be 95 dpi at the same size; it is not used by anything any more.
 
 | Press file | Source | Ground comes off by |
 | --- | --- | --- |
 | `crest.png` | `vector/logo-one-transparent-600dpi.png` | `reach: "trim"` — already transparent |
 | `crest-gold.png` | `vector/logo-one-one-color-gold.svg` | `reach: "everywhere"` |
+
+`cli.ts marks` lists every image under `docs/logos/`, at any depth, and shows
+which are wired in. Two are.
 
 `reach` is not a preference and getting it wrong destroys the artwork:
 

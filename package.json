@@ -31,6 +31,9 @@
     "dev": "next dev apps/web",
     "build:site": "next build apps/web",
     "store:print": "node scripts/build-print-files.mjs",
+    "store:report": "node packages/store/src/cli.ts report",
+    "store:catalogue": "node packages/store/src/cli.ts catalogue",
+    "store:line": "node packages/store/src/cli.ts line",
     "bake:retriever": "blender assets/3d/retriever-original.blend --background --python scripts/blender/bake-retriever.py",
     "bake:compress": "node scripts/compress-bakes.mjs",
     "dev:regen": "npm run build:data && next dev apps/web"

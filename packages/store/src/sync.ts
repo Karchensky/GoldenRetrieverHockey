@@ -10,12 +10,12 @@ import {
   uploadImage,
 } from "./api.ts";
 import {
-  LINE,
   assertClaims,
   fillTokens,
   loadArt,
   loadSite,
   place,
+  productLine,
 } from "./line.ts";
 import type { Art } from "./line.ts";
 import type { CatalogPlaceholder, CreateProductBody, PrintArea, PrintifyProduct } from "./types.ts";
@@ -38,6 +38,12 @@ import type { CatalogPlaceholder, CreateProductBody, PrintArea, PrintifyProduct 
 
 const ROOT = new URL("../../../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const REPORT = join(ROOT, "dist/print/printify-sync.json");
+
+/**
+ * The resolution floor, at the printed size, on the LARGEST size a product
+ * offers. Not a warning — `sync` throws rather than uploading under it.
+ */
+export const MIN_DPI = 300;
 
 type VariantsWithPlaceholders = {
   variants: { id: number; placeholders?: CatalogPlaceholder[] }[];
@@ -74,7 +80,7 @@ async function variantsOf(blueprintId: number, printProviderId: number): Promise
  * scale that fits the 15 oz overflows the 11 oz. `place()` clamps against this
  * rather than against the canvas it happens to be handed.
  */
-async function canvasesFor(
+export async function canvasesFor(
   blueprintId: number,
   printProviderId: number,
   variantIds: number[],
@@ -131,6 +137,9 @@ export type SyncResult = {
 };
 
 export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> {
+  // Built here rather than at import, so a matrix that does not hold together
+  // fails with its own sentence instead of a module-loader stack.
+  const LINE = productLine();
   const site = await loadSite();
 
   // 1 — the gate.
@@ -159,23 +168,22 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
     art.set(file, loaded);
     console.log(`art  ${file.padEnd(30)} ${loaded.box.width}x${loaded.box.height}px`);
   }
-  if (!options.dryRun) {
-    for (const [file, loaded] of art) {
-      if (!needed.has(file)) continue;
-      const up = await uploadImage({ file_name: loaded.name, contents: loaded.base64 });
-      loaded.uploadId = up.id;
-      console.log(`up   ${file.padEnd(30)} -> ${up.id}`);
-    }
-  }
-
-  const results: SyncResult[] = [];
+  // 4 — the geometry, for the WHOLE line, before anything is created.
+  //
+  // This is a pre-flight and not a running commentary, which is the change of
+  // 2026-07-28. The resolution floor used to be printed as a warning inside the
+  // create loop, so a design under it was flagged and then uploaded anyway, and
+  // any product earlier in the line was already on the shop by the time the
+  // operator read the line. Now every placement in the line is measured first
+  // and one that is too soft stops the run with every offender named — the same
+  // shape as the claims gate above it.
+  const planned = new Map<string, SyncResult["placements"]>();
+  const tooSoft: string[] = [];
 
   for (const item of LINE) {
     const variantIds = item.colors.flatMap((c) => c.variants);
-    const firstVariant = variantIds[0];
-    if (firstVariant === undefined) throw new Error(`${item.id} has no variants`);
+    if (variantIds[0] === undefined) throw new Error(`${item.id} has no variants`);
     const placements: SyncResult["placements"] = [];
-    const placeholders: PrintArea["placeholders"] = [];
 
     for (const p of item.placements) {
       const loaded = art.get(p.art);
@@ -192,23 +200,57 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
         widthIn: fitted.widthIn, heightIn: fitted.heightIn, dpi: fitted.dpi,
         maxWidthIn, minDpi, scale: fitted.scale, y: p.y,
       });
-      placeholders.push({
-        position: p.position,
-        images: [{ id: loaded.uploadId ?? "DRY-RUN", x: 0.5, y: p.y, scale: fitted.scale, angle: 0 }],
-      });
       // 300 dpi at the printed size, measured on the LARGEST size offered, is
       // the floor the captain set on 2026-07-28. It used to be a 150 dpi warning
       // because the marks were 1254px flats and half the line would have tripped
       // a real threshold; off the vector masters nothing comes close to it.
-      const flag = minDpi < 300 ? "  << UNDER 300 DPI — do not ship" : "";
+      if (minDpi < MIN_DPI) {
+        tooSoft.push(
+          `${item.id}/${p.position}: ${minDpi} dpi at ${maxWidthIn}in, its largest size — ` +
+            `${p.art} is ${loaded.box.width}px wide and would need ${Math.ceil(maxWidthIn * MIN_DPI)}px`,
+        );
+      }
       const range = maxWidthIn === fitted.widthIn
         ? `${fitted.widthIn}in @${fitted.dpi}dpi`
         : `${fitted.widthIn}-${maxWidthIn}in @${fitted.dpi}-${minDpi}dpi`;
       console.log(
         `     ${item.id}/${p.position}: ${range} (h ${fitted.heightIn}in on the smallest) ` +
-          `scale ${fitted.scale}${flag}`,
+          `scale ${fitted.scale}${minDpi < MIN_DPI ? "  << UNDER 300 DPI" : ""}`,
       );
     }
+    planned.set(item.id, placements);
+  }
+
+  if (tooSoft.length) {
+    throw new Error(
+      `Refusing to upload art that prints under ${MIN_DPI} dpi at its largest size:\n  ` +
+        `${tooSoft.join("\n  ")}\n` +
+        `Render the mark larger, or print it smaller. Do not ship it soft.`,
+    );
+  }
+
+  // 5 — the art goes up only once the whole line has passed.
+  if (!options.dryRun) {
+    for (const [file, loaded] of art) {
+      if (!needed.has(file)) continue;
+      const up = await uploadImage({ file_name: loaded.name, contents: loaded.base64 });
+      loaded.uploadId = up.id;
+      console.log(`up   ${file.padEnd(30)} -> ${up.id}`);
+    }
+  }
+
+  const results: SyncResult[] = [];
+
+  for (const item of LINE) {
+    const variantIds = item.colors.flatMap((c) => c.variants);
+    const placements = planned.get(item.id) ?? [];
+    const placeholders: PrintArea["placeholders"] = placements.map((p) => ({
+      position: p.position,
+      images: [{
+        id: art.get(p.art)?.uploadId ?? "DRY-RUN",
+        x: 0.5, y: p.y, scale: p.scale, angle: 0,
+      }],
+    }));
 
     const body: CreateProductBody = {
       title: item.title,

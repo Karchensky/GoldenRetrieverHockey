@@ -2,10 +2,14 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type {
   Blueprint,
+  BlueprintDetail,
   CreateProductBody,
   PrintProvider,
   PrintifyProduct,
   Shop,
+  ShippingMethodIndex,
+  ShippingProfilesV1,
+  ShippingRates,
   UploadImageBody,
   UploadedImage,
   VariantsResponse,
@@ -30,6 +34,12 @@ import type {
  */
 
 const BASE = "https://api.printify.com/v1";
+/**
+ * Only the shipping subtree lives here. Every other v2 catalog path — blueprints,
+ * print_providers, variants — 404s, checked on 2026-07-28. Nothing is being
+ * migrated; v2 is simply where the labelled shipping rates are.
+ */
+const BASE_V2 = "https://api.printify.com/v2";
 
 /** The only shop this repo may write to. Not configurable, deliberately. */
 export const SHOP_ID = 28277243;
@@ -117,10 +127,10 @@ const UA = "golden-retrievers-archive (store sync)";
 const WRITE_PAUSE_MS = 1200;
 const pause = (ms: number) => new Promise<void>((r) => { setTimeout(r, ms); });
 
-async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+async function request<T>(method: string, path: string, body?: unknown, base: string = BASE): Promise<T> {
   assertShopPath(path);
 
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetch(`${base}${path}`, {
     method,
     headers: {
       Authorization: `Bearer ${await token()}`,
@@ -144,6 +154,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
 }
 
 const get = <T,>(path: string): Promise<T> => request<T>("GET", path);
+const getV2 = <T,>(path: string): Promise<T> => request<T>("GET", path, undefined, BASE_V2);
 
 /** `GET /v1/shops.json` — which shops the token can see. */
 export const listShops = (): Promise<Shop[]> => get<Shop[]>("/shops.json");
@@ -157,9 +168,53 @@ export const listShops = (): Promise<Shop[]> => get<Shop[]>("/shops.json");
  */
 export const listBlueprints = (): Promise<Blueprint[]> => get<Blueprint[]>("/catalog/blueprints.json");
 
+/** `GET /v1/catalog/blueprints/{id}.json` — brand and model for one blueprint. */
+export const getBlueprint = (blueprintId: number): Promise<BlueprintDetail> =>
+  get<BlueprintDetail>(`/catalog/blueprints/${blueprintId}.json`);
+
 /** `GET /v1/catalog/blueprints/{id}/print_providers.json` */
 export const listPrintProviders = (blueprintId: number): Promise<PrintProvider[]> =>
   get<PrintProvider[]>(`/catalog/blueprints/${blueprintId}/print_providers.json`);
+
+/**
+ * `GET /v1/catalog/print_providers.json` — every provider on the platform, with
+ * its address. The per-blueprint list gives a title and not always a location,
+ * and where a provider SHIPS FROM is half of what the shipping table means.
+ */
+export const listAllPrintProviders = (): Promise<PrintProvider[]> =>
+  get<PrintProvider[]>("/catalog/print_providers.json");
+
+/**
+ * `GET /v1/catalog/blueprints/{b}/print_providers/{p}/shipping.json`
+ *
+ * 7 KB against v2's 6 MB, at the cost of not knowing which profile is which
+ * method. For comparing providers that is the right trade; for quoting a rate
+ * it is not, and `report.ts` uses v2.
+ */
+export const listShippingProfiles = (blueprintId: number, printProviderId: number): Promise<ShippingProfilesV1> =>
+  get<ShippingProfilesV1>(`/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/shipping.json`);
+
+/** `GET /v2/catalog/blueprints/{b}/print_providers/{p}/shipping.json` */
+export const listShippingMethods =(blueprintId: number, printProviderId: number): Promise<ShippingMethodIndex> =>
+  getV2<ShippingMethodIndex>(`/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/shipping.json`);
+
+/**
+ * `GET /v2/catalog/blueprints/{b}/print_providers/{p}/shipping/{method}.json`
+ *
+ * One row per variant per country, and it is not small — standard shipping for
+ * a Bella+Canvas 3001 is 18,538 rows and 6 MB. There is no filter parameter;
+ * `?country=`, `?filter[country]=` and `?variant_ids=` were all tried on
+ * 2026-07-28 and all returned the whole set. Callers cache by blueprint and
+ * provider and reduce locally.
+ */
+export const listShippingRates = (
+  blueprintId: number,
+  printProviderId: number,
+  method: string,
+): Promise<ShippingRates> =>
+  getV2<ShippingRates>(
+    `/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/shipping/${method}.json`,
+  );
 
 /** `GET /v1/catalog/blueprints/{id}/print_providers/{id}/variants.json` */
 export const listVariants = (blueprintId: number, printProviderId: number): Promise<VariantsResponse> =>

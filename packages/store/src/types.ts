@@ -41,10 +41,25 @@ export type Blueprint = {
   images: string[];
 };
 
-/** `GET /v1/catalog/blueprints/{blueprint_id}/print_providers.json` */
+/**
+ * `GET /v1/catalog/blueprints/{blueprint_id}.json`
+ *
+ * The same record as an entry in the list, which is why it shares a type. Worth
+ * a call of its own only because the list is 1,300 blueprints and this is one.
+ */
+export type BlueprintDetail = Blueprint & { description?: string };
+
+/**
+ * `GET /v1/catalog/blueprints/{blueprint_id}/print_providers.json`
+ *
+ * `location` comes back on `/v1/catalog/print_providers.json` but not always on
+ * the per-blueprint list, hence optional. Where it is present it matters: a
+ * provider's country is the country a parcel is posted from.
+ */
 export type PrintProvider = {
   id: number;
   title: string;
+  location?: { country?: string; city?: string; region?: string };
 };
 
 /**
@@ -66,6 +81,70 @@ export type VariantsResponse = {
   title: string;
   variants: Variant[];
 };
+
+/* ==================================================================
+   Shipping.
+
+   Printify serves two shapes and only the second one is usable.
+
+   v1 `/catalog/blueprints/{b}/print_providers/{p}/shipping.json`
+   returns overlapping, UNLABELLED profiles: Bella+Canvas 3001 through
+   Monster Digital has three separate US profiles at $4.29, $4.75 and
+   $7.99 over the same variants, and nothing in the response says
+   which is which. Its `handling_time` is one blanket figure — 10 days
+   — for every method.
+
+   v2 `/catalog/blueprints/{b}/print_providers/{p}/shipping/{method}
+   .json` names the method, gives a handling-time RANGE per method
+   (standard 2-5 days, economy 4-8, express 2-3) and quotes per
+   variant. That is the one this package reads. Verified live on
+   2026-07-28 against blueprint 12, and cross-checked against
+   `POST /shops/{id}/orders/shipping.json`, which returned standard
+   475 for a US tee — the same figure.
+
+   Only the shipping subtree exists under /v2. Every other v2 catalog
+   path 404s: blueprints, print_providers and variants are all v1.
+   ================================================================== */
+
+/**
+ * `GET /v1/catalog/blueprints/{b}/print_providers/{p}/shipping.json`
+ *
+ * The compact, unlabelled shape. Kept for one job only: comparing eighteen
+ * providers of the same hoodie, where the v2 endpoint's 6 MB per provider is
+ * the wrong trade and "the cheapest US rate this provider offers" is the
+ * question being asked. Never used where an exact figure matters.
+ */
+export type ShippingProfilesV1 = {
+  handling_time: { value: number; unit: string };
+  profiles: {
+    variant_ids: number[];
+    first_item: { cost: number; currency: string };
+    additional_items: { cost: number; currency: string };
+    countries: string[];
+  }[];
+};
+
+/** `GET /v2/catalog/blueprints/{b}/print_providers/{p}/shipping.json` */
+export type ShippingMethodIndex = {
+  data: { type: string; id: string; attributes: { name: string } }[];
+};
+
+/** `GET /v2/.../shipping/{method}.json` — one row per variant per country. */
+export type ShippingRateRow = {
+  attributes: {
+    shippingType: string;
+    /** ISO country code, or the literal "REST_OF_THE_WORLD". */
+    country: { code: string };
+    variantId: number;
+    handlingTime: { from: number; to: number };
+    shippingCost: {
+      firstItem: { amount: number; currency: string };
+      additionalItems: { amount: number; currency: string };
+    };
+  };
+};
+
+export type ShippingRates = { data: ShippingRateRow[] };
 
 /* ==================================================================
    Below this line: typed, NOT implemented.
