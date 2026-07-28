@@ -3,6 +3,14 @@
     "The catalog. Hand-written, unlike every other data file in this repo, which is",
     "generated from the capture corpus.",
     "",
+    "NOTHING RENDERS THIS TODAY. On 2026-07-28 the captain took /store down to a",
+    "placeholder — 'these are not finalized, don't list garbage items that are not",
+    "actually products, we will build out the real store and list it all at once'.",
+    "The page is one sentence now. This file stayed, because it is not page copy: it",
+    "is the record of what exists on Printify shop 28277243 and the thing",
+    "packages/store/src/sync.ts checks the live shop against. Delete it and the sync",
+    "loses its only witness.",
+    "",
     "A count that comes from the archive is stored as a {{token}} and resolved from",
     "site.json at build time by lib/store.ts. A figure written as a literal here is",
     "one that does NOT move — the printed width of a design in inches — and each was",
@@ -21,19 +29,27 @@
     "",
     "Nothing here types a year. Copy that states one carries a {{firstYear}} token",
     "and lib/store.ts resolves it from FOUNDED, which is counted off the earliest",
-    "session. The next older season recovered moves it without anyone editing a",
-    "file, which in this project is not a hypothetical.",
+    "session. Beyond that, nothing in the line states a fact about the archive at",
+    "all. Every product prints one mark: logo_one, and only logo_one.",
     "",
-    "Beyond that, nothing in the line states a fact about the archive at all. On",
-    "2026-07-26 the captain's instruction was team logos only, and the three",
-    "archive-text products were deleted from the shop and from",
-    "packages/store/src/line.ts. What is left prints a mark and a place.",
+    "TWO INKS, AND THE SPLIT IS FORCED. The full-colour crest is outlined in black",
+    "with a black banner and disappears into a dark garment. The one-ink gold crest",
+    "is the same drawing with the cream keyed out, so the garment shows through the",
+    "banner lettering and the dog's face — which is legible on black and is nothing",
+    "at all on white. That is why there is a cap, a beanie and a black mug here.",
+    "",
+    "BOTH COME OFF THE VECTOR MASTERS, and that is the other change of 2026-07-28.",
+    "Every mark this line used to print was a 1254 px flat carrying ~900 px of",
+    "artwork: 158 dpi at six inches, which is why the crest was sold at six inches.",
+    "docs/logos/vector renders at whatever is asked for. cli.ts logos takes 6000 px,",
+    "which trims to 4526 x 5094 of artwork, and 4526 px is 453 dpi at ten inches.",
     "",
     "Two figures per print, not one. Printify's placement is a proportion of the",
     "print area and the print area is bigger on a 3XL than on an S, so one design",
-    "prints 5.17 in wide on a small and 7.01 on a 3XL. widthIn/dpi are the smallest",
+    "prints 7.38 in wide on a small and 10.0 on an L. widthIn/dpi are the smallest",
     "size offered; maxWidthIn/minDpi are the largest. The second pair is the one",
-    "that decides whether a print looks soft.",
+    "that decides whether a print looks soft, and the floor is 300. The worst in",
+    "this line is 453.",
     "",
     "printify.productId is the DRAFT created on shop 28277243 by",
     "`node packages/store/src/cli.ts sync`. Draft means visible=false: it exists in",
@@ -46,12 +62,12 @@
       "name": "Golden Retrievers Crest",
       "kind": "tee",
       "family": "crest",
-      "blurb": "The shield across the chest. Offered on light bodies: the crest is outlined in black and needs something to sit on.",
+      "blurb": "The shield across the chest, full colour, ten inches wide on a large. Offered on light bodies: the crest is outlined in black and needs something to sit on.",
       "spec": [
         "4.2 oz combed ringspun cotton, 32 singles",
         "Direct-to-garment, front only",
         "Side-seamed, shoulder-taped, unisex sizing",
-        "Prints soft up close — the source file is 946 px"
+        "453 dpi at its largest printed size"
       ],
       "priceCents": 2800,
       "sizes": [
@@ -86,17 +102,17 @@
       "printify": {
         "blueprintId": 12,
         "printProviderId": 29,
-        "productId": "6a664caf51e2e68b0b067bcf",
+        "productId": "6a691bf1af16d93ed709ae75",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 6,
-            "heightIn": 6.77,
-            "dpi": 158,
-            "maxWidthIn": 8.13,
-            "minDpi": 116,
-            "scale": 0.5423,
+            "widthIn": 7.38,
+            "heightIn": 8.3,
+            "dpi": 614,
+            "maxWidthIn": 10,
+            "minDpi": 453,
+            "scale": 0.6666,
             "y": 0.42
           }
         ]
@@ -108,12 +124,12 @@
       "name": "Golden Retrievers Crest",
       "kind": "hoodie",
       "family": "crest",
-      "blurb": "The same shield, on eight ounces of fleece. Front pouch, two-ply hood, flat drawcord. The drawcord is the extent of the features.",
+      "blurb": "The same shield, on eight ounces of fleece. The front panel is wider than it is tall, so a portrait mark is bound by height and stops just under seven inches across.",
       "spec": [
         "8.0 oz cotton/polyester fleece, brushed interior",
         "Direct-to-garment, front only",
         "Ribbed cuffs and hem, two-ply hood",
-        "Prints soft up close — the source file is 946 px"
+        "545 dpi at its largest printed size"
       ],
       "priceCents": 5800,
       "sizes": [
@@ -148,17 +164,17 @@
       "printify": {
         "blueprintId": 77,
         "printProviderId": 29,
-        "productId": "6a664cb646b4a23b89009ed2",
+        "productId": "6a691bf7bec56e07110b614f",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 6,
-            "heightIn": 6.77,
-            "dpi": 158,
-            "maxWidthIn": 7.28,
-            "minDpi": 130,
-            "scale": 0.4853,
+            "widthIn": 6.85,
+            "heightIn": 7.71,
+            "dpi": 661,
+            "maxWidthIn": 8.31,
+            "minDpi": 545,
+            "scale": 0.5541,
             "y": 0.5
           }
         ]
@@ -175,7 +191,7 @@
         "Kiss-cut white vinyl, UV printed",
         "3 in or 4 in square",
         "Rated for outdoor use",
-        "The one crest product that prints above 300 dpi"
+        "1469 dpi at its largest printed size"
       ],
       "priceCents": 600,
       "sizes": [
@@ -198,17 +214,17 @@
       "printify": {
         "blueprintId": 400,
         "printProviderId": 99,
-        "productId": "6a664d7e1fbfd56f9905ed1f",
+        "productId": "6a691bfbeacd773d0f0c8046",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 2.31,
-            "heightIn": 2.61,
-            "dpi": 409,
-            "maxWidthIn": 3.09,
-            "minDpi": 306,
-            "scale": 0.8334,
+            "widthIn": 2.3,
+            "heightIn": 2.59,
+            "dpi": 1968,
+            "maxWidthIn": 3.08,
+            "minDpi": 1469,
+            "scale": 0.8293,
             "y": 0.5
           }
         ]
@@ -216,78 +232,16 @@
       "popUpUrl": null
     },
     {
-      "id": "monogram-tee",
-      "name": "Golden Retrievers Monogram",
+      "id": "crest-gold-tee",
+      "name": "Golden Retrievers Crest, Gold",
       "kind": "tee",
-      "family": "monogram",
-      "blurb": "The C-R monogram, high on the chest and deliberately small. Three inches is where an 884-pixel file stops being sharp.",
+      "family": "crest-gold",
+      "blurb": "The same crest in a single ink. Everything cream in the full-colour mark is the shirt here: the banner lettering, the muzzle, the eyes, the tape on the blades.",
       "spec": [
         "4.2 oz combed ringspun cotton, 32 singles",
         "Direct-to-garment, front only",
         "Side-seamed, shoulder-taped, unisex sizing",
-        "Light bodies only: the R and the wordmark are solid black"
-      ],
-      "priceCents": 2800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "White",
-          "hex": "#f4f4f2"
-        },
-        {
-          "name": "Ash",
-          "hex": "#c9cbc8"
-        },
-        {
-          "name": "Athletic Heather",
-          "hex": "#b0b2ad"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "tee",
-          "design": "monogram-logo"
-        }
-      ],
-      "printify": {
-        "blueprintId": 12,
-        "printProviderId": 29,
-        "productId": "6a66af025e1686240a07d5ab",
-        "status": "draft",
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.95,
-            "heightIn": 2.74,
-            "dpi": 300,
-            "maxWidthIn": 4,
-            "minDpi": 221,
-            "scale": 0.2666,
-            "y": 0.3
-          }
-        ]
-      },
-      "popUpUrl": null
-    },
-    {
-      "id": "wordmark-tee",
-      "name": "Golden Retrievers Wordmark",
-      "kind": "tee",
-      "family": "wordmark",
-      "blurb": "Gold over ivory, on a skate-blade underline. Drawn on black, so it is sold on black.",
-      "spec": [
-        "4.2 oz combed ringspun cotton, 32 singles",
-        "Direct-to-garment, front only",
-        "Side-seamed, shoulder-taped, unisex sizing",
-        "Black, navy, heather navy, dark grey heather"
+        "Dark bodies only: on white the mark has nothing to cut into"
       ],
       "priceCents": 2800,
       "sizes": [
@@ -320,35 +274,35 @@
         {
           "view": "front",
           "silhouette": "tee",
-          "design": "wordmark-logo"
+          "design": "crest-gold-logo"
         }
       ],
       "printify": {
         "blueprintId": 12,
         "printProviderId": 29,
-        "productId": "6a66af096ed755bb7a0bc6ad",
+        "productId": "6a691bff558fb20af40d2e8d",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 5.17,
-            "heightIn": 1.79,
-            "dpi": 300,
-            "maxWidthIn": 7.01,
-            "minDpi": 221,
-            "scale": 0.4673,
-            "y": 0.34
+            "widthIn": 7.38,
+            "heightIn": 8.3,
+            "dpi": 614,
+            "maxWidthIn": 10,
+            "minDpi": 453,
+            "scale": 0.6666,
+            "y": 0.42
           }
         ]
       },
       "popUpUrl": null
     },
     {
-      "id": "wordmark-hoodie",
-      "name": "Golden Retrievers Wordmark",
+      "id": "crest-gold-hoodie",
+      "name": "Golden Retrievers Crest, Gold",
       "kind": "hoodie",
-      "family": "wordmark",
-      "blurb": "The wordmark on eight ounces of fleece, above the pouch.",
+      "family": "crest-gold",
+      "blurb": "The one-ink crest on eight ounces of fleece, above the pouch.",
       "spec": [
         "8.0 oz cotton/polyester fleece, brushed interior",
         "Direct-to-garment, front only",
@@ -382,35 +336,35 @@
         {
           "view": "front",
           "silhouette": "hoodie",
-          "design": "wordmark-logo"
+          "design": "crest-gold-logo"
         }
       ],
       "printify": {
         "blueprintId": 77,
         "printProviderId": 29,
-        "productId": "6a66af0f7501a1691d078d74",
+        "productId": "6a691c0595c3d338010312d3",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 5.17,
-            "heightIn": 1.79,
-            "dpi": 300,
-            "maxWidthIn": 6.27,
-            "minDpi": 247,
-            "scale": 0.4182,
-            "y": 0.42
+            "widthIn": 6.85,
+            "heightIn": 7.71,
+            "dpi": 661,
+            "maxWidthIn": 8.31,
+            "minDpi": 545,
+            "scale": 0.5541,
+            "y": 0.5
           }
         ]
       },
       "popUpUrl": null
     },
     {
-      "id": "wordmark-cap",
-      "name": "Golden Retrievers Wordmark",
+      "id": "crest-gold-cap",
+      "name": "Golden Retrievers Crest, Gold",
       "kind": "cap",
-      "family": "wordmark",
-      "blurb": "A Richardson 112, embroidered. Structured front, mesh back, snapback, pre-curved visor. There is no light colourway because the mark's second word is ivory.",
+      "family": "crest-gold",
+      "blurb": "A Richardson 112, embroidered. Structured front, mesh back, snapback, pre-curved visor. The panel is two inches tall and a portrait mark is bound by that figure.",
       "spec": [
         "Embroidered front, stitched not printed",
         "Structured six-panel front, mesh back",
@@ -443,23 +397,23 @@
         {
           "view": "front",
           "silhouette": "cap",
-          "design": "wordmark-logo"
+          "design": "crest-gold-logo"
         }
       ],
       "printify": {
         "blueprintId": 1743,
         "printProviderId": 99,
-        "productId": "6a66af142afc803bf90e2781",
+        "productId": "6a691c0a95c3d338010312d5",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 5.17,
-            "heightIn": 1.79,
-            "dpi": 300,
-            "maxWidthIn": 5.17,
-            "minDpi": 300,
-            "scale": 0.8763,
+            "widthIn": 1.66,
+            "heightIn": 1.87,
+            "dpi": 2727,
+            "maxWidthIn": 1.66,
+            "minDpi": 2727,
+            "scale": 0.2814,
             "y": 0.5
           }
         ]
@@ -467,11 +421,11 @@
       "popUpUrl": null
     },
     {
-      "id": "wordmark-beanie",
-      "name": "Golden Retrievers Wordmark",
+      "id": "crest-gold-beanie",
+      "name": "Golden Retrievers Crest, Gold",
       "kind": "beanie",
-      "family": "wordmark",
-      "blurb": "A cuffed knit beanie, embroidered, which is what a Buffalo winter asks for and what this line could not offer until there was a mark drawn for black.",
+      "family": "crest-gold",
+      "blurb": "A cuffed knit beanie, embroidered, which is what a Buffalo winter asks for and what this line could not offer until the crest had a colourway that survives black.",
       "spec": [
         "Embroidered on the cuff face, stitched not printed",
         "Acrylic knit, double-layer cuff",
@@ -496,23 +450,23 @@
         {
           "view": "front",
           "silhouette": "beanie",
-          "design": "wordmark-logo"
+          "design": "crest-gold-logo"
         }
       ],
       "printify": {
         "blueprintId": 1691,
         "printProviderId": 99,
-        "productId": "6a66af17697dbfb49d0eb2de",
+        "productId": "6a691c0d6f6a3b1de20dbda6",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 4.7,
+            "widthIn": 1.45,
             "heightIn": 1.63,
-            "dpi": 330,
-            "maxWidthIn": 4.7,
-            "minDpi": 330,
-            "scale": 0.94,
+            "dpi": 3121,
+            "maxWidthIn": 1.45,
+            "minDpi": 3121,
+            "scale": 0.29,
             "y": 0.5
           }
         ]
@@ -520,16 +474,16 @@
       "popUpUrl": null
     },
     {
-      "id": "wordmark-mug",
-      "name": "Golden Retrievers Wordmark",
+      "id": "crest-gold-mug",
+      "name": "Golden Retrievers Crest, Gold",
       "kind": "mug",
-      "family": "wordmark",
-      "blurb": "Black ceramic, eleven ounces or fifteen. The black body is what makes this mark usable at all: on white it loses its second word.",
+      "family": "crest-gold",
+      "blurb": "Black ceramic, eleven ounces or fifteen. The black body is what makes this mark usable at all: on white it has nothing to cut into.",
       "spec": [
         "Black ceramic, 11 oz or 15 oz",
         "Dye-sublimated, dishwasher and microwave safe",
-        "Printed one side, 5.17 in across",
-        "Same printer as the shirts"
+        "Printed one side, 3.15 in across",
+        "The 11 oz is the shorter canvas and sets the size for both"
       ],
       "priceCents": 1800,
       "sizes": [
@@ -546,131 +500,23 @@
         {
           "view": "front",
           "silhouette": "mug",
-          "design": "wordmark-logo"
+          "design": "crest-gold-logo"
         }
       ],
       "printify": {
         "blueprintId": 479,
         "printProviderId": 29,
-        "productId": "6a66af1a697dbfb49d0eb2e0",
+        "productId": "6a691c10400d6bef250910ce",
         "status": "draft",
         "print": [
           {
             "position": "front",
-            "widthIn": 5.17,
-            "heightIn": 1.79,
-            "dpi": 300,
-            "maxWidthIn": 5.23,
-            "minDpi": 297,
-            "scale": 0.6336,
-            "y": 0.5
-          }
-        ]
-      },
-      "popUpUrl": null
-    },
-    {
-      "id": "retriever-tee",
-      "name": "Pixel Retriever",
-      "kind": "tee",
-      "family": "retriever",
-      "blurb": "The retriever built out of ice pixels and coming apart at the tail, a tennis ball in orbit. Worn as a badge, high on the chest, because at three inches it is sharp and at nine it is not.",
-      "spec": [
-        "4.2 oz combed ringspun cotton, 32 singles",
-        "Direct-to-garment, front only",
-        "Side-seamed, shoulder-taped, unisex sizing",
-        "Black and navy"
-      ],
-      "priceCents": 2800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "tee",
-          "design": "retriever-logo"
-        }
-      ],
-      "printify": {
-        "blueprintId": 12,
-        "printProviderId": 29,
-        "productId": "6a66af1d6ed755bb7a0bc6b8",
-        "status": "draft",
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.85,
-            "heightIn": 2.51,
-            "dpi": 300,
-            "maxWidthIn": 3.86,
-            "minDpi": 222,
-            "scale": 0.2576,
-            "y": 0.22
-          }
-        ]
-      },
-      "popUpUrl": null
-    },
-    {
-      "id": "retriever-sticker",
-      "name": "Pixel Retriever Sticker",
-      "kind": "sticker",
-      "family": "retriever",
-      "blurb": "The retriever keeps its black ground here. Vinyl is white and this mark has no light colourway, so the sticker is the ground.",
-      "spec": [
-        "Kiss-cut white vinyl, UV printed",
-        "3 in or 4 in square",
-        "Rated for outdoor use",
-        "The sharpest thing in the line at 482 dpi"
-      ],
-      "priceCents": 600,
-      "sizes": [
-        "3 in",
-        "4 in"
-      ],
-      "colors": [
-        {
-          "name": "Black on white vinyl",
-          "hex": "#17191b"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "sticker",
-          "design": "retriever-plate"
-        }
-      ],
-      "printify": {
-        "blueprintId": 400,
-        "printProviderId": 99,
-        "productId": "6a66af236ed755bb7a0bc6be",
-        "status": "draft",
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.6,
-            "heightIn": 2.6,
-            "dpi": 482,
-            "maxWidthIn": 3.48,
-            "minDpi": 360,
-            "scale": 0.9375,
+            "widthIn": 3.15,
+            "heightIn": 3.55,
+            "dpi": 1437,
+            "maxWidthIn": 3.18,
+            "minDpi": 1423,
+            "scale": 0.386,
             "y": 0.5
           }
         ]
