@@ -1,6 +1,6 @@
 # Golden Retrievers
 
-Archive and store for a Buffalo men's-league hockey team, est. 2011.
+Archive and store for The Golden Retrievers, Buffalo's premier golden retriever themed hockey team, est. 2011.
 
 Fifteen years of the club's record, reassembled from five platforms that died or
 moved on. Every figure traces back to a stored page.
