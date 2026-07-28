@@ -1,0 +1,5 @@
+{
+  "name": "@gr/build",
+  "private": true,
+  "type": "module"
+}

@@ -1,0 +1,58 @@
+{
+  "name": "golden-retrievers-archive",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "pretest": "npm run reindex --silent",
+    "test": "node --test packages/*/test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "capture:keystone": "node packages/capture/src/cli.ts capture:keystone",
+    "reindex": "node packages/capture/src/cli.ts reindex",
+    "capture:harborcenter-archive": "node packages/capture/src/cli.ts capture:harborcenter-archive",
+    "capture:harborcenter-sportngin": "node packages/capture/src/cli.ts capture:harborcenter-sportngin",
+    "capture:harborcenter-live": "node packages/capture/src/cli.ts capture:harborcenter-live",
+    "capture:harborcenter-games": "node packages/capture/src/cli.ts capture:harborcenter-games",
+    "capture:harborcenter-leaders": "node packages/capture/src/cli.ts capture:harborcenter-leaders",
+    "capture:cohort-search": "node packages/capture/src/capture-cohort-search.ts",
+    "capture:eriemetro": "node packages/capture/src/cli.ts capture:eriemetro",
+    "capture:eriemetro-leaders": "node packages/capture/src/cli.ts capture:eriemetro-leaders",
+    "build:data": "node packages/build/src/generate.ts",
+    "derive:private": "node packages/build/src/derive.ts",
+    "build:brand-assets": "node scripts/build-brand-assets.mjs",
+    "sync:current": "node scripts/sync-current.mjs",
+    "sync:install-task": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/register-sync-task.ps1",
+    "dev": "next dev apps/web",
+    "build:site": "next build apps/web",
+    "store:print": "node scripts/build-print-files.mjs",
+    "bake:retriever": "blender assets/3d/retriever-original.blend --background --python scripts/blender/bake-retriever.py",
+    "bake:compress": "node scripts/compress-bakes.mjs",
+    "dev:regen": "npm run build:data && next dev apps/web"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.1",
+    "playwright": "^1.61.1",
+    "sharp": "^0.34.5",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
+    "n8ao": "^1.10.3",
+    "next": "^15.5.20",
+    "postprocessing": "^6.39.2",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "three": "^0.185.1"
+  }
+}

@@ -1,0 +1,25 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# THE CORPUS IS EVIDENCE. Do not let git touch a byte of it.
+#
+# `* text=auto` above normalises line endings on anything git decides is text,
+# and captures.jsonl is text by that test. Normalisation is harmless for source
+# and wrong here: this archive's central rule is that every figure traces back
+# to bytes actually retrieved from a source, and bytes git rewrote on checkout
+# are no longer those bytes. Parsers are verified against this corpus, so a CRLF
+# appearing on one platform and not another is a test that passes on one machine
+# and fails on the other for a reason nobody will find quickly.
+data/captures.jsonl -text
+data/blobs/** binary
+
+# The derived records, for the same reason one step removed. These are the only
+# surviving trace of three documents that are not published, and they are what a
+# build server reads in place of them. Nothing downstream cares about a line
+# ending — but the whole point of storing them is that this machine and a runner
+# produce the same site.json from the same bytes, and `text=auto` would hand the
+# two of them different bytes.
+data/derived/*.json -text
+
+# The captain's roster book and the stats workbook build:data depends on.
+*.xlsx binary

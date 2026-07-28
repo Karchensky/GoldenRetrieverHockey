@@ -1,0 +1,936 @@
+.seasonHero { min-height: min(74vh, 680px); }
+
+/* The page's map, and it travels.
+   It was static, ended 748px down a 19,000px document and never came back, so
+   a reader twelve thousand pixels into the record had no route to anything but
+   the scrollbar. Sticky to the top of the viewport, one row, scrolled sideways
+   rather than wrapped on a phone, and every target tall enough to hit.
+
+   AND IT SAYS WHEN IT CONTINUES. The row measures 1,037px inside a 350px box on
+   a phone — 687px of it off-screen — with `scrollbar-width: none` removing the
+   only cue there was, so a nineteen-thousand-pixel document showed two or three
+   of its nine destinations and no sign the other six existed. The fade is the
+   same one `.hScrollWrap` uses on the two charts. It rides the sticky wrapper
+   rather than the scroller, or it would scroll away with the links. */
+.archiveNavWrap {
+  position: sticky;
+  /* Clear of the site masthead, which is `position: fixed` and bottoms out at
+     56px (72px under 620px). Below it in the stack too — the masthead is the
+     site and this is one page's index of itself. */
+  top: 58px;
+  z-index: 3;
+  margin: 30px 0 4px;
+  background: linear-gradient(180deg, rgba(10, 10, 12, .94) 62%, rgba(10, 10, 12, 0));
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+.archiveNavWrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(10, 10, 12, 0), rgba(10, 10, 12, .82));
+}
+/* Above this the row fits the column and a fade would cue nothing. SWEPT AT
+   1px, not reasoned: the nav's scrollWidth meets its clientWidth at 1251. It
+   said 1120 and "the nine links fit", and the tenth — `Data coverage`, which
+   was added ahead of the route — pushed the row 131px past it. Between 1120 and
+   1250 the map was truncating its own tail with the cue switched off, and the
+   tail is `Player index` and `Season index`: the two entries the design singles
+   out as the archive itself. A map that hides its two most important stops
+   without saying so is worse than no map. Re-sweep when a link is added. */
+@media (min-width: 1251px) {
+  .archiveNavWrap::after { display: none; }
+}
+.archiveNav {
+  display: flex;
+  gap: 0 20px;
+  padding: 4px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* THE SCROLLER IS THE OFFSET PARENT, which is what lets `ArchiveNav` bring the
+     marked link into view with one line of arithmetic. Without it the nearest
+     positioned ancestor is `.archiveNavWrap`, and a link's `offsetLeft` would be
+     measured against a box that is not the one being scrolled. */
+  position: relative;
+}
+.archiveNav::-webkit-scrollbar { display: none; }
+/* 44px. Nine taps is the whole navigation budget for a nineteen-thousand-pixel
+   document and they were 26px boxes; the rule stays where it was, so only the
+   target grows. */
+.archiveNav a {
+  flex: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(182, 186, 197, .18);
+  color: var(--dim);
+  font-size: 9.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* The two spine sections are the archive; the seven between them are readings
+   taken off it. The type says so and the map now says the same. */
+.archiveNav .archiveNavSpine { color: var(--ink); border-bottom-color: rgba(182, 186, 197, .34); }
+/* `.archiveNavScope` is gone with the slot that set it. `Data coverage` was
+   rendered ahead of the route, behind a vertical rule and without an underline,
+   to mark it as the key to the sections rather than one of them — which put it
+   leftmost on a bar whose only promise is that it is in the order of the page,
+   and the chart is the second section on that page. It is an ordinary stop. */
+/* WHERE YOU ARE. A map that travels with the reader and never marks their
+   position is doing half its job: twelve thousand pixels into the record there
+   was nothing to say whether the last eight screens were the sin bin or the
+   opponents. */
+.archiveNav a[aria-current="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ball);
+}
+.archiveNav a:hover { color: var(--ball); border-bottom-color: var(--ball); }
+
+/* ==================================================================
+   DATA COVERAGE — four dimensions down, the session spine across.
+
+   A table, laid out as a matrix. `table-layout: fixed` is what makes it one:
+   the term column and the tally take their stated widths and the sessions
+   divide whatever is left equally, so the pitch is even whatever the archive
+   grows to. It is NOT the pitch of the session history or the career timelines:
+   measured at 1440, the three spines run 205-1283, 293-1269 and 320-1214, at
+   pitches of 32.7, 29.6 and 27.1 — three origins a fifth apart, because each
+   chart's left-hand furniture is a different width and has to be. The claim
+   that they shared an axis was in this comment and is gone; the tick RULE is
+   shared, in `axisTicks`.
+
+   ONE SET OF NUMBERS FOR THE MARKS AND THE KEYS. The cell, the full mark and
+   the fragment are custom properties, and the legend's swatches are drawn from
+   the same three — so "the key and the cell it points at are the same drawing"
+   is true by construction rather than by two places agreeing.
+
+   THE MARK IS DRAWN, THE CELL IS NOT. Every cell is the same box; what changes
+   is the height of the block sitting on its floor — full, a third, a hairline.
+   Absence gets a hairline rather than an empty cell, because an empty cell is
+   indistinguishable from a rendering fault and this archive's one rule is that
+   absence is not nothing.
+   ================================================================== */
+.covCard {
+  --cov-term: 106px;
+  --cov-tally: 58px;
+  --cov-cell: 27px;
+  --cov-full: 19px;
+  --cov-part: 8px;
+  /* The card's own ground, painted behind the two pinned columns so marks pass
+     UNDER them rather than through. `.card` is a translucent panel over the
+     pond, so this is the panel's colour composited — not a flat black. */
+  --cov-ground: #0e1319;
+}
+/* `.covWrap` is gone with the fade it existed to hang. It was an absolutely
+   positioned gradient over the right edge, painted whenever the viewport was
+   under 761px whatever the scroll position — so at full right, where there is
+   nothing further right, it was a cue to nothing sitting on top of the tally
+   column and costing those four figures 41% of their peak luminance. The seam
+   on the pinned columns says the same thing and says it truthfully.
+
+   IT LANDS ON THE RECENT END, and `direction` is how, because this chart is
+   rendered on the server and has to be right before any JavaScript runs. In a
+   right-to-left scroller the resting position is the right-hand edge; the table
+   sets `direction: ltr` back on itself, so nothing about the layout moves and
+   only the starting point does.
+   At 375 the chart is 620px inside a 297px port — 324px and twenty-two of the
+   thirty-three columns off-screen. Landed at the left it opened on 2011 Winter
+   to 2015 Winter: an empty Game log row beside a tally reading 14, and a wholly
+   empty Scoresheets row beside 4, which reads as the chart disagreeing with
+   itself. It opens on the end where the archive is, the same end the Season
+   index below it and the current season above it both lead with, and the seam
+   over the row terms says the rest is behind it.
+   UNDER THE SAME 741px THE SEAM IS GATED ON, because above it there is nothing
+   to land anywhere — and the reversal costs a rounding pixel of scrollWidth,
+   which on a chart that otherwise fits exactly is a 1px scroller at every
+   desktop width. */
+.covScroll { overflow-x: auto; max-width: 100%; }
+@media (max-width: 740px) {
+  .covScroll { direction: rtl; }
+  .covScroll > * { direction: ltr; }
+}
+
+/* 620px, and it is set by the AXIS rather than by the marks. The five ticks
+   are 58px of 8px mono apiece; at 560 the column pitch was 12px, which put
+   "2011 Winter" — anchored to the left edge — three pixels short of "2014
+   Winter" centred on its own column. 620 opens the pitch to 13.8px and the
+   nearest pair clears by sixteen. The marks themselves are legible far below
+   this; the names under them are not. */
+.covChart {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.covChart th,
+.covChart td { border: 0; padding: 0; }
+
+/* The header strip: five names, absolutely placed so a name three times the
+   width of its own column cannot set that column's width. Both ends read
+   inward; the rest are centred on the column they belong to. */
+.covChart thead th { height: 19px; position: relative; }
+.covCorner,
+.covTerm { width: var(--cov-term); }
+.covTotalHead,
+.covTotal { width: var(--cov-tally); }
+
+/* THE ROW'S NAME AND ITS TALLY DO NOT SCROLL AWAY FROM THE ROW.
+   620px of chart in a 297px scrollport is 13 of the sessions at rest, and both
+   were ordinary table columns: half a swipe took GAME LOG / SCORESHEETS /
+   ROSTER / STATISTICS off the left edge, and the four tallies could only ever
+   be reached in the one scroll position where the rows they belong to were
+   gone. Four rows of anonymous marks and a column of unattributed figures, on
+   the section the page calls the key to all the others. Pinned, and the card's
+   ground goes behind them so a mark passes under rather than through. */
+/* Scoped to the chart, which is not decoration: `.covChart tbody td` sets
+   `position: relative` for the mark inside every cell and is 0-1-2, so a bare
+   `.covTotal` at 0-1-0 lost the position it was asking for and the tally column
+   scrolled away while the row terms stayed. Measured, not assumed — it looked
+   right in the stylesheet and pinned nothing. */
+.covChart .covCorner,
+.covChart .covTerm {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--cov-ground);
+}
+.covChart .covTotalHead,
+.covChart .covTotal {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: var(--cov-ground);
+}
+/* THE SEAM, WHICH IS THE SCROLL CUE, AND IT HAS TO PAINT.
+   It was `box-shadow` on the pinned cells and it painted NOTHING. A/B at 375 on
+   the real chart: the luminance profile across the seam is identical with the
+   declaration and without it — 1.60 inside the pinned column, a flat 1.55 for
+   every pixel after it, delta 0.00 across 26px. In the collapsed-border model a
+   shadow on a cell dies the moment the cells are positioned, and this chart sets
+   `position: relative` on every td and `sticky` on the pinned ones. So the fade
+   that used to hang on `.covWrap` came off in exchange for a cue that renders as
+   nothing, leaving 323px and twenty-two columns off-screen at 375 with no
+   affordance of any kind — and no scrollbar either, since a touch scroller
+   reserves none.
+   A pseudo-element paints under the same conditions: measured, it takes the
+   ground from 1.55 to 0.53 at the seam and fades out over 8px. It is drawn on
+   the pinned cells' own edges, so it says "content passes under here" at every
+   scroll position, which is what a fade pinned to the viewport's edge could not.
+   The old one was painted over the tally column whenever the viewport was under
+   761px, including at full-right scroll where there is nothing further right,
+   and it took the peak luminance of those four figures down 41%.
+   ON THE LEFT ONLY, because the chart rests at its right-hand end. A seam on
+   the tally would be painted over the one dated anchor a phone reader gets —
+   "2026 Summer", which ends exactly at the tally's edge — to cue a direction
+   there is nothing in. That is the same false cue the `.covWrap` fade was
+   deleted for, and landing the scroller at the recent end is what would have
+   brought it back. Everything the chart holds is to the LEFT of where it opens,
+   and that is the edge the seam is on. */
+.covChart .covCorner::after,
+.covChart .covTerm::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 8px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(4, 6, 9, .95), rgba(4, 6, 9, 0));
+}
+/* Nothing overflows above this — swept at 1px and the chart's scrollWidth meets
+   its clientWidth at 740 — so the seam has nothing to cue and comes off. The
+   fade it replaced was switched at 761 on a stated width of 639 that was never
+   the measurement. */
+@media (min-width: 741px) {
+  .covChart .covCorner::after,
+  .covChart .covTerm::after { display: none; }
+}
+.covTick {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: none;
+  color: var(--dim);
+}
+.covTick[data-end="l"] { left: 0; transform: none; }
+.covTick[data-end="r"] { left: auto; right: 0; transform: none; }
+
+.covTerm,
+.covTotalHead {
+  color: var(--dim);
+  font-size: 8.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.covTerm { text-align: left; padding-right: 14px; }
+.covTotalHead { text-align: right; padding: 0 0 5px 12px; }
+.covTotal {
+  text-align: right;
+  padding-left: 12px;
+  font-family: var(--disp);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+/* THE DENOMINATOR, BESIDE THE FIGURE RATHER THAN ONLY IN THE ARIA TEXT.
+   The tally is the one thing on this chart that is not a cell, which makes it
+   the one figure a reader quotes — and it printed a bare 14, 4, 28, 24 under a
+   heading reading COMPLETE, with "of 31 sessions" available to a screen reader
+   alone. Scoresheets is where it bites: a bare 4 over a chart of 33 columns
+   reads as 4 of 33, and eighteen of those sessions hold no game that could ever
+   have carried a sheet. The heading cannot take it — at 46px "COMPLETE" already
+   renders to its own edge — so the fraction is set the way a fraction is, with
+   the denominator quiet. */
+.covOf { font-size: 8px; color: var(--dim); letter-spacing: .02em; }
+
+.covChart tbody td { height: var(--cov-cell); position: relative; }
+.covChart tbody td i {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 4px;
+  display: block;
+  background: var(--paint-b);
+}
+.covFull i { height: var(--cov-full); opacity: .8; }
+.covPart i { height: var(--cov-part); opacity: .42; }
+/* Nothing on file, drawn. `--ink` rather than the accent: it is the absence of
+   the thing the accent means, and a cell left empty is indistinguishable from
+   a cell that failed to render. */
+.covNone i { height: 1px; background: var(--ink); opacity: .22; }
+/* A half-year with no session at all. The band runs the full height of the
+   cell in all four rows and the cells touch, so it reads as one column of
+   nothing rather than as four marks that happen to line up. */
+.covGap { background: rgba(56, 62, 78, .34); }
+
+.covLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 20px;
+  align-items: center;
+  margin-top: 16px;
+  color: var(--dim);
+  font-size: 10px;
+}
+/* EVERY KEY SITS ON ITS TERM'S BASELINE, the way every cell sits on its row's
+   floor — and until now three of the four did not.
+   The swatch is a 27px cell with the mark on its FLOOR, and the row centred the
+   cells rather than the marks: measured at 1440, the painted ink of "complete"
+   landed 3.0px below its own word, "a fragment" 8.5px and "nothing on file"
+   12.1px, so the faintest and most important key — a hairline, for absence —
+   had detached from its label and read as a stray rule floating between two
+   other keys. The taller the mark, the closer it landed.
+   `baseline` fixes all four with one word and no magic numbers: an empty
+   inline-block's baseline IS its bottom margin edge, so aligning on it puts each
+   mark's floor exactly on the term's baseline whatever height the mark is. */
+.covLegend > span { display: flex; align-items: baseline; gap: 8px; }
+/* Every key is the chart's own mark, at the chart's own size, off the chart's
+   own numbers — the cell height, the full mark and the fragment are the same
+   three custom properties the cells draw with, so the two cannot drift. The
+   swatch was 12px square with the fragment at a 45% stop and absence at .16
+   alpha, none of which were the marks: absence's key was fainter than absence
+   itself, which is a small error landing on the faintest claim on the chart. */
+.covKey { flex: none; width: 12px; height: var(--cov-cell); background: none; }
+.covKeyFull { background: linear-gradient(to top, rgba(91, 155, 213, .8) var(--cov-full), transparent 0); }
+.covKeyPart { background: linear-gradient(to top, rgba(91, 155, 213, .42) var(--cov-part), transparent 0); }
+.covKeyNone { background: linear-gradient(to top, rgba(182, 186, 197, .22) 1px, transparent 1px); }
+.covKeyGap { background: rgba(56, 62, 78, .34); }
+/* THE TWO HALF-YEARS NOBODY HAS. Not a key — a key is a swatch and a term, and
+   this is a sentence about two seasons — so it sits under the chart in the
+   register the rest of the archive states absence in. It was the fourth item in
+   the legend at 541px against 67, 79 and 108 for the other three.
+   The names are unbreakable: at 375 the line wraps, and a season name split
+   across two lines is not a season name. */
+.covGaps {
+  margin: 9px 0 0;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+.covKeyName { white-space: nowrap; color: var(--ink); }
+
+/* WHAT THE TWO PINNED COLUMNS ARE ALLOWED TO COST ON A PHONE. 106 and 58 out
+   of a 297px scrollport is 55% of the measure spent on furniture, which is the
+   trade the box two blocks down came off for making. The terms are their own
+   longest word — "Scoresheets" sets this — and the tally is set by its HEADING
+   rather than by its two digits: at 38px it rendered "COMPLET", which is a
+   column of four unexplained figures with a typo over it. Measured: the word is
+   38.8px at 8px and .02em, so the column is 46 with a 6px gutter. */
+@media (max-width: 620px) {
+  .covCard { --cov-term: 74px; --cov-tally: 46px; }
+  .covTerm { padding-right: 8px; letter-spacing: .06em; }
+  .covTotalHead { padding-left: 6px; font-size: 8px; letter-spacing: .02em; }
+  .covTotal { padding-left: 6px; }
+}
+
+/* Named for a screen reader, invisible to everyone else — every cell's own
+   word, every column's own session, and the row header the corner would
+   otherwise leave nameless. */
+.covHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* THE OLD BOX, kept for the one row that still needs it — see `ScopeNote`. */
+.dataScope {
+  margin: 0 0 clamp(28px, 5vw, 54px);
+  padding: 2px 0 0;
+  border: 1px solid var(--line);
+  background: rgba(56, 62, 78, .07);
+}
+.dataScope > div {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 0 18px;
+  padding: 9px 16px;
+  border-top: 1px solid var(--rule);
+}
+.dataScope > div:first-child { border-top: 0; }
+.dataScope dt {
+  color: var(--dim);
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.9;
+}
+.dataScope dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.65;
+  letter-spacing: .01em;
+  text-wrap: pretty;
+  font-variant-numeric: tabular-nums;
+}
+/* THE TERM COLUMN COSTS MORE THAN IT IS WORTH ON A PHONE. 108px and an 18px
+   gutter out of 343 is 37% of the measure spent on labels, and it was
+   spending it by wrapping every value to three and four lines. The term goes
+   above its own value under 620px and the rows collapse. */
+@media (max-width: 620px) {
+  .dataScope > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .dataScope dt { line-height: 1.4; }
+}
+/* The same row on a page that is not the archive — a player's scoresheet
+   window. One row, so it carries the section's own top margin instead of the
+   box's. */
+.scopeNote { margin: 2px 0 16px; }
+
+.seasonTitle { display: flex; align-items: flex-end; gap: clamp(12px, 2vw, 26px); }
+.seasonYear {
+  font-family: var(--disp);
+  font-weight: 200;
+  font-size: clamp(5.6rem, 18vw, 13rem);
+  line-height: .68;
+  letter-spacing: -.06em;
+  color: var(--ink);
+}
+.seasonHalf {
+  font-family: var(--disp);
+  font-weight: 200;
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: .82;
+  color: var(--dim);
+}
+.seasonNav { display: flex; justify-content: space-between; gap: 18px; margin-top: 28px; }
+.honors { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.honor { display: grid; grid-template-columns: 15ch 1fr auto; gap: 16px; padding: 13px 15px; background: rgba(56,62,78,.08); }
+.honor strong { font-weight: 400; color: var(--gold); }
+.honor small { color: var(--dim); }
+/* An honour read off the shape of a playoff schedule rather than off a stored
+   trophy case. Same row, quieter gold, and the provenance line says which. */
+.honorDerived strong { color: rgba(196, 148, 58, .62); }
+.honorDerived span { color: var(--dim); }
+
+/* One of the archive's own rulings, on the season it was made about. */
+.ruling { max-width: 74ch; padding: 4px 0 2px; }
+.ruling h3 { margin: 0 0 10px; font-family: var(--disp); font-size: 1.1rem; font-weight: 300; }
+.ruling p { margin: 0 0 10px; color: var(--dim); font-size: 12.5px; line-height: 1.75; }
+.ruling strong { color: var(--ink); font-weight: 400; font-size: 12.5px; }
+
+.recaps { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.recap { background: rgba(56,62,78,.07); }
+.recap summary,
+.recapHead { display: grid; grid-template-columns: 8ch 1fr auto; gap: 12px; padding: 13px 15px; align-items: baseline; }
+.recap summary { cursor: pointer; list-style: none; }
+.recap summary::-webkit-details-marker { display: none; }
+/* A result with no write-up behind it. Same line, and nothing to press. */
+.recapBare .recapHead { color: var(--dim); }
+.recapWhen { color: var(--dim); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.recap blockquote { color: var(--dim); margin: 0; padding: 2px 18px 18px; max-width: 78ch; font-family: var(--disp); font-size: 13px; line-height: 1.7; }
+@media (max-width: 640px) {
+  .seasonTitle { display: grid; }
+  .honor { grid-template-columns: 1fr; gap: 3px; }
+  .recap summary,
+  .recapHead { grid-template-columns: 7ch 1fr; }
+  .recap summary span:last-child,
+  .recapHead span:last-child { grid-column: 2; }
+}
+
+/* The canonical archive: one descending document, no route-hopping.
+   These sit in the page's column like every other section — the width comes
+   from `.wrap`/`--col` in globals.css and is not restated here. */
+.chronicle,
+.playerIndex {
+  padding-top: clamp(86px, 12vw, 150px);
+}
+.chronicleHead {
+  margin: 0 0 30px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+}
+.chronicleHead h2 {
+  margin-top: 9px;
+  font-family: var(--disp);
+  font-size: clamp(2.6rem, 6vw, 6.3rem);
+  font-weight: 200;
+  letter-spacing: -.055em;
+  line-height: .88;
+}
+.chronicleHead p {
+  margin: 0;
+  max-width: 32ch;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: right;
+}
+.chronicleRail {
+  border-top: 1px solid rgba(182, 186, 197, .13);
+}
+.chronicleSeason {
+  display: block;
+  border-bottom: 1px solid rgba(182, 186, 197, .1);
+  background: linear-gradient(90deg, rgba(42, 75, 94, .035), transparent 52%);
+}
+.chronicleSeason > summary { list-style: none; cursor: pointer; }
+.chronicleSeason > summary::-webkit-details-marker { display: none; }
+.chronicleSeason[open] {
+  background: linear-gradient(104deg, rgba(71, 123, 151, .09), rgba(4, 9, 14, .32) 52%, transparent);
+  box-shadow: inset 2px 0 var(--paint-b);
+}
+.chronicleEmpty {
+  color: rgba(182, 186, 197, .22);
+  background: repeating-linear-gradient(-54deg, transparent 0 16px, rgba(142, 156, 171, .018) 16px 17px);
+}
+.chronicleSummary {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 42px 112px 112px minmax(230px, 1fr) minmax(180px, .72fr) 32px;
+  align-items: center;
+  gap: clamp(10px, 2vw, 32px);
+  transition: color .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+}
+summary:hover .chronicleSummary,
+summary:focus-visible .chronicleSummary { color: #eef5f8; transform: translateX(5px); }
+.chronicleIndex { color: var(--dim); font-size: 8px; letter-spacing: .16em; }
+.chronicleYear {
+  font-family: var(--disp);
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  font-weight: 200;
+  letter-spacing: -.055em;
+  font-variant-numeric: tabular-nums;
+}
+.chronicleHalf { color: var(--dim); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; }
+.chronicleSignals { display: flex; flex-wrap: wrap; gap: 6px 17px; color: var(--dim); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+.chronicleSignals b { color: var(--ink); font-size: 13px; font-weight: 400; }
+/* A caveat on the row's own numbers, not a signal competing with them: quieter
+   than the counts beside it, and not italic-for-emphasis.
+   IT WAS #6b5a3a AT 9px, 7px on a phone — 2.97:1, the least legible mark on
+   the page, carrying the one fact about these rows the reader cannot get by
+   looking. Quieter is done with weight and case now, not with contrast nobody
+   can resolve.
+   AND IT IS NOT A WARM COLOUR. #9b8757 is one step off the gold this row sets
+   its honours in, so 2013 - Summer printed "5 results, no game log" and
+   "Runner-Up" in the same hue on the same line — a hole in the record and a
+   trophy, with no key and nothing to tell them apart. Every absence on the rail
+   is --dim now, which is already what "searched for, not found" and "confirmed
+   not played" use one row away. */
+.chroniclePartial { font-style: normal; color: var(--dim); }
+/* A half-year nobody has, in the archive's own words. The distinction between
+   "searched for, not found" and "may not have been played" is the whole reason
+   these rows are drawn at all. */
+.chronicleGap { font-style: normal; color: var(--dim); }
+.chronicleHonor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  color: var(--gold);
+  font-family: var(--disp);
+  font-size: clamp(.9rem, 1.45vw, 1.25rem);
+}
+.chronicleHonor i { font-style: normal; }
+/* THE SEPARATOR BELONGS TO THE ITEM BEFORE IT. Attached to the item after, it
+   leads the line on every wrap: 2012-13 renders "Mid-Season EMHL Champions" /
+   "· President's Trophy · Runner-Up", and the gold honour line is the one warm
+   mark on the rail. A non-breaking space keeps the middot with the title it
+   closes. */
+.chronicleHonor i:not(:last-child)::after { content: "\00a0·"; color: var(--dim); }
+/* Read off the shape of a playoff schedule, not off a stored trophy case. The
+   dotted rule under it came off: at 20px on a near-black ground a 1px dotted
+   line reads as solid, and an underlined string in this design language is a
+   link — so four honours were underlined, unclickable, and carrying a
+   distinction nothing on the page could decode. The quieter gold says the same
+   thing without pretending to be a target; the season's own page states the
+   provenance in words. */
+.honorDerivedMark { color: rgba(196, 148, 58, .66); }
+.chronicleToggle { justify-self: end; color: var(--dim); font-size: 20px; font-weight: 200; transition: transform .35s ease, color .2s ease; }
+.chronicleSeason[open] .chronicleToggle { color: var(--ball); transform: rotate(45deg); }
+/* A season whose only surviving account is a league standings row. Nothing to
+   expand, so the row itself is the way to the page that holds it. */
+.chronicleLink { display: block; }
+.chronicleLink:hover .chronicleSummary { color: #eef5f8; transform: translateX(5px); }
+.chronicleLink:hover .chronicleToggle { color: var(--ball); }
+
+/* The season being played. Its lineup and its game log are already open at the
+   top of the page; this row is the way back to them, not a second copy of
+   1,250 desktop pixels and 2,000 phone pixels. */
+.chronicleCurrent { display: block; border-bottom: 0; }
+.chronicleCurrent .chronicleToggle { font-size: 15px; }
+.chronicleCurrent:hover .chronicleSummary { color: #eef5f8; transform: translateX(5px); }
+.chronicleCurrent:hover .chronicleToggle { color: var(--ball); }
+.chronicleBody {
+  padding: 4px 0 clamp(42px, 7vw, 82px) 74px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+.chronicleBlock {
+  min-width: 0;
+  border: 1px solid rgba(182, 186, 197, .09);
+  background: rgba(6, 12, 18, .48);
+  backdrop-filter: blur(12px);
+}
+.chronicleBlockHead {
+  min-height: 58px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(182, 186, 197, .08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.chronicleBlockHead h3 { margin: 0; font-family: var(--disp); font-size: 1.15rem; font-weight: 300; }
+.chronicleTable { min-width: 520px; }
+.chronicleTable a { border-bottom: 1px solid transparent; }
+.chronicleTable a:hover { color: var(--ball); border-bottom-color: var(--ball); }
+.compactGames { max-height: 430px; overflow-y: auto; }
+.compactGame {
+  min-height: 48px;
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: 82px minmax(150px, 1fr) 20px 52px;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(182, 186, 197, .065);
+  font-size: 10px;
+  transition: background .2s ease, color .2s ease;
+}
+.compactGame:hover { background: rgba(102, 151, 183, .09); color: #fff; }
+.compactGame time { color: var(--dim); font-variant-numeric: tabular-nums; }
+.compactGame span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* THE OVERRIDES HAVE TO BEAT THIS RULE, AND FOR TWO ROUNDS THEY DID NOT.
+   `.compactGame small` is 0-1-1 and `.compactNext` / `.compactStatus` were
+   0-1-0, so every chip in every game log rendered as the identical 7px gold
+   cap with the identical 7px trailing gap — "Playoff", "Next", "Not Started"
+   and "Postponed", four different facts in one mark. A CSS module hashes the
+   class names at build time and does not touch their specificity, so it failed
+   in production exactly as it failed in the harness. The overrides are
+   descendant selectors now and cannot lose.
+   The base is --dim rather than --gold: gold on this page means an honour, and
+   a playoff is not one. */
+.compactGame small { margin-right: 7px; color: var(--dim); font-size: 7px; letter-spacing: .13em; text-transform: uppercase; }
+/* A knockout game, marked by brightness rather than by a hue. */
+.compactGame .compactPlayoff { color: var(--ink); }
+/* The fixture the banner at the top of the section names. Marked, not printed
+   a second time. */
+.compactGame .compactNext { color: var(--ball); }
+/* A game with no score: the word sits with the club, where there is room for
+   it, rather than in a 44px track sized for "6–3". */
+.compactGame .compactStatus { margin: 0 0 0 7px; color: var(--dim); }
+/* Only the rows that carry one wrap — every other row in the log is a single
+   line and stays one. */
+.compactGame[data-result=""] span { white-space: normal; overflow: visible; }
+.compactGame b { color: var(--dim); }
+.compactGame[data-result="W"] b { color: var(--ball); }
+.compactGame[data-result="L"] b { color: var(--paint-r); }
+.compactGame strong { text-align: right; font-weight: 400; font-variant-numeric: tabular-nums; }
+.seasonDeepLink {
+  grid-column: 1 / -1;
+  width: max-content;
+  /* 9px of type over a 7px skirt is a 21px target on the link out of every
+     season in the record. The top padding is the only thing that changes. */
+  padding-top: 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(212, 225, 87, .42);
+  color: var(--ball);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+/* A figure tile whose value is a NAME rather than a number. The display face
+   is sized for seven tabular glyphs and set nowrap; a club's name is neither.
+   Scoped under the global tile so it beats `.fig dd`. */
+:global(.fig) .figName {
+  font-size: clamp(1.05rem, 2.1vw, 1.55rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+/* The season being played. Same two blocks as an opened season in the rail,
+   without the rail's 74px indent — nothing is opening out of anything here. */
+.currentBody {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+/* A block head that carries an action beside its heading. A flex item may
+   shrink to its widest word, and at 360px "Game log" broke to "Game / log"
+   rather than let the link wrap one line further. The heading keeps its line;
+   the action, which is set in a small face, spends the lines. */
+.headAction h3 { white-space: nowrap; }
+
+/* The calendar subscription, on the head of the log it subscribes you to.
+   The head has been a flex row with space-between and a 58px floor since it
+   held one heading; this is the thing that row was shaped for. Two lines: the
+   action, and the domain it leaves for. */
+.calendarLink {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  text-align: right;
+  color: var(--ball);
+  font-size: 9px;
+  letter-spacing: .15em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.calendarLink > span {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(212, 225, 87, .42);
+  transition: border-color .2s ease;
+}
+.calendarLink i { font-style: normal; }
+.calendarLink small {
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: .05em;
+  text-transform: none;
+  transition: color .2s ease;
+}
+.calendarLink:hover > span { border-bottom-color: var(--ball-pure); }
+.calendarLink:hover small { color: var(--ink); }
+
+.currentHonor {
+  margin: 0 0 16px;
+  color: var(--gold);
+  font-family: var(--disp);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 300;
+}
+
+/* WHERE THE SEASON IS — the last one skated and the next one on the card.
+   One hairline under the pair and three lines of type in each, the same weight
+   as a season's row in the rail rather than a call to action. No rule above:
+   the section head already draws one 16px higher and two would read as a box.
+   Either half may be absent — a season that has not started, a season that has
+   finished — so the pair is a wrapping flex row rather than two fixed tracks: a
+   lone fixture grows back to the full measure it always had, two share it where
+   there is room for both, and under it they stack. `flex-basis` with `min-width:
+   0` is what lets them shrink past that basis instead of pushing a scrollbar
+   out of a 320px card. */
+.fixtures {
+  margin: 0 0 20px;
+  padding: 0 0 15px;
+  border-bottom: 1px solid rgba(182, 186, 197, .11);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px clamp(20px, 4vw, 46px);
+}
+.fixture {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 5px 24px;
+}
+.fixtureLabel {
+  grid-column: 1 / -1;
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+/* The club is what a reader is looking for, so the club leads and the date sits
+   right. `break-word`, not nowrap: two fixtures now share the width one had,
+   and a club's own name ellipsised mid-word reads as a rendering fault. */
+.fixtureName {
+  font-family: var(--disp);
+  font-size: clamp(1.05rem, 2.4vw, 1.6rem);
+  font-weight: 300;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  overflow-wrap: break-word;
+  transition: color .2s ease;
+}
+/* The verdict, in the game log's own two colours, in the log's own place at the
+   head of the row. `b` is the site's result mark and carries no weight of its
+   own here — the display face is already thin. */
+.fixtureName b { font-weight: 300; color: var(--dim); }
+.fixture[data-result="W"] .fixtureName b { color: var(--ball); }
+.fixture[data-result="L"] .fixtureName b { color: var(--paint-r); }
+.fixtureWhen {
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.fixture:hover .fixtureName { color: var(--ball); }
+.fixture:hover .fixtureWhen { color: var(--ink); }
+
+/* `.scope` and `.scopeRail` are gone with the last sentence they set. A
+   section's coverage was a quiet grey paragraph under its heading, seven times
+   down this page and twice more on every player page; it is a labelled row in
+   `.dataScope` now, and the two player pages that still needed one take the
+   same row through `ScopeNote`. Two type treatments for one job, on the two
+   page types a reader crosses between constantly, was the whole complaint. */
+
+.playerIndex { padding-bottom: clamp(80px, 12vw, 160px); }
+/* A field, not a scrollbar. Seventy-nine tiles in alphabetical order with no
+   way to reach one of them was the heaviest section on the phone — 28% of the
+   document — in a section whose whole job is to be the door out. */
+.playerFind { display: flex; align-items: baseline; gap: 10px; }
+/* Its own class, because it is a form label and not a summary figure. It was
+   set in `.kicker` — the class eight other sections use for the fact that sums
+   them up, in the same size and the same corner of the head zone. */
+.playerFindLabel {
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.playerFind input {
+  width: clamp(120px, 22vw, 200px);
+  padding: 6px 8px;
+  border: 0;
+  border-bottom: 1px solid rgba(182, 186, 197, .2);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+}
+.playerFind input:focus { outline: none; border-bottom-color: var(--ball); }
+.playerFind b { color: var(--dim); font-weight: 400; font-size: 11px; font-variant-numeric: tabular-nums; }
+.playerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(182, 186, 197, .1);
+  border-left: 1px solid rgba(182, 186, 197, .1);
+}
+.playerIndexLink {
+  min-height: 76px;
+  padding: 13px 16px;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-content: center;
+  gap: 3px 10px;
+  border-right: 1px solid rgba(182, 186, 197, .1);
+  border-bottom: 1px solid rgba(182, 186, 197, .1);
+  transition: color .2s ease, background .2s ease;
+}
+.playerIndexLink:hover { color: var(--ball); background: rgba(75, 123, 149, .08); }
+.playerIndexLink > span { grid-row: 1 / 3; align-self: center; color: var(--dim); font-family: var(--disp); font-size: 1.2rem; }
+.playerIndexLink strong { font-family: var(--disp); font-size: 1rem; font-weight: 300; }
+.playerIndexLink small { color: var(--dim); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
+/* The hollow-roster flag, on the season's own page as well as on the rail —
+   and in the same --dim every other absence on the archive is set in. */
+.seasonPartial { color: var(--dim); }
+
+@media (max-width: 900px) {
+  .chronicleSummary { grid-template-columns: 34px 84px 90px 1fr 26px; min-height: 94px; }
+  .chronicleHonor { grid-column: 4; }
+  .chronicleToggle { grid-column: 5; grid-row: 1 / 3; }
+  .chronicleBody { padding-left: 0; grid-template-columns: 1fr; }
+  .currentBody { grid-template-columns: 1fr; }
+  .playerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .archiveNavWrap { top: 74px; }
+  /* A 108px term track leaves 210px for a value naming five seasons, which
+     wraps to four lines against a two-word label. The term takes its own. */
+  .dataScope > div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  /* The heading takes the line and the field takes the next one: at 390px they
+     do not share one, and the count fell off the right edge. */
+  .chronicleHead { flex-wrap: wrap; }
+  .playerFind { width: 100%; }
+  .playerFind input { flex: 1; width: auto; }
+}
+@media (max-width: 600px) {
+  .chronicleHead { align-items: start; }
+  .chronicleHead p { display: none; }
+  .chronicleSummary { grid-template-columns: 25px 72px 1fr 24px; gap: 8px; min-height: 88px; }
+  .chronicleIndex { font-size: 7px; }
+  .chronicleYear { font-size: 1.85rem; }
+  .chronicleHalf { font-size: 8px; }
+  /* NOT 7px. The signals are the row's figures and its one caveat; shrinking
+     them past legibility to make room is a trade the row does not have to
+     make — the columns above give it the width. */
+  .chronicleSignals { grid-column: 3; font-size: 8.5px; gap: 4px 9px; }
+  .chronicleSignals b { font-size: 11px; }
+  .chronicleHonor { grid-column: 3; font-size: .86rem; }
+  .chronicleToggle { grid-column: 4; grid-row: 1 / 4; }
+  .chronicleBody { gap: 16px; }
+  .compactGame { grid-template-columns: 68px minmax(108px, 1fr) 17px 44px; gap: 7px; padding-inline: 10px; }
+  /* "LINEUP & STATISTICS" WITH ITS STATISTICS ON SCREEN.
+     The table held a 520px floor inside a 310px window, so GP, G, A and Pts
+     were all off the right edge and eighteen rows of a section titled
+     "statistics" showed a number and a name — with no fade, no scrollbar and
+     nothing else to say the rest was there. It fits now: the floor comes off,
+     the cells give back the padding they do not need at this width, and a long
+     name wraps rather than pushing four columns out of the frame. Nothing is
+     hidden and there is nothing left to scroll. */
+  .chronicleTable { min-width: 0; }
+  .chronicleTable th,
+  .chronicleTable td { padding-left: 5px; padding-right: 5px; }
+  .chronicleTable td:not(.l) { font-size: 12px; }
+  .chronicleTable td.l:nth-child(2) { white-space: normal; line-height: 1.4; }
+  /* Two columns and a shorter tile: one column of 79 name cards was 7,071px
+     of a 25,019px page, the largest single thing on the phone. */
+  .playerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .playerIndexLink { min-height: 62px; padding: 10px 11px; grid-template-columns: 22px 1fr; gap: 2px 7px; }
+  .playerIndexLink > span { font-size: .95rem; }
+  .playerIndexLink strong { font-size: .86rem; }
+  .playerIndexLink small { font-size: 8.5px; letter-spacing: .04em; }
+  /* A club's name and a date, a rink and a face-off time do not share 320px.
+     The fixture keeps the line it was given and the when goes under it. */
+  .fixture { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .fixtureWhen { text-align: left; }
+}

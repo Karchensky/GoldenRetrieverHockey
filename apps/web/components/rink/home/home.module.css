@@ -1,0 +1,137 @@
+/* THE FAR SHORE — the page chrome around the canvas.
+   Every rule here is docs/openers/o-2.html's own stylesheet, unchanged except
+   for the two additions the app needs: a document lock (the standalone set
+   `overflow:hidden` on html/body, which a shared globals.css cannot), and a
+   :focus-visible state so the two doors are reachable from the keyboard. */
+
+/* The world is a single viewport. No scroll journey, no spacer, no track. */
+.lock,
+.lock body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* The sound gate was hidden here while the bed was a synthesized rumble and
+   there was nothing worth turning on. There is now — wind over snow, the ice,
+   and a game somewhere across it — so it shows, and it is set a step up from
+   the size it takes on the record pages. A 7.5px chip on a near-black dawn
+   frame is not a control anybody finds, and this is the only thing on the page
+   to do besides the two doors. It sits in the opposite corner from them: they
+   are at 12vh in the sky, this is on the floor. */
+.lock :global(.sound-gate) {
+  font-size: 9px;
+  letter-spacing: .22em;
+  padding: 9px 11px;
+  color: #7f8c9c;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  background: #05070c;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* THE DOORS ARE IN THE SKY.
+   The horizon sits at 0.58 of frame, so the eye lands in the upper field first
+   and the doors were spending that attention on nothing — they sat in the
+   bottom margin at microcopy size and read as a footer. At 12vh they are the
+   first thing found and they are still the only thing to do. The unit is vh
+   because the composition is fixed to frame HEIGHT: the vertical FOV never
+   changes, so 12vh is the same distance above the crests on every window, and
+   the sky at that height is the grade's near-black, which carries pale type
+   without needing a scrim behind it. */
+.doors {
+  position: fixed;
+  z-index: 3;
+  /* Full width and centred, NOT left:50% with a translate. A shrink-to-fit box
+     anchored at 50% may only be as wide as the half-viewport to its right, and
+     on a phone that broke TEAM ARCHIVE over two lines. */
+  left: 0;
+  right: 0;
+  top: 12vh;
+  display: flex;
+  justify-content: center;
+  /* Wide, and wider on a wide window: the two doors read as the page's whole
+     navigation rather than as a pair of words that happen to be adjacent. The
+     minimum came down with the type going up — the two have to fit one line at
+     320px, and the WORDS are what should own that width, not the space. */
+  gap: clamp(2rem, 11vw, 9rem);
+  padding: 0 1rem;
+  opacity: 0;
+  transition: opacity 2.2s cubic-bezier(.4, 0, .2, 1);
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* The strip is full width now, so it gives the pointer straight back to the
+     world; only the two words themselves take it. */
+  pointer-events: none;
+}
+
+.doors.in { opacity: 1; }
+
+/* The world fades them in once it has assembled. With no scripting there is no
+   world and nothing to wait for, so the site's only two links are simply there. */
+@media (scripting: none) {
+  .doors { opacity: 1; }
+}
+
+/* THE SIZE IS THE NAVIGATION.
+   These two words are the entire way out of this page, and at microcopy size a
+   visitor was not finding them — twice. So they are set as a headline, not as a
+   caption: 1.7rem on a wide window against .74rem before, which is roughly
+   2.3x, and near-white against the .62 grey. The TRACKING comes DOWN as the
+   size goes up (.42em -> .28em): letter-spacing that reads as deliberate at
+   12px reads as a word coming apart at 27px, and the wider glyphs already do
+   the spacing work. 2.2vw between the bounds so the pair keeps the same share
+   of the frame on every window, and the whole run still fits one line at 320px.
+   The halo is dawn-warm and very faint: the grade lights its subjects from
+   within rather than laying a scrim behind them, and there is nothing at 12vh
+   for a scrim to hide. */
+.doors a {
+  font-size: clamp(1rem, 2.2vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: rgba(238, 244, 253, .90);
+  text-shadow: 0 0 26px rgba(255, 226, 178, .16);
+  padding-bottom: .85rem;
+  position: relative;
+  pointer-events: auto;
+  transition: color .7s cubic-bezier(.4, 0, .2, 1),
+              text-shadow .7s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* The rule is PERMANENT now, not a hover reveal. A hover-only underline is
+   worth nothing to the visitor who has not found the words yet, and it is worth
+   nothing at all on a touch screen; standing there faintly it says "these two
+   are doors" before anything is pointed at. Hover and keyboard focus brighten
+   it rather than draw it.
+   `right: .28em` trims the tracking that trails the last letter — it matches
+   letter-spacing exactly, and without it the rule hangs past the word and stops
+   looking like it belongs to it. */
+.doors a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: .28em;
+  bottom: 0;
+  height: 1px;
+  background: rgba(226, 233, 244, .28);
+  transition: background-color .7s cubic-bezier(.4, 0, .2, 1);
+}
+
+.doors a:hover,
+.doors a:focus-visible {
+  color: rgba(255, 244, 226, 1);
+  text-shadow: 0 0 34px rgba(255, 214, 150, .30);
+}
+
+.doors a:hover::after,
+.doors a:focus-visible::after { background: rgba(255, 241, 219, .85); }
+
+/* No breakpoint. The gap is a clamp and the offset is in vh, so both follow the
+   window on their own — and vh is the right unit because the vertical FOV is
+   fixed, which puts the horizon at 0.58 of frame on every screen there is. */

@@ -1,0 +1,706 @@
+{
+  "derivedFrom": "docs/research/captain-roster-emails/*.txt",
+  "derivedBy": "npm run derive:private",
+  "count": 5,
+  "files": [
+    {
+      "file": "2018-summer.txt",
+      "sha256": "3201362aa3f0e345084aba91df623dd2741de0875281a7bd97ddf432c0b04136",
+      "session": "2018 - Summer",
+      "team": "The Golden Retrievers",
+      "entries": [
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Corey Muff",
+          "jersey": "1",
+          "position": "G",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Adam Kaplewicz",
+          "jersey": "96",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Christy",
+          "jersey": "44",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brent Boeing",
+          "jersey": "80",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Bryan Karchensky",
+          "jersey": "21",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Greg Suffoletto",
+          "jersey": "28",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Jason Kaplewicz",
+          "jersey": "47",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Justin Wheeler",
+          "jersey": null,
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Vinny Terrana",
+          "jersey": "89",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Andy Murphy",
+          "jersey": null,
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Gugino",
+          "jersey": "2",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brendan Kaplewicz",
+          "jersey": "9",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brett Koeppel",
+          "jersey": "18",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Dan Schmitt",
+          "jersey": "3",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Rich Fedele",
+          "jersey": "16",
+          "position": "D",
+          "status": null
+        }
+      ],
+      "unread": [
+        "Here's the roster for The Golden Retrievers:",
+        "Player Name       Number   Position"
+      ],
+      "refused": 0
+    },
+    {
+      "file": "2018-winter.txt",
+      "sha256": "59a691a1884a428d654e338109754e93f46b8cd28b9ee705e8ccd6393e6b148b",
+      "session": "2018 - Winter",
+      "team": "The Golden Retrievers",
+      "entries": [
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Corey Muff",
+          "jersey": "1",
+          "position": "G",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Adam Kaplewicz",
+          "jersey": "96",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Christy",
+          "jersey": "44",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brent Boeing",
+          "jersey": "80",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Bryan Karchensky",
+          "jersey": "21",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Greg Suffoletto",
+          "jersey": "28",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Jason Kaplewicz",
+          "jersey": "47",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Vinny Terrana",
+          "jersey": "89",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Andy Murphy",
+          "jersey": null,
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Gugino",
+          "jersey": "2",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brendan Kaplewicz",
+          "jersey": "9",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brett Koeppel",
+          "jersey": "18",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Dan Schmitt",
+          "jersey": "3",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2018 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Rich Fedele",
+          "jersey": "16",
+          "position": "D",
+          "status": null
+        }
+      ],
+      "unread": [
+        "Number        Player Name    Position"
+      ],
+      "refused": 6
+    },
+    {
+      "file": "2019-summer.txt",
+      "sha256": "cad2e31cd37e574429fc772e88e724c5449272ae32187b918e473e4bd3c76176",
+      "session": "2019 - Summer",
+      "team": "The Golden Retrievers",
+      "entries": [
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Andy Murphy",
+          "jersey": "12",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Ryan Neidrauer",
+          "jersey": "7",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Bryan Karchensky",
+          "jersey": "21",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Vinny Terrana",
+          "jersey": "89",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Seth Hamilton",
+          "jersey": "19",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Corey Muff",
+          "jersey": "1",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Gugino",
+          "jersey": "2",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brendan Kaplewicz",
+          "jersey": "9",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brett Koeppel",
+          "jersey": "18",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Galante",
+          "jersey": "4",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Rich Fedele",
+          "jersey": "16",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Dan Schmitt",
+          "jersey": "3",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Adam Kaplewicz",
+          "jersey": "96",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Christy",
+          "jersey": "44",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Brent Boeing",
+          "jersey": "80",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Jason Kaplewicz",
+          "jersey": "47",
+          "position": null,
+          "status": null
+        },
+        {
+          "session": "2019 - Summer",
+          "team": "The Golden Retrievers",
+          "name": "Greg Suffoletto",
+          "jersey": "26",
+          "position": null,
+          "status": null
+        }
+      ],
+      "unread": [],
+      "refused": 0
+    },
+    {
+      "file": "2019-winter.txt",
+      "sha256": "a0b7bdf959b1402cb13de7110794b6a5310c35f19e12ced25c3dfb48664d6a7e",
+      "session": "2019 - Winter",
+      "team": "The Golden Retrievers",
+      "entries": [
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Corey Muff",
+          "jersey": "1",
+          "position": "G",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Gugino",
+          "jersey": "2",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Dan Schmitt",
+          "jersey": "3",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brendan Kaplewicz",
+          "jersey": "9",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Andy Murphy",
+          "jersey": "12",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Rich Fedele",
+          "jersey": "16",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brett Koeppel",
+          "jersey": "18",
+          "position": "D",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Seth Hamilton",
+          "jersey": "19",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Bryan Karchensky",
+          "jersey": "21",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Mark Lucatra",
+          "jersey": "26",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Christy",
+          "jersey": "44",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Jason Kaplewicz",
+          "jersey": "47",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brent Boeing",
+          "jersey": "80",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Vinny Terrana",
+          "jersey": "89",
+          "position": "F",
+          "status": null
+        },
+        {
+          "session": "2019 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Adam Kaplewicz",
+          "jersey": "96",
+          "position": "F",
+          "status": null
+        }
+      ],
+      "unread": [
+        "Player Name    Number    Position"
+      ],
+      "refused": 0
+    },
+    {
+      "file": "2020-winter.txt",
+      "sha256": "81e3ae407ca99012013a8872e42716f7bb940005b33c230de0481cdcb10451ca",
+      "session": "2020 - Winter",
+      "team": "The Golden Retrievers",
+      "entries": [
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Adam Kaplewicz",
+          "jersey": "96",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Jason Kaplewicz",
+          "jersey": "47",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brett Koeppel",
+          "jersey": "18",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Andy Murphy",
+          "jersey": "12",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brendan Kaplewicz",
+          "jersey": "9",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Corey Muff",
+          "jersey": "1",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Christy",
+          "jersey": "44",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Mark Lucatra",
+          "jersey": "26",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Bryan Karchensky",
+          "jersey": "21",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Rich Fedele",
+          "jersey": "16",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Dan Schmitt",
+          "jersey": "3",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Anthony Gugino",
+          "jersey": "2",
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "John Rein",
+          "jersey": null,
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Dave Tornabene",
+          "jersey": null,
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Darryl McLaughlin",
+          "jersey": null,
+          "position": null,
+          "status": "Rostered"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Seth Hamilton",
+          "jersey": "19",
+          "position": null,
+          "status": "Taxi Squad"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Brent Boeing",
+          "jersey": "80",
+          "position": null,
+          "status": "Taxi Squad"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Ryan Neidrauer",
+          "jersey": null,
+          "position": null,
+          "status": "Taxi Squad"
+        },
+        {
+          "session": "2020 - Winter",
+          "team": "The Golden Retrievers",
+          "name": "Vinny Terrana",
+          "jersey": "89",
+          "position": null,
+          "status": "IR"
+        }
+      ],
+      "unread": [
+        "Player Name         Number   Rostered"
+      ],
+      "refused": 0
+    }
+  ]
+}

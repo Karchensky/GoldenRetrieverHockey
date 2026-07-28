@@ -1,0 +1,6 @@
+{
+  "name": "@gr/capture",
+  "private": true,
+  "type": "module",
+  "main": "src/cli.ts"
+}

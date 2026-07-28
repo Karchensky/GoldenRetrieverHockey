@@ -1,0 +1,337 @@
+/* The three stat hubs. Near-black ground, one accent that means "us" and one
+   that means "against us", and no rule here reaches anything outside a hub. */
+
+/* ---- shared: a chart too wide for a phone scrolls rather than shrinking.
+       SVG text scales with its box, so a fluid chart on a 360px screen sets
+       its own labels at two pixels.
+
+       AND IT SAYS SO. Two charts hid 308px and 268px behind an edge with
+       nothing to signal it, and one of them hid the column its rows are sorted
+       by. A fade on the right edge is the cue; it is drawn on a wrapper so it
+       does not scroll away with the content.
+
+       THE ARCHIVE'S TABLES SAY IT A SECOND WAY, ON PURPOSE. `.scroll` in
+       globals.css now fades its own right edge off a scroll timeline, which
+       gates itself on the element's overflow rather than on a media query and
+       needs no wrapper around thirteen call sites. It is not the same
+       mechanism and should not be unified into this one: a timeline is an
+       animation, so the global reduced-motion rule takes it off, and these two
+       charts keep their cue there. ---------------------------------------- */
+.hScroll { overflow-x: auto; max-width: 100%; }
+.hScrollWrap { position: relative; }
+.hScrollWrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 26px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(10, 10, 12, 0), rgba(10, 10, 12, .6));
+}
+/* Only where the chart is actually wider than its box. The two inner widths
+   are 620px and 580px, so nothing scrolls above this and a fade over a chart
+   that fits is a cue to nothing. */
+@media (min-width: 701px) {
+  .hScrollWrap::after { display: none; }
+}
+
+/* ---- the opponents ------------------------------------------------- */
+.oppHead,
+.oppRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 118px 34px 74px minmax(0, 1fr);
+  gap: 14px;
+}
+.oppHead {
+  padding: 0 14px 7px;
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.oppHead span:nth-child(3),
+.oppHead span:nth-child(4) { text-align: right; }
+.oppGrid {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.oppRow {
+  align-items: center;
+  padding: 8px 14px;
+  background: rgba(56, 62, 78, .06);
+  transition: background .18s ease;
+}
+.oppRow > * { min-width: 0; }
+.oppRow:hover { background: rgba(56, 62, 78, .16); }
+/* A club's own name, ellipsised mid-word, reads as a rendering fault rather
+   than a design choice — "Mediak Constructi… Kings" on a side the team has met
+   sixteen times. The column is wide enough for its longest word on every width
+   the archive is read at, so it wraps between words instead.
+   `break-word`, not `anywhere`: both break a word that cannot fit its line, and
+   only one of them lets the track size below the word — which is what left the
+   name 3px short of "Construction" and split it. A genuinely unbreakable token
+   still breaks rather than overflowing the row. */
+.oppName {
+  color: var(--ink);
+  font-size: 12.5px;
+  overflow-wrap: break-word;
+}
+.oppWhen {
+  margin-top: 2px;
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.oppNum {
+  color: var(--dim);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.oppRec {
+  color: var(--ink);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.oppMet,
+.oppDiff { display: block; width: 100%; height: auto; overflow: visible; }
+.oppDiffText { display: none; }
+
+/* ---- the sin bin: one matrix, one sequential ramp ------------------- */
+.mxInner { min-width: 620px; }
+.mxHead { display: grid; padding-bottom: 8px; }
+.mxHead span {
+  justify-self: center;
+  padding-bottom: 5px;
+  color: var(--dim);
+  font-size: 8.5px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.mxHead .mxHeadTotal {
+  justify-self: end;
+  align-self: end;
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+.mx {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.mxRow {
+  display: grid;
+  align-items: center;
+  background: rgba(56, 62, 78, .06);
+  transition: background .18s ease;
+}
+.mxRow:hover { background: rgba(56, 62, 78, .18); }
+.mxName {
+  display: grid;
+  gap: 1px;
+  padding: 5px 12px;
+  min-width: 0;
+  color: var(--ink);
+  font-size: 11.5px;
+}
+.mxName a { border-bottom: 1px solid transparent; }
+.mxName a:hover { color: var(--ball-pure); }
+.mxName span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mxName small { color: var(--dim); font-size: 9px; letter-spacing: .03em; }
+.mxCell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 30px;
+  height: 100%;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.mxFill { position: absolute; inset: 2px; border-radius: 1px; }
+.mxCell b { position: relative; font-weight: 400; }
+.mxTot {
+  padding: 0 10px;
+  color: var(--ink);
+  font-family: var(--disp);
+  font-weight: 300;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---- first and last ------------------------------------------------ */
+.spanInner { min-width: 580px; }
+.spanAxis,
+.spanRow {
+  display: grid;
+  grid-template-columns: minmax(126px, 168px) minmax(0, 1fr) 46px;
+  gap: 12px;
+}
+.spanAxis { padding: 0 12px 6px; }
+.spans {
+  display: grid;
+  padding: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.spanRow {
+  align-items: center;
+  padding: 1px 12px;
+  background: rgba(56, 62, 78, .06);
+  transition: background .18s ease;
+}
+.spanRow > * { min-width: 0; }
+.spanRow:hover { background: rgba(56, 62, 78, .2); }
+/* Where the men still playing stop and the record behind them starts. The
+   block above is sorted by tenure and everything below it by arrival, and two
+   sort orders running into each other with no seam reads as neither. */
+.spanRow.spanBreak { box-shadow: inset 0 1px 0 rgba(212, 225, 87, .3); }
+/* ONE RULE FOR THE LIT NAMES, AND IT IS THE ONE THE REST OF THE ROW ALREADY
+   DRAWS: a man still playing.
+   It used to be career length — anybody with a second session on file was set
+   in --ink and the thirty-nine who appear once in --dim — while the bars, the
+   dot and the sort order of the block all marked something else entirely. So
+   Anthony Orange, four games into the season being played and sitting in the
+   current block with a lit bar and a lit dot, had the only grey name in it; and
+   men who stopped playing a decade ago were as bright as the men on the ice.
+   Two signals, two meanings, one chart, and no key for either.
+   Now the name, the bar's opacity and the dot say the same thing, and the
+   legend's second entry is the key to all three. */
+/* NOT --dim, and the reason is arithmetic. --dim is #7d8496, which measures
+   4.40:1 against this row's own wash — 0.10 under AA, on the site's most
+   name-dense surface. It was already there and applied to 39 names; keying the
+   colour on "still playing" instead of "played more than once" widened it to 61,
+   which is the point at which a pre-existing shortfall stops being incidental.
+   #8b92a3 is the same hue two steps up and clears at 5.29:1. The token stays as
+   it is everywhere else; this is one surface, measured. */
+.spanName {
+  color: #8b92a3;
+  font-size: 10.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.spanHere .spanName { color: var(--ink); }
+.spanName a { border-bottom: 1px solid transparent; }
+.spanName a:hover { color: var(--ball-pure); }
+.spanName i { margin-right: 7px; color: var(--dim); font-style: normal; font-variant-numeric: tabular-nums; }
+.spanBar { display: block; width: 100%; height: auto; overflow: visible; }
+.spanCount {
+  color: var(--dim);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---- legends ------------------------------------------------------- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.legend span { display: flex; align-items: center; gap: 7px; }
+.key { flex: none; width: 11px; height: 11px; border-radius: 1px; }
+.keyRamp { width: 64px; }
+.keyDot { width: 9px; height: 9px; border-radius: 50%; }
+
+@media (max-width: 860px) {
+  /* EVERY TRACK FIXED BUT THE FIRST.
+     `.oppHead` and `.oppRow` are two independent grids, not a subgrid, and the
+     last track was `minmax(0, auto)` — which sizes to its own content, so the
+     two grids resolved differently and every column label sat exactly 80px to
+     the left of the data it labelled. Measured at 390px: "Goal difference" was
+     printed over the record column, so a phone read "Goal difference: 6–10–1".
+     A shared fixed track is the only thing that makes two grids agree. */
+  /* 26px FOR GP, AND THE PIXELS GO TO THE NAME. The name track resolves to
+     85px at 375 and "Construction" is 88px at 12.5px mono, so the one club
+     whose longest word does not fit its column broke inside the word —
+     "Mediak / Constructio / n Kings", a nonsense token on a side the team has
+     met sixteen times, which is the same rendering fault `overflow-wrap:
+     anywhere` was brought in to cure. GP holds two digits and a two-letter
+     head; the most this club has ever played anybody is seventeen. */
+  .oppHead,
+  .oppRow { grid-template-columns: minmax(0, 1fr) 26px 66px 52px; gap: 10px; }
+  .oppMet,
+  .oppDiff,
+  .oppHead span:nth-child(2) { display: none; }
+  .oppHead span:nth-child(5) { text-align: right; }
+  .oppDiffText {
+    display: block;
+    color: var(--dim);
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  /* THE NAME GETS THE LINES AND THE METADATA GETS THE CLAMP.
+     It was the other way round: two clamped lines for the club — which still
+     elided, "Mediak Construction Kings" coming out "Mediak Construction…" at
+     390px — over three unclamped lines of dates and counts. A row that clips
+     its own identity to spend three lines on its metadata has its priorities
+     inverted. The playoff clause goes at 700px and under; it is in the table
+     under the rows and in nothing else here. */
+  .oppWhen { white-space: normal; overflow: visible; line-height: 1.55; }
+  .oppName {
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+}
+@media (max-width: 700px) {
+  .oppPlayoff { display: none; }
+}
+
+/* The ranking, in the row's own name cell, on the widths where the matrix
+   scrolls.
+
+   `Total` was pinned to the right edge to make it reachable, and a pinned
+   column covers whatever is beneath it at EVERY scroll position: measured at
+   390px the sticky box ran x 293–351 over a Hooking column at 306–320, so its
+   header and all 26 of its cells were unreadable and Slashing was half gone —
+   two of eleven infractions legible instead of three. The `.hScrollWrap` fade
+   was drawn under the same pin and cued nothing.
+
+   Nothing overlays anything now. The count leads the name, where it is on
+   screen at rest and reads as the thing the rows are sorted by; the Total
+   column still closes the matrix for anyone who scrolls to it. */
+/* --ink, not --ball. The lime is the site's link colour — the masthead's
+   current-page mark 400px above this, every outbound link, every deep link and
+   the W in every game log — and it was being spent on the archive's most
+   punitive figure, on the one width where a reader is most likely to tap it,
+   in a section whose only real targets are the names beside it. Position and
+   tabular alignment carry the ranking, as the desktop Total column already
+   does. */
+.mxRank {
+  display: none;
+  font-style: normal;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 700px) {
+  .mxRank { display: inline-block; min-width: 2.2ch; margin-right: 9px; }
+}
+
+/* A name is a target as well as a label. The anchors inside these rows were
+   11.5px and 10.5px tall — the smallest hit areas on the page, in two sections
+   whose only interaction is the names. Vertical padding on an inline box
+   enlarges the target without moving a single row, so the type scale and the
+   density are untouched. */
+.mxName a,
+.spanName a { padding-block: 6px; }
