@@ -1,0 +1,82 @@
+# The current season, refreshed daily.
+#
+# The club plays Monday to Friday and the league posts scores the morning after,
+# so a result is at most a day old when it becomes findable. This runs at 14:00
+# UTC — 10:00 Buffalo in summer, 09:00 in winter. GitHub's cron has no timezone
+# and does not follow daylight saving; both times are after the scorekeeper, so
+# the hour is left alone rather than chased twice a year.
+#
+# A run with nothing new makes ZERO network requests: sync:current diffs before
+# it fetches. Six runs in seven cost nothing.
+#
+# It commits to main and Cloudflare redeploys on the push. The sync script
+# itself never pushes and refuses to commit on the default branch — that is
+# deliberate, so the decision to publish is taken here, in the open, by a job
+# whose permissions are declared, rather than inside a script somebody might run
+# by hand on their own machine.
+
+name: Refresh current season
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+# One at a time. Two overlapping runs would both regenerate site.json from the
+# same corpus and race to push the result.
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 24 is not a preference. This codebase relies on native TypeScript
+      # type-stripping and will not run on an older runtime.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # capture -> diff -> regenerate -> guard -> verify.
+      #
+      # Deliberately WITHOUT --commit: the script refuses the default branch,
+      # and the commit below is the explicit act. If the guard finds the archive
+      # lost anything — a total down, a player gone, a session vanished — this
+      # exits non-zero and nothing is committed.
+      - name: Sync
+        run: npm run sync:current
+
+      # Nothing changed on most days, and that is not a failure.
+      - name: Detect changes
+        id: diff
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --porcelain | head -20
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Nothing new."
+          fi
+
+      - name: Commit
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(data): current season refresh
+
+          Captured, regenerated and verified by the scheduled job. The guard
+          passed: nothing decreased, no player lost, no session vanished."
+          git push
