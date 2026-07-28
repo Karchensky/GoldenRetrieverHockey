@@ -1,0 +1,979 @@
+/* ==================================================================
+   THE FETCH — real ice.
+   A committed single world: a rink under arena lights. White, painted,
+   scarred. The one warm thing in it is a tennis ball, which is the whole
+   brand — a golden retriever, with no paw prints and no puns.
+
+   The WORDS are the archive's: dry, sourced, unimpressed. The visuals are
+   free. The gap between a dog doing zoomies and a page that says
+   "unexplained activity. Investigation ongoing." is the joke.
+   ================================================================== */
+/* IBM PLEX MONO, SELF-HOSTED.
+   The two faces have been sitting in public/fonts unreferenced, and the one
+   place the family is NAMED — the home page's two doors — was quietly falling
+   through to ui-monospace, which on this box is Cascadia and on a Mac is SF
+   Mono. Nobody had ever seen the doors in the face they were set in. Declared
+   here rather than in the module because @font-face is document-scoped, and
+   nothing downloads it until something asks for the family, which is still only
+   that one rule. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ice: #0a0a0c;
+  --ice-hi: #0d0d12;
+  --paint-b: #5b9bd5;
+  --paint-r: #d4555a;
+  --ball: #a8b93e;
+  --ball-pure: #d4e157;
+  --gold: #c4943a;
+  --ink: #b6bac5;
+  /* Every piece of secondary copy on the site is this colour — the scope
+     lines, the kickers, the recap prose, the chronicle signals, the player
+     tiles. At #6b7080 it measured 4.01:1 on the near-black ground and lower
+     again over a card's wash, which is under AA for text this size, and the
+     smallest things on the page are the ones set in it. Lifted just far enough
+     to clear 4.5:1 and no further: it is still plainly quieter than --ink, and
+     the ground is unchanged. */
+  --dim: #7d8496;
+  --line: #1a1d24;
+  --rule: #12151c;
+
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  --disp: "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --measure: 66ch;
+}
+
+* { box-sizing: border-box; }
+/* EVERY ANCHOR LANDS UNDER THE FIXED FURNITURE, so every anchor clears it.
+   The archive's nav is the only map on a 19,000px document and all nine of its
+   targets arrived behind it: measured at 390px the row bottoms out at 118px and
+   seven of the nine headings occupied y 86–119, fully covered, so tapping "The
+   sin bin" put the reader on a card whose first line is "505 penalties · 29
+   players" with no title above it. 132px is the 72px masthead plus the 44px
+   sticky row plus air, and it is one declaration rather than a margin on nine
+   targets that would each have to be remembered. */
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 132px; color-scheme: dark; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ice);
+  color: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(212,225,87,0.18); color: var(--ink); }
+html { scrollbar-color: var(--line) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+a { color: inherit; text-decoration: none; }
+a:hover { border-bottom-color: var(--ball-pure) !important; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--paint-b); outline-offset: 3px; }
+
+.kicker { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
+
+/* THE COLUMN.
+ *
+ * One route may want a wider column than another, and the archive does: its
+ * season record and player index are full-width instruments, not paragraphs.
+ * That was previously bought by breaking those two sections OUT of the wrap —
+ * `width: 100vw` plus a negative margin — with an inner `max-width` of their
+ * own, which left every other section on the page 300px narrower and the
+ * scroll stepping in and out of the column six times on the way down.
+ *
+ * The column is a token now. A route sets `--col`/`--gutter` once on the wrap
+ * and every section inside it — hero, card, rail and grid alike — lands on the
+ * same two edges, because there is only one rule computing them. */
+.wrap { max-width: var(--col, 1140px); margin: 0 auto; padding: 0 var(--gutter, clamp(20px, 5vw, 40px)); }
+.wrap-wide { --col: 1440px; --gutter: clamp(20px, 5vw, 76px); }
+
+/* ==================================================================
+   TYPE AT SCALE
+
+   Every route opened with a headline at clamp(…, 5.6rem) sitting in the top
+   corner of an otherwise empty field — a caption on a blank page, with two
+   thirds of the frame doing nothing. The display face was the best asset in
+   the system and it was being used at the size of a paragraph.
+
+   The hero is now a FRAME, not a block: it takes the first viewport, the
+   rink owns everything behind it, the words sit on the floor of it, and the
+   type is sized to fill the measure rather than to be polite. 11.5vw puts
+   "Everything comes" edge to edge on a laptop, which is the point — at that
+   size it stops being a label on a picture and becomes part of the picture.
+
+   `hero-wide` opts out of the 1140px column: the words are allowed to touch
+   the frame the way the rink does. The body copy under them is not, and
+   keeps its measure.
+   ================================================================== */
+.hero {
+  display: grid;
+  align-content: end;
+  gap: clamp(10px, 1.6vh, 16px);
+  min-height: min(78vh, 700px);
+  padding-bottom: clamp(24px, 5vh, 58px);
+
+  /* PARALLAX, WITH NO JAVASCRIPT PER ELEMENT.
+     --mx/--my are already lengths in the DOM (ArenaLight writes them once a
+     frame for the light pool), and a length times a number is valid calc, so
+     the headline can lean away from the pointer for free. About 14px at the
+     edges of the frame — enough that the words feel bedded into the scene
+     rather than printed on top of it, and not enough to notice as an effect.
+
+     `translate` and not `transform`: the load sequence animates transform on
+     these same elements, and a running animation beats a static declaration.
+     They are separate properties and they compose. */
+  translate:
+    calc((var(--mx, 50vw) - 50vw) * -0.014)
+    calc((var(--my, 50vh) - 50vh) * -0.010);
+  transition: translate .5s cubic-bezier(.2,.7,.3,1);
+}
+@media (prefers-reduced-motion: reduce) {
+  /* The global rule kills animations and transitions. It cannot kill a value
+     that is simply computed from a variable, so this one is turned off by
+     hand. ArenaLight also stops writing the variables — belt and braces,
+     because the variables have viewport-centred fallbacks and this must land
+     at exactly zero either way. */
+  .hero { translate: none; }
+}
+.hero-h {
+  font-family: var(--disp);
+  font-weight: 300;
+  margin: 0;
+  font-size: clamp(2.9rem, 11.2vw, 9.4rem);
+  line-height: 0.83;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-shadow: 0 0 60px rgba(91,155,213,0.12), 0 0 120px rgba(91,155,213,0.06);
+}
+.hero-h i { font-style: normal; color: var(--dim); font-weight: 200; }
+.hero-p {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--dim);
+  font-size: 12.5px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(10,10,12,0.8);
+}
+.hero-p b { color: var(--ink); font-weight: 400; }
+
+/* The home page only. Its hero has no record under it competing for the
+   frame, so the headline is let off the 1140px column and runs to the edge
+   of the viewport — the same full bleed the rink has. Everything else on the
+   page stays in the column, so this reads as the one thing that broke out
+   rather than as a page with no grid. */
+.hero-wide { max-width: none; }
+.hero-wide .hero-h { font-size: clamp(2.9rem, 13.4vw, 12rem); }
+.hero-tall { min-height: min(94vh, 860px); }
+@media (min-width: 1500px) {
+  /* Past this the viewport is wider than the words want to be; hold them. */
+  .hero-wide { max-width: 1500px; margin: 0 auto; }
+}
+
+/* ==================================================================
+   THE NUMBERS
+
+   This is a statistics site whose figures were set at 1.7rem in a row of
+   little boxes — smaller than the headline of the section that contained
+   them, and set in the same face as the prose. The single most valuable
+   thing this archive owns was being typeset like a footnote.
+
+   They are now the display face at four times that, tabular, tight, and
+   given the room to be looked at. The label goes above in 9px mono, because
+   an instrument reads LABEL then VALUE and the value is the part you came
+   for. The rule under each one is a hairline of arena blue that draws itself
+   as the tile arrives.
+   ================================================================== */
+.figs {
+  display: grid;
+  /* 140px, and the claim that 156 "still yields two columns on a 360px phone"
+     was true of exactly one instance of this row: the one in the masthead,
+     which is not inside a card. Every other `.figs` on the archive sits in a
+     card and measures 312px on a 390px phone — two 156px tracks plus the 1px
+     gap is 313 — so four sections collapsed to a single column and spent
+     1,396px of phone page on stat tiles holding a 10px label and a 32px number
+     in a 310px-wide box. The same component was rendering in two rhythms in one
+     document. Generous spacing is the bar; empty gutters are not the same
+     thing. */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  /* THE FIGURES IN A ROW SIT ON ONE LINE, whatever their labels do. Each tile
+     was its own grid with `align-content: start`, so the three lines were laid
+     out per tile: at 375 "From the first session" wraps to two lines and its 16
+     dropped 14px below the 5 in the tile beside it — four display figures in a
+     row that do not share a baseline, in the component the masthead, both
+     player heroes, the penalties, the opponents and `Best game` are all built
+     from. The label, the value and the caption are three rows of THIS grid now,
+     so a label that wraps grows the row and moves nothing across it. */
+  grid-auto-rows: min-content;
+}
+/* THE HAIRLINES BELONG TO THE TILES, NOT TO THE GRID BEHIND THEM.
+   The rules were a `--line` background showing through a 1px gap, which is
+   exact while the tiles fill the grid and paints a lit rectangle the size of a
+   tile the moment they do not: `auto-fit` collapses empty TRACKS, never the
+   empty CELL in a short last row, so both three-tile rows on the archive drew a
+   fourth panel with nothing in it — at 390px in the sin bin, at 768px in the
+   opponents. An empty framed box beside three figures reads as a figure that
+   failed to load. A 1px ring on each tile draws the same hairlines out of the
+   tiles themselves: adjacent rings meet inside the 1px gap, the outer ring is
+   the border the container used to carry, and an absent tile draws nothing. */
+.fig {
+  background: rgba(56,62,78,0.12);
+  box-shadow: 0 0 0 1px var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 16px 18px;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s cubic-bezier(0.33,0,0.2,1), box-shadow .3s cubic-bezier(0.33,0,0.2,1);
+}
+.fig:hover {
+  background: rgba(56,62,78,0.22);
+  box-shadow: 0 0 0 1px var(--line), 0 0 30px rgba(182,186,197,0.04);
+}
+.fig dt, .fig .k {
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dim);
+}
+.fig dd, .fig .v {
+  margin: 0;
+  font-family: var(--disp);
+  font-weight: 300;
+  /* Sized so "140–119" — seven tabular glyphs, the longest value these tiles
+     carry — fits a minimum track with the 32px of tile padding, at every stop
+     of the clamp. The whole grid moves together, so the record is not bought
+     by shrinking one tile out of step with the rest. */
+  font-size: clamp(1.8rem, 3.4vw, 2.9rem);
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.fig small, .fig .n { font-size: 10px; color: var(--dim); line-height: 1.5; }
+/* The tick. Arena blue, hairline, and it grows in — the one moving part of a
+   number, and it moves once. */
+.fig::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0; height: 2px; width: 100%;
+  background: var(--paint-b);
+  opacity: 0.26;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+@supports (animation-timeline: view()) {
+  .fig::after {
+    animation: tick linear both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 46%;
+  }
+}
+@keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Without scroll-driven animation the tick would sit at scaleX(0) forever,
+   which is a missing rule rather than a still one. */
+@supports not (animation-timeline: view()) { .fig::after { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .fig::after { transform: scaleX(1); } }
+
+/* Content floats above the rink. It must not eat the pointer — the ice is
+   interactive, and a transparent div swallowing clicks would break the dog. */
+.content { position: relative; z-index: 1; pointer-events: none; }
+.content .card, .content a, .content table { pointer-events: auto; }
+
+.section { padding-top: clamp(48px, 8vh, 92px); }
+
+/* Frosted panels: the record sits ON the ice, not in front of it.
+ *
+ * It said that before and it was a 3px blur and a hairline, which is a white
+ * box with a rumour of translucency. A pane of frosted glass lying on a lit
+ * sheet has three things this did not: a RIM where the light catches the top
+ * edge, a SHADOW under it proving it is above the surface, and enough blur
+ * that the world beneath actually smears. All three are here now, and the
+ * cursor's light pool passes underneath and blooms through them.
+ *
+ * The blur is 8px and stays 8px. Every backdrop-filtered region over a live
+ * canvas is re-blurred by the compositor every frame that canvas draws, and
+ * there are six of these stacked down /stats with a WebGL rink running behind
+ * them. This is the number where it still reads as glass and the frame budget
+ * survives an integrated GPU. It is a ceiling, not a starting point.
+ */
+.card {
+  background: rgba(56,62,78,0.15);
+  border: 1px solid rgba(182,186,197,0.08);
+  border-radius: 2px;
+  padding: clamp(18px, 3vw, 26px);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  box-shadow:
+    0 0 40px rgba(182,186,197,0.04),
+    0 0 80px rgba(182,186,197,0.02),
+    0 0 1px rgba(182,186,197,0.1) inset;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(182,186,197,0.08);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.head h2 {
+  font-family: var(--disp);
+  font-weight: 300;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede { color: var(--dim); font-size: 12.5px; line-height: 1.7; max-width: var(--measure); margin: 0 0 18px; }
+.lede b { color: var(--ink); font-weight: 400; }
+
+/* ------------------------------------------------------------------
+   THE TABLES.
+
+   A table is the right structure for this record and it is staying a table:
+   it is sortable, it is readable with the stylesheet off, and a screen
+   reader announces it correctly. What it was NOT was a material — 12.5px of
+   grey on white with a 1px rule under every row, which is a spreadsheet.
+
+   What changed is the figures and the row. The numbers are lining, tabular,
+   and a step up in size; the leftmost column carries the name and the rest
+   of the row is measurement, so measurement gets the mono and the name gets
+   the room. The hover is a sweep of tennis-ball light across the row with a
+   lit edge at the left — the same light that is in the ice, arriving on the
+   record. It is 60fps because it is a background gradient and nothing moves.
+   ------------------------------------------------------------------ */
+.scroll { overflow-x: auto; }
+/* AND IT SAYS WHEN IT IS HIDING SOMETHING.
+   `.scroll` was `overflow-x: auto` and nothing else. At 375 the franchise
+   leaderboard is 426px inside a 297px window: 129px off the right edge, and
+   what is off it is Pts — the column the board is sorted by — its sort button,
+   Pts/G and PIM, with no fade, no scrollbar and no cue of any kind. "All 36
+   careers, session by session" hides 1,302px of 1,599 the same way. The two
+   charts in the hubs have had a fade since they were built, on a wrapper,
+   switched off by a media query above the width at which they fit; eleven
+   tables had nothing.
+   The cue asks the ELEMENT rather than guessing at the viewport. A scroll
+   timeline on the element's own inline axis is inactive when there is nothing
+   to scroll, so this is absent on every table that fits — at any width, with no
+   list of thirteen minimum widths to keep in step — and it clears as the last
+   column arrives. Where scroll-driven animation is not supported the rule does
+   not apply at all, which is exactly what these tables do today.
+   Reduced motion takes it off too, by the global rule at the top of this file.
+   That is the right way round: the alternative is drawing the fade
+   unconditionally, which would dim the last inch of every table that fits and
+   hide nothing behind it. */
+@supports (animation-timeline: scroll(self)) {
+  .scroll {
+    animation: scroll-cue linear both;
+    animation-timeline: scroll(self inline);
+  }
+  @keyframes scroll-cue {
+    0%, 88% { mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent); }
+    100% { mask-image: linear-gradient(90deg, #000 calc(100% - 0px), transparent); }
+  }
+}
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums lining-nums; }
+th {
+  text-align: right; font-size: 9.5px; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--dim); font-weight: 400; border-bottom: 1px solid var(--line); padding: 8px 9px;
+}
+td { text-align: right; padding: 9px 9px; border-bottom: 1px solid var(--rule); }
+/* A NAME IN A CELL IS A TARGET, not only a label. The links in these tables set
+   a 16px hit box inside a 34px row — 690 of the archive's 1,209 focusable
+   elements measured under the 24px minimum, most of them here. Vertical padding
+   on an inline box enlarges the target and moves nothing: the type scale is
+   correct, the density is correct, and the box a finger has to find is not. */
+td a { padding-block: 5px; }
+/* Figures want to be read against each other down the column, so they get a
+   size and a colour of their own. Names are prose and stay prose. */
+td:not(.l) { font-size: 13px; letter-spacing: -0.01em; }
+th:first-child, td:first-child, th.l, td.l { text-align: left; padding-left: 0; }
+tbody tr { transition: background .2s; }
+tbody tr:hover td {
+  background: linear-gradient(90deg, rgba(212,225,87,0.08), rgba(212,225,87,0.03) 60%, transparent);
+}
+tbody tr:hover td:first-child { box-shadow: inset 2px 0 0 var(--ball-pure); }
+.aka { display: block; font-size: 10px; color: var(--gold); }
+/* The bar under a figure is the figure again, drawn. It was 2px at 40%
+   opacity — invisible. It is the only chart in the leaderboard and it is
+   allowed to be seen. */
+.bar {
+  display: block; height: 3px; margin-top: 4px; margin-left: auto;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(91,155,213,0.3), var(--paint-b));
+  opacity: 0.62;
+}
+
+footer.site {
+  border-top: 1px solid rgba(182,186,197,0.06);
+  margin-top: 88px;
+  padding: 18px 0 96px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  max-width: var(--measure);
+}
+
+/* ------------------------------------------------------------------
+   Observation log. The only voice on the page, and it is not impressed
+   by anything happening on the ice.
+   ------------------------------------------------------------------ */
+/*
+ * IT WAS A STICKY NOTE ON A 3D WORLD.
+ *
+ * An opaque cream card, a border, a rounded corner, a gold rule and a drop
+ * SHADOW — every one of those is a device for lifting a panel off a document,
+ * and this is not sitting on a document, it is sitting on a rink. It read, in
+ * the review's words, as "a sticky note from a different website", and it was
+ * the least integrated element on the page by a distance.
+ *
+ * The copy is the client's and it is one of the best things on the site, so
+ * not a word of it moves. What goes is the CARD. This is telemetry now: pinned
+ * to the corner, no box, no shadow, no fill, just marks on the world with
+ * enough of a glow to survive whatever is behind them. That is what the
+ * reference does with its own corner readouts and it is why they read as part
+ * of the instrument rather than as an element of a webpage.
+ *
+ * The gold survives as a two-pixel tick, because --gold means archive-only
+ * provenance and this is the archive's own voice talking.
+ */
+.log {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 3;
+  pointer-events: none;
+  padding-left: 9px;
+  border-left: 2px solid var(--gold);
+  min-width: 236px;
+  text-shadow: 0 0 14px rgba(10,10,12,0.9), 0 0 30px rgba(10,10,12,0.6);
+}
+.log .t { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+.log .v { font-size: 12px; margin-top: 3px; color: var(--ink); }
+.log .n { font-size: 10px; color: var(--dim); margin-top: 4px; font-style: italic; font-family: var(--disp); }
+
+/* ------------------------------------------------------------------
+   Masthead.
+
+   Fixed and frosted rather than solid: the rink is the page background
+   and the dog is live under every route, so an opaque bar would be a lid
+   on the only thing on the page that moves. The strip itself refuses the
+   pointer and only the links take it back, which keeps the ice clickable
+   right up to the edge of the words.
+   ------------------------------------------------------------------ */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 4;
+  pointer-events: none;
+}
+/*
+ * THE BAR IS THE PROBLEM, NOT THE BLUR.
+ *
+ * The gradient and the backdrop-filter used to live on .nav itself, and a
+ * backdrop-filter applies to the element's whole RECT — it does not care that
+ * the gradient over it fades out. So the blur stopped dead in a hard
+ * horizontal line across the ice at the bottom of the strip, and every
+ * screenshot had a grey band across the top of the world that read as a
+ * rendering artifact.
+ *
+ * Masking the pseudo-element fades the blur and the wash together, so the
+ * masthead dissolves into the rink instead of sitting on it. The mask is on
+ * ::before only — put it on .nav and it takes the links with it.
+ */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -38px 0;
+  background: linear-gradient(#0a0a0cf2 0%, #0a0a0ce8 42%, #0a0a0cb0 68%, #0a0a0c00 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(#000 0%, #000 44%, #0000 100%);
+  mask-image: linear-gradient(#000 0%, #000 44%, #0000 100%);
+  pointer-events: none;
+}
+.nav-in {
+  /* Above the ::before wash. An absolutely-positioned pseudo-element paints
+     over its static siblings, so without this the masthead's own gradient
+     covers its own links. */
+  position: relative;
+  z-index: 1;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 11px clamp(20px, 5vw, 40px) 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav a { pointer-events: auto; }
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 10px rgba(255, 195, 36, 0.18));
+  flex: none;
+}
+.brand-t {
+  font-family: var(--disp);
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  display: grid;
+}
+.brand-s {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.nav .links { display: flex; gap: clamp(12px, 2.4vw, 26px); list-style: none; margin: 0; padding: 0; }
+.nav .links a {
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color .2s cubic-bezier(0.33,0,0.2,1);
+}
+.nav .links a:hover { color: var(--ink); }
+/* The tennis-ball accent still marks the active surface; the masthead carries
+   the gold crest used on the team's jerseys. */
+.nav .links a.on { color: var(--ink); border-bottom-color: var(--ball-pure); }
+
+.fetch-live .nav-in {
+  max-width: none;
+  padding-inline: clamp(20px, 4.5vw, 72px);
+}
+.fetch-live .brand-t { letter-spacing: .12em; }
+.fetch-live .brand-s { color: #505966; }
+
+.sound-gate {
+  position: fixed;
+  z-index: 6;
+  left: clamp(18px, 2.2vw, 34px);
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  padding: 7px 8px;
+  background: rgba(4, 8, 13, .62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 6px;
+  color: #65707e;
+  font: 7.5px/1 var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: color .25s ease, background .25s ease;
+}
+.sound-gate-mark {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--ball);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(212, 225, 87, .18);
+}
+.sound-gate[aria-pressed="true"] .sound-gate-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--ball);
+  box-shadow: 0 0 7px rgba(212, 225, 87, .62);
+}
+.sound-gate:hover,
+.sound-gate[aria-pressed="true"] { color: var(--ink); background: rgba(20, 32, 43, .45); }
+
+/* Clear the fixed masthead. The home hero is full-bleed and manages its own
+   spacing, so this is a floor rather than a blanket rule.
+ *
+ * THE z-index IS NOT OPTIONAL AND IT IS NOT COSMETIC.
+ *
+ * The rink canvas is `position: fixed; z-index: 0`. A positioned element with
+ * z-index 0 paints ABOVE all non-positioned block content, so the moment a
+ * route mounts the rink, any static content on it goes UNDER an opaque WebGL
+ * canvas. /players/[slug] rendered as a completely blank rink — a 208px jersey
+ * number and the whole career table, painted and then covered.
+ *
+ * The other routes only survived by accident: `.hero` sets `translate`, and
+ * `[data-reveal]` animates `transform`, and both of those create a stacking
+ * context that happens to land in the same paint layer as the canvas and win
+ * on DOM order. That is not a layout, that is a coincidence — it would have
+ * broken again the first time anyone added a plain section to a page.
+ *
+ * `.page` is the class every inner route already wears to clear the masthead,
+ * so it is the right place to say the record is above the weather. Home says
+ * the same thing with `.content`, and the store with its own `.shell`.
+ */
+.page { padding-top: 84px; position: relative; z-index: 1; }
+
+@media (max-width: 620px) {
+  .nav-in { flex-direction: column; align-items: flex-start; gap: 8px; padding-bottom: 14px; }
+  .brand-s { display: none; }
+  .page { padding-top: 104px; }
+}
+
+/* Skip link. Off-screen until focused, then a real, visible target — the
+   rink canvas is fixed over the whole viewport, so this is the only keyboard
+   route past it. */
+.skip {
+  position: fixed;
+  top: 8px;
+  left: -9999px;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--ice);
+  padding: 9px 14px;
+  border-radius: 2px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.skip:focus { left: 8px; }
+
+/* The sound gate sits a little higher on a phone, where the browser chrome
+   eats the bottom of the viewport. */
+@media (max-width: 760px) {
+  .sound-gate { bottom: 14px; }
+}
+
+/* ==================================================================
+   THE WORLD, AND THE WASH OVER IT
+
+   The wash used to be a flat 94%-opaque sheet of ice-colour across the
+   whole viewport for the entire scroll, and it did exactly what it says:
+   it erased the rink. Screenshotted, /store was a grey document with the
+   faintest suggestion of a dog behind it, which is the precise complaint —
+   the world was built and then painted over.
+
+   It is now a SCENE CHANGE. At the top of an inner route you are looking at
+   the rink, full strength, same as the home page. As you scroll into the
+   record the ice fogs over and the words take the frame. Scroll back up and
+   the arena comes back. The wash is weather, and weather moves.
+
+   Driven by `animation-timeline: scroll()`, which means no JavaScript, no
+   scroll listener, and no layout read per frame — the compositor already
+   knows where the page is. The base rule below is the state a browser
+   without scroll-driven animations gets, and it is deliberately the READABLE
+   one: an unsupported browser lands on a legible page, not a blank one.
+   `prefers-reduced-motion` kills the animation globally and therefore lands
+   on the same safe base. Failure is always toward legibility.
+   ================================================================== */
+.rink-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(#0a0a0ce6 0%, #0a0a0ccc 40%, #0a0a0cee 100%);
+}
+
+/* the home's scroll affordance: a bead falling down a hairline, wordlessly */
+@keyframes scroll-hint {
+  0%   { transform: translateY(-14px); opacity: 0; }
+  22%  { opacity: 1; }
+  78%  { opacity: 1; }
+  100% { transform: translateY(44px); opacity: 0; }
+}
+@keyframes scrim-in {
+  /* 0 -> 55% of the first viewport: the hero belongs to the rink. */
+  0%, 12% { opacity: 0; }
+  55%, 100% { opacity: 1; }
+}
+@supports (animation-timeline: scroll()) {
+  .rink-scrim {
+    animation: scrim-in linear both;
+    animation-timeline: scroll();
+    animation-range: 0 100vh;
+  }
+  /* On a phone the hero type shares the frame with the dog and the ball —
+     the scrim keeps a floor so the record stays legible over the weather. */
+  @media (max-width: 560px) {
+    @keyframes scrim-in-m {
+      0%, 12% { opacity: 0.55; }
+      55%, 100% { opacity: 1; }
+    }
+    .rink-scrim { animation-name: scrim-in-m; }
+  }
+}
+
+/* ------------------------------------------------------------------
+   ARENA LIGHT — the cursor, as a light source.
+
+   Two jobs in one fixed element, because two full-viewport composited
+   layers to do the work of one is how you lose the frame budget on a page
+   that is already running a WebGL scene.
+
+   1. A vignette. Purely photographic and shamelessly so: the frame reads as
+      a SHOT of a place rather than a screenshot of a plane, and it costs one
+      gradient that never repaints.
+   2. A pool of light that follows the pointer. It sits UNDER the content and
+      OVER the ice on purpose — it can never touch the contrast of a word,
+      because it is behind every word on the page. The frosted panels have a
+      backdrop-filter, so the light passes through the frost and blooms. The
+      cursor is lighting the arena, not decorating the DOM.
+
+   --mx/--my are viewport pixels, written once per frame by one rAF-batched
+   pointermove listener on the root. See components/fx/ArenaLight.tsx.
+   ------------------------------------------------------------------ */
+.rink-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      460px circle at var(--mx, 50vw) var(--my, 42vh),
+      rgba(91,130,180,0.10) 0%, rgba(60,90,140,0.06) 32%, rgba(40,60,100,0.02) 56%, transparent 74%
+    ),
+    var(--vig);
+}
+/* One definition, four places. The vignette is the frame and the frame does
+   not change when a pointer stops existing.
+   It is deliberately heavy at the corners: the whole palette lives between
+   #eef4f8 and #fff, which is a beautiful range and about a third of a stop
+   wide, and a page with no dark in it anywhere reads as paper no matter what
+   is drawn on it. This is where the range comes from. */
+:root {
+  /* Measured rather than eyeballed. At 122%/100% centred at 32% the bottom
+     corners came out 52 luminance under the centre and the TOP corners came
+     out 10 — i.e. there was no vignette across the top half of the frame at
+     all, which is exactly where the masthead and the horizon are. Pulled to
+     the middle and tightened so all four corners actually fall away.
+     Two stacked gradients: a wide soft one for the body of the falloff and a
+     tight corner-weighted one, because a single ellipse either crushes the
+     mid-frame or never reaches the corners. */
+  --vig:
+    radial-gradient(
+      104% 88% at 50% 44%,
+      transparent 30%, rgba(6,8,14,0.35) 58%, rgba(4,5,10,0.65) 84%, rgba(2,3,8,0.85) 100%
+    ),
+    radial-gradient(
+      150% 118% at 50% 40%,
+      transparent 54%, rgba(4,6,12,0.5) 100%
+    );
+}
+@media (prefers-reduced-motion: reduce) {
+  /* The vignette is a still image and stays. The pool tracks a pointer, so
+     it goes: motion the reader did not ask for is motion the reader does not
+     get, even when it is only light. */
+  .rink-fx { background: var(--vig); }
+}
+@media (pointer: coarse) {
+  .rink-fx { background: var(--vig); }
+}
+
+/* ------------------------------------------------------------------
+   REVEALS, promoted out of /stats and made site-wide.
+
+   This pattern was already in the codebase, scoped to one route, and it was
+   the right one: pure CSS scroll-driven animation behind an @supports gate.
+   A JavaScript reveal starts every section at opacity:0, which means a
+   reader with JavaScript off gets a blank archive — for a project whose
+   entire thesis is that the record outlives its platform, that is not a
+   flourish, it is a contradiction. Browsers without animation-timeline get
+   the content. That is the correct failure, and it is why this is allowed to
+   be everywhere.
+   ------------------------------------------------------------------ */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  [data-reveal] {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 2% entry 40%;
+  }
+  [data-stagger] > * {
+    animation: rise linear both;
+    animation-timeline: view();
+  }
+  [data-stagger] > *:nth-child(1) { animation-range: entry 0% entry 32%; }
+  [data-stagger] > *:nth-child(2) { animation-range: entry 3% entry 35%; }
+  [data-stagger] > *:nth-child(3) { animation-range: entry 6% entry 38%; }
+  [data-stagger] > *:nth-child(4) { animation-range: entry 9% entry 41%; }
+  [data-stagger] > *:nth-child(5) { animation-range: entry 12% entry 44%; }
+  [data-stagger] > *:nth-child(6) { animation-range: entry 15% entry 47%; }
+  [data-stagger] > *:nth-child(n+7) { animation-range: entry 18% entry 50%; }
+}
+
+/* ------------------------------------------------------------------
+   THE LOAD SEQUENCE.
+
+   One thing at a time, in the order you would read them, over about a
+   second. CSS keyframes rather than JS: it runs with scripting off, and the
+   global prefers-reduced-motion rule already sets `animation: none`, which
+   drops every element straight to its resting style — so the reduced-motion
+   and no-CSS-animation outcomes are both "the page, immediately".
+
+   NOTHING here may set opacity:0 as a base style. The keyframe's `from` is
+   the only place it exists. That is the whole safety property.
+   ------------------------------------------------------------------ */
+@keyframes lift { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes lift-sm { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+.seq > * { animation: lift-sm .7s cubic-bezier(.16,.84,.3,1) both; }
+.seq > *:nth-child(1) { animation-delay: .05s; }
+.seq > *:nth-child(2) { animation: lift 1s cubic-bezier(.16,.84,.3,1) .16s both; }
+.seq > *:nth-child(3) { animation-delay: .46s; }
+.seq > *:nth-child(4) { animation-delay: .58s; }
+
+/* ------------------------------------------------------------------
+   HISTORY
+   ------------------------------------------------------------------ */
+.trophy-row {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+  align-items: center; padding: 12px 16px;
+  border-left: 3px solid transparent;
+  transition: background .2s;
+}
+.trophy-row:hover { background: rgba(196,148,58,0.04); }
+.trophy-row.champ {
+  border-left-color: var(--gold);
+  background: linear-gradient(90deg, rgba(196,148,58,0.06), transparent 70%);
+}
+.trophy-year {
+  font-family: var(--disp); font-size: 22px; font-weight: 300;
+  min-width: 62px; letter-spacing: 0.02em;
+}
+.trophy-row.champ .trophy-year { color: var(--gold); }
+.trophy-row:not(.champ) .trophy-year { color: var(--dim); font-size: 15px; }
+.trophy-title { font-size: 13.5px; }
+.trophy-league {
+  font-size: 9px; color: var(--dim); letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px;
+  width: 1px; background: var(--line);
+}
+.tl-row {
+  position: relative; display: grid;
+  grid-template-columns: 1fr auto; gap: 8px;
+  padding: 10px 14px 10px 0; align-items: start;
+}
+.tl-row::before {
+  content: ""; position: absolute; left: -24px; top: 16px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--line); border: 2px solid var(--surface, var(--ice));
+  z-index: 1;
+}
+.tl-row.empty::before { background: transparent; border-color: var(--line); }
+.tl-row.has-trophy::before { background: var(--gold); border-color: var(--gold); }
+.tl-id {
+  font-size: 14px; font-family: var(--disp); font-weight: 300;
+  line-height: 1.2;
+}
+.tl-detail { font-size: 12px; color: var(--dim); margin-top: 2px; }
+.tl-trophy { font-size: 11px; color: var(--gold); margin-top: 2px; }
+.tl-prov {
+  font-size: 9.5px; color: var(--dim); letter-spacing: .04em;
+  text-align: right; white-space: nowrap; padding-top: 2px;
+}
+.tl-prov.archive { color: var(--gold); }
+
+.recap-item {
+  border-left: 3px solid transparent;
+  transition: background .15s;
+}
+.recap-item.playoff { border-left-color: var(--gold); }
+.recap-item summary {
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 12px;
+  align-items: center; padding: 10px 14px;
+  cursor: default; list-style: none;
+  transition: background .15s;
+}
+.recap-item summary::-webkit-details-marker { display: none; }
+.recap-item.has-recap summary { cursor: pointer; }
+.recap-item.has-recap:hover summary { background: rgba(182,186,197,0.03); }
+.recap-score {
+  font-family: var(--disp); font-size: 14px; font-weight: 300;
+  letter-spacing: 0.01em;
+}
+.recap-score.win { color: var(--ok, #2a7); }
+.recap-score.loss { color: var(--err, #c44); }
+.recap-score.tie { color: var(--dim); }
+.recap-opp { font-size: 13px; }
+.recap-tag {
+  font-size: 8.5px; color: var(--gold); letter-spacing: .1em;
+  text-transform: uppercase; margin-right: 6px; vertical-align: 1px;
+}
+.recap-date { font-size: 11px; color: var(--dim); }
+.recap-body {
+  padding: 0 14px 16px 82px; font-size: 13px; line-height: 1.7;
+  color: var(--ink); font-style: italic; font-family: var(--disp);
+  max-width: 62ch;
+}
+
+/* ------------------------------------------------------------------
+   ANIMATED COUNTERS (CSS @property)
+   ------------------------------------------------------------------ */
+@property --counter-val {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.anim-counter {
+  --counter-end: 0;
+  --counter-val: 0;
+  counter-reset: c var(--counter-val);
+  animation: countUp 1.2s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.anim-counter::after {
+  content: counter(c);
+}
+
+.anim-counter.counting {
+  animation-play-state: running;
+}
+
+@keyframes countUp {
+  to { --counter-val: var(--counter-end); }
+}
