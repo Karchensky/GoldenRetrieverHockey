@@ -46,17 +46,34 @@ export const FORBIDDEN_SHOPS: ReadonlyMap<number, string> = new Map([
 /**
  * Every request passes through here. A path that addresses a shop must address
  * OUR shop; anything else throws before a socket is opened.
+ *
+ * EVERY occurrence, not the first one. This used to `exec` once and return the
+ * moment it saw our id, and every path here BEGINS with our id because the
+ * constant is what builds it — so the check was always satisfied by the prefix
+ * before it reached the part a caller supplied. A second `/shops/{id}` further
+ * along was never looked at. Demonstrated on 2026-07-28: a product id of
+ * `x.json?redirect=/shops/13449786/products` produced
+ * `/shops/28277243/products/x.json?redirect=/shops/13449786/products`, the old
+ * check read 28277243 and allowed it, and the request went out. `matchAll` does
+ * not have that hole, and it fires on exactly that string now.
+ *
+ * Nothing in this package can reach the hole through its own API — no exported
+ * function takes a shop id and the only caller-supplied path segment is a
+ * product id this repo reads back off the shop. It is closed anyway, because a
+ * guard whose whole subject is a live storefront belonging to somebody else does
+ * not get to depend on nobody ever passing it a bad string.
  */
 function assertShopPath(path: string): void {
-  const m = /\/shops\/(\d+)/.exec(path);
-  if (!m) return; // catalog and upload endpoints are not shop-scoped
-  const id = Number(m[1]);
-  if (id === SHOP_ID) return;
-  const why = FORBIDDEN_SHOPS.get(id);
-  throw new Error(
-    `Refusing to address shop ${id}${why ? ` (${why})` : ""}. ` +
-      `This client only writes to ${SHOP_ID} (GoldenRetrieverHockey).`,
-  );
+  // Catalog and upload endpoints are not shop-scoped; they match nothing here.
+  for (const m of path.matchAll(/\/shops\/(\d+)/g)) {
+    const id = Number(m[1]);
+    if (id === SHOP_ID) continue;
+    const why = FORBIDDEN_SHOPS.get(id);
+    throw new Error(
+      `Refusing to address shop ${id}${why ? ` (${why})` : ""}. ` +
+        `This client only writes to ${SHOP_ID} (GoldenRetrieverHockey).`,
+    );
+  }
 }
 
 /** Documented limits. Not enforced here — the CLI makes single calls. */

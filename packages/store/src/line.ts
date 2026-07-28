@@ -128,8 +128,22 @@ export type ArtBox = { width: number; height: number };
  * `scale` is a fraction of the print area's WIDTH, so a portrait image inside a
  * landscape print area — every hoodie front — is limited by height instead, and
  * the caller gets told rather than getting a print that runs off the garment.
+ *
+ * `areaShape` is the SHAPE of the tightest canvas the same scale will be sent
+ * to, as height over width, and it defaults to this area's own. It exists
+ * because one `scale` covers every variant and the variants are not all the same
+ * shape: a black mug is offered in 11 oz at 2475 × 1155 and 15 oz at 2448 × 1266,
+ * and a scale computed against the 15 oz — which is the SMALLER canvas, so the
+ * one this function is handed — overflows the 11 oz by a tenth of an inch. It
+ * cost nothing to notice with a landscape wordmark on it and would have cropped
+ * a portrait crest.
  */
-export function place(area: CatalogPlaceholder, art: ArtBox, widthIn: number): {
+export function place(
+  area: CatalogPlaceholder,
+  art: ArtBox,
+  widthIn: number,
+  areaShape: number = area.height / area.width,
+): {
   scale: number;
   widthIn: number;
   heightIn: number;
@@ -145,7 +159,7 @@ export function place(area: CatalogPlaceholder, art: ArtBox, widthIn: number): {
   let h = w * aspect;
   // Never let a print exceed 94% of the area in either direction: providers
   // trim at the edge and a design that touches it comes back cropped.
-  const maxH = areaHIn * 0.94;
+  const maxH = areaWIn * areaShape * 0.94;
   const maxW = areaWIn * 0.94;
   if (h > maxH) { h = maxH; w = h / aspect; }
   if (w > maxW) { w = maxW; h = w * aspect; }
@@ -168,16 +182,18 @@ export type Art = { name: string; base64: string; box: ArtBox; sourcePath: strin
 /**
  * Read a print file, trim its transparent margin, and return it ready to upload.
  *
- * The trim is not cosmetic. `scripts/build-print-files.mjs` renders each design
- * letterboxed into the garment's print area — a design can be 2520 x 3360 of
- * which the art is 2366 x 1778, the rest transparent. Printify places an image
- * by its file box, so uploading it untrimmed puts a wide empty border inside the
- * print area and silently shrinks the print to roughly half the size asked for.
+ * The trim is not cosmetic. Printify places an image by its file box, so a file
+ * with a transparent border around its artwork prints at the size of the border
+ * rather than the size asked for. Both sources this can be handed have one: the
+ * vector masters render onto a square 6000px canvas that the 4526 x 5094 mark
+ * sits inside, and `scripts/build-print-files.mjs` letterboxes a harvested
+ * design into the garment's print area.
  *
  * It only applies to art with an alpha channel, and that condition is load
- * bearing. `retriever-plate.png` is a flat black square on purpose — its ground
- * IS the sticker — and trimming a flat file eats the artwork rather than the
- * margin around it.
+ * bearing: trimming a FLAT file eats the artwork rather than the margin around
+ * it, because there is no margin. Nothing in the line is flat today —
+ * `retriever-plate.png` was, and it went with the pixel retriever — but the
+ * guard costs nothing and the next mark drawn for white vinyl will need it.
  */
 export async function loadArt(file: string): Promise<Art> {
   const sourcePath = file.startsWith("logos/")
@@ -227,47 +243,60 @@ export type LineItem = {
 };
 
 /**
- * Four marks, and which garments each one can survive.
+ * One mark, two inks, eight things to put it on.
  *
- * The split is not a marketing device. It is forced by the ground each mark was
- * drawn on, and getting it wrong is not a matter of taste — it deletes half the
- * artwork.
+ * On 2026-07-28 the captain cut the line to `logo_one` and nothing else. Three
+ * marks went with the eight products that carried them — a monogram, a skate-
+ * blade wordmark and a pixel retriever — and their source files are off disk.
+ * Do not restore them.
  *
- * **Drawn on cream, so they go on light bodies.** `crest` is outlined in black
- * and `monogram`'s R and wordmark are solid black. On a black or navy garment
- * the crest loses its shield edge and the monogram reads as a floating gold C
- * with no second letter. Both were rendered against black, navy, charcoal and
- * white before this was written down.
+ * **Resolution is no longer the binding constraint, and that is the change.**
+ * Every mark this file used to print was a 1254px flat carrying about 900px of
+ * artwork, which is 158 dpi at six inches. That is why the crest was sold at six
+ * inches and the wordmark at 5.17 and the pixel retriever at 2.85: each was
+ * pinned to the width where its file stopped being sharp. The vector masters in
+ * docs/logos/vector have no such ceiling. `cli.ts logos` renders them at 6000px,
+ * which trims to 4526 x 5094 of artwork, and 4526px is 453 dpi at ten inches.
+ * Nothing below is sized to its file any more. Everything below is sized to the
+ * garment, and the garment always wins first.
  *
- * **Drawn on black, so they go on dark bodies.** `wordmark` is gold and ivory;
- * `retriever` is gold and ice blue. On white the ivory and the ice blue vanish.
- * These two are what make a cap, a beanie and a black mug possible at all —
- * headwear is bought in black, and until there was a mark drawn for black there
- * was no headwear in this line.
+ * **The split is the ink, and it is forced rather than chosen.** The full-colour
+ * crest is outlined in black and its banner is black: on a black or navy body it
+ * loses its shield edge and its banner becomes a hole. So it goes on white, ash
+ * and heather. The one-ink gold crest is the same drawing with the cream keyed
+ * out, so the garment shows through the banner lettering and the dog's face —
+ * which reads on black, navy and charcoal and reads as nothing at all on white.
+ * That is what put a cap, a beanie and a black mug back in this line: headwear
+ * is bought in black.
  *
- * **Resolution is the binding constraint on all four, and it is a file problem,
- * not a design problem.** Every source in docs/logos is a 72 dpi export around
- * 1254 px. So every placement below is sized to the art rather than to the
- * garment: the width asked for is the width at which that file prints at 300
- * dpi, and no further. Where a mark looks small on a shirt, that is why. A
- * re-export at 3000 px would let every one of these grow by a factor of three
- * with nothing else in this file changing.
+ * One trap survives the re-export, and it is why `dpi` is a range and not a
+ * number: Printify's placement is a PROPORTION of the print area, and the print
+ * area is bigger on a 3XL than on an S. One scale is sent for every size. The
+ * tee below prints 7.38 inches wide on a small and 10.0 on everything from L up,
+ * and the second number is the one that decides whether the print looks soft, so
+ * sync.ts reports both and products.json stores both.
  *
- * One further trap, and it is why `dpi` is a range and not a number: Printify's
- * placement is a PROPORTION of the print area, and the print area is bigger on a
- * 3XL than on an S. The same product prints 5.17 inches wide on a small and 7.01
- * on a 3XL. The first number is the best case and the second is the one that
- * decides whether the print looks soft, so sync.ts reports both and
- * products.json stores both.
+ * The floor is 300 dpi at the printed size, measured on the LARGEST size
+ * offered. Nothing here is close to it; the worst in the line is 453.
  */
 export const LINE: LineItem[] = [
+  /* ---------------------------------------------------------------- *
+   * FULL COLOUR — light bodies.                                       *
+   * dist/print/logos/crest.png, 4526 x 5094, off                      *
+   * docs/logos/vector/logo-one-transparent-600dpi.png.                *
+   * ---------------------------------------------------------------- */
   {
     id: "crest-tee",
     title: "Golden Retrievers Crest — Tee",
     description:
-      "The team crest, printed across the chest.\n\n" +
+      "The crest across the chest, full colour, at the size the vector master " +
+      "allows rather than the size the old file could hold. Ten inches wide on a " +
+      "large, seven and a half on a small — the print is a proportion of the " +
+      "garment, so it grows with it.\n\n" +
       "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
       "shoulder-taped, unisex sizing. Direct-to-garment, front only.\n\n" +
+      "White, ash and athletic heather. The shield is outlined in black and the " +
+      "banner is black, so this colourway needs something under it.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     blueprintId: 12,
     printProviderId: 29,
@@ -278,22 +307,25 @@ export const LINE: LineItem[] = [
       { name: "Ash", hex: "#c9cbc8", variants: [38602, 38605, 38608, 38611, 38614, 38617] },
       { name: "Athletic Heather", hex: "#b0b2ad", variants: [18076, 18077, 18078, 18079, 18080, 18081] },
     ],
-    // 6 inches, not the 7 a full-front print would take. The crest is a 946px
-    // file; at 7in it prints at 135 dpi and at 6in it prints at 158 on a small
-    // and 116 on a 3XL. Neither is the 300 a printer wants. This product and the
-    // hoodie below predate the rule the rest of the line follows and are left as
-    // the captain has already seen them; a 3000px re-export fixes both.
-    placements: [{ position: "front", art: "logos/crest.png", widthIn: 6.0, y: 0.42 }],
+    // 7.375in is the width that puts the print at 10.0in on the four sizes that
+    // share the 15 x 17in canvas — L, XL, 2XL and 3XL, four of the six. Only S
+    // and M are smaller. 4526px over 10in is 453 dpi, which is the number this
+    // whole re-export exists to produce; the old 946px file managed 158 at six
+    // inches and 116 on a 3XL.
+    placements: [{ position: "front", art: "logos/crest.png", widthIn: 7.375, y: 0.42 }],
     claims: [],
   },
   {
     id: "crest-hoodie",
     title: "Golden Retrievers Crest — Hoodie",
     description:
-      "The team crest, on the chest.\n\n" +
+      "The crest on eight ounces of fleece. The front panel is wider than it is " +
+      "tall — the pouch takes the rest — so a portrait mark is limited by height " +
+      "here and prints a little under seven inches across.\n\n" +
       "Gildan 18500: 8.0 oz cotton/polyester fleece, brushed interior, front pouch, " +
       "two-ply hood, flat drawcord, ribbed cuffs and hem. The drawcord is the extent " +
       "of the features.\n\n" +
+      "Sport grey, white and ash.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     blueprintId: 77,
     printProviderId: 29,
@@ -304,14 +336,17 @@ export const LINE: LineItem[] = [
       { name: "White", hex: "#f4f4f2", variants: [32910, 32911, 32912, 32913, 32914, 32915] },
       { name: "Ash", hex: "#c9cbc8", variants: [33345, 33346, 33347, 33348, 33349, 33350] },
     ],
-    placements: [{ position: "front", art: "logos/crest.png", widthIn: 6.0, y: 0.5 }],
+    // The hoodie front is 12.36 x 8.24in on a small. At 6.85in wide the crest is
+    // 7.71in tall, just inside the 94% the provider will not trim into. Sized to
+    // the garment, not to the file — the file would go to fifteen.
+    placements: [{ position: "front", art: "logos/crest.png", widthIn: 6.85, y: 0.5 }],
     claims: [],
   },
   {
     id: "crest-sticker",
     title: "Golden Retrievers Crest — Sticker",
     description:
-      "The team crest, die-cut on white vinyl. Three inches or four.\n\n" +
+      "The crest die-cut on white vinyl. Three inches or four.\n\n" +
       "UV printed, kiss-cut, rated for outdoor use. It will outlast at least two of " +
       "the platforms this team's record had to be recovered from.",
     blueprintId: 400,
@@ -323,40 +358,28 @@ export const LINE: LineItem[] = [
     priceCents: 600,
     sizes: ['3" × 3"', '4" × 4"'],
     colors: [{ name: "White vinyl", hex: "#f4f4f2", variants: [45750, 45752] }],
-    placements: [{ position: "front", art: "logos/crest.png", widthIn: 3.5, y: 0.5 }],
+    placements: [{ position: "front", art: "logos/crest.png", widthIn: 2.3, y: 0.5 }],
     claims: [],
   },
+
+  /* ---------------------------------------------------------------- *
+   * ONE INK — dark bodies.                                            *
+   * dist/print/logos/crest-gold.png, 4526 x 5094, off                 *
+   * docs/logos/vector/logo-one-one-color-gold.svg with the cream       *
+   * keyed out everywhere, so the garment is the second colour.        *
+   * ---------------------------------------------------------------- */
   {
-    id: "monogram-tee",
-    title: "Golden Retrievers Monogram — Tee",
+    id: "crest-gold-tee",
+    title: "Golden Retrievers Crest, Gold — Tee",
     description:
-      "The C-R monogram, high on the chest.\n\n" +
+      "The same crest in a single ink. Everything that is cream in the full-colour " +
+      "mark is the shirt here: the banner lettering, the muzzle, the eyes, the tape " +
+      "on the blades. Ten inches wide on a large.\n\n" +
       "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
       "shoulder-taped, unisex sizing. Direct-to-garment, front only.\n\n" +
-      "Buffalo, N.Y. Playing since {{firstYear}}.",
-    blueprintId: 12,
-    printProviderId: 29,
-    priceCents: 2800,
-    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    colors: [
-      { name: "White", hex: "#f4f4f2", variants: [18540, 18541, 18542, 18543, 18544, 18545] },
-      { name: "Ash", hex: "#c9cbc8", variants: [38602, 38605, 38608, 38611, 38614, 38617] },
-      { name: "Athletic Heather", hex: "#b0b2ad", variants: [18076, 18077, 18078, 18079, 18080, 18081] },
-    ],
-    // 884px of art. 2.95in is where it prints at 300 dpi, so that is where it
-    // prints. Small on a shirt, and honest about why.
-    placements: [{ position: "front", art: "logos/monogram.png", widthIn: 2.95, y: 0.3 }],
-    claims: [],
-  },
-  {
-    id: "wordmark-tee",
-    title: "Golden Retrievers Wordmark — Tee",
-    description:
-      "The wordmark across the chest, gold over ivory on a skate-blade underline.\n\n" +
-      "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
-      "shoulder-taped, unisex sizing. Direct-to-garment, front only.\n\n" +
-      "Black, navy, heather navy and dark grey heather. The mark was drawn on black " +
-      "and is offered on the bodies it was drawn for.\n\n" +
+      "Black, navy, heather navy and dark grey heather. There is no light " +
+      "colourway and there cannot be one — on white the mark has nothing to cut " +
+      "into.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     blueprintId: 12,
     printProviderId: 29,
@@ -368,17 +391,18 @@ export const LINE: LineItem[] = [
       { name: "Heather Navy", hex: "#2f3a4c", variants: [18268, 18269, 18270, 18271, 18272, 18273] },
       { name: "Dark Grey Heather", hex: "#3e4245", variants: [18148, 18149, 18150, 18151, 18152, 18153] },
     ],
-    placements: [{ position: "front", art: "logos/wordmark.png", widthIn: 5.17, y: 0.34 }],
+    placements: [{ position: "front", art: "logos/crest-gold.png", widthIn: 7.375, y: 0.42 }],
     claims: [],
   },
   {
-    id: "wordmark-hoodie",
-    title: "Golden Retrievers Wordmark — Hoodie",
+    id: "crest-gold-hoodie",
+    title: "Golden Retrievers Crest, Gold — Hoodie",
     description:
-      "The wordmark on eight ounces of fleece.\n\n" +
+      "The one-ink crest on eight ounces of fleece.\n\n" +
       "Gildan 18500: cotton/polyester, brushed interior, front pouch, two-ply hood, " +
       "flat drawcord, ribbed cuffs and hem. The drawcord is the extent of the " +
       "features.\n\n" +
+      "Black, navy and charcoal.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     blueprintId: 77,
     printProviderId: 29,
@@ -389,19 +413,19 @@ export const LINE: LineItem[] = [
       { name: "Navy", hex: "#1b2a3d", variants: [32894, 32895, 32896, 32897, 32898, 32899] },
       { name: "Charcoal", hex: "#4a4d4f", variants: [42211, 42212, 42213, 42214, 42215, 42216] },
     ],
-    placements: [{ position: "front", art: "logos/wordmark.png", widthIn: 5.17, y: 0.42 }],
+    placements: [{ position: "front", art: "logos/crest-gold.png", widthIn: 6.85, y: 0.5 }],
     claims: [],
   },
   {
-    id: "wordmark-cap",
-    title: "Golden Retrievers Wordmark — Cap",
+    id: "crest-gold-cap",
+    title: "Golden Retrievers Crest, Gold — Cap",
     description:
-      "The wordmark embroidered on a Richardson 112. Structured front panels, " +
-      "mesh back, pre-curved visor, snapback closure, one size.\n\n" +
-      "Stitched rather than printed: the gold and the ivory are thread, and the " +
-      "shapes between them are bare twill.\n\n" +
-      "Black, charcoal and two-tone. There is no light colourway: the mark's " +
-      "second word is ivory.\n\n" +
+      "The crest embroidered on a Richardson 112. Structured front panels, mesh " +
+      "back, pre-curved visor, snapback closure, one size.\n\n" +
+      "Stitched rather than printed: the gold is thread and the shapes inside it " +
+      "are bare twill. The embroidery panel is 5.9 in across and 2 in tall, and a " +
+      "portrait mark is bound by the second figure.\n\n" +
+      "Black, charcoal and two-tone.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     // Richardson 112 through Printify Choice rather than the same cap through
     // Duplium, which the catalog also offers. Two reasons, both checked against
@@ -419,14 +443,14 @@ export const LINE: LineItem[] = [
       { name: "Black / White", hex: "#1c1f21", variants: [118724] },
       { name: "Charcoal / Black", hex: "#3b3e40", variants: [118726] },
     ],
-    placements: [{ position: "front", art: "logos/wordmark.png", widthIn: 5.17, y: 0.5 }],
+    placements: [{ position: "front", art: "logos/crest-gold.png", widthIn: 1.66, y: 0.5 }],
     claims: [],
   },
   {
-    id: "wordmark-beanie",
-    title: "Golden Retrievers Wordmark — Beanie",
+    id: "crest-gold-beanie",
+    title: "Golden Retrievers Crest, Gold — Beanie",
     description:
-      "The wordmark embroidered on a cuffed knit beanie. Yupoong 1501KC: acrylic, " +
+      "The crest embroidered on a cuffed knit beanie. Yupoong 1501KC: acrylic, " +
       "double-layer cuff, one size.\n\n" +
       "Black and navy.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
@@ -438,62 +462,28 @@ export const LINE: LineItem[] = [
       { name: "Black", hex: "#17191b", variants: [116417] },
       { name: "Navy", hex: "#1b2a3d", variants: [116425] },
     ],
-    placements: [{ position: "front", art: "logos/wordmark.png", widthIn: 4.7, y: 0.5 }],
+    placements: [{ position: "front", art: "logos/crest-gold.png", widthIn: 1.45, y: 0.5 }],
     claims: [],
   },
   {
-    id: "wordmark-mug",
-    title: "Golden Retrievers Wordmark — Mug",
+    id: "crest-gold-mug",
+    title: "Golden Retrievers Crest, Gold — Mug",
     description:
-      "The wordmark on a black ceramic mug, eleven ounces or fifteen. " +
-      "Dye-sublimated, dishwasher and microwave safe.\n\n" +
+      "The crest on a black ceramic mug, eleven ounces or fifteen. Dye-sublimated, " +
+      "dishwasher and microwave safe.\n\n" +
       "Printed on one side. The black body is what lets this mark be used at all — " +
-      "on white it loses its second word.\n\n" +
+      "on white it has nothing to cut into.\n\n" +
       "Buffalo, N.Y. Playing since {{firstYear}}.",
     blueprintId: 479,
     printProviderId: 29,
     priceCents: 1800,
     sizes: ["11 oz", "15 oz"],
     colors: [{ name: "Black", hex: "#17191b", variants: [65217, 104470] }],
-    placements: [{ position: "front", art: "logos/wordmark.png", widthIn: 5.17, y: 0.5 }],
-    claims: [],
-  },
-  {
-    id: "retriever-tee",
-    title: "Golden Retrievers Pixel Retriever — Tee",
-    description:
-      "The retriever, assembled out of ice pixels and coming apart at the tail, " +
-      "with a tennis ball in orbit. High on the chest.\n\n" +
-      "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
-      "shoulder-taped, unisex sizing. Direct-to-garment, front only. Black and navy.\n\n" +
-      "Buffalo, N.Y. Playing since {{firstYear}}.",
-    blueprintId: 12,
-    printProviderId: 29,
-    priceCents: 2800,
-    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    colors: [
-      { name: "Black", hex: "#17191b", variants: [18100, 18101, 18102, 18103, 18104, 18105] },
-      { name: "Navy", hex: "#1b2a3d", variants: [18396, 18397, 18398, 18399, 18400, 18401] },
-    ],
-    // 856px of art, so 2.85in at 300 dpi and no more. A badge, not a chest print.
-    placements: [{ position: "front", art: "logos/retriever.png", widthIn: 2.85, y: 0.22 }],
-    claims: [],
-  },
-  {
-    id: "retriever-sticker",
-    title: "Golden Retrievers Pixel Retriever — Sticker",
-    description:
-      "The pixel retriever on the black it was drawn on, die-cut on white vinyl. " +
-      "Three inches or four.\n\n" +
-      "UV printed, kiss-cut, rated for outdoor use.",
-    blueprintId: 400,
-    printProviderId: 99,
-    priceCents: 600,
-    sizes: ['3" × 3"', '4" × 4"'],
-    colors: [{ name: "Black on white vinyl", hex: "#17191b", variants: [45750, 45752] }],
-    // The plate, not the keyed file. Vinyl is white and this mark has no light
-    // colourway, so it carries its own ground onto the sticker.
-    placements: [{ position: "front", art: "logos/retriever-plate.png", widthIn: 2.6, y: 0.5 }],
+    // 3.15in, and the limit is the 11 oz rather than the 15. The two sizes are
+    // not the same shape — 2475 x 1155 against 2448 x 1266 — so the taller mug
+    // is the WIDER canvas and the scale that fits it overflows the smaller one.
+    // `place()` is handed the tightest shape of the two for exactly this reason.
+    placements: [{ position: "front", art: "logos/crest-gold.png", widthIn: 3.15, y: 0.5 }],
     claims: [],
   },
 ];

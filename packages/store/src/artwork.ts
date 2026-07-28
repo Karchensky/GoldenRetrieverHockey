@@ -10,35 +10,41 @@ import sharp from "sharp";
  * store by `scripts/build-print-files.mjs` and lands in `dist/print/`. Nothing
  * here touches that path or duplicates a single one of those drawings.
  *
- * What this handles is the other kind of art: the team logos in `docs/logos/`,
- * which arrive as flattened PNGs on a solid ground. A ground is a rectangle when
- * it is printed on a shirt, so they cannot go to a printer as they are.
+ * What this handles is the other kind of art: the team logo in `docs/logos/`,
+ * which arrives on a solid cream ground. A ground is a rectangle when it is
+ * printed on a shirt, so it cannot go to a printer as it is.
  *
- * There are two grounds in that folder and they need opposite treatments. Which
- * one a file wants is not a preference; getting it wrong destroys the artwork.
+ * There are two ways a ground comes off and they are opposite. Which one a file
+ * wants is not a preference; getting it wrong destroys the artwork.
  *
  * **`reach: "border"` — a flood fill inward from the edge.** This is what the
- * cream-ground logos need. `logo_one` and `logo_two` contain large cream areas
- * that are *part of the artwork* — the RETRIEVERS banner text, the dog's muzzle,
- * the tape on the stick blades, the dog's whole head in the monogram. A global
- * "make every cream pixel transparent" punches holes through all of them. A fill
- * that starts at the border and stops at the first dark outline cannot reach
- * them.
+ * FULL-COLOUR crest needs. It contains large cream areas that are *part of the
+ * artwork* — the RETRIEVERS banner text, the dog's muzzle, the tape on the stick
+ * blades. A global "make every cream pixel transparent" punches holes through
+ * all of them. A fill that starts at the border and stops at the first dark
+ * outline cannot reach them.
  *
- * **`reach: "everywhere"` — a straight colour key.** This is what the
- * black-ground concepts need, and the reason is the exact inverse. In
- * `concept-04` and `concept-11` the ground is black and *nothing drawn is black*:
- * the art is gold, ivory and ice blue, and every black region is ground — the
- * counters of the O and the D, the slots in the skate blade, the gaps between
- * the dog's pixels, the space between its legs. A border fill leaves all of
- * those opaque, which was verified before this option existed: the leg gap came
- * back as a solid black blob and the letter counters as black slugs. On a black
- * shirt DTG lays a white underbase under every non-transparent pixel, so those
- * would have printed as glossy black patches on matte black cotton; on navy they
- * would simply have been black.
+ * **`reach: "everywhere"` — a straight colour key.** This is what a ONE-INK mark
+ * needs, and the reason is the exact inverse. In `logo-one-one-color-gold.svg`
+ * there are exactly two colours, gold and cream, and *nothing drawn is cream*:
+ * every cream region is either the ground or negative space cut into the gold —
+ * the banner lettering, the dog's muzzle and eyes, the tape on the blades. On a
+ * dark garment that negative space is supposed to be the garment showing
+ * through, so every cream pixel has to go, enclosed or not. A border fill leaves
+ * all of them opaque, and DTG lays a white underbase under every non-transparent
+ * pixel: the lettering would print as cream slugs on a black shirt.
+ *
+ * Removing them the other way round is just as fatal and was measured: deleting
+ * the cream *paths* from the vector instead of keying the cream *pixels* leaves
+ * a gold blob with no face and an empty banner.
  *
  * Neither mode redraws, recolours, or restyles anything. Same pixels, minus the
  * ground they were sitting on.
+ *
+ * **`reach: "trim"` — nothing removed.** For a source that already carries an
+ * alpha channel, which the vector exports do. It still trims, because Printify
+ * places an image by its file box and the exports are square canvases with the
+ * artwork inset.
  */
 
 /** Which pixels count as ground. See the file header — this is not a preference. */
@@ -78,7 +84,11 @@ const HARD_TOLERANCE = 34;
  * alpha. Beyond this distance a pixel is simply ink and stays opaque.
  */
 const SOFT_TOLERANCE = 112;
-/** How far the rim can extend. Two pixels covers the anti-aliasing on a 1254px source. */
+/**
+ * How far the rim can extend. Rasterisers anti-alias over about a pixel whatever
+ * the output size, so two passes covers a 1254px flat and a 6000px vector export
+ * alike.
+ */
 const FEATHER_PASSES = 2;
 
 /**
@@ -210,31 +220,59 @@ export async function removeBackground(
 }
 
 /**
- * Prepare one logo and write both the file a printer receives and the file the
- * site serves.
+ * Rasterise an SVG at an exact pixel width.
+ *
+ * `density` is dots per inch against the document's own units, and sharp reads
+ * an SVG at 72 units to the inch, so the density that lands on a target width
+ * depends on the document. Rounded UP and then resized down: rendering short and
+ * scaling up would be the same lost detail the vector masters exist to avoid.
+ */
+async function rasterise(svg: Buffer, width: number): Promise<Buffer> {
+  const natural = (await sharp(svg).metadata()).width ?? 0;
+  if (!natural) throw new Error("cannot read the source's natural width");
+  const density = Math.ceil((72 * width) / natural);
+  return sharp(svg, { density }).resize({ width }).png({ compressionLevel: 9 }).toBuffer();
+}
+
+/**
+ * Prepare one logo and write the file a printer receives, optionally alongside a
+ * web-sized copy of the same picture.
  *
  * They are the same artwork and must stay that way — a store whose page shows
  * one mark and whose parcels carry another is the exact drift this repo builds
  * its whole print pipeline to avoid. So both come out of this one function, off
  * one source file, in one pass. The press file is a full-resolution PNG with an
- * alpha channel; the web file is a WebP at the largest size the page can
- * actually use, because the press PNG is 1.2 MB and no page should pay that.
+ * alpha channel; the web file is a WebP at the largest size a page could
+ * actually use, because the press PNG is megabytes and no page should pay that.
  *
- * `reach: "keep"` writes the flat file through untouched, ground and all. One
- * product needs that: a kiss-cut sticker is printed on white vinyl, and a mark
- * drawn for a black ground has nothing to hold it there. Its ground is the
- * sticker. Every other placement in the line is on fabric that supplies one.
+ * **`render` is what lets a vector source in.** `docs/logos/vector/` holds the
+ * masters, and a mark taken from those has no resolution ceiling — the ceiling
+ * is whatever pixel width is asked for here. It is the whole reason a crest can
+ * print ten inches wide at 453 dpi when the flat PNG it replaced managed 158 at
+ * six. A raster source ignores it: resampling a 1254px flat up to 6000 invents
+ * detail and this function will not do that.
  */
 export async function prepareLogo(
   source: string,
   destDir: string,
-  options: { reach?: Reach | "keep"; as?: string; web?: { path: string; width: number } } = {},
+  options: {
+    reach?: Reach | "trim";
+    as?: string;
+    web?: { path: string; width: number };
+    /** Rasterise a vector source at this pixel width. Ignored for a raster. */
+    render?: { width: number };
+  } = {},
 ): Promise<PreparedLogo> {
-  const { reach = "border", as, web } = options;
-  const png = await readFile(source);
+  const { reach = "border", as, web, render } = options;
+  const png = render && source.toLowerCase().endsWith(".svg")
+    ? await rasterise(await readFile(source), render.width)
+    : await readFile(source);
   const { buffer, backgroundFraction } =
-    reach === "keep"
-      ? { buffer: await sharp(png).png({ compressionLevel: 9 }).toBuffer(), backgroundFraction: 0 }
+    reach === "trim"
+      ? {
+          buffer: await sharp(png).trim({ threshold: 0 }).png({ compressionLevel: 9 }).toBuffer(),
+          backgroundFraction: 0,
+        }
       : await removeBackground(png, { reach });
   await mkdir(destDir, { recursive: true });
   const out = join(destDir, as ?? basename(source));

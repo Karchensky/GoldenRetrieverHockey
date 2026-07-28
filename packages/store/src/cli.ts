@@ -41,7 +41,7 @@ const USAGE = `
     audit                    Every product on shop 28277243, and nothing else.
 
   Writes, to shop 28277243 only
-    logos                    Strip the paper off docs/logos/*.png for print.
+    logos                    Render the vector masters and take their ground off.
     sync --dry-run           Show placement and resolution. Sends nothing.
     sync                     Upload art, create the line as DRAFTS, read it back.
 
@@ -134,46 +134,69 @@ async function main(argv: string[]): Promise<number> {
 
     case "logos": {
       /**
-       * Every mark the line puts on a garment, and how its ground comes off.
+       * The two marks the line puts on a garment, and how each one's ground
+       * comes off.
        *
-       * `reach` is not a style choice — see artwork.ts. The cream-ground logos
+       * Both are `logo_one` and both come off the VECTOR masters, not the flat
+       * PNG beside them. That is the whole point of this command now: the flat
+       * is 948px of artwork, which is 158 dpi at a six-inch print and 95 at ten,
+       * and it is why the crest used to be sold at six inches. The vector
+       * renders at whatever is asked for — 6000px here, 4526px of artwork after
+       * the trim, which is 453 dpi at ten inches.
+       *
+       * `reach` is not a style choice — see artwork.ts. The full-colour crest
        * must be flood-filled from the border or the fill eats the banner text
-       * and the dog's muzzle; the black-ground concepts must be keyed
-       * everywhere or the letter counters and the gap between the dog's legs
-       * stay opaque and print as black slugs.
+       * and the dog's muzzle. The one-ink crest must be keyed everywhere or the
+       * banner lettering and the eyes stay cream and print as slugs on a black
+       * shirt; on that mark cream is not ink, it is the garment showing through.
        *
-       * The output names say what the mark IS. The source names say where it
-       * came from, and two of these are exploration art the captain has not
-       * signed off — that provenance is in docs/store/POP-UP.md, not buried in
-       * a filename the printer sees.
+       * The output names say what the mark IS.
+       *
+       * NO WEB FILE COMES OUT OF THIS ANY MORE, and that is not an oversight.
+       * `prepareLogo` still writes one — press PNG and web WebP off one source
+       * in one pass, so the mark on the page and the mark on the parcel cannot
+       * drift — but /store is a placeholder as of 2026-07-28 and renders no
+       * mark, so a WebP in apps/web/public/store would be a file shipped in the
+       * static export that nothing points at. Add
+       * `web: { path: "apps/web/public/store/<name>.webp", width: 900 }` back to
+       * each job on the day the real store is listed.
        */
       const jobs: {
         source: string;
         as: string;
-        reach: Reach | "keep";
-        web?: string;
+        reach: Reach | "trim";
         why: string;
       }[] = [
-        { source: "logo_one.png", as: "crest.png", reach: "border", web: "crest.webp", why: "cream ground, black outline" },
-        { source: "logo_two.png", as: "monogram.png", reach: "border", web: "monogram.webp", why: "cream ground, black R" },
-        { source: "concept-04-skate-blade-wordmark.png", as: "wordmark.png", reach: "everywhere", web: "wordmark.webp", why: "black ground, no black ink" },
-        { source: "concept-11-pixel-retriever.png", as: "retriever.png", reach: "everywhere", web: "retriever.webp", why: "black ground, no black ink" },
-        // The sticker is white vinyl and this mark was drawn for black. It
-        // brings its own ground; nothing is removed.
-        { source: "concept-11-pixel-retriever.png", as: "retriever-plate.png", reach: "keep", why: "kept whole, for white vinyl" },
+        {
+          source: "vector/logo-one-transparent-600dpi.png",
+          as: "crest.png",
+          reach: "trim",
+          why: "full colour, ground already off — light garments",
+        },
+        {
+          source: "vector/logo-one-one-color-gold.svg",
+          as: "crest-gold.png",
+          reach: "everywhere",
+          why: "one ink, cream keyed to garment — dark garments",
+        },
       ];
+
+      // 6000px square, which is the size of the captain's own 600 dpi export and
+      // trims to 4526 x 5094 of artwork. Larger is free to render and not free
+      // to upload: the file goes to Printify base64-encoded.
+      const RENDER_WIDTH = 6000;
 
       for (const job of jobs) {
         const r = await prepareLogo(`docs/logos/${job.source}`, "dist/print/logos", {
           reach: job.reach,
           as: job.as,
-          ...(job.web ? { web: { path: `apps/web/public/store/${job.web}`, width: 900 } } : {}),
+          render: { width: RENDER_WIDTH },
         });
         console.log(
-          `${job.as.padEnd(20)} ${`${r.width}x${r.height}`.padEnd(12)} ` +
+          `${job.as.padEnd(16)} ${`${r.width}x${r.height}`.padEnd(12)} ` +
             `${(r.backgroundFraction * 100).toFixed(1).padStart(5)}% ground   ${job.why}\n` +
-            `${" ".repeat(20)} from  ${job.source}\n` +
-            `${" ".repeat(20)} press ${r.out}${r.web ? `\n${" ".repeat(20)} web   ${r.web}` : ""}`,
+            `${" ".repeat(16)} from  ${job.source}\n` +
+            `${" ".repeat(16)} press ${r.out}`,
         );
       }
       return 0;

@@ -1,10 +1,16 @@
 # @gr/store — Printify
 
 Creates and verifies the store's products on **shop 28277243** as drafts. It has
-been run against the live API and the eleven products in
+been run against the live API and the eight products in
 `apps/web/data/products.json` were made by it. The shop is named "Golden
 Retrievers" in the dashboard now; the id is what matters and the id has not
 changed.
+
+**Nothing on the site renders any of this.** `/store` is a placeholder as of
+2026-07-28 — the captain's instruction was that none of it was a product yet and
+the line would be listed all at once when it is finished. `products.json` stayed
+because it is not page copy: it is the record `sync` checks the live shop
+against, and deleting it would leave the sync with no witness.
 
 For the captain's side of this — opening the Pop-Up store, publishing, and what
 to look at first — see [`docs/store/POP-UP.md`](../../docs/store/POP-UP.md).
@@ -13,7 +19,7 @@ to look at first — see [`docs/store/POP-UP.md`](../../docs/store/POP-UP.md).
 node packages/store/src/cli.ts shops        # start here; smallest possible request
 node packages/store/src/cli.ts claims       # re-derive every printed claim from site.json
 node packages/store/src/cli.ts audit        # every product on 28277243, and only that shop
-node packages/store/src/cli.ts logos        # take the ground off the marks in docs/logos/
+node packages/store/src/cli.ts logos        # render the vector masters for print
 node packages/store/src/cli.ts sync --dry-run
 node packages/store/src/cli.ts sync         # upload art, create drafts, read them back
 ```
@@ -36,6 +42,11 @@ and no config to mistype: `SHOP_ID` is a constant, and every request also
 asserts its own URL before a socket is opened. Forging a path at another shop
 throws with the reason, not a number.
 
+The assertion was walking every path's FIRST `/shops/{id}` and stopping there,
+which is the id the constant had just written — so a second shop segment further
+along was never read. Found and closed on 2026-07-28: a product id of
+`x.json?redirect=/shops/13449786/products` used to pass and now throws.
+
 There is deliberately **no `publishProduct()`**. Publishing is one click in a
 dashboard the captain can see, and nothing in this package can make the shop go
 live.
@@ -53,11 +64,11 @@ after the shirt was written. Then on 2026-07-26 it stopped a run outright: the
 captain's stats workbook had been ingested with a **Winter 2011** season on it,
 which makes **EST. 2012** false, and three garments were about to carry it.
 
-`CLAIMS` is empty today and that is the correct state. The line prints a mark and
-a place — no count, no year, no name in type — so there is nothing left to check.
-Where copy states the founding year it carries a `{{firstYear}}` token resolved
-from `site.json` at upload time, and a derived number cannot go stale. The gate
-stays wired for the next garment that states something.
+`CLAIMS` is empty today and that is the correct state. The line prints one mark
+and a place — no count, no year, no name in type — so there is nothing left to
+check. Where copy states the founding year it carries a `{{firstYear}}` token
+resolved from `site.json` at upload time, and a derived number cannot go stale.
+The gate stays wired for the next garment that states something.
 
 It also compares `apps/web/data/products.json` against what is on the shop —
 product ids, prices, and the printed size, resolution, scale and height of every
@@ -89,7 +100,16 @@ scale covers all 318 variants of a tee, so a design sent at 5.17 inches on a
 small arrives at 7.01 inches on a 3XL and its resolution falls by the same third.
 `sync` therefore measures the smallest canvas and the largest, and reports
 `widthIn`/`dpi` alongside `maxWidthIn`/`minDpi`. Quoting only the first is
-quoting the best case.
+quoting the best case. The floor is **300 dpi at the printed size, on the largest
+size offered**; the worst in the line is 453.
+
+**The canvases are not all the same SHAPE either**, and that is a third number.
+A black mug is 2475 × 1155 in 11 oz and 2448 × 1266 in 15 oz, so the wider canvas
+is the shorter one and a scale computed against the 15 oz — which is the smaller
+one, the one `place()` is handed — overflows the 11 oz. It cost nothing with a
+landscape wordmark on it and would have cropped a portrait crest, so
+`canvasesFor()` now returns the tightest height-over-width of every variant and
+`place()` clamps against that instead of against whichever canvas it was given.
 
 Legal `position` strings come from the catalog, not the docs: each variant's
 `placeholders[].position`. Bella+Canvas 3001 and Gildan 18500 through Monster
@@ -110,42 +130,61 @@ it was found by probing.
 
 ## The artwork, and where it comes from
 
-Two sources, and they stay separate on purpose.
+**One mark, off the vector masters.** On 2026-07-28 the captain cut the line to
+`logo_one` and nothing else: *"remove all items other than the ones with the
+logo_one in some capacity; i believe most of these items are lower DPI than we
+require."* He was right about the dpi. The monogram, the skate-blade wordmark and
+the pixel retriever were 1254px flats carrying ~900px of artwork, which reaches
+300 dpi only by shrinking the print — the wordmark to 5.17 inches, the retriever
+to 2.85. Their source files are off disk. Do not restore them.
 
-**Generated designs** are drawn by
-`apps/web/components/store/ProductFigure.tsx`, harvested out of the built store
-by `scripts/build-print-files.mjs`, and land in `dist/print/`. The site is the
-single source of that art and the files cannot drift from what the store shows.
-`loadArt()` trims each one before upload — the harvest letterboxes a design into
-the garment's print area, so `wordmark` is a 2520 × 3360 file whose art is
-2366 × 1778, and uploading it untrimmed puts a wide transparent border inside the
-print area and silently halves the print.
+`cli.ts logos` renders `docs/logos/vector/` at 6000px and writes two press files
+to `dist/print/logos/`. Both trim to **4526 × 5094** of artwork, which is 453 dpi
+at a ten-inch print. The flat `logo_one.png` beside them holds 948px and would be
+95 dpi at the same size; it is not used by anything any more.
 
-**The team logos** run the other way: they arrive as flattened PNGs in
-`docs/logos/`, and `src/artwork.ts` produces the press file and the web file
-from that one source in a single pass, so the mark on the page and the mark on
-the parcel are the same picture.
+| Press file | Source | Ground comes off by |
+| --- | --- | --- |
+| `crest.png` | `vector/logo-one-transparent-600dpi.png` | `reach: "trim"` — already transparent |
+| `crest-gold.png` | `vector/logo-one-one-color-gold.svg` | `reach: "everywhere"` |
 
-There are two grounds in that folder and they need **opposite** treatments.
-`cli.ts logos` names which each mark gets, and the choice is not a preference:
+`reach` is not a preference and getting it wrong destroys the artwork:
 
-- **`reach: "border"`** — a flood fill inward from the edge, for `logo_one` and
-  `logo_two`. Both contain large cream areas that are *part of the artwork* —
-  the RETRIEVERS banner, the dog's muzzle, the tape on the stick blades, the
-  dog's whole head in the monogram. A global colour key punches holes through
-  all of them.
-- **`reach: "everywhere"`** — a straight colour key, for `concept-04` and
-  `concept-11`. Their ground is black and nothing drawn is black, so every black
-  region is ground: the counters of the O and the D, the slots in the skate
-  blade, the gap between the dog's legs. A border fill leaves all of those
-  opaque, which was measured before this option existed. On a dark garment DTG
-  lays a white underbase under every non-transparent pixel, so they would have
-  printed as glossy black patches on matte black cotton.
-- **`reach: "keep"`** — no removal at all, for the pixel retriever's sticker.
-  Vinyl is white and that mark has no light colourway, so it brings its own
-  ground. `loadArt()` skips its trim for exactly this file: trimming an opaque
-  image eats the artwork rather than the margin.
+- **`reach: "border"`** — a flood fill inward from the edge, for the FULL-COLOUR
+  crest on a cream ground. It contains large cream areas that are *part of the
+  artwork* — the RETRIEVERS banner, the dog's muzzle, the tape on the stick
+  blades. A global colour key punches holes through all of them. Not used today
+  only because the captain's transparent export has already done this in vector.
+- **`reach: "everywhere"`** — a straight colour key, for the ONE-INK crest. That
+  file has exactly two colours and *nothing drawn is cream*: every cream region
+  is either the ground or negative space cut into the gold, and on a dark garment
+  that negative space is meant to be the garment. A border fill leaves the banner
+  lettering and the eyes opaque, and DTG lays a white underbase under every
+  non-transparent pixel, so they would print as cream slugs on black.
+- **`reach: "trim"`** — nothing removed, for a source that already carries alpha.
+  It still trims: Printify places an image by its file box and the vector exports
+  are square canvases with the artwork inset, so uploading one untrimmed puts a
+  wide transparent border inside the print area and silently shrinks the print.
 
-`npm run store:print` now harvests nothing, and that is expected. Every mark in
-the line is a file rather than a drawing, so there is no `[data-art]` left in the
+**Deleting the cream *paths* is not the same as keying the cream *pixels*, and it
+was measured.** Stripping every `fill="#faf4ea"` path out of the one-colour SVG
+and rendering the rest leaves a gold blob with no face and an empty banner: those
+paths are drawn ON TOP of the gold and they are the drawing.
+
+Two things the one-colour gold master does that are worth knowing before it goes
+on a garment. The banner reads **RETRIEVERS** only — "GOLDEN" is gold-on-black in
+the full-colour crest and becomes gold-on-gold here, so it disappears. And the
+dog's head reduces to a mask rather than a portrait. Both are properties of the
+captain's own file, reproduced faithfully; if he wants "GOLDEN" back it has to be
+knocked out in the master, not here.
+
+`prepareLogo` still writes a web-sized WebP alongside the press file, off the
+same source in the same pass, so the mark on a page and the mark on a parcel
+cannot drift. `cli.ts logos` does not ask for one today: `/store` is a
+placeholder and renders no mark, so the file would ship in the static export with
+nothing pointing at it. Restore the `web:` line on each job when the real store
+is listed.
+
+`npm run store:print` harvests nothing, and that is expected. Every mark in the
+line is a file rather than a drawing, so there is no `[data-art]` left in the
 built store for it to lift. The press files come from `cli.ts logos`.

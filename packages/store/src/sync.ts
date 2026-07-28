@@ -67,13 +67,19 @@ async function variantsOf(blueprintId: number, printProviderId: number): Promise
  * Quoting only the smallest — which this file used to do — reports the best case
  * as if it were the whole story, and the worst case is the one that decides
  * whether a print looks soft.
+ *
+ * `tightestShape` is the third number and it is not about resolution. The
+ * canvases are not all the same SHAPE either: a black mug is 2475 x 1155 in
+ * 11 oz and 2448 x 1266 in 15 oz, so the WIDER canvas is the SHORTER one and a
+ * scale that fits the 15 oz overflows the 11 oz. `place()` clamps against this
+ * rather than against the canvas it happens to be handed.
  */
 async function canvasesFor(
   blueprintId: number,
   printProviderId: number,
   variantIds: number[],
   position: string,
-): Promise<{ smallest: CatalogPlaceholder; largest: CatalogPlaceholder }> {
+): Promise<{ smallest: CatalogPlaceholder; largest: CatalogPlaceholder; tightestShape: number }> {
   const res = await variantsOf(blueprintId, printProviderId);
   const areas: CatalogPlaceholder[] = [];
   for (const id of variantIds) {
@@ -90,7 +96,8 @@ async function canvasesFor(
   const smallest = byWidth[0];
   const largest = byWidth[byWidth.length - 1];
   if (!smallest || !largest) throw new Error(`no "${position}" print area on any variant of ${blueprintId}/${printProviderId}`);
-  return { smallest, largest };
+  const tightestShape = Math.min(...areas.map((a) => a.height / a.width));
+  return { smallest, largest, tightestShape };
 }
 
 export type SyncResult = {
@@ -173,10 +180,10 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
     for (const p of item.placements) {
       const loaded = art.get(p.art);
       if (!loaded) throw new Error(`no art loaded for ${p.art}`);
-      const { smallest, largest } = await canvasesFor(
+      const { smallest, largest, tightestShape } = await canvasesFor(
         item.blueprintId, item.printProviderId, variantIds, p.position,
       );
-      const fitted = place(smallest, loaded.box, p.widthIn);
+      const fitted = place(smallest, loaded.box, p.widthIn, tightestShape);
       // The same proportion on the biggest canvas the product offers.
       const maxWidthIn = Number(((largest.width / 300) * fitted.scale).toFixed(2));
       const minDpi = Math.round(loaded.box.width / maxWidthIn);
@@ -189,7 +196,11 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
         position: p.position,
         images: [{ id: loaded.uploadId ?? "DRY-RUN", x: 0.5, y: p.y, scale: fitted.scale, angle: 0 }],
       });
-      const flag = minDpi < 150 ? "  << low resolution" : "";
+      // 300 dpi at the printed size, measured on the LARGEST size offered, is
+      // the floor the captain set on 2026-07-28. It used to be a 150 dpi warning
+      // because the marks were 1254px flats and half the line would have tripped
+      // a real threshold; off the vector masters nothing comes close to it.
+      const flag = minDpi < 300 ? "  << UNDER 300 DPI — do not ship" : "";
       const range = maxWidthIn === fitted.widthIn
         ? `${fitted.widthIn}in @${fitted.dpi}dpi`
         : `${fitted.widthIn}-${maxWidthIn}in @${fitted.dpi}-${minDpi}dpi`;
