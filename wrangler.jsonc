@@ -1,0 +1,35 @@
+{
+  // Cloudflare Workers, serving the static export.
+  //
+  // There is no `main` and no Worker script: with `assets` and no entrypoint,
+  // the platform serves the directory directly and never runs our code. That is
+  // the whole deployment — the site has no server, no database and no runtime
+  // fetch, and this config should not be the first thing to introduce one.
+  //
+  // The store's checkout will need a real Worker later. When it does, `main`
+  // points at it and `assets.binding` lets it fall through to these files; the
+  // directory below does not change.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "goldenretrieverhockey",
+  "compatibility_date": "2026-07-28",
+
+  "assets": {
+    // next build with output:"export" writes here. The build command that
+    // fills it is npm run build:site.
+    "directory": "./apps/web/out",
+
+    // SERVE THE EXPORT'S OWN 404, WITH ITS 404 STATUS.
+    //
+    // The alternative, "single-page-application", would answer every unknown
+    // path with index.html and a 200 — which for a static archive means a
+    // mistyped player URL returns the home page and tells a crawler it is a
+    // real page. This site generates 458 of them and one 404.html; that file is
+    // the right answer and it should arrive with the right status.
+    "not_found_handling": "404-page",
+
+    // A request for /seasons finds /seasons.html without a redirect. The export
+    // is written without trailing slashes, so this matches how the links in the
+    // HTML are already spelled.
+    "html_handling": "auto-trailing-slash"
+  }
+}
