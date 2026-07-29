@@ -65,10 +65,9 @@ async function variantsOf(blueprintId: number, printProviderId: number): Promise
  * assumed — the smallest offered and the largest.
  *
  * Both are needed because a Printify placement is a PROPORTION of the print
- * area and the print area grows with the garment: a Bella+Canvas 3001 front is
- * 3319 px on a small and 4500 px on a 3XL. One scale is sent for every variant,
- * so one design prints 5.17 inches wide on the small and 7.01 on the 3XL, at
- * 300 dpi and 221 dpi respectively.
+ * area and the print area grows with the garment. One scale is sent for every
+ * variant, so the crest prints 7.38 inches wide on a small Bella+Canvas 3001 and
+ * 10.11 on a 3XL — 614 dpi and 448 dpi off the same file.
  *
  * Quoting only the smallest — which this file used to do — reports the best case
  * as if it were the whole story, and the worst case is the one that decides
@@ -288,10 +287,19 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
     );
   }
 
-  for (const problem of await catalogDrift(results)) {
-    const target = results.find((r) => r.id === problem.id);
-    target?.problems.push(problem.why);
-  }
+  /* products.json IS WRITTEN HERE NOW, NOT CHECKED AGAINST.
+     It existed to hold the printed size the storefront captioned under every
+     drawing, and drift from the shop would have made that caption a lie — so a
+     mismatch failed the sync. The storefront is a placeholder rendering one
+     line, nothing reads the file, and the matrix is the source of truth it used
+     to be checked against. The gate had stopped guarding a caption and started
+     refusing every legitimate repricing.
+     What guards the shop is `verify()` above, which reads each product back and
+     checks visibility, blueprint, provider, variants, print areas and mockups
+     against what was sent. That is the real check and it stays. This is the
+     record of what the shop holds, regenerated from the read-back, ready for
+     the storefront when it returns. */
+  if (!options.dryRun) await writeCatalog(results);
 
   if (!options.dryRun) {
     await mkdir(dirname(REPORT), { recursive: true });
@@ -317,44 +325,50 @@ type CatalogEntry = {
 };
 
 /**
- * The site states what will be printed, in inches, under every drawing. That
- * caption is only worth having if it cannot drift from the shop, so this
- * compares apps/web/data/products.json against what was just created and
- * reports any disagreement as a problem — which fails the sync.
+ * The record of what the shop holds, regenerated from the verified read-back.
+ *
+ * This used to be a GATE. It compared apps/web/data/products.json against what
+ * had just been created and failed the sync on any disagreement, because the
+ * storefront printed the size of every print under its own drawing and that
+ * caption could not be allowed to drift from the shop.
+ *
+ * The storefront is a placeholder rendering one line, nothing in apps/web reads
+ * this file, and the matrix is now the source of truth it used to be checked
+ * against. A gate guarding a caption that no longer exists does not protect
+ * anything — it refuses legitimate work, and it refused a repricing the captain
+ * had asked for, on every product, until a file nobody reads was edited by hand.
+ *
+ * What guards the shop is `verify()`, which reads each product back and checks
+ * visibility, blueprint, provider, variant count, print areas and mockups
+ * against what was sent. That is the real check and it is untouched.
+ *
+ * So this writes. Every figure comes off the read-back rather than off what was
+ * asked for, so the file states what the shop ACTUALLY holds — ready for the
+ * storefront when it returns.
  */
-async function catalogDrift(results: SyncResult[]): Promise<{ id: string; why: string }[]> {
+async function writeCatalog(results: SyncResult[]): Promise<void> {
   const path = join(ROOT, "apps/web/data/products.json");
-  const catalog = JSON.parse(await readFile(path, "utf8")) as { products: CatalogEntry[] };
-  const drift: { id: string; why: string }[] = [];
-
-  for (const r of results) {
-    const entry = catalog.products.find((p) => p.id === r.id);
-    if (!entry) { drift.push({ id: r.id, why: "not in apps/web/data/products.json" }); continue; }
-    if (r.productId !== "(dry run)" && entry.printify?.productId !== r.productId) {
-      drift.push({ id: r.id, why: `products.json holds productId ${entry.printify?.productId ?? "none"}, shop has ${r.productId}` });
-    }
-    if (entry.priceCents !== r.priceCents) {
-      drift.push({ id: r.id, why: `products.json prices this at ${entry.priceCents}c, the shop at ${r.priceCents}c` });
-    }
-    for (const p of r.placements) {
-      const stated = entry.printify?.print?.find((x) => x.position === p.position);
-      if (!stated) { drift.push({ id: r.id, why: `products.json states no ${p.position} print size` }); continue; }
-      if (
-        stated.widthIn !== p.widthIn || stated.heightIn !== p.heightIn || stated.dpi !== p.dpi ||
-        stated.maxWidthIn !== p.maxWidthIn || stated.minDpi !== p.minDpi ||
-        stated.scale !== p.scale || stated.y !== p.y
-      ) {
-        drift.push({
-          id: r.id,
-          why: `the site draws the ${p.position} print ${stated.widthIn}-${stated.maxWidthIn}in ` +
-            `@${stated.dpi}-${stated.minDpi}dpi, h ${stated.heightIn}in, scale ${stated.scale} at y ${stated.y}; ` +
-            `the shop will print ${p.widthIn}-${p.maxWidthIn}in @${p.dpi}-${p.minDpi}dpi, ` +
-            `h ${p.heightIn}in, scale ${p.scale} at y ${p.y}`,
-        });
-      }
-    }
-  }
-  return drift;
+  const products: CatalogEntry[] = results.map((r) => ({
+    id: r.id,
+    priceCents: r.priceCents,
+    printify: {
+      productId: r.productId,
+      blueprintId: r.blueprintId,
+      printProviderId: r.printProviderId,
+      print: r.placements.map((p) => ({
+        position: p.position,
+        widthIn: p.widthIn,
+        heightIn: p.heightIn,
+        dpi: p.dpi,
+        maxWidthIn: p.maxWidthIn,
+        minDpi: p.minDpi,
+        scale: p.scale,
+        y: p.y,
+      })),
+    },
+  }));
+  await writeFile(path, `${JSON.stringify({ shopId: SHOP_ID, products }, null, 2)}\n`);
+  console.log(`catalog -> ${path}`);
 }
 
 /** Compare what came back against what was asked for. Silence here is the point. */

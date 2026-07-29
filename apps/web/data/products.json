@@ -1,221 +1,55 @@
 {
-  "_comment": [
-    "The catalog. Hand-written, unlike every other data file in this repo, which is",
-    "generated from the capture corpus.",
-    "",
-    "NOTHING RENDERS THIS TODAY. On 2026-07-28 the captain took /store down to a",
-    "placeholder — 'these are not finalized, don't list garbage items that are not",
-    "actually products, we will build out the real store and list it all at once'.",
-    "The page is one sentence now. This file stayed, because it is not page copy: it",
-    "is the record of what exists on Printify shop 28277243 and the thing",
-    "packages/store/src/sync.ts checks the live shop against. Delete it and the sync",
-    "loses its only witness.",
-    "",
-    "A count that comes from the archive is stored as a {{token}} and resolved from",
-    "site.json at build time by lib/store.ts. A figure written as a literal here is",
-    "one that does NOT move — the printed width of a design in inches — and each was",
-    "read off the placement sync.ts sent to the shop, not typed from memory.",
-    "",
-    "The rule: a shirt that quotes the archive has to be as accountable as the",
-    "archive. It has been broken twice. '120 goaltender lines' traced to nothing and",
-    "was silkscreened anyway. '16 sessions' was true for about a day.",
-    "",
-    "And twice more, caught before either printed. This catalog carried a tee",
-    "reading SAVES 0 / EVERY GOALTENDER SEASON, which is false: Brent Seymour's 2012",
-    "and 2013 lines record 775, 180 and 118 saves. Then on 2026-07-26 the gate",
-    "stopped a run outright, because the captain's stats workbook had just been",
-    "ingested with a Winter 2011 season on it and EST. 2012 was about to be printed",
-    "on a shirt. The club is a year older than its own masthead claimed.",
-    "",
-    "Nothing here types a year. Copy that states one carries a {{firstYear}} token",
-    "and lib/store.ts resolves it from FOUNDED, which is counted off the earliest",
-    "session. Beyond that, nothing in the line states a fact about the archive at",
-    "all. Every product prints one mark: logo_one, and only logo_one.",
-    "",
-    "TWO INKS, AND THE SPLIT IS FORCED. The full-colour crest is outlined in black",
-    "with a black banner and disappears into a dark garment. The one-ink gold crest",
-    "is the same drawing with the cream keyed out, so the garment shows through the",
-    "banner lettering and the dog's face — which is legible on black and is nothing",
-    "at all on white. That is why there is a cap, a beanie and a black mug here.",
-    "",
-    "BOTH COME OFF THE VECTOR MASTERS, and that is the other change of 2026-07-28.",
-    "Every mark this line used to print was a 1254 px flat carrying ~900 px of",
-    "artwork: 158 dpi at six inches, which is why the crest was sold at six inches.",
-    "docs/logos/vector renders at whatever is asked for. cli.ts logos takes 6000 px,",
-    "which trims to 4526 x 5094 of artwork, and 4526 px is 453 dpi at ten inches.",
-    "",
-    "Two figures per print, not one. Printify's placement is a proportion of the",
-    "print area and the print area is bigger on a 3XL than on an S, so one design",
-    "prints 7.38 in wide on a small and 10.0 on an L. widthIn/dpi are the smallest",
-    "size offered; maxWidthIn/minDpi are the largest. The second pair is the one",
-    "that decides whether a print looks soft, and the floor is 300. The worst in",
-    "this line is 453.",
-    "",
-    "printify.productId is the DRAFT created on shop 28277243 by",
-    "`node packages/store/src/cli.ts sync`. Draft means visible=false: it exists in",
-    "the Printify dashboard and nowhere else. popUpUrl stays null until the Pop-Up",
-    "store exists and the product is published into it — see docs/store/POP-UP.md."
-  ],
+  "shopId": 28277243,
   "products": [
     {
       "id": "crest-tee",
-      "name": "Golden Retrievers Crest",
-      "kind": "tee",
-      "family": "crest",
-      "blurb": "The shield across the chest, full colour, ten inches wide on a large. Offered on light bodies: the crest is outlined in black and needs something to sit on.",
-      "spec": [
-        "4.2 oz combed ringspun cotton, 32 singles",
-        "Direct-to-garment, front only",
-        "Side-seamed, shoulder-taped, unisex sizing",
-        "453 dpi at its largest printed size"
-      ],
-      "priceCents": 2800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "White",
-          "hex": "#f4f4f2"
-        },
-        {
-          "name": "Ash",
-          "hex": "#c9cbc8"
-        },
-        {
-          "name": "Athletic Heather",
-          "hex": "#b0b2ad"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "tee",
-          "design": "crest-logo"
-        }
-      ],
+      "priceCents": 3600,
       "printify": {
+        "productId": "6a694440d256fe6fc00d05f1",
         "blueprintId": 12,
-        "printProviderId": 29,
-        "productId": "6a691bf1af16d93ed709ae75",
-        "status": "draft",
+        "printProviderId": 410,
         "print": [
           {
             "position": "front",
             "widthIn": 7.38,
             "heightIn": 8.3,
             "dpi": 614,
-            "maxWidthIn": 10,
-            "minDpi": 453,
-            "scale": 0.6666,
+            "maxWidthIn": 10.11,
+            "minDpi": 448,
+            "scale": 0.6739,
             "y": 0.42
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-hoodie",
-      "name": "Golden Retrievers Crest",
-      "kind": "hoodie",
-      "family": "crest",
-      "blurb": "The same shield, on eight ounces of fleece. The front panel is wider than it is tall, so a portrait mark is bound by height and stops just under seven inches across.",
-      "spec": [
-        "8.0 oz cotton/polyester fleece, brushed interior",
-        "Direct-to-garment, front only",
-        "Ribbed cuffs and hem, two-ply hood",
-        "545 dpi at its largest printed size"
-      ],
-      "priceCents": 5800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "Sport Grey",
-          "hex": "#a7a9a6"
-        },
-        {
-          "name": "White",
-          "hex": "#f4f4f2"
-        },
-        {
-          "name": "Ash",
-          "hex": "#c9cbc8"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "hoodie",
-          "design": "crest-logo"
-        }
-      ],
+      "priceCents": 7400,
       "printify": {
-        "blueprintId": 77,
-        "printProviderId": 29,
-        "productId": "6a691bf7bec56e07110b614f",
-        "status": "draft",
+        "productId": "6a694447d43879582e063057",
+        "blueprintId": 2002,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
-            "widthIn": 6.85,
-            "heightIn": 7.71,
-            "dpi": 661,
-            "maxWidthIn": 8.31,
-            "minDpi": 545,
-            "scale": 0.5541,
+            "widthIn": 6.88,
+            "heightIn": 7.75,
+            "dpi": 658,
+            "maxWidthIn": 8.35,
+            "minDpi": 542,
+            "scale": 0.5566,
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-sticker",
-      "name": "Crest Sticker",
-      "kind": "sticker",
-      "family": "crest",
-      "blurb": "Die-cut white vinyl, three inches or four. Rated for outdoor use, which is longer than two of the four platforms this record had to be recovered from managed to stay up.",
-      "spec": [
-        "Kiss-cut white vinyl, UV printed",
-        "3 in or 4 in square",
-        "Rated for outdoor use",
-        "1469 dpi at its largest printed size"
-      ],
       "priceCents": 600,
-      "sizes": [
-        "3 in",
-        "4 in"
-      ],
-      "colors": [
-        {
-          "name": "White vinyl",
-          "hex": "#f4f4f2"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "sticker",
-          "design": "crest-logo"
-        }
-      ],
       "printify": {
+        "productId": "6a69444b872e183088011da8",
         "blueprintId": 400,
         "printProviderId": 99,
-        "productId": "6a691bfbeacd773d0f0c8046",
-        "status": "draft",
         "print": [
           {
             "position": "front",
@@ -228,183 +62,57 @@
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-gold-tee",
-      "name": "Golden Retrievers Crest, Gold",
-      "kind": "tee",
-      "family": "crest-gold",
-      "blurb": "The same crest in a single ink. Everything cream in the full-colour mark is the shirt here: the banner lettering, the muzzle, the eyes, the tape on the blades.",
-      "spec": [
-        "4.2 oz combed ringspun cotton, 32 singles",
-        "Direct-to-garment, front only",
-        "Side-seamed, shoulder-taped, unisex sizing",
-        "Dark bodies only: on white the mark has nothing to cut into"
-      ],
-      "priceCents": 2800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d"
-        },
-        {
-          "name": "Heather Navy",
-          "hex": "#2f3a4c"
-        },
-        {
-          "name": "Dark Grey Heather",
-          "hex": "#3e4245"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "tee",
-          "design": "crest-gold-logo"
-        }
-      ],
+      "priceCents": 3600,
       "printify": {
+        "productId": "6a69444e872e183088011daa",
         "blueprintId": 12,
-        "printProviderId": 29,
-        "productId": "6a691bff558fb20af40d2e8d",
-        "status": "draft",
+        "printProviderId": 410,
         "print": [
           {
             "position": "front",
             "widthIn": 7.38,
             "heightIn": 8.3,
             "dpi": 614,
-            "maxWidthIn": 10,
-            "minDpi": 453,
-            "scale": 0.6666,
+            "maxWidthIn": 10.11,
+            "minDpi": 448,
+            "scale": 0.6739,
             "y": 0.42
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-gold-hoodie",
-      "name": "Golden Retrievers Crest, Gold",
-      "kind": "hoodie",
-      "family": "crest-gold",
-      "blurb": "The one-ink crest on eight ounces of fleece, above the pouch.",
-      "spec": [
-        "8.0 oz cotton/polyester fleece, brushed interior",
-        "Direct-to-garment, front only",
-        "Ribbed cuffs and hem, two-ply hood",
-        "Black, navy, charcoal"
-      ],
-      "priceCents": 5800,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d"
-        },
-        {
-          "name": "Charcoal",
-          "hex": "#4a4d4f"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "hoodie",
-          "design": "crest-gold-logo"
-        }
-      ],
+      "priceCents": 7400,
       "printify": {
-        "blueprintId": 77,
-        "printProviderId": 29,
-        "productId": "6a691c0595c3d338010312d3",
-        "status": "draft",
+        "productId": "6a694456a6b2dcf366075a52",
+        "blueprintId": 2002,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
-            "widthIn": 6.85,
-            "heightIn": 7.71,
-            "dpi": 661,
-            "maxWidthIn": 8.31,
-            "minDpi": 545,
-            "scale": 0.5541,
+            "widthIn": 6.88,
+            "heightIn": 7.75,
+            "dpi": 658,
+            "maxWidthIn": 8.35,
+            "minDpi": 542,
+            "scale": 0.5566,
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-gold-cap",
-      "name": "Golden Retrievers Crest, Gold",
-      "kind": "cap",
-      "family": "crest-gold",
-      "blurb": "A Richardson 112, embroidered. Structured front, mesh back, snapback, pre-curved visor. The panel is two inches tall and a portrait mark is bound by that figure.",
-      "spec": [
-        "Embroidered front, stitched not printed",
-        "Structured six-panel front, mesh back",
-        "Snapback closure, pre-curved visor, one size",
-        "Black, charcoal and two-tone"
-      ],
-      "priceCents": 3000,
-      "sizes": [
-        "One size"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        },
-        {
-          "name": "Black / Charcoal",
-          "hex": "#232628"
-        },
-        {
-          "name": "Black / White",
-          "hex": "#1c1f21"
-        },
-        {
-          "name": "Charcoal / Black",
-          "hex": "#3b3e40"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "cap",
-          "design": "crest-gold-logo"
-        }
-      ],
+      "priceCents": 4000,
       "printify": {
+        "productId": "6a694459d43879582e06305d",
         "blueprintId": 1743,
-        "printProviderId": 99,
-        "productId": "6a691c0a95c3d338010312d5",
-        "status": "draft",
+        "printProviderId": 410,
         "print": [
           {
             "position": "front",
@@ -417,47 +125,15 @@
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-gold-beanie",
-      "name": "Golden Retrievers Crest, Gold",
-      "kind": "beanie",
-      "family": "crest-gold",
-      "blurb": "A cuffed knit beanie, embroidered, which is what a Buffalo winter asks for and what this line could not offer until the crest had a colourway that survives black.",
-      "spec": [
-        "Embroidered on the cuff face, stitched not printed",
-        "Acrylic knit, double-layer cuff",
-        "One size",
-        "Black and navy"
-      ],
-      "priceCents": 2600,
-      "sizes": [
-        "One size"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "beanie",
-          "design": "crest-gold-logo"
-        }
-      ],
+      "priceCents": 3200,
       "printify": {
+        "productId": "6a69445cd43879582e06305f",
         "blueprintId": 1691,
-        "printProviderId": 99,
-        "productId": "6a691c0d6f6a3b1de20dbda6",
-        "status": "draft",
+        "printProviderId": 410,
         "print": [
           {
             "position": "front",
@@ -470,58 +146,28 @@
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     },
     {
       "id": "crest-gold-mug",
-      "name": "Golden Retrievers Crest, Gold",
-      "kind": "mug",
-      "family": "crest-gold",
-      "blurb": "Black ceramic, eleven ounces or fifteen. The black body is what makes this mark usable at all: on white it has nothing to cut into.",
-      "spec": [
-        "Black ceramic, 11 oz or 15 oz",
-        "Dye-sublimated, dishwasher and microwave safe",
-        "Printed one side, 3.15 in across",
-        "The 11 oz is the shorter canvas and sets the size for both"
-      ],
-      "priceCents": 1800,
-      "sizes": [
-        "11 oz",
-        "15 oz"
-      ],
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b"
-        }
-      ],
-      "images": [
-        {
-          "view": "front",
-          "silhouette": "mug",
-          "design": "crest-gold-logo"
-        }
-      ],
+      "priceCents": 2600,
       "printify": {
+        "productId": "6a69445f80f902545c027446",
         "blueprintId": 479,
-        "printProviderId": 29,
-        "productId": "6a691c10400d6bef250910ce",
-        "status": "draft",
+        "printProviderId": 99,
         "print": [
           {
             "position": "front",
-            "widthIn": 3.15,
-            "heightIn": 3.55,
-            "dpi": 1437,
-            "maxWidthIn": 3.18,
-            "minDpi": 1423,
-            "scale": 0.386,
+            "widthIn": 3,
+            "heightIn": 3.38,
+            "dpi": 1509,
+            "maxWidthIn": 3.16,
+            "minDpi": 1432,
+            "scale": 0.3868,
             "y": 0.5
           }
         ]
-      },
-      "popUpUrl": null
+      }
     }
   ]
 }

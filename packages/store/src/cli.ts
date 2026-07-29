@@ -7,6 +7,7 @@ import {
 } from "./api.ts";
 import { prepareLogo } from "./artwork.ts";
 import { catalogue } from "./catalogue.ts";
+import { cost } from "./cost.ts";
 import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
 import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
 import { report } from "./report.ts";
@@ -30,6 +31,8 @@ const USAGE = `
   Deciding what to sell
     report                   Cost, margin, postage and take-home for every product. LIVE.
     catalogue <query|bpId>   What else a garment could be, and who makes it.
+    cost <bpId> <ppId>       What a garment this shop has never sold would cost.
+                             Creates one draft, reads its cost, DELETES it.
     marks                    Every logo on disk, and which are wired into the line.
     line                     The matrix, as products, without calling anything.
 
@@ -144,6 +147,9 @@ async function main(argv: string[]): Promise<number> {
     case "catalog":
       return catalogue(argv[1]);
 
+    case "cost":
+      return cost(argv[1], argv[2]);
+
     case "marks": {
       const onDisk = await marksOnDisk();
       console.log("Every logo on disk. A mark has to be in MARKS in matrix.ts to be printable.\n");
@@ -179,6 +185,13 @@ async function main(argv: string[]): Promise<number> {
             `${item.colors.reduce((n, c) => n + c.variants.length, 0)} variants  ${item.title}`,
         );
         console.log(`${" ".repeat(20)} ${item.placements.map((p) => `${p.position} ${p.art} ${p.widthIn}in y${p.y}`).join(", ")}`);
+        if (item.sale) {
+          const rule = [
+            item.sale.minQuantity && item.sale.minQuantity > 1 ? `sold in ${item.sale.minQuantity}s` : "",
+            item.sale.addOnOnly ? "never on its own" : "",
+          ].filter(Boolean).join(", ");
+          console.log(`${" ".repeat(20)} ${rule} — ${item.sale.why}`);
+        }
       }
       console.log(
         `\n${LINE.length} products from ${MARKS.length} marks and ${ITEMS.length} items. ` +

@@ -2,340 +2,237 @@
 
 Print-on-demand through Printify, sold on `goldenretrieverhockey.com`.
 
-**Where the decisions live.** Printify's dashboard owns the catalogue: which
-garment, which print provider, what it costs. It is free, live, and better than
-anything we would write, so nothing here replaces it. The repo owns two things
-Printify cannot do — which logo goes on which item, and selling it on our own
-domain.
+Shop **28277243** only. `13449786` is a live Etsy storefront for an unrelated
+business; `packages/store/src/api.ts` refuses to address it and takes no shop id
+from any caller. All eight products are `visible=false` — drafts. Nothing in this
+repo can publish; that is one click in the dashboard.
 
 | Decision | Where |
 | --- | --- |
-| Which garment, which brand, which print provider | Printify dashboard |
-| What a variant costs you | Printify dashboard · `npm run store:report` |
-| Retail price, which logo, which colourways, print size | `packages/store/src/matrix.ts` |
-| What the customer pays for postage | our checkout — **not built yet** |
-| Whether the shop is public | Printify dashboard, one click. Nothing in this repo can publish |
-
-Shop **28277243** only. `13449786` is a live Etsy storefront for an unrelated
-business; `packages/store/src/api.ts` refuses to address it and takes no shop id
-from any caller.
+| Which garment, which maker, which logo, what it costs the customer | `packages/store/src/matrix.ts` |
+| What a variant costs **you** | Printify, read back by `npm run store:report` or `cli.ts cost` |
+| Postage, tax, delivery speed | this file, §2 and §3 |
+| Whether the shop is public | Printify dashboard |
 
 ---
 
-## 1. The line today
+## 1. The line
 
-Eight products, two logos, six items. All `visible=false` — drafts in the
-dashboard, invisible everywhere else. `/store` on the site is a placeholder.
+Two logos, six items, eight products. **Quality chose every row; price only set
+the retail figure afterwards.** Costs measured live on 2026-07-28 —
+`npm run store:report` is the source of truth and this table is a snapshot.
 
-From `npm run store:report`, 2026-07-28. **That command is the source of truth;
-this table is a snapshot.**
+| Product | Garment | Maker | Your cost | US post | Retail | You keep | Net |
+| --- | --- | --- | --- | ---: | ---: | ---: | ---: |
+| `crest-tee`, `crest-gold-tee` | Bella+Canvas 3001 | Printful | $14.25 – $18.43 | $4.75 | **$36.00** | $15.66 – $11.48 | 43.5 – 31.9% |
+| `crest-hoodie`, `crest-gold-hoodie` | Independent Trading IND4000 | SwiftPOD | $32.92 – $36.74 | $8.49 | **$74.00** | $30.14 – $26.32 | 40.7 – 35.6% |
+| `crest-gold-cap` | Richardson 112 | Printful | $20.08 | $4.89 | **$40.00** | $13.57 | 33.9% |
+| `crest-gold-beanie` | Yupoong 1501KC | Printful | $14.96 | $4.89 | **$32.00** | $10.92 | 34.1% |
+| `crest-gold-mug` | Black ceramic, 11/15 oz | Printify Choice | $7.19 – $8.29 | $8.99 | **$26.00** | $8.77 – $7.67 | 33.7 – 29.5% |
+| `crest-sticker` | Kiss-cut white vinyl | Printify Choice | $4.74 – $6.00 | $4.77 | **$18.00** *(three)* | $7.67 – $6.41 | 42.6 – 35.6% |
 
-| Product | Retail | Your cost | Margin | US post | |
-| --- | ---: | --- | ---: | ---: | --- |
-| `crest-tee` | $28.00 | $11.54 – $16.44 | 41 – 59% | $4.75 | |
-| `crest-hoodie` | $58.00 | $23.11 – $26.58 | 54 – 60% | $8.49 | |
-| `crest-sticker` | $6.00 | $1.58 – $2.00 | 67 – 74% | $4.59 | **POST** |
-| `crest-gold-tee` | $28.00 | $11.54 – $16.44 | 41 – 59% | $4.75 | |
-| `crest-gold-hoodie` | $58.00 | $23.11 – $26.58 | 54 – 60% | $8.49 | |
-| `crest-gold-cap` | $30.00 | $19.89 | 34% | $4.89 | **THIN** |
-| `crest-gold-beanie` | $26.00 | $14.96 | 43% | $4.89 | |
-| `crest-gold-mug` | $18.00 | $9.66 – $10.31 | 43 – 46% | $8.99 | **POST** |
+**Net** is what is left after the goods, US standard postage and Stripe — not
+gross margin, which flatters every item by the price of its own parcel.
 
-One of each, US, worst-case size, postage charged on top: customer pays
-**$301.84**, Printify takes **$183.04**, Stripe takes **$11.16**, you keep
-**$107.64** — 42.7% of retail.
+One of each, worst-case size, free US shipping: customer pays **$336.00**,
+Printify takes **$209.69**, Stripe takes **$12.14**, you keep **$114.17** —
+34.0%. At the old prices the same policy kept $57.27 on $250, 22.9%, with the
+sticker at −$1.06 a sale and the mug at −$2.12.
 
-**THIN** — under 40% gross on the dearest variant. **POST** — US postage over
-25% of the retail price.
+### Why each one
 
-Cost moves with size, not just with garment. A 3XL tee costs $16.44 against
-$11.54 for a small: same shirt, same price to the customer, 17 points of margin
-gone. The report breaks every product into cost tiers for that reason.
+| | Chosen | Over | Because |
+| --- | --- | --- | --- |
+| **Tee** | Bella+Canvas 3001 · **Printful** | Monster Digital; Comfort Colors 1717 | 3001 is the DTG standard and stayed. Printful posts to the EU for **$4.79** where Monster Digital charges $13.49, carries 432 variants against 299, and offers embroidery placements on the same shirt. It costs $2.71 more on a 3XL. Comfort Colors 1717 was probed at **$20.51** — 44% dearer for a garment-dyed body whose colour varies unit to unit. |
+| **Hoodie** | Independent Trading **IND4000** · SwiftPOD | Gildan 18500; Lane Seven LS14001; Champion S700 | Gildan 18500 is the budget default: 8 oz of 50/50. IND4000 is 10 oz of 80/20 with a jersey-lined hood, and its 15 × 10in front canvas prints the crest 8.35in wide against the Gildan's 8.31 in a smaller frame. SwiftPOD over Monster Digital because Monster Digital's IND4000 **has no black and stops at 2XL**. Lane Seven costs $29.26 and is the fallback if $74 proves too much. |
+| **Cap** | Richardson 112 · **Printful** | Printify Choice; Duplium | The 112 was already right. Printful is one named embroiderer rather than a routing layer, charges the same $4.89 in the US, and opens the EU at $4.59 — which Printify Choice does not offer **at any price**. It costs 19¢ more. |
+| **Beanie** | Yupoong 1501KC · **Printful** | Printify Choice | Identical cost, $14.96 either way, identical US postage. Printful adds Europe at $4.59. |
+| **Mug** | Black ceramic · **Printify Choice** | Monster Digital; District Photo; ORCA Coatings | $8.29 against Monster Digital's $10.31 for the same object at the same postage. ORCA Coatings — the only real *brand* in the mug category — was probed at **$13.08**, which is a $30 mug. A sublimated mug is a commodity; the money belongs in the garments. |
+| **Sticker** | Kiss-cut vinyl · Printify Choice | SPOKE | SPOKE rejects creation outright (`Decorator 1 not available for this blueprint 400`). There is no other maker. |
+
+### The sticker, and why it is sold in threes
+
+One sticker costs $2.00 and $4.59 to post. Free shipping on one needs $7.10 to
+break even and about $11 to earn anything, and an $11 sticker is not a store
+anybody wants to shop in. **Three post for $4.77.** So three is the unit: $18,
+posted free, 35.6% net. `matrix.ts` carries this as `sale.minQuantity` beside the
+price, because it *is* part of the price, and checkout has to enforce it.
+
+### The finding that shapes all of it
+
+**Postage does not merge across product types.** Verified against
+`POST /shops/28277243/orders/shipping.json` on 2026-07-28:
+
+| Basket | Quoted | Which is |
+| --- | ---: | --- |
+| tee | $4.75 | |
+| tee + cap, **both Printful** | $9.64 | $4.75 + $4.89 — two first-item rates |
+| tee + sticker | $9.34 | $4.75 + $4.59 |
+| tee × 2 | $7.15 | $4.75 + $2.40 — *this* merges |
+| sticker × 3 | $4.77 | $4.59 + 2 × $0.09 |
+
+Only **quantity of one thing** merges. Consolidating makers buys quality and
+international reach; it buys nothing on postage. Every price above therefore
+carries its own US first-item rate.
 
 ---
 
-## 2. Where do I change the brand of a shirt?
+## 2. Shipping
 
-Brand is the **blueprint**. Cost is the **print provider**. They are two
-different choices and only the second one usually moves the money.
+**Free within the US, priced in.** The customer pays the shelf price and nothing
+else. Postage is a cost of goods, and every retail figure in §1 already covers it.
 
-### Compare before you open the dashboard
+**International pays the difference, at cost** — their rate *minus* the US rate
+already inside the price, so nothing is charged twice. Where a maker posts abroad
+for less than it posts at home, there is no surcharge at all.
 
-```bash
-npm run store:catalogue "hooded sweatshirt"   # every hoodie blueprint, with ids
-npm run store:catalogue 77                    # blueprint 77's 18 print providers
-```
+| Destination | Tee | Hoodie | Cap | Beanie | Mug | Sticker ×3 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| US | free | free | free | free | free | free |
+| EU | +$0.04 | +$10.00 | free | free | **not offered** | **not offered** |
+| Canada | +$4.64 | +$4.20 | +$4.50 | +$4.50 | +$5.90 | +$5.00 |
+| Rest of world | +$5.25 | +$6.51 | +$5.10 | +$5.10 | +$12.20 | +$8.20 |
 
-The provider table gives, per provider: where they ship from, how many variants
-they carry, the first-item postage to the US and the EU, and the print areas.
-It marks the ones this line already uses and any known to reject creation.
+Europe costs four cents on a tee and nothing on a cap, because Printful posts
+there for $4.79 and $4.59 — against Monster Digital's $13.49, which is what the
+tee used to cost to send. Printify Choice does not ship to the EU at all, so the
+mug and the sticker are US, Canada and rest-of-world only.
 
-It does **not** give item cost, and it cannot: Printify publishes no cost
-anywhere in the catalog API. A variant's `cost` field appears for the first time
-on a product that already exists, which is why `store:report` can quote cost for
-these eight and nothing can quote it for a provider this shop has never used.
-Checked 2026-07-28 — the v1 catalog carries no price field and the whole v2
-catalog tree 404s apart from shipping.
+**Method: standard. Always.** Economy saves 46¢ on a tee, 80¢ on a hoodie and
+$2.20 on a mug — $4.56 across one of everything, 2.1% of retail — and costs three
+days, moving 2–5 days to 4–8. It also carries **no international rates at all**,
+so using it would mean two shipping policies. A delivery estimate is part of the
+product; it is not for sale at 46¢.
 
-### Then in Printify
+**Printify Express: not enabled, and mostly not available.** Printful quotes no
+express or priority on the tee, the cap or the beanie — standard and economy are
+the whole menu. The only product that offers it is the hoodie, where the live
+calculator returns `{"standard":849,"express":2099,"priority":2099}`: **$20.99
+against $8.49** to save perhaps two days on a 2–5 day service. The $13.99 quoted
+in earlier notes was ordinary carrier express on the old Monster Digital tee, not
+the Printify Express programme. One speed, one honest price. Revisit if customers
+ask, not before.
 
-| Want | Screen | Effect |
+**Printify sets these rates and you cannot.** `store:report` breaks them out per
+method and region; `POST /shops/28277243/orders/shipping.json` prices a real
+basket and creates nothing. That second call is what checkout will make.
+
+---
+
+## 3. Tax
+
+**Not settled by code, and nothing in this repo collects a cent.** Two separate
+questions, both the captain's:
+
+**1 — Tax you charge the customer.** The regular way for a US store selling
+direct is **Stripe Tax**: it calculates at checkout from the buyer's address and
+adds the line itself. It costs 0.5% of transactions where tax is calculated. It
+does **not** file or remit — that stays with you or a filing service.
+
+- Register in **New York** first: the business is here, so there is nexus from
+  the first sale.
+- Other states only once their economic-nexus threshold is crossed — commonly
+  $100,000 or 200 transactions in twelve months. A store this size will most
+  likely never cross one. Stripe Tax monitors thresholds and warns.
+- Enable it, set the origin address, add the NY registration, done.
+
+**2 — Tax Printify charges you.** Printify charges US sales tax on the
+*fulfilment*, to you, unless a **resale certificate** is on file — you are
+reselling the goods, not consuming them, and the tax is meant to be collected
+once, from the customer. Without it the same goods are taxed twice.
+
+- Printify → account settings → tax exemption → upload the resale certificate
+  for the state you are registered in.
+- This needs the registration in (1) to exist first.
+
+Ask an accountant before the first sale. Neither of these is a code change.
+
+---
+
+## 4. Stripe setup
+
+Everything here is done by the captain, in a browser, in this order. **Test mode
+until a real card has to work.**
+
+| # | Step | Detail |
 | --- | --- | --- |
-| A different **garment** (Gildan → Bella+Canvas) | Catalog → the garment → Start designing | A different blueprint id: a new product. The old one is untouched |
-| A different **maker** of the same garment | Open the product → the print provider selector in the editor → Change print provider | Cost and postage change; variant ids change; colours offered may change |
-| See what each maker charges | The provider-choice screen, which lists them with their prices | This is the only place per-provider cost is shown before a product exists |
+| 1 | Create the account | `dashboard.stripe.com`. Business entity and bank account are needed before payouts, not before testing |
+| 2 | Stay in **Test mode** | The toggle, top right. Every key below has a test twin. Nothing built against test keys can move money |
+| 3 | Copy the two keys | Developers → API keys. **Publishable** (`pk_…`) and **Secret** (`sk_…`) |
+| 4 | Put them in `.secrets/` | `.secrets/stripe_publishable.txt`, `.secrets/stripe_secret.txt`. The directory is gitignored, same as the Printify token |
+| 5 | Turn on **Stripe Tax** | Settings → Tax. Set the origin address. Add the New York registration. Leave the rest to threshold monitoring |
+| 6 | Create the webhook | Developers → Webhooks → add endpoint, the Worker's URL, event `checkout.session.completed`. Copy the **signing secret** (`whsec_…`) to `.secrets/stripe_webhook_secret.txt` |
+| 7 | Test the whole path | Card `4242 4242 4242 4242`, any future expiry. The order must reach Printify as a draft order and no further |
+| 8 | Go live last | Flip to Live mode, repeat 3 and 6 with the live keys, run one real order and refund it |
 
-`printify.com/app/catalog` and `printify.com/app/products`. Printify moves its
-UI; the screen names are what to look for.
+**Do not:**
 
-**Changing a provider on a live product changes its variant ids.** Anything in
-`matrix.ts` pointing at the old ids is now wrong. After any provider change:
-`npm run store:catalogue <blueprintId>` for the new provider id, then
-`node packages/store/src/cli.ts variants <blueprintId> <providerId>` for the new
-variant ids, then update the item in `matrix.ts`, then `npm run store:report`.
-
----
-
-## 3. Where do I see what an item costs me and what I make?
-
-**In the terminal** — everything, in one screen, live:
-
-```bash
-npm run store:report
-```
-
-Per product: blueprint id with brand and model, provider id with name and
-country, cost/profit/margin per cost tier, postage per method and region,
-printed size and dpi, and what a single sale leaves you after Stripe. Then a
-total, then the products worth a decision, then a note on how every number was
-made. It writes nothing and creates nothing.
-
-**In Printify** — open a product, go to its pricing screen. It shows cost,
-retail and profit per variant, with a margin control that sets retail from a
-target percentage.
-
-**Do not set retail there.** Retail lives in `matrix.ts` and `sync` pushes it.
-A price edited in the dashboard and not in the repo drifts, and
-`store:report` will say so — it compares the two and flags the disagreement.
-
-### The one-sale arithmetic
-
-Stripe takes 2.9% + 30¢ of the **whole** charge, postage included.
-
-| | Customer pays | You keep |
-| --- | --- | --- |
-| Postage on top | retail + postage | retail − cost − Stripe |
-| Free shipping | retail | retail − cost − postage − Stripe |
-
-Break-even retail with free shipping is `(cost + postage + 0.30) / 0.971`. The
-report prints it per product. Two are already under water there: a $6.00 sticker
-needs $7.10 and an $18.00 mug needs $20.19.
+- put any key in the repo, in `matrix.ts`, in a Worker's source, or in a commit
+  message — `.secrets/` and Cloudflare's encrypted variables, nowhere else;
+- expose the secret key to the browser. `pk_…` is public by design, `sk_…` never
+  leaves the server;
+- price a basket from the browser. The Worker re-prices every line from
+  `matrix.ts` before it creates a session, or a customer sets their own price;
+- go live before a test order has gone end to end and been refunded.
 
 ---
 
-## 4. How does shipping work, and what can I control?
+## 5. Changing something
 
-**Printify's rates are the print provider's and you cannot set them.** There is
-no API to change them and no dashboard field for it. They are a cost, like the
-garment.
+Everything is in **`packages/store/src/matrix.ts`** — `MARKS` (the logos),
+`ITEMS` (the things to print on), `MATRIX` (one line per product). Ids, titles,
+colourways, descriptions and placements are all derived, so a tee cannot be $36
+in one place and $32 in another.
 
-You control four things.
+| Want | Do |
+| --- | --- |
+| Change a price | `priceCents` on the item. Then `sync` (or `updateProduct`) to push it |
+| Change the garment or the maker | Compare with `cli.ts catalogue <query>` then `catalogue <blueprintId>`; get real costs with `cli.ts cost <bpId> <ppId>`; get variant ids with `cli.ts variants <bpId> <ppId>`; edit the item; then **delete the old draft in the dashboard and re-sync** |
+| Add a product | One line in `MATRIX`. `cli.ts line` composes it and refuses a mark on a ground it cannot use |
+| Add a logo | Master into `docs/logos/`, entry in `MARKS` with its `reach`, `cli.ts logos` to render. **Getting `reach` wrong destroys the artwork** — `packages/store/src/artwork.ts` explains why |
+| Remove a product | Delete its `MATRIX` line, then delete the draft in the dashboard. `sync` only ever creates |
 
-**1 — Which provider.** The rate is per provider, so choosing one chooses a
-rate. The same beanie is posted to the EU for $4.59 by Printful and not at all
-by Printify Choice.
+**Item cost is not in the catalog API and cannot be.** A variant's cost appears
+for the first time on a product that exists, so `cli.ts cost` creates one draft,
+reads the cost off it, and deletes it in a `finally`. Two ceilings found by
+running it: **100 enabled variants** per product (`400 code 8251`), and providers
+the catalog advertises that reject creation outright.
 
-**2 — Which method you buy.** Every order you submit names one, as
-`shipping_method`. Verified live on 2026-07-28:
+**Changing a maker changes the variant ids** — usually. On this line they did not
+(blueprint 12's ids are the same through Printful and Monster Digital), but that
+is a property of the blueprint, not a rule. Always read them back with
+`cli.ts variants`.
 
-| Id | Method | US tee, first item | Handling | |
-| --- | --- | ---: | --- | --- |
-| 1 | standard | $4.75 | 2–5 days | the default |
-| 2 | priority | not in the catalog rates | | the order calculator quotes $13.99 |
-| 3 | express | $7.99 | 2–3 days | **not available on these products** |
-| 4 | economy | $4.29 | 4–8 days | |
+### Before anything is uploaded
 
-Economy is 46¢ cheaper than standard on a tee and three days slower. Across
-eight products that is real money and nobody has decided it yet.
-
-Two of those rows need care. **Printify Express is a separate programme** — a
-product is `is_printify_express_eligible` and then has to be *enabled*. Both
-tees are eligible; nothing on this shop is enabled. That is why the catalog
-quotes express at $7.99 and the live order calculator, asked about the same
-tee, answered `{"standard":475,"express":1399,"priority":1399}`: $13.99 is
-ordinary carrier express, not the Printify programme. Enabling it is a decision
-nobody has made.
-
-**3 — Whether it merges.** Printify groups postage by product type **and**
-provider. Two items from the same provider pay one first-item rate plus an
-additional-item rate; two items from different providers pay two first-item
-rates. This line is deliberately on two providers. A third would cost the
-customer a whole extra first item on any mixed basket.
-
-**4 — What the customer pays.** This is entirely ours and it is decided **in our
-checkout, not in Printify**. Three options:
-
-| | Customer sees | Risk |
-| --- | --- | --- |
-| **Pass through** | Postage added at checkout, at Printify's rate | Honest, and a $4.59 postage line on a $6.00 sticker looks absurd |
-| **Flat rate** | One figure — say $5 US — whatever is in the basket | Simple. You lose on a single mug ($8.99) and win on a basket of tees |
-| **Absorb** | "Free shipping", postage built into retail | Best conversion. Needs every price above its break-even, and two are not |
-
-Nothing is decided. A sensible shape given these numbers: free US shipping over
-a threshold, flat rate below it, and no international sales at launch — EU
-postage on a tee is $13.49 and on a mug is $19.49, which is more than the mug.
-
-**The rate for a real basket** comes from
-`POST /v1/shops/28277243/orders/shipping.json` with the line items and the
-address. It creates nothing. Verified 2026-07-28: standard $4.75 for a US tee,
-matching the catalog exactly. That is the call our checkout makes — the catalog
-rates in `store:report` are for deciding prices, not for quoting a customer.
+- **Every printed claim re-derives from `site.json`.** `CLAIMS` in `line.ts` is
+  empty today because nothing in the line states a count, a year or a name in
+  type. It has caught three real errors, including a `SAVES: 0` shirt that was
+  false. The moment a garment states something, it gets a `Claim` or it does not
+  get printed.
+- **Nothing uploads under 300 dpi** at its largest printed size. The worst in the
+  line today is **448 dpi** — the tee, printing 10.11in wide on a 3XL off a
+  4526 × 5094 px master rendered from the vector at 6000 px.
 
 ---
 
-## 5. How do I add a product, or change which logo is on what?
+## 6. What is left
 
-Everything is in **`packages/store/src/matrix.ts`**. Three lists:
-
-- **`MARKS`** — the logos. Each carries its source file, the press file it
-  renders to, how its background comes off, and **the grounds it may sit on**.
-- **`ITEMS`** — the things to print on. Each carries blueprint, provider, price,
-  sizes, print positions, default placement, and colourways **tagged light or
-  dark**.
-- **`MATRIX`** — one line per product: which mark, on which item.
-
-Ids and titles are derived: `crest` + `tee` → id `crest-tee`, title
-`Golden Retrievers Crest — Tee`. Descriptions are composed from the mark's
-blurb, the item's spec, the colour list and the ground note. Nothing is typed
-twice.
-
-### Worked example — sell the gold crest on a sticker
-
-Add one line:
-
-```ts
-export const MATRIX: MatrixEntry[] = [
-  { mark: "crest", item: "tee" },
-  { mark: "crest", item: "sticker" },
-  { mark: "crest-gold", item: "sticker" },   // <- new
-  ...
-```
-
-```
-$ node packages/store/src/cli.ts line
-crest-gold on sticker: the sticker is offered on light bodies and this mark can
-only sit on dark. Dark bodies only, and there cannot be a light one — on white
-the mark has nothing to cut into. Add a dark colourway to the item, or drop the
-line.
-```
-
-It refuses, and the refusal is correct: the one-ink crest works by letting the
-garment show through the banner and the dog's face, and white vinyl gives it
-nothing to cut into. To do it anyway you would add a black-vinyl colourway to
-the sticker item — a real variant id from a real provider — and it would then
-build.
-
-### Worked example — sell the full-colour crest on a cap
-
-The four cap colourways in the line are black, charcoal and two-tone: all dark.
-So this needs two edits, not one. Get the variant id from the catalogue first —
-never type one from memory:
-
-```
-$ node packages/store/src/cli.ts variants 1743 99
-  118722  One size / Black              size=One size color=Black
-  ...
-  118728  One size / Heather Grey/White size=One size color=Heather Grey / White
-```
-
-Then add the light colourway to the item, and the matrix line:
-
-```ts
-// in ITEMS, the cap:
-colourways: [
-  { name: "Black", hex: "#17191b", ground: "dark", variants: [118722] },
-  ...
-  { name: "Heather Grey / White", hex: "#c9c8c4", ground: "light", variants: [118728] },  // <- new
-],
-
-// in MATRIX:
-{ mark: "crest", item: "cap" },   // <- new
-```
-
-Then check it before it goes anywhere near the API:
-
-```bash
-node packages/store/src/cli.ts line          # composes it, fetches nothing
-node packages/store/src/cli.ts sync --dry-run  # printed size and dpi, sends nothing
-npm run store:report                         # what it would cost and earn
-node packages/store/src/cli.ts sync          # creates it as a DRAFT
-```
-
-### Adding a new logo
-
-1. Put the master in `docs/logos/` or `docs/logos/vector/`. Vector is strongly
-   preferred: it has no resolution ceiling.
-2. Add it to `MARKS` with its grounds and its `reach` — `trim` if it already has
-   transparency, `everywhere` for a one-ink mark, `border` for a full-colour
-   mark on a solid background. **Getting `reach` wrong destroys the artwork**;
-   `packages/store/src/artwork.ts` explains why in detail.
-3. `node packages/store/src/cli.ts logos` renders it.
-4. `node packages/store/src/cli.ts marks` lists every image under `docs/logos/`,
-   at any depth, and shows which are wired in. Two are wired today. Everything
-   else is a concept nobody can buy.
-5. Add matrix lines.
-
-### Removing a product
-
-Delete its `MATRIX` line. **That does not delete the draft on Printify** — `sync`
-only ever creates. Delete it in the dashboard, or with
-`deleteProduct()` in `api.ts`. `store:report` lists anything on the shop that
-the matrix no longer knows about.
-
-### The two gates that stay
-
-- **Every printed claim re-derives from `site.json` before an upload runs.**
-  `CLAIMS` in `line.ts` is empty today because nothing in the line states a
-  count, a year or a name in type. The moment a garment does, it gets a `Claim`
-  there or it does not get printed. This has caught three real errors, including
-  a `SAVES: 0` shirt that was false and an `EST. 2012` that was a year wrong.
-- **Nothing uploads under 300 dpi at its largest printed size.** `sync` measures
-  every placement in the line before it uploads a byte and throws with every
-  offender named. The worst in the line today is 453 dpi.
-
----
-
-## 6. What is still missing before anyone can buy
-
-Nothing on the site sells anything. `/store` renders one sentence. Four pieces,
-in order:
+`/store` on the site renders one sentence. Nothing sells anything yet.
 
 | # | Piece | What it does |
 | --- | --- | --- |
-| 1 | **Cart** | Holds variant ids and quantities. Client-side; the site is a static export |
-| 2 | **Stripe Checkout session** | A Worker that prices the basket server-side — never trust a price from the browser — adds postage per the rule chosen in §4, and returns a session URL |
-| 3 | **Stripe webhook** | Receives `checkout.session.completed`, verifies the signature, and is the only thing allowed to trigger fulfilment |
-| 4 | **Printify order submission** | `POST /v1/shops/28277243/orders.json` with line items, address and `shipping_method`. Idempotent on the Stripe session id, or a retry ships two parcels |
+| 0 | **Rebuild the drafts** | Seven of eight products changed garment or maker. Delete them in the dashboard, refresh `apps/web/data/products.json`, run `cli.ts sync`. `store:report` flags each one `GARMENT` until this is done |
+| 1 | **Cart** | Variant ids and quantities, client-side. Must enforce `sale.minQuantity` |
+| 2 | **Stripe Checkout session** | A Worker that re-prices the basket from `matrix.ts`, adds the international difference per §2, and returns a session URL |
+| 3 | **Stripe webhook** | `checkout.session.completed`, signature verified. The only thing allowed to trigger fulfilment |
+| 4 | **Printify order** | `POST /v1/shops/28277243/orders.json`, `shipping_method: 1` (standard). Idempotent on the Stripe session id, or a retry ships two parcels |
 
-Cloudflare Workers, $0 at this volume. Stripe is $0/month, 2.9% + 30¢ per sale.
+Cloudflare Workers, $0 at this volume. Stripe $0/month + 2.9% + 30¢. Stripe Tax
+0.5%. Printify free plan, per item.
 
-### Decisions needed before any of it is worth building
-
-1. **Postage model.** Pass through, flat rate, or absorb — §4. Everything
-   downstream depends on it.
-2. **Shipping method.** Standard or economy: 46¢ and three days per tee. And
-   whether to enable Printify Express on the two products eligible for it.
-3. **International.** EU postage on a tee is $13.49. Sell there, or US and
-   Canada only?
-4. **The cap.** 34% gross at $30. Raise it, or find a cheaper maker.
-5. **The sticker and the mug.** Both cost more to post than they can carry
-   alone. Minimum order value, or accessories only?
-6. **Stripe account.** Whose, and on what legal entity.
-7. **Returns and reprints.** Printify reprints its own faults free and charges
-   for everything else. Who eats a wrong size?
-8. **Sales tax.** Printify charges the merchant sales tax on the fulfilment.
-   Whether anything must be collected from the customer is a question for an
-   accountant, not for this file.
+**Still open:** who eats a wrong size (Printify reprints its own faults free and
+charges for everything else), and which legal entity the Stripe account sits on.
 
 ---
 
@@ -344,20 +241,21 @@ Cloudflare Workers, $0 at this volume. Stripe is $0/month, 2.9% + 30¢ per sale.
 ```bash
 npm run store:report              # cost, margin, postage, take-home. LIVE. Reads only
 npm run store:catalogue "hoodie"  # what else it could be
-npm run store:catalogue 77        # who makes it, and what they charge to post
+npm run store:catalogue 2002      # who makes it, and what they charge to post
 npm run store:line                # the matrix as products. Fetches nothing
 
-node packages/store/src/cli.ts marks      # every logo on disk
-node packages/store/src/cli.ts audit      # every product on shop 28277243
-node packages/store/src/cli.ts claims     # re-derive printed claims from site.json
-node packages/store/src/cli.ts variants 12 29
-node packages/store/src/cli.ts logos      # render the masters for press
+node packages/store/src/cli.ts cost 12 410   # real cost: creates a draft, reads it, deletes it
+node packages/store/src/cli.ts variants 12 410
+node packages/store/src/cli.ts marks         # every logo on disk
+node packages/store/src/cli.ts audit         # every product on shop 28277243
+node packages/store/src/cli.ts claims        # re-derive printed claims from site.json
+node packages/store/src/cli.ts logos         # render the masters for press
 node packages/store/src/cli.ts sync --dry-run
-node packages/store/src/cli.ts sync       # create drafts. Cannot publish
+node packages/store/src/cli.ts sync          # create drafts. Cannot publish
 ```
 
 Token: `PRINTIFY_API_TOKEN`, or `.secrets/printify_token.txt`. Gitignored, never
 logged, never committed.
 
-Implementation notes — the placement geometry, the two artwork traps, the shop
-guard — are in [`packages/store/README.md`](../packages/store/README.md).
+Implementation notes — placement geometry, the two artwork traps, the shop guard
+— are in [`packages/store/README.md`](../packages/store/README.md).

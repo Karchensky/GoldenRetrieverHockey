@@ -12,6 +12,13 @@ the line would be listed all at once when it is finished. `products.json` stayed
 because it is not page copy: it is the record `sync` checks the live shop
 against, and deleting it would leave the sync with no witness.
 
+**The drafts on the shop are one line behind the matrix.** Seven of the eight
+changed garment, maker or price on 2026-07-28 and none has been rebuilt: `sync`
+only ever creates, and it matches on title, so it will verify the old draft
+rather than replace it. Delete the seven in the dashboard, bring
+`apps/web/data/products.json` up to date, then `cli.ts sync`. Until then
+`store:report` flags each one `GARMENT` and refuses to quote its cost.
+
 **[`docs/STORE.md`](../../docs/STORE.md) is the manual** — where to change a
 brand, where cost and margin live, how shipping works and what is controllable,
 how to add a product, and what is left before anyone can buy. This file is the
@@ -20,10 +27,11 @@ implementation notes underneath it.
 ```sh
 npm run store:report                        # cost, margin, postage, take-home. LIVE
 npm run store:catalogue "hoodie"            # what else it could be
-npm run store:catalogue 77                  # who makes it, and what they charge to post
+npm run store:catalogue 2002                # who makes it, and what they charge to post
 npm run store:line                          # the matrix as products; fetches nothing
 
 node packages/store/src/cli.ts shops        # start here on a new token; smallest request
+node packages/store/src/cli.ts cost 12 410  # real per-variant cost: creates a draft, reads it, deletes it
 node packages/store/src/cli.ts marks        # every logo on disk, and which are wired in
 node packages/store/src/cli.ts claims       # re-derive every printed claim from site.json
 node packages/store/src/cli.ts audit        # every product on 28277243, and only that shop
@@ -39,9 +47,14 @@ credential — never committed, never logged, never printed.
 
 `src/matrix.ts` holds three lists — `MARKS`, `ITEMS`, `MATRIX` — and
 `buildLine()` turns them into products. One line in `MATRIX` is one product; its
-id, title, colourways, description and placement are all derived, so a tee
-cannot be $28 in one place and $32 in another and the same paragraph cannot be
-spelled two ways.
+id, title, colourways, description, placement and buying rules are all derived,
+so a tee cannot be $36 in one place and $32 in another and the same paragraph
+cannot be spelled two ways.
+
+An item may carry a `sale` — `minQuantity`, `addOnOnly`, and the sentence saying
+why. It travels with the price rather than living in checkout because it **is**
+part of the price: the sticker is $6 and sold in threes, and neither half of that
+is true without the other.
 
 `buildLine()` refuses rather than guesses, and every refusal names both halves of
 the pairing:
@@ -57,8 +70,10 @@ It also catches an unknown mark or item, a duplicate line, a colourway whose
 variant-id count does not match the item's sizes, and a placement position the
 garment does not offer. That last one found a real error the day it was written:
 this package had believed Bella+Canvas 3001 through Monster Digital took sleeve
-prints. All 299 of its variants offer front, back and neck only. The hoodie does
-take sleeves; the tee never did.
+prints. All 299 of its variants offer front, back and neck only. (Through
+Printful, which prints the tee now, it takes ten positions including both sleeves
+and four embroidery areas — the declaration is per provider and the report
+re-checks it against the catalog every run.)
 
 `productLine()` is a function and not a constant so those messages arrive
 through the CLI's own error handler rather than as a module-loader stack.
@@ -66,19 +81,49 @@ through the CLI's own error handler rather than as a module-loader stack.
 ## What the report reads, and what does not exist to read
 
 `store:report` is live and read-only. Per product it prints blueprint id with
-brand and model, provider id with name and country, cost/profit/margin per cost
-tier, postage per method and region, printed size and dpi, and the take-home on
-one sale under two shipping policies. Then a total, then what is worth a
-decision, then how every figure was made.
+brand and model, provider id with name and country, cost and take-home per cost
+tier, postage per method and region, printed size and dpi, and what one US sale
+leaves under the policy the store actually ships on — **free US postage, priced
+in**. Then a total, then what is worth a decision, then how every figure was made.
 
-Four things about Printify's API that the report had to be built around, all
+Two things it will not do, both added on 2026-07-28.
+
+**It quotes retail from the matrix, never from the shop.** `matrix.ts` is where
+the price is decided and `sync` is what pushes it, so a figure sitting on a
+product is the last one uploaded rather than the current one. Reading the shop's
+price made a repricing look like it had not happened until it had been uploaded.
+The disagreement is still reported; it just no longer decides the arithmetic.
+
+**It refuses to quote a cost that belongs to a different garment.** Products are
+matched by TITLE, and a title is derived from the mark and the item — so changing
+the hoodie from Gildan to Independent Trading in `matrix.ts` leaves the old
+Gildan draft still answering to "Golden Retrievers Crest — Hoodie". Every cost
+would be the Gildan's, quoted confidently against the Independent's price, and it
+would look right and be wrong by ten dollars a unit. The row is flagged
+`GARMENT`, the cost tiers are suppressed, and the report prints the `cli.ts cost`
+line that gets the real number.
+
+Six things about Printify's API that the report had to be built around, all
 checked live on 2026-07-28:
 
 - **There is no cost in the catalog.** `/v1/catalog/.../variants.json` returns
   options and print areas and no price, and the v2 catalog tree 404s apart from
   shipping. A variant's `cost` appears for the first time on a product that
   exists. This is why `store:catalogue` can compare providers on postage, print
-  area and origin but not on cost, and says so.
+  area and origin but not on cost, and says so — and why `src/cost.ts` exists:
+  it creates one draft, reads the cost off it, and deletes it in a `finally`.
+  That is not a workaround, it is the only route there is.
+- **A product may hold at most 100 enabled variants.** 120 returns
+  `400 code 8251: Too many variants enabled. Maximum allowed: 100`. Undocumented,
+  and nothing in the catalog response predicts it; `cost.ts` caps at 100 and
+  prints the cap beside the answer.
+- **Postage does not merge across product types.** `POST /shops/{id}/orders/
+  shipping.json` prices a tee at $4.75, a cap at $4.89, and the two together at
+  **$9.64** — both from Printful, two first-item rates. Two tees quote $7.15 and
+  three stickers $4.77, so quantity of ONE thing does merge. This file used to
+  claim the opposite, on the strength of Printify's own wording about grouping
+  "by product type and provider"; the basket call settles it. It is the reason
+  every retail price in `matrix.ts` carries a whole first-item rate.
 - **v1 shipping profiles are unlabelled and overlapping.** Blueprint 12 through
   Monster Digital returns three separate US profiles at $4.29, $4.75 and $7.99
   over the same variants with nothing to say which is which, and one blanket
@@ -172,8 +217,14 @@ knows about, which is how that gets noticed.
 The eight drafts that exist were created before the line was composed, so their
 descriptions on Printify are the older hand-written prose rather than the text
 `matrix.ts` composes today. Nothing depends on the two matching; `sync` will not
-overwrite them and the report does not compare them. Push `updateProduct()` if
-they should agree.
+overwrite them and the report does not compare them.
+
+**Title matching is also why a garment change needs a deletion.** Change the
+blueprint or the provider and the title does not move, so `sync` finds the old
+draft and leaves it alone — a Gildan hoodie answering to a name that now means an
+Independent Trading one. `store:report` catches exactly this and flags it
+`GARMENT`; the fix is to delete the draft in the dashboard and sync again, not to
+push an update, because a product's blueprint cannot be changed after creation.
 
 ## The geometry, now that it is known
 
@@ -192,12 +243,13 @@ and read back:
 Because these are proportions, one placement is legal for every garment size even
 though the catalog reports a bigger canvas for a 3XL than for an S. **The print
 grows with the shirt, and that is not free.** One `print_areas` entry with one
-scale covers all 318 variants of a tee, so a design sent at 5.17 inches on a
-small arrives at 7.01 inches on a 3XL and its resolution falls by the same third.
+scale covers every variant of a tee, so a design sent at 7.38 inches on a small
+arrives at 10.11 inches on a 3XL and its resolution falls by the same third.
 `sync` therefore measures the smallest canvas and the largest, and reports
 `widthIn`/`dpi` alongside `maxWidthIn`/`minDpi`. Quoting only the first is
 quoting the best case. The floor is **300 dpi at the printed size, on the largest
-size offered**; the worst in the line is 453.
+size offered**; the worst in the line is **448** — the tee, 10.11 inches wide on
+a 3XL off a 4526 px master.
 
 **The canvases are not all the same SHAPE either**, and that is a third number.
 A black mug is 2475 × 1155 in 11 oz and 2448 × 1266 in 15 oz, so the wider canvas
@@ -207,13 +259,15 @@ landscape wordmark on it and would have cropped a portrait crest, so
 `canvasesFor()` now returns the tightest height-over-width of every variant and
 `place()` clamps against that instead of against whichever canvas it was given.
 
-Legal `position` strings come from the catalog, not the docs: each variant's
-`placeholders[].position`. Through Monster Digital, Bella+Canvas 3001 accepts
-`front`, `back` and `neck` — **not** the sleeves, which this file claimed until
-`store:report` compared the declaration in `matrix.ts` against the catalog and
-disagreed. Gildan 18500 does accept `left_sleeve` and `right_sleeve`. Each item
-in `matrix.ts` declares its positions so a typo fails offline, and the report
-re-checks the declaration against the live catalog every run.
+Legal `position` strings come from the catalog, not the docs, and **they are per
+provider as well as per garment**: each variant's `placeholders[].position`.
+Bella+Canvas 3001 through Monster Digital accepted `front`, `back` and `neck` and
+not the sleeves, which this file claimed until `store:report` compared the
+declaration in `matrix.ts` against the catalog and disagreed. The same shirt
+through Printful offers ten, four of them embroidery. Each item in `matrix.ts`
+declares its positions so a typo fails offline, and the report re-checks the
+declaration against the live catalog every run — in both directions, so a
+provider change that quietly adds positions is reported too.
 
 ## Two things found the hard way
 

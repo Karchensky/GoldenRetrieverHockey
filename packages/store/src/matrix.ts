@@ -14,7 +14,7 @@ import type { Reach } from "./artwork.ts";
  * Add a line to MATRIX and there is a new product. Delete one and it is gone.
  * Everything a product needs beyond those two words — its id, its title, its
  * colourways, its price, its placement, its description — is derived from the
- * mark and the item, so the same tee cannot be $28 in one place and $32 in
+ * mark and the item, so the same tee cannot be $36 in one place and $32 in
  * another.
  *
  * **Nothing here is a printed claim about the archive.** Copy that states a
@@ -81,6 +81,27 @@ export type Colourway = {
   variants: number[];
 };
 
+/**
+ * How an item may be bought. **Checkout enforces this; the rule lives here,
+ * beside the price, because it IS part of the price.**
+ *
+ * It exists because Printify's postage does not merge across product types.
+ * Proven on 2026-07-28 against `POST /shops/28277243/orders/shipping.json`: a
+ * tee and a cap, both from Printful, quote $9.64 — $4.75 + $4.89, two separate
+ * first-item rates. Three stickers quote $4.77 — $4.59 plus two additional-item
+ * rates of $0.09. So quantity of ONE thing is nearly free to post and a second
+ * KIND of thing never is, and an item whose postage is larger than the item has
+ * exactly one honest shape: sell it in a quantity that carries its own parcel.
+ */
+export type Sale = {
+  /** Fewest units of this item a basket may hold. Default 1. */
+  minQuantity?: number;
+  /** True when this may not be the only thing in a basket. */
+  addOnOnly?: boolean;
+  /** Why. Printed by `cli.ts line` and store:report; never guessed at. */
+  why: string;
+};
+
 export type Item = {
   /** Second half of every product id. The word he uses for it. */
   id: string;
@@ -88,8 +109,14 @@ export type Item = {
   title: string;
   blueprintId: number;
   printProviderId: number;
-  /** Retail, integer cents. One price per item, whatever mark is on it. */
+  /**
+   * Retail, integer cents, **US postage included** — the store ships free
+   * within the US, so the rate is a cost of goods and not a line at checkout.
+   * One price per item, whatever mark is on it. See docs/STORE.md §3.
+   */
   priceCents: number;
+  /** Buying rules, where the plain "one of these, on its own" does not work. */
+  sale?: Sale;
   sizes: string[];
   /**
    * Print areas this blueprint/provider offers, as the CATALOG reports them —
@@ -147,6 +174,8 @@ export type LineItem = {
   colors: { name: string; hex: string; variants: number[] }[];
   sizes: string[];
   placements: Placement[];
+  /** Buying rules checkout must enforce. Undefined means "one, on its own, fine". */
+  sale?: Sale;
   claims: string[];
   /** Back-references, so a report can say what a product is made of. */
   markId: string;
@@ -223,29 +252,47 @@ export const MARKS: Mark[] = [
 /**
  * What there is to print on. Blueprint and provider are the two numbers that
  * decide brand, cost and shipping; `npm run store:report` prints all three from
- * the live API, and `store:catalogue` shows what else is on offer.
+ * the live API, `store:catalogue` shows what else is on offer, and
+ * `cli.ts cost <bp> <pp>` gets a real per-variant cost out of a provider this
+ * shop has never used.
  *
- * The two providers here are not an accident. Printify groups shipping by
- * product type AND provider, so a third provider in this line would not merge
- * with anything and the customer would pay a second first-item rate.
+ * **Quality is the selection rule here, not price.** Every blueprint below is
+ * the best garment its category offers on this platform and every provider is
+ * the best maker of it, judged on the print method, the size of the canvas, the
+ * colourways carried, where it posts from and what it charges to post abroad.
+ * Cost decided nothing; it only set the retail price afterwards. The measured
+ * costs and the reasoning are in docs/STORE.md §1.
+ *
+ * **Postage does not merge across product types**, which is the fact that shapes
+ * this list. See `Sale` above: a tee and a cap from the SAME provider quote two
+ * first-item rates. So consolidating providers buys quality and international
+ * reach, not postage, and every price below carries its own US first-item rate.
  */
 export const ITEMS: Item[] = [
   {
     id: "tee",
     title: "Tee",
     blueprintId: 12,
-    printProviderId: 29,
-    priceCents: 2800,
+    // Printful rather than Monster Digital. The garment is identical — the
+    // variant ids are per blueprint, not per provider — and the choice buys
+    // three things measured on 2026-07-28: the EU first-item rate falls from
+    // $13.49 to $4.79, which is four cents more than posting it inside the US;
+    // 432 variants and 72 colourways against 299 and fewer; and embroidery
+    // placements on the same shirt that Monster Digital does not offer. It also
+    // makes the cap and the beanie, so three of the six items come off one
+    // accountable manufacturer. It costs $2.71 more on the dearest size.
+    printProviderId: 410,
+    priceCents: 3600,
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    // Front, back and neck — and NOT the sleeves, which this repo believed until
-    // `store:report` compared the declaration against the catalog on 2026-07-28
-    // and disagreed. All 299 variants of blueprint 12 through Monster Digital
-    // report the same three. The hoodie below really does take sleeves; the tee
-    // never did.
-    positions: ["front", "back", "neck"],
-    // 7.375in puts the print at 10.0in on the four sizes that share the
-    // 15 x 17in canvas — L, XL, 2XL, 3XL, four of the six. 4526px over 10in is
-    // 453 dpi. y 0.42 lifts it off the hem.
+    // Ten of them, and the whole list has to be declared: store:report compares
+    // this against the live catalog and flags a difference in either direction.
+    positions: [
+      "front", "back", "left_sleeve", "right_sleeve", "neck",
+      "large_center_embroidery", "front_left_chest", "front_center_chest",
+      "left_sleeve_embroidery", "right_sleeve_embroidery",
+    ],
+    // y 0.42 lifts it off the hem. The width is checked by `sync --dry-run`,
+    // which prints the printed size on the smallest garment and the largest.
     placement: { position: "front", widthIn: 7.375, y: 0.42 },
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [18540, 18541, 18542, 18543, 18544, 18545] },
@@ -258,37 +305,49 @@ export const ITEMS: Item[] = [
     ],
     spec:
       "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
-      "shoulder-taped, unisex sizing. Direct-to-garment, front only. Ten inches " +
-      "wide on a large, seven and a half on a small — the print is a proportion " +
-      "of the garment, so it grows with it.",
+      "shoulder-taped, unisex sizing. Printed direct-to-garment by Printful, " +
+      "front only. The print is a proportion of the garment, so it grows with " +
+      "it — seven and a half inches across on a small, ten on a 3XL.",
   },
   {
     id: "hoodie",
     title: "Hoodie",
-    blueprintId: 77,
-    printProviderId: 29,
-    priceCents: 5800,
+    // Independent Trading Co. IND4000, not Gildan 18500. The Gildan is the
+    // budget default: 8 oz of 50/50 blend with a one-ply body. The IND4000 is
+    // 10 oz of 80/20, jersey-lined hood, twill-taped neck — the hoodie the
+    // merchandise trade treats as the quality tier. It also carries a 15 x 10in
+    // front canvas against the Gildan's 12.4 x 8.2, which is what lets this
+    // crest print eight inches across instead of under seven.
+    blueprintId: 2002,
+    // SwiftPOD, not Monster Digital, and the reason is stock rather than money:
+    // Monster Digital's IND4000 has no black and stops at 2XL. SwiftPOD carries
+    // black, runs to 3XL, and adds the back and both sleeves as print areas. It
+    // is also 55 cents cheaper on black.
+    printProviderId: 39,
+    priceCents: 7400,
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
-    // The hoodie front is 12.36 x 8.24in on a small — wider than it is tall,
-    // because the pouch takes the rest — so a portrait mark is bound by HEIGHT.
-    // At 6.85in wide the crest is 7.71in tall, just inside the 94% the provider
-    // will not trim into. Sized to the garment; the file would go to fifteen.
-    placement: { position: "front", widthIn: 6.85, y: 0.5 },
+    // The front is 15 x 10in — wider than it is tall, because the pouch takes
+    // the rest — so a portrait mark is bound by HEIGHT. 8.3in wide puts the
+    // crest at 9.34in tall, just inside the 94% the provider will not trim into.
+    placement: { position: "front", widthIn: 8.3, y: 0.5 },
+    // Three, and the missing ones are a cost decision made in the open.
+    // Measured on 2026-07-28: black is $32.92/$34.16, navy $34.58/$36.74, white
+    // $34.58/$35.79 — and every other colour SwiftPOD offers, the heathers and
+    // bone and sandstone among them, jumps to $42.35-$42.71 at 2XL and 3XL.
+    // That is a different garment's price, and one price per item cannot carry
+    // both. Bring one back and the retail has to rise with it.
     colourways: [
-      { name: "Sport Grey", hex: "#a7a9a6", ground: "light", variants: [32902, 32903, 32904, 32905, 32906, 32907] },
-      { name: "White", hex: "#f4f4f2", ground: "light", variants: [32910, 32911, 32912, 32913, 32914, 32915] },
-      { name: "Ash", hex: "#c9cbc8", ground: "light", variants: [33345, 33346, 33347, 33348, 33349, 33350] },
-      { name: "Black", hex: "#17191b", ground: "dark", variants: [32918, 32919, 32920, 32921, 32922, 32923] },
-      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [32894, 32895, 32896, 32897, 32898, 32899] },
-      { name: "Charcoal", hex: "#4a4d4f", ground: "dark", variants: [42211, 42212, 42213, 42214, 42215, 42216] },
+      { name: "White", hex: "#f4f4f2", ground: "light", variants: [123996, 123981, 123966, 124011, 123936, 123951] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [123875, 123859, 123843, 123891, 123811, 123827] },
+      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [147880, 147879, 147878, 147881, 147876, 147877] },
     ],
     spec:
-      "Gildan 18500: 8.0 oz cotton/polyester fleece, brushed interior, front pouch, " +
-      "two-ply hood, flat drawcord, ribbed cuffs and hem. The drawcord is the " +
-      "extent of the features. The front panel is wider than it is tall, so a " +
-      "portrait mark is limited by height here and prints a little under seven " +
-      "inches across.",
+      "Independent Trading Co. IND4000: 10 oz of 80/20 cotton-polyester " +
+      "heavyweight fleece, jersey-lined hood, twill-taped neck, ribbed cuffs and " +
+      "hem, front pouch. The front panel is wider than it is tall, so a portrait " +
+      "mark is limited by height here — just under seven inches across on a " +
+      "small, eight and a third on a 3XL.",
   },
   {
     id: "sticker",
@@ -298,6 +357,19 @@ export const ITEMS: Item[] = [
     // this blueprint and rejects creation outright — see REJECTS_CREATION.
     printProviderId: 99,
     priceCents: 600,
+    // Three at a time, and this is arithmetic rather than merchandising.
+    // A single sticker costs $2.00 to make and $4.59 to post, so free shipping
+    // needs $7.10 just to break even and about $11 to earn anything — an $11
+    // price on a $2 object, which is not a store anybody should want to shop in.
+    // Quantity of ONE thing is the only postage Printify discounts: three
+    // stickers post for $4.77, not $13.77. So three is the unit. $18 for three,
+    // posted free, keeps 35.6% and reads as a fair price for what arrives.
+    sale: {
+      minQuantity: 3,
+      why:
+        "One sticker costs more to post ($4.59) than to make ($2.00), and free " +
+        "shipping on one would need an $11 price tag. Three post for $4.77.",
+    },
     sizes: ['3" × 3"', '4" × 4"'],
     positions: ["front"],
     placement: { position: "front", widthIn: 2.3, y: 0.5 },
@@ -307,8 +379,9 @@ export const ITEMS: Item[] = [
     spec:
       "UV printed on white vinyl, kiss-cut, rated for outdoor use. It will " +
       "outlast at least two of the platforms this team's record had to be " +
-      "recovered from.",
-    colourSentence: { light: "Three inches or four." },
+      "recovered from. Sold in threes — one sticker costs more to post than to " +
+      "make, and three cost the same to post as one.",
+    colourSentence: { light: "Three inches or four, mix them as you like." },
     // A sticker has no body, so the mark's note about needing a light one under
     // it is about the wrong object. The white vinyl IS the light ground.
     groundNote: { light: null },
@@ -317,12 +390,17 @@ export const ITEMS: Item[] = [
   {
     id: "cap",
     title: "Cap",
+    // Richardson 112 is already the standard — the cap the trade embroiders when
+    // the cap matters. Nothing in the catalog beats it, so the blueprint stayed.
     blueprintId: 1743,
-    // Richardson 112 through Printify Choice rather than the same cap through
-    // Duplium, which the catalog also offers: $4.89 to post rather than $7.49,
-    // and it keeps the line to two providers so shipping merges.
-    printProviderId: 99,
-    priceCents: 3000,
+    // Printful rather than Printify Choice. Printify Choice is a routing layer:
+    // it picks a partner for you and does not offer Europe at all. Printful is
+    // one named embroiderer with its own machines, charges the same $4.89 to
+    // post inside the US, opens the EU at $4.59, and costs 19 cents more per
+    // cap. On embroidery, where the difference between shops is visible in the
+    // stitch, 19 cents is not a decision.
+    printProviderId: 410,
+    priceCents: 4000,
     sizes: ["One size"],
     positions: ["front"],
     // The embroidery panel is 5.9 x 2in. A portrait mark is bound by the second
@@ -344,8 +422,12 @@ export const ITEMS: Item[] = [
     id: "beanie",
     title: "Beanie",
     blueprintId: 1691,
-    printProviderId: 99,
-    priceCents: 2600,
+    // Printful, for the cap's reasons and at literally no cost: measured on
+    // 2026-07-28, Printful and Printify Choice both charge $14.96 for this
+    // beanie and the same $4.89 to post it. Printful adds Europe at $4.59,
+    // which Printify Choice does not offer at any price.
+    printProviderId: 410,
+    priceCents: 3200,
     sizes: ["One size"],
     positions: ["front"],
     placement: { position: "front", widthIn: 1.45, y: 0.5 },
@@ -361,14 +443,21 @@ export const ITEMS: Item[] = [
     id: "mug",
     title: "Mug",
     blueprintId: 479,
-    printProviderId: 29,
-    priceCents: 1800,
+    // Printify Choice rather than Monster Digital: $7.19/$8.29 against
+    // $9.66/$10.31 for the same object posted at the same $8.99, measured on
+    // 2026-07-28. A sublimated ceramic mug is a commodity — the coating and the
+    // press are the same everywhere, and the quality argument that buys a named
+    // embroiderer for the cap buys nothing here. ORCA Coatings, the one actual
+    // BRAND in the mug category, was probed and costs $13.08 through the single
+    // provider that carries it. That is a $30 mug, and it is not one.
+    printProviderId: 99,
+    priceCents: 2600,
     sizes: ["11 oz", "15 oz"],
     positions: ["front"],
-    // 3.15in, and the limit is the 11 oz rather than the 15. The two sizes are
-    // not the same SHAPE — 2475 x 1155 against 2448 x 1266 — so the taller mug
-    // is the wider canvas and a scale that fits it overflows the smaller one.
-    placement: { position: "front", widthIn: 3.15, y: 0.5 },
+    // 3.0in, and the limit is the 11 oz rather than the 15. The two sizes are
+    // not the same SHAPE, so the taller mug is the wider canvas and a scale
+    // that fits it overflows the smaller one.
+    placement: { position: "front", widthIn: 3.0, y: 0.5 },
     colourways: [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [65217, 104470] },
     ],
@@ -533,6 +622,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
       colors: usable.map((c) => ({ name: c.name, hex: c.hex, variants: c.variants })),
       sizes: item.sizes,
       placements: [{ ...placement, art: mark.press }],
+      ...(item.sale ? { sale: item.sale } : {}),
       claims: entry.claims ?? [],
       markId: mark.id,
       itemId: item.id,
