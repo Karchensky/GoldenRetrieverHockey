@@ -517,7 +517,7 @@ export const ITEMS: Item[] = [
     // back the day international opens** — the EU difference is larger than the
     // saving.
     printProviderId: 29,
-    priceCents: 2900,
+    priceCents: 2500,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     // Three, not the ten Printful offered: Monster Digital prints and does not
@@ -565,7 +565,7 @@ export const ITEMS: Item[] = [
     // black, runs to 3XL, and adds the back and both sleeves as print areas. It
     // is also 55 cents cheaper on black.
     printProviderId: 39,
-    priceCents: 6600,
+    priceCents: 5500,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
@@ -600,7 +600,7 @@ export const ITEMS: Item[] = [
     // Printify Choice, not SPOKE (provider 1). SPOKE appears in the catalog for
     // this blueprint and rejects creation outright — see REJECTS_CREATION.
     printProviderId: 99,
-    priceCents: 450,
+    priceCents: 350,
     // Vinyl, not apparel. No exemption anywhere applies to it.
     taxCode: "txcd_99999999",
     // Three at a time, and this is arithmetic rather than merchandising.
@@ -650,7 +650,7 @@ export const ITEMS: Item[] = [
     // cap. On embroidery, where the difference between shops is visible in the
     // stitch, 19 cents is not a decision.
     printProviderId: 410,
-    priceCents: 3500,
+    priceCents: 3000,
     // Hats, not general clothing. New York exempts caps the same way it exempts
     // shirts; the specific code is the one that says so in every other state too.
     taxCode: "txcd_30060006",
@@ -683,7 +683,7 @@ export const ITEMS: Item[] = [
     // beanie and the same $4.89 to post it. Printful adds Europe at $4.59,
     // which Printify Choice does not offer at any price.
     printProviderId: 410,
-    priceCents: 2700,
+    priceCents: 2300,
     taxCode: "txcd_30060006",
     sizes: ["One size"],
     positions: ["front"],
@@ -711,7 +711,7 @@ export const ITEMS: Item[] = [
     // BRAND in the mug category, was probed and costs $13.08 through the single
     // provider that carries it. That is a $30 mug, and it is not one.
     printProviderId: 99,
-    priceCents: 1700,
+    priceCents: 1600,
     // Ceramic. Fully taxable everywhere this shop can post to.
     taxCode: "txcd_99999999",
     sizes: ["11 oz", "15 oz"],
@@ -810,11 +810,18 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
   { mark: "nose-to-nose", item: "beanie", placement: { widthIn: 3.2 } },
 
-  /* Mug — landscape, and the two widest marks wrap it the way a mug wants to be
-     wrapped. The medallion is the third because a mug is the one object in the
-     line you look at head-on. */
-  { mark: "rink-board", item: "mug", placement: { widthIn: 6.5 } },
-  { mark: "nose-to-nose", item: "mug", placement: { widthIn: 6.0 } },
+  /* Mug — and the widths here are smaller than the canvas allows, on purpose.
+     The print area is 7.76in wide but a mug is a CYLINDER: seen head-on, only
+     the middle four inches or so face you and the rest curves away. Printify's
+     mockup renders that honestly, which is how it was caught — `rink-board` at
+     6.5in came back with the dog roundel bisected by the left edge of the mug
+     and the stick running off the right. It was not mispositioned; it was
+     printed correctly onto a surface that bends.
+     So the two wide marks are sized to the VISIBLE face rather than to the
+     canvas, and the medallion — which was already inside it at 3.44in — is
+     untouched. A mug is the one object in this line you look at head-on. */
+  { mark: "rink-board", item: "mug", placement: { widthIn: 4.5 } },
+  { mark: "nose-to-nose", item: "mug", placement: { widthIn: 4.0 } },
   { mark: "mascot-medallion", item: "mug" },
 
   /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every

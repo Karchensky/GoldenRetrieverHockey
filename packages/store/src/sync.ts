@@ -111,6 +111,16 @@ export type SyncResult = {
   id: string;
   productId: string;
   title: string;
+  /**
+   * As the SHOP holds it, tokens already resolved.
+   *
+   * Not `LineItem.description`, which still carries `{{firstYear}}`: that gets
+   * filled by `fillTokens` on the way into the create body and nowhere else, so
+   * reading the matrix version put the literal text "Playing since
+   * {{firstYear}}" on eighteen product pages while Printify showed "Playing
+   * since 2011". Taking it off the read-back cannot drift from what was sent.
+   */
+  description: string;
   blueprintId: number;
   printProviderId: number;
   visible: boolean;
@@ -286,6 +296,9 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
     if (options.dryRun) {
       results.push({
         id: item.id, productId: "(dry run)", title: item.title,
+        // Filled here too: a dry run that printed the raw token would be a
+        // preview of something the real run does not produce.
+        description: fillTokens(item.description, site),
         blueprintId: item.blueprintId, printProviderId: item.printProviderId,
         visible: false, variants: variantIds.length,
         priceCents: item.priceCents, costCents: 0, marginCents: 0,
@@ -455,7 +468,7 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
     return {
       id: r.id,
       title: item.title,
-      description: item.description,
+      description: r.description,
       priceCents: r.priceCents,
       taxCode: item.taxCode,
       markId: item.markId,
@@ -641,6 +654,7 @@ function verify(
     id,
     productId: got.id,
     title: got.title,
+    description: got.description,
     blueprintId: got.blueprint_id,
     printProviderId: got.print_provider_id,
     visible: got.visible,

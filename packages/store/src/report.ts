@@ -55,8 +55,15 @@ export const STRIPE_FLAT_CENTS = 30;
  * The margin that decides whether a product is worth selling is therefore what
  * is left after the goods and after Stripe — the postage cancels, being both
  * collected and paid. Net below this on the dearest variant is called out.
+ *
+ * **Lowered from 30% to 20% on 2026-07-29**, when the captain set the line at
+ * about 25% net: *"We want lower margins; I don't want to be ripping people
+ * off."* A threshold above the target flags everything and therefore flags
+ * nothing. 20% is where a sale stops being worth making — below it a single
+ * customer-error reprint, which Printify charges for, costs more than three
+ * sales earn.
  */
-const THIN_NET_MARGIN = 0.3;
+const THIN_NET_MARGIN = 0.2;
 /**
  * US first-item shipping above this share of retail is called out separately.
  * It is not a pricing failure once postage is priced in — it is a warning that
