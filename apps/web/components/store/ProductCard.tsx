@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { blurb, heroMockup, money } from "../../lib/store";
+import { blurb, fromLabel, heroMockup } from "../../lib/store";
 import type { Product } from "../../lib/store";
 import s from "./store.module.css";
 
@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <h3 className={s.name}>
             <Link href={`/store/${product.id}`}>{product.title}</Link>
           </h3>
-          <span className={s.price}>{money(product.priceCents)}</span>
+          <span className={s.price}>{fromLabel(product)}</span>
         </div>
 
         <p className={s.blurb}>{blurb(product)}</p>

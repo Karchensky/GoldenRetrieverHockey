@@ -7,7 +7,7 @@ import {
   listShippingRates,
 } from "./api.ts";
 import { loadArt, place, productLine } from "./line.ts";
-import { ITEMS, MARKS } from "./matrix.ts";
+import { ITEMS, MARGIN_TARGET, MARKS } from "./matrix.ts";
 import type { LineItem } from "./matrix.ts";
 import { canvasesFor } from "./sync.ts";
 import type { PrintifyProduct } from "./types.ts";
@@ -117,10 +117,30 @@ const stripeFee = (cents: number): number => Math.round(cents * STRIPE_PERCENT) 
  */
 type Unit = { units: number; charge: number; goods: number; post: number; stripe: number; keep: number };
 
-function unitOf(row: Row, cost: number): Unit {
+/**
+ * The price set against a given cost, from the shop's own tiers.
+ *
+ * Every call site below asks about a COST — the dearest variant, the cheapest —
+ * and every one of them used to assume a single price. With price following
+ * cost, the pairing has to be looked up or the report quotes a 3XL's cost
+ * against a small's price and reports a margin nobody earns.
+ */
+function priceAtCost(row: Row, cost: number): number {
+  return row.tiers.find((t) => t.cost === cost)?.price ?? row.retail;
+}
+
+/** That tier's own US postage, or undefined to fall back to the product's worst. */
+function postAtCost(row: Row, cost: number): number | undefined {
+  return row.tiers.find((t) => t.cost === cost)?.post || undefined;
+}
+
+function unitOf(row: Row, cost: number, price = row.retail, firstItem?: number): Unit {
   const units = Math.max(1, row.sale?.minQuantity ?? 1);
   const rate = row.shipping.find((m) => m.method === "standard")?.byRegion.get("US");
-  const post = rate ? rate.first + (units - 1) * rate.additional : 0;
+  // `firstItem` overrides the product's worst rate with this TIER's own, which
+  // is what a margin has to be measured against. See `usPostPerVariant`.
+  const first = firstItem ?? rate?.first ?? 0;
+  const post = rate ? first + (units - 1) * rate.additional : first;
   const goods = cost * units;
 
   /* POSTAGE IS PASSED THROUGH, NOT ABSORBED — changed 2026-07-29.
@@ -136,7 +156,7 @@ function unitOf(row: Row, cost: number): Unit {
      left is the retail less the cost less the card fee — and Stripe's cut is
      taken on the whole charge including the postage, which is why `post` is
      still in the arithmetic at all. */
-  const charge = row.retail * units + post;
+  const charge = price * units + post;
   const stripe = stripeFee(charge);
   return { units, charge, goods, post, stripe, keep: charge - goods - post - stripe };
 }
@@ -244,11 +264,54 @@ async function shippingFor(
   return out;
 }
 
+/**
+ * US standard first-item postage **per variant**, not collapsed to the worst.
+ *
+ * `shippingFor` above deliberately takes the worst rate across a product's
+ * variants, because most of what this report says about shipping is a warning
+ * and the pessimistic figure is the right one to warn with. That is wrong for a
+ * MARGIN: an 11 oz mug posts for $6.99 and a 15 oz for $8.99, and charging the
+ * small one the big one's postage reported it at 18.6% against a real 20.9% —
+ * a product that looks under target and is not, which is the kind of figure
+ * somebody reprices against.
+ */
+async function usPostPerVariant(
+  blueprintId: number,
+  printProviderId: number,
+  variantIds: number[],
+): Promise<Map<number, number>> {
+  const all = await ratesOf(blueprintId, printProviderId);
+  const standard = all.find((m) => m.method === "standard");
+  const out = new Map<number, number>();
+  if (!standard) return out;
+  for (const id of variantIds) {
+    const rate = standard.byVariant.get(id)?.get("US");
+    if (rate) out.set(id, rate.first);
+  }
+  return out;
+}
+
 /* ------------------------------------------------------------------ */
 /* One product                                                         */
 /* ------------------------------------------------------------------ */
 
-type CostTier = { cost: number; variants: number; sizes: string[]; colours: string[] };
+/**
+ * One cost the shop reports, and **the price that was set against it**.
+ *
+ * `price` arrived on 2026-07-29 with per-variant pricing. Before that a product
+ * had one price and a tier only needed its cost; now the price follows the cost
+ * so that a 3XL and a small earn the same margin, and a tier without its own
+ * price cannot state a margin at all.
+ */
+type CostTier = {
+  cost: number;
+  price: number;
+  /** US standard first-item postage for this tier — its OWN, not the product's worst. */
+  post: number;
+  variants: number;
+  sizes: string[];
+  colours: string[];
+};
 
 type Row = {
   id: string;
@@ -298,11 +361,21 @@ type Row = {
 };
 
 /** Split the enabled variants into cost tiers, since cost moves with size. */
-function costTiers(product: PrintifyProduct, sizeOf: Map<number, string>, colourOf: Map<number, string>): CostTier[] {
-  const tiers = new Map<number, { variants: number; sizes: Set<string>; colours: Set<string> }>();
+function costTiers(
+  product: PrintifyProduct,
+  sizeOf: Map<number, string>,
+  colourOf: Map<number, string>,
+  postOf: Map<number, number>,
+): CostTier[] {
+  const tiers = new Map<number, { price: number; post: number; variants: number; sizes: Set<string>; colours: Set<string> }>();
   for (const v of product.variants) {
     if (!v.is_enabled) continue;
-    const tier = tiers.get(v.cost) ?? { variants: 0, sizes: new Set<string>(), colours: new Set<string>() };
+    const tier = tiers.get(v.cost) ?? { price: v.price, post: 0, variants: 0, sizes: new Set<string>(), colours: new Set<string>() };
+    tier.post = Math.max(tier.post, postOf.get(v.id) ?? 0);
+    // Variants at one cost should be at one price. If they are not, the DEAREST
+    // is reported, because that is the one whose margin looks best and the point
+    // of this report is to be pessimistic where it is unsure.
+    tier.price = Math.max(tier.price, v.price);
     tier.variants++;
     const size = sizeOf.get(v.id);
     const colour = colourOf.get(v.id);
@@ -312,7 +385,7 @@ function costTiers(product: PrintifyProduct, sizeOf: Map<number, string>, colour
   }
   return [...tiers.entries()]
     .sort((a, b) => a[0] - b[0])
-    .map(([cost, t]) => ({ cost, variants: t.variants, sizes: [...t.sizes], colours: [...t.colours] }));
+    .map(([cost, t]) => ({ cost, price: t.price, post: t.post, variants: t.variants, sizes: [...t.sizes], colours: [...t.colours] }));
 }
 
 /* ------------------------------------------------------------------ */
@@ -358,27 +431,36 @@ export async function report(): Promise<number> {
         `the matrix now says blueprint ${item.blueprintId} / provider ${item.printProviderId}`;
     }
 
-    // **Retail is the matrix's, always.** matrix.ts is where the price is
-    // decided and sync is what pushes it; a figure sitting on the shop is the
-    // last one pushed, not the current one. This used to report the SHOP's
-    // price, which meant a repricing looked like it had not happened until it
-    // had been uploaded. The disagreement is still reported — it just no longer
-    // decides the arithmetic.
-    const retail = item.priceCents;
+    /* **RETAIL COMES OFF THE SHOP NOW, and that is a reversal.**
+       It used to come off the matrix, because the matrix decided the price and
+       the shop merely held the last one pushed. That is no longer true: the
+       price is COMPUTED, per variant, from the cost the shop reports and the
+       postage Printify quotes, so `item.priceCents` is an anchor sent at
+       creation and nothing more. Reporting it made every tee read $23 with a
+       19.7-37.3% spread — precisely the spread per-variant pricing removed.
+       The matrix figure is still shown when the product is not on the shop at
+       all, because then there is nothing else to show. */
+    const shopPrices = product
+      ? product.variants.filter((v) => v.is_enabled).map((v) => v.price)
+      : [];
+    const retail = shopPrices.length ? Math.min(...shopPrices) : item.priceCents;
     let tiers: CostTier[] = [];
     if (product) {
-      const prices = [...new Set(product.variants.filter((v) => v.is_enabled).map((v) => v.price))];
-      if (prices.length === 1 && prices[0] !== undefined && prices[0] !== retail) {
-        notes.push(`the shop still prices this at ${usd(prices[0])} — sync has not pushed ${usd(retail)}`);
-      } else if (prices.length > 1) {
-        notes.push(`${prices.length} different prices on the shop: ${prices.map(usd).join(", ")}`);
+      const prices = [...new Set(shopPrices)].sort((a, b) => a - b);
+      if (prices.length > 1) {
+        notes.push(`priced per size: ${prices.map(usd).join(" · ")}`);
       }
       if (product.visible) notes.push("VISIBLE — this product is not a draft");
       if (garmentDrift) {
         notes.push(`the shop holds a DIFFERENT GARMENT — ${garmentDrift}`);
         notes.push("no cost is shown: the one on the shop is the old garment's. `cli.ts cost` quotes the new one");
       } else {
-        tiers = costTiers(product, sizeOf, colourOf);
+        tiers = costTiers(
+          product,
+          sizeOf,
+          colourOf,
+          await usPostPerVariant(item.blueprintId, item.printProviderId, variantIds),
+        );
       }
     } else {
       notes.push("not on the shop yet — `cli.ts sync` would create it");
@@ -497,7 +579,7 @@ function flagsFor(row: Row): string[] {
   const flags: string[] = [];
   if (row.garmentDrift) flags.push("GARMENT");
   if (row.maxCost) {
-    const worst = unitOf(row, row.maxCost);
+    const worst = unitOf(row, row.maxCost, priceAtCost(row, row.maxCost), postAtCost(row, row.maxCost));
     if (worst.keep / worst.charge < THIN_NET_MARGIN) flags.push("THIN");
   }
   // Measured over the same smallest basket: a sticker's $4.59 is 76% of one
@@ -518,32 +600,42 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   /* --- at a glance ------------------------------------------------ */
 
   console.log("");
-  console.log(" POSTAGE IS PASSED THROUGH AT COST. 'pays' is the goods plus the real postage.");
+  console.log(` PRICED PER SIZE AT ${pct(MARGIN_TARGET)} NET — every size earns the same, so a 3XL`);
+  console.log(` costs more than a small instead of the small subsidising it. 'pays' is the`);
+  console.log(` goods plus the real postage; postage is passed through at cost.`);
   console.log("");
   console.log(
-    ` ${"product".padEnd(20)}${"pays".padStart(8)}  ${"your cost".padEnd(17)}` +
+    ` ${"product".padEnd(20)}${"pays".padStart(17)}  ${"your cost".padEnd(17)}` +
       `${"US post".padStart(8)}  ${"you keep".padEnd(17)}${"net".padStart(14)}  flags`,
   );
   console.log(` ${THIN.slice(0, 94)}`);
 
   for (const row of rows) {
-    const best = unitOf(row, row.minCost);
-    const worst = unitOf(row, row.maxCost);
-    const label = worst.units > 1 ? `${row.id} x${worst.units}` : row.id;
-    const cost = row.maxCost
-      ? row.minCost === row.maxCost ? usd(worst.goods) : `${usd(best.goods)} - ${usd(worst.goods)}`
-      : "—";
-    const keep = !row.maxCost
-      ? "—"
-      : row.minCost === row.maxCost ? usd(worst.keep) : `${usd(worst.keep)} - ${usd(best.keep)}`;
+    /* CHEAPEST AND DEAREST BY COST, then presented in the order the READER
+       expects — ascending. With one price per product the cheap variant was
+       always the better sale, so "worst - best" happened to read low to high.
+       Per-variant pricing inverts that: every size earns the same PERCENTAGE, so
+       the dearest size returns the most DOLLARS, and the old ordering printed
+       "$5.70 - $4.53". Ranges are sorted on what they contain. */
+    const low = unitOf(row, row.minCost, priceAtCost(row, row.minCost), postAtCost(row, row.minCost));
+    const high = unitOf(row, row.maxCost, priceAtCost(row, row.maxCost), postAtCost(row, row.maxCost));
+    const single = row.minCost === row.maxCost;
+    const span = (a: number, b: number): string =>
+      a === b ? usd(a) : `${usd(Math.min(a, b))} - ${usd(Math.max(a, b))}`;
+
+    const label = high.units > 1 ? `${row.id} x${high.units}` : row.id;
+    const pays = row.maxCost ? span(low.charge, high.charge) : usd(high.charge);
+    const cost = row.maxCost ? span(low.goods, high.goods) : "—";
+    const keep = !row.maxCost ? "—" : span(low.keep, high.keep);
     const net = !row.maxCost
       ? "—"
-      : row.minCost === row.maxCost
-        ? pct(worst.keep / worst.charge)
-        : `${pct(worst.keep / worst.charge)} - ${pct(best.keep / best.charge)}`;
+      : single
+        ? pct(high.keep / high.charge)
+        : `${pct(Math.min(low.keep / low.charge, high.keep / high.charge))} - ` +
+          `${pct(Math.max(low.keep / low.charge, high.keep / high.charge))}`;
     console.log(
-      (` ${label.padEnd(20)}${usd(worst.charge).padStart(8)}  ${cost.padEnd(17)}` +
-        `${(worst.post ? usd(worst.post) : "—").padStart(8)}  ${keep.padEnd(17)}${net.padStart(14)}  ` +
+      (` ${label.padEnd(20)}${pays.padStart(17)}  ${cost.padEnd(17)}` +
+        `${(high.post ? usd(high.post) : "—").padStart(8)}  ${keep.padEnd(17)}${net.padStart(14)}  ` +
         `${flagsFor(row).join(" ")}`).trimEnd(),
     );
   }
@@ -608,7 +700,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
           `     ${"cost".padEnd(9)}${"+ post".padEnd(9)}${"you keep".padEnd(10)}${"net".padEnd(9)}what it covers`,
         );
         for (const tier of row.tiers) {
-          const u = unitOf(row, tier.cost);
+          const u = unitOf(row, tier.cost, tier.price, tier.post || undefined);
           const covers = tier.sizes.length
             ? `${plural(tier.variants, "variant")} · ${tier.sizes.join(", ")}`
             : plural(tier.variants, "variant");
@@ -648,7 +740,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
       /* the one-sale numbers, and what abroad adds on top */
       if (row.maxCost) {
         const ship = usPost(row);
-        const u = unitOf(row, row.maxCost);
+        const u = unitOf(row, row.maxCost, priceAtCost(row, row.maxCost), postAtCost(row, row.maxCost));
         const breakEven = Math.ceil(
           (row.maxCost * u.units + u.post + STRIPE_FLAT_CENTS) / (1 - STRIPE_PERCENT) / u.units,
         );
@@ -697,7 +789,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   for (const row of rows) {
     if (!row.maxCost) { unpriced++; continue; }
     priced++;
-    const u = unitOf(row, row.maxCost);
+    const u = unitOf(row, row.maxCost, priceAtCost(row, row.maxCost), postAtCost(row, row.maxCost));
     retail += u.charge;
     cost += u.goods;
     ship += u.post;
@@ -734,7 +826,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
         console.log(`       ${" ".repeat(20)} Delete the old draft in the dashboard, then \`cli.ts sync\`.`);
       }
       if (flags.includes("THIN")) {
-        const u = unitOf(row, row.maxCost);
+        const u = unitOf(row, row.maxCost, priceAtCost(row, row.maxCost), postAtCost(row, row.maxCost));
         const dearest = row.tiers[row.tiers.length - 1]?.sizes ?? [];
         const where = row.tiers.length > 1 && dearest.length ? ` on ${dearest.join("/")}` : "";
         console.log(

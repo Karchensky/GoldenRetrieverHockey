@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { money } from "../../../../packages/store/src/basket";
+import { money, unitPriceFor, variantIdFor } from "../../../../packages/store/src/basket";
 import type { Product } from "../../lib/store";
 import { useCart } from "./Cart";
 import s from "./store.module.css";
@@ -27,6 +27,10 @@ export default function Buy({ product }: { product: Product }) {
   const [added, setAdded] = useState(false);
 
   const minimum = product.sale?.minQuantity ?? 1;
+  // The price of what is SELECTED, not of the product. Every size is priced off
+  // its own cost, so this moves as the size buttons move — which is the whole
+  // point: nobody should discover at checkout that a 3XL is dearer.
+  const unitCents = unitPriceFor(product, variantIdFor(product, color, size));
 
   function addToBasket() {
     if (!color || !size) return;
@@ -91,8 +95,8 @@ export default function Buy({ product }: { product: Product }) {
           {added
             ? "In the basket"
             : minimum > 1
-              ? `Add ${minimum} — ${money(product.priceCents * minimum)}`
-              : `Add — ${money(product.priceCents)}`}
+              ? `Add ${minimum} — ${money(unitCents * minimum)}`
+              : `Add — ${money(unitCents)}`}
         </button>
 
         {product.sale && <p className={s.saleNote}>{product.sale.why}</p>}

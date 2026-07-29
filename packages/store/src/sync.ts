@@ -9,6 +9,7 @@ import {
   listProducts,
   deleteProduct,
   listVariants,
+  quoteOrderShipping,
   updateProduct,
   uploadImage,
 } from "./api.ts";
@@ -21,6 +22,8 @@ import {
   productLine,
 } from "./line.ts";
 import type { Art } from "./line.ts";
+import { MARGIN_TARGET } from "./matrix.ts";
+import { keepFor, priceForVariant } from "./pricing.ts";
 import type { CatalogPlaceholder, CreateProductBody, PrintArea, PrintifyProduct } from "./types.ts";
 
 /**
@@ -51,6 +54,12 @@ export const MIN_DPI = 300;
 type VariantsWithPlaceholders = {
   variants: { id: number; placeholders?: CatalogPlaceholder[] }[];
 };
+
+/**
+ * One postage quote per blueprint, provider and SIZE, however many marks are
+ * printed on that garment. Six sizes of tee cost six calls, not six per product.
+ */
+const postageCache = new Map<string, number>();
 
 /** One catalog read per blueprint/provider, however many placements ask for it. */
 const catalogCache = new Map<string, VariantsWithPlaceholders>();
@@ -126,7 +135,12 @@ export type SyncResult = {
   printProviderId: number;
   visible: boolean;
   variants: number;
+  /** The LOWEST variant price — the "from" figure a card shows. */
   priceCents: number;
+  /** Variant id -> price in cents. Every size priced off its own cost. */
+  prices: Record<number, number>;
+  /** US standard first-item postage for one of these, quoted from Printify. */
+  postageCents: number;
   costCents: number;
   marginCents: number;
   placements: {
@@ -327,7 +341,7 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
         description: fillTokens(item.description, site),
         blueprintId: item.blueprintId, printProviderId: item.printProviderId,
         visible: false, variants: variantIds.length,
-        priceCents: item.priceCents, costCents: 0, marginCents: 0,
+        priceCents: item.priceCents, prices: {}, postageCents: 0, costCents: 0, marginCents: 0,
         placements, mockups: [], artHash: "(dry run)", problems: [],
       });
       continue;
@@ -392,8 +406,77 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       });
       how = "sent";
     }
-    const read = await getProduct(created.id);
-    const result = verify(item.id, item.priceCents, body, read, placements, artHash);
+    /* EVERY SIZE PRICED OFF ITS OWN COST.
+       The body above went up carrying `item.priceCents` on every variant, which
+       is an anchor and not a price: a product's real costs are only knowable
+       AFTER the shop reports them, and they differ by size and sometimes by
+       colour — the hoodie is $32.92 in black and $34.58 in navy at the same
+       size. So the create is followed by a reprice.
+       Before this, one flat price meant a small tee earned 37.3% and a 3XL
+       19.7%: the person taking a medium was subsidising the person taking a 3XL
+       by about four dollars. The captain's instruction was 20% on all sizes,
+       and this is the only shape that honours it. */
+    /* POSTAGE IS QUOTED PER SIZE, and getting this wrong was a live bug for
+       about five minutes. The first version quoted ONE variant and priced the
+       whole product against it. Printify posts an 11 oz mug for $6.99 and a
+       15 oz for $8.99, so the 15 oz was priced against the small mug's postage
+       and came out at 18.9% — under the target, on the item the captain would
+       be least likely to check.
+       Postage moves with SIZE, not colour, so one quote per size is enough and
+       cached across every product sharing a blueprint and provider: six sizes
+       of tee are six calls however many marks are printed on them. */
+    const target = item.marginTarget ?? MARGIN_TARGET;
+    // The smallest basket this item sells in. The sticker's three share one
+    // parcel, so both the quote and the price have to be for three.
+    const units = Math.max(1, item.sale?.minQuantity ?? 1);
+    const postageBySize: number[] = [];
+    for (const [sizeIndex] of item.sizes.entries()) {
+      const sample = item.colors[0]?.variants[sizeIndex];
+      if (sample === undefined) throw new Error(`${item.id}: no variant for size index ${sizeIndex}`);
+      const key = `${item.blueprintId}/${item.printProviderId}/${sizeIndex}/x${units}`;
+      let quoted = postageCache.get(key);
+      if (quoted === undefined) {
+        quoted = (await quoteOrderShipping([
+          { product_id: created.id, variant_id: sample, quantity: units },
+        ])).standard;
+        postageCache.set(key, quoted);
+      }
+      postageBySize.push(quoted);
+    }
+    // Every variant back to the size it is, so it can be priced against the
+    // postage that size actually costs.
+    const sizeOfVariant = new Map<number, number>();
+    for (const way of item.colors) {
+      way.variants.forEach((id, sizeIndex) => sizeOfVariant.set(id, sizeIndex));
+    }
+
+    let read = await getProduct(created.id);
+    const wanted = new Map<number, number>();
+    const postageOf = new Map<number, number>();
+    for (const v of read.variants) {
+      if (!v.is_enabled) continue;
+      const post = postageBySize[sizeOfVariant.get(v.id) ?? 0] ?? postageBySize[0]!;
+      postageOf.set(v.id, post);
+      // A variant the shop reports at zero cost cannot be priced. Leave it at
+      // the anchor and let verify() say so rather than dividing by a guess.
+      wanted.set(v.id, v.cost > 0 ? priceForVariant(v.cost, post, target, units) : item.priceCents);
+    }
+    const postageCents = Math.max(...postageOf.values());
+    const drifted = read.variants.filter((v) => v.is_enabled && wanted.get(v.id) !== v.price);
+    if (drifted.length) {
+      await updateProduct(created.id, {
+        variants: [...wanted].map(([id, price]) => ({ id, price, is_enabled: true })),
+      });
+      read = await getProduct(created.id);
+      const range = [...wanted.values()].sort((a, b) => a - b);
+      console.log(
+        `     ${item.id}: repriced ${drifted.length} variant(s) to ` +
+          `$${(range[0]! / 100).toFixed(2)}-$${(range[range.length - 1]! / 100).toFixed(2)} ` +
+          `at ${(target * 100).toFixed(0)}% on $${(postageCents / 100).toFixed(2)} postage`,
+      );
+    }
+
+    const result = verify(item.id, wanted, postageOf, postageCents, target, units, body, read, placements, artHash);
     results.push(result);
     console.log(
       `${how} ${item.id.padEnd(28)} ${read.id}  ` +
@@ -451,6 +534,16 @@ type CatalogEntry = {
   mockups: string[];
   /** Hash of the art the shop holds. The next sync compares against it. */
   artHash: string;
+  /**
+   * Variant id -> price in cents. **The authority on what anything costs.**
+   *
+   * `priceCents` above is only the cheapest of these, for a card that says
+   * "from $17". Every size is priced off its own cost, so a product no longer
+   * HAS a single price and anything that reads one is reading the wrong number.
+   */
+  prices: Record<string, number>;
+  /** US standard first-item postage, quoted from Printify when this was priced. */
+  postageCents: number;
   printify?: {
     productId?: string;
     blueprintId?: number;
@@ -517,6 +610,8 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
       ...(item.sale ? { sale: item.sale } : {}),
       mockups: r.mockups,
       artHash: r.artHash,
+      prices: Object.fromEntries(Object.entries(r.prices).map(([k, v]) => [String(k), v])),
+      postageCents: r.postageCents,
       printify: {
         productId: r.productId,
         blueprintId: r.blueprintId,
@@ -652,7 +747,11 @@ function chooseMockups(
 /** Compare what came back against what was asked for. Silence here is the point. */
 function verify(
   id: string,
-  priceCents: number,
+  wanted: Map<number, number>,
+  postageOf: Map<number, number>,
+  postageCents: number,
+  target: number,
+  units: number,
   sent: CreateProductBody,
   got: PrintifyProduct,
   placements: SyncResult["placements"],
@@ -671,11 +770,31 @@ function verify(
 
   const costs = enabled.map((v) => v.cost).filter((c) => typeof c === "number" && c > 0);
   const costCents = costs.length ? Math.max(...costs) : 0;
-  if (costCents && priceCents <= costCents) {
-    problems.push(`price ${priceCents}c does not cover cost ${costCents}c`);
+
+  /* PRICED PER VARIANT, SO CHECKED PER VARIANT.
+     This used to compare every variant against one figure. It cannot now: each
+     size is priced off its own cost, so the only meaningful check is that each
+     variant carries the price computed FOR IT and that the margin it yields is
+     the target. A variant that came back at somebody else's price is exactly
+     the failure that would put a 3XL on sale at a small's price. */
+  const mispriced = enabled.filter((v) => v.price !== wanted.get(v.id));
+  if (mispriced.length) {
+    problems.push(
+      `${mispriced.length} variant(s) came back at a price they were not sent: ` +
+        mispriced.slice(0, 3).map((v) => `${v.id} is ${v.price}c, sent ${wanted.get(v.id)}c`).join("; "),
+    );
   }
-  const mispriced = enabled.filter((v) => v.price !== priceCents);
-  if (mispriced.length) problems.push(`${mispriced.length} variants priced at something other than ${priceCents}c`);
+  for (const v of enabled) {
+    if (v.cost <= 0) { problems.push(`variant ${v.id} reports no cost — it cannot be priced`); continue; }
+    if (v.price <= v.cost) { problems.push(`variant ${v.id} at ${v.price}c does not cover ${v.cost}c`); continue; }
+    // Rounding up to the nearest 50c can only ever overshoot, so a variant
+    // BELOW target means the arithmetic or the cost moved under us.
+    const { margin } = keepFor(v.price, v.cost, postageOf.get(v.id) ?? postageCents, units);
+    if (margin < target - 0.005) {
+      problems.push(`variant ${v.id} yields ${(margin * 100).toFixed(1)}%, under the ${(target * 100).toFixed(0)}% target`);
+    }
+  }
+  const priceCents = Math.min(...enabled.map((v) => v.price));
 
   // The placement echo. Printify normalises, so compare with a tolerance
   // rather than for equality.
@@ -701,6 +820,8 @@ function verify(
     visible: got.visible,
     variants: enabled.length,
     priceCents,
+    prices: Object.fromEntries(enabled.map((v) => [v.id, v.price])),
+    postageCents,
     costCents,
     marginCents: costCents ? priceCents - costCents : 0,
     placements,

@@ -29,7 +29,21 @@ export type CatalogProduct = {
   id: string;
   title: string;
   description: string;
+  /**
+   * The CHEAPEST variant's price — a "from" figure for a card, and a fallback.
+   *
+   * Not the price of anything in particular. See `prices`.
+   */
   priceCents: number;
+  /**
+   * Variant id (as a string, because JSON) -> price in cents.
+   *
+   * **Every size is priced off its own cost**, so that a 3XL tee and a small
+   * both earn the same margin instead of the small subsidising the 3XL. A
+   * basket line therefore cannot be priced from the product; it has to be
+   * priced from the variant the colour and size resolve to.
+   */
+  prices?: Record<string, number>;
   taxCode: string;
   markId: string;
   itemId: string;
@@ -87,6 +101,31 @@ export type Resolution =
  * charged and then disappointed.
  */
 export const MAX_PER_LINE = 10;
+
+/**
+ * The variant a colour and size resolve to, or null.
+ *
+ * Exported because the cart and the product page both need to price a SELECTION
+ * before it is a basket line, and duplicating this two-line lookup is how a
+ * page ends up showing one price and charging another.
+ */
+export function variantIdFor(product: CatalogProduct, color: string, size: string): number | null {
+  const way = product.colors.find((c) => c.name === color);
+  const index = product.sizes.indexOf(size);
+  if (!way || index < 0) return null;
+  return way.variants[index] ?? null;
+}
+
+/** What one of that variant costs. Falls back to the "from" price. */
+export const unitPriceFor = (product: CatalogProduct, variantId: number | null): number =>
+  (variantId === null ? undefined : product.prices?.[String(variantId)]) ?? product.priceCents;
+
+/** The cheapest and dearest this product is sold at. Equal on a one-size item. */
+export function priceRange(product: CatalogProduct): { from: number; to: number } {
+  const all = Object.values(product.prices ?? {});
+  if (!all.length) return { from: product.priceCents, to: product.priceCents };
+  return { from: Math.min(...all), to: Math.max(...all) };
+}
 
 /** A stable key for a line. Same product, colour and size is the same line. */
 export const lineKey = (l: Pick<BasketLine, "productId" | "color" | "size">): string =>
@@ -157,12 +196,20 @@ export function resolveBasket(lines: BasketLine[], catalog: CatalogProduct[]): R
       continue;
     }
 
+    // The variant's own price, never the product's. `priceCents` is the
+    // cheapest size and would undercharge every size above it.
+    const unitCents = product.prices?.[String(variantId)] ?? product.priceCents;
+    if (!Number.isInteger(unitCents) || unitCents <= 0) {
+      problems.push(`${product.title}: no price on record for ${line.color} / ${line.size}.`);
+      continue;
+    }
+
     resolved.push({
       line,
       product,
       variantId,
-      unitCents: product.priceCents,
-      subtotalCents: product.priceCents * line.quantity,
+      unitCents,
+      subtotalCents: unitCents * line.quantity,
     });
   }
 

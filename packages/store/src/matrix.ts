@@ -135,6 +135,24 @@ export type Sale = {
   why: string;
 };
 
+/**
+ * The share of what the customer pays that stays with the club, on EVERY size.
+ *
+ * The captain's figure, 2026-07-29: *"20% margin across the board, dynamic
+ * pricing for those extra large sizes that cost more… let's not abuse people
+ * here."* One price per product could not express that — a 3XL tee costs $4.90
+ * more to make than a small, so a flat $23 earned 37% on the small and 19.7% on
+ * the 3XL, and the person taking a medium was subsidising the person taking a
+ * 3XL by four dollars.
+ *
+ * Every variant is now priced from its OWN cost. See `pricing.ts`.
+ *
+ * Change this one number and re-sync and the whole shop reprices. Below about
+ * 18% a single customer-error reprint, which Printify charges for, costs more
+ * than three sales earn.
+ */
+export const MARGIN_TARGET = 0.2;
+
 export type Item = {
   /** Second half of every product id. The word he uses for it. */
   id: string;
@@ -163,6 +181,8 @@ export type Item = {
   priceCents: number;
   /** Buying rules, where the plain "one of these, on its own" does not work. */
   sale?: Sale;
+  /** Overrides `MARGIN_TARGET` for this item alone. Nothing uses it yet. */
+  marginTarget?: number;
   /**
    * Stripe product tax code, which decides what the buyer is charged.
    *
@@ -250,6 +270,8 @@ export type LineItem = {
   sale?: Sale;
   /** Stripe product tax code, from the item. See `Item["taxCode"]`. */
   taxCode: string;
+  /** Per-item override of `MARGIN_TARGET`. Undefined means use the constant. */
+  marginTarget?: number;
   claims: string[];
   /** Back-references, so a report can say what a product is made of. */
   markId: string;
@@ -961,6 +983,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
       placements: [{ ...placement, art: mark.press }],
       ...(item.sale ? { sale: item.sale } : {}),
       taxCode: item.taxCode,
+      ...(item.marginTarget === undefined ? {} : { marginTarget: item.marginTarget }),
       claims: entry.claims ?? [],
       markId: mark.id,
       itemId: item.id,

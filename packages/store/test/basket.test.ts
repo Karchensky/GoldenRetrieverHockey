@@ -280,23 +280,48 @@ test("no two real products claim the same id", () => {
   assert.equal(new Set(ids).size, ids.length);
 });
 
-test("every real product can be put in a basket and priced", () => {
-  // One of everything, at its own minimum, resolved against the real catalog.
-  // Nothing on the shop may be unbuyable.
+test("EVERY real size and colour can be put in a basket, at the variant's own price", () => {
+  /* This used to try one colour in one size and assert the subtotal equalled
+     `priceCents * quantity`. Both halves are now wrong. Every size is priced off
+     its own cost, so `priceCents` is the CHEAPEST variant — a "from" figure —
+     and asserting against it failed the moment per-variant pricing landed: a
+     hoodie's first colourway in its first size is $48.00 against a $45.75 floor.
+     So this walks the whole matrix of colours and sizes instead of one corner of
+     it, and prices each line from the variant it resolves to. 252 variants, all
+     of which somebody can pick from a dropdown. */
   const catalog = real();
+  let checked = 0;
+
   for (const product of catalog) {
-    const color = product.colors[0];
-    const size = product.sizes[0];
-    assert.ok(color && size);
     const quantity = product.sale?.minQuantity ?? 1;
-    const got = resolveBasket(
-      [{ productId: product.id, color: color.name, size, quantity }],
-      catalog,
-    );
-    assert.equal(got.ok, true, `${product.id} cannot be bought: ${got.ok ? "" : got.problems.join(" ")}`);
-    if (!got.ok) continue;
-    assert.equal(got.subtotalCents, product.priceCents * quantity);
+    for (const color of product.colors) {
+      for (const [index, size] of product.sizes.entries()) {
+        const got = resolveBasket(
+          [{ productId: product.id, color: color.name, size, quantity }],
+          catalog,
+        );
+        assert.equal(
+          got.ok,
+          true,
+          `${product.id} ${color.name}/${size} cannot be bought: ${got.ok ? "" : got.problems.join(" ")}`,
+        );
+        if (!got.ok) continue;
+
+        const variantId = color.variants[index];
+        assert.ok(variantId !== undefined);
+        const expected = product.prices?.[String(variantId)] ?? product.priceCents;
+        assert.equal(
+          got.subtotalCents,
+          expected * quantity,
+          `${product.id} ${color.name}/${size} priced ${got.subtotalCents}, expected ${expected * quantity}`,
+        );
+        assert.equal(got.lines[0]?.variantId, variantId);
+        checked += 1;
+      }
+    }
   }
+
+  assert.ok(checked > 200, `only ${checked} variants were exercised`);
 });
 
 test("stickers in the real catalog are sold in threes", () => {

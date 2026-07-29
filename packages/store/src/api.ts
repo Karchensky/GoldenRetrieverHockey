@@ -285,6 +285,41 @@ export async function deleteProduct(productId: string): Promise<void> {
 }
 
 /**
+ * `POST /v1/shops/28277243/orders/shipping.json` — what a basket costs to post.
+ * Creates nothing; every call is a quote.
+ *
+ * The sync needs this to price a variant, because the target margin is a share
+ * of what the CUSTOMER pays and the customer pays the postage. Quoting is the
+ * only honest source: the v2 rate table gives the same figure but costs 6 MB per
+ * blueprint, and typing it into the matrix is exactly the economics-from-memory
+ * that file forbids.
+ *
+ * The address only has to name the right COUNTRY — measured on 2026-07-29, one
+ * basket quoted $11.74 to Buffalo, Los Angeles, Anchorage and Miami.
+ */
+export const quoteOrderShipping = (
+  lineItems: { product_id: string; variant_id: number; quantity: number }[],
+): Promise<{ standard: number; express?: number }> =>
+  request<{ standard: number; express?: number }>(
+    "POST",
+    `/shops/${SHOP_ID}/orders/shipping.json`,
+    {
+      line_items: lineItems,
+      address_to: {
+        first_name: "Golden",
+        last_name: "Retrievers",
+        email: "store@goldenretrieverhockey.com",
+        phone: "7160000000",
+        country: "US",
+        region: "NY",
+        address1: "1 Main St",
+        city: "Buffalo",
+        zip: "14201",
+      },
+    },
+  );
+
+/**
  * `PUT /v1/shops/28277243/products/{id}.json`
  *
  * Printify treats this as a merge, so a partial body edits only what it names.

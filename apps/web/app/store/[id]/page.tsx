@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Buy from "../../../components/store/Buy";
-import { groups, mockupPath, money, paragraphs, productById, products } from "../../../lib/store";
+import { fromLabel, groups, mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -75,7 +75,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         </div>
 
         <div>
-          <p className={s.detailPrice}>{money(product.priceCents)}</p>
+          <p className={s.detailPrice}>{priceLabel(product)}</p>
           {copy.map((para) => (
             <p key={para} className={s.detailCopy}>{para}</p>
           ))}
@@ -113,7 +113,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     ? other.colors[0]?.name
                     : `${other.colors.length} colours`}</span>
                 </span>
-                <span className={s.otherPrice}>{money(other.priceCents)}</span>
+                <span className={s.otherPrice}>{fromLabel(other)}</span>
               </Link>
             ))}
           </div>

@@ -1,4 +1,5 @@
 import catalog from "../data/products.json";
+import { money, priceRange } from "../../../packages/store/src/basket";
 import type { CatalogProduct } from "../../../packages/store/src/basket";
 
 /**
@@ -114,4 +115,27 @@ export const paragraphs = (product: Product): string[] =>
 /** The opening line only, for a card that has room for one sentence. */
 export const blurb = (product: Product): string => paragraphs(product)[0] ?? "";
 
-export { money } from "../../../packages/store/src/basket";
+export {
+  money,
+  priceRange,
+  unitPriceFor,
+  variantIdFor,
+} from "../../../packages/store/src/basket";
+
+/**
+ * "$17.00" or "$17.00 – $23.50".
+ *
+ * Every size is priced off its own cost so that a 3XL and a small earn the same
+ * margin, which means most products no longer have A price. A card that printed
+ * one would be quoting the small at the 3XL, or the other way about.
+ */
+export function priceLabel(product: Product): string {
+  const { from, to } = priceRange(product);
+  return from === to ? money(from) : `${money(from)} – ${money(to)}`;
+}
+
+/** For a card, where the range is too much: "from $17.00". */
+export const fromLabel = (product: Product): string => {
+  const { from, to } = priceRange(product);
+  return from === to ? money(from) : `from ${money(from)}`;
+};

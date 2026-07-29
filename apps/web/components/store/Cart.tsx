@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { MAX_PER_LINE, lineKey, money, resolveBasket } from "../../../../packages/store/src/basket";
+import { MAX_PER_LINE, lineKey, money, resolveBasket, unitPriceFor, variantIdFor } from "../../../../packages/store/src/basket";
 import type { BasketLine } from "../../../../packages/store/src/basket";
 import { products } from "../../lib/store";
 import s from "./cart.module.css";
@@ -173,10 +173,14 @@ function CartDrawer() {
   const resolution = useMemo(() => resolveBasket(lines, products), [lines]);
   const byId = useMemo(() => new Map(products.map((p) => [p.id, p])), []);
 
-  const subtotal = lines.reduce(
-    (sum, l) => sum + (byId.get(l.productId)?.priceCents ?? 0) * l.quantity,
-    0,
-  );
+  // Per VARIANT. Summing `priceCents` would quote every size at the cheapest
+  // one and disagree with the invoice.
+  const priceOf = (l: BasketLine): number => {
+    const product = byId.get(l.productId);
+    if (!product) return 0;
+    return unitPriceFor(product, variantIdFor(product, l.color, l.size));
+  };
+  const subtotal = lines.reduce((sum, l) => sum + priceOf(l) * l.quantity, 0);
 
   async function checkout() {
     setSending(true);
@@ -250,7 +254,7 @@ function CartDrawer() {
                         +
                       </button>
                     </div>
-                    <span className={s.linePrice}>{money(product.priceCents * line.quantity)}</span>
+                    <span className={s.linePrice}>{money(priceOf(line) * line.quantity)}</span>
                     <button
                       type="button"
                       className={s.lineDrop}
