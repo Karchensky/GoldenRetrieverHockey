@@ -1,26 +1,39 @@
 import type { Metadata } from "next";
+import ProductCard from "../../components/store/ProductCard";
+import { groups, products } from "../../lib/store";
 import s from "../../components/store/store.module.css";
 
 /**
- * THE STORE, BEFORE THERE IS A STORE.
+ * THE STORE.
  *
- * This page listed eleven products, priced them, sorted them into four families
- * and gave each one its own page. None of them was a product: they are drafts on
- * a Printify shop, invisible, several of them carrying artwork that could not
- * print above 300 dpi at any useful size and was deleted the same day. The copy
- * went further and described a range — "the crest on light bodies, the archive's
- * own artwork on dark" — which is a promise about a line that does not exist.
+ * It was a placeholder saying "Not open yet" for three days, and the note that
+ * stood here explained why: the products it had listed were drafts on a Printify
+ * shop, several carrying artwork that could not print above 300 dpi, and the
+ * copy described a range that did not exist. All of that is fixed. Twenty-three
+ * products across nine marks and six items exist on shop 28277243, every one
+ * read back and verified, the worst print in the line at 437 dpi against a floor
+ * of 300.
  *
- * So it says the one true thing instead. The line is being built and will be
- * listed when it is finished, all at once.
+ * **This page can take money now.** Between the placeholder and this there was a
+ * plan to hand checkout to a Printify Pop-Up store — a second website on a
+ * second domain that the customer would be handed off to. It was abandoned on
+ * 2026-07-29 for the reason it was chosen: it does NOT make Printify the
+ * merchant of record, which was the only thing it was for. Their own help pages
+ * say the seller is, and that no tax is applied at their checkout at all. So the
+ * tax obligation was identical either way, and the Pop-Up cost the experience
+ * for nothing. Checkout is `workers/checkout`, on this domain, in this design.
  *
- * The route stays because the home page has two doors and this is one of them.
- * `/store/[id]` generates nothing while this is here — an orphaned detail page
- * is still a page a crawler can find.
+ * The grid renders from `apps/web/data/products.json`, which is written by the
+ * sync from the verified read-back. A product that failed to sync is not in that
+ * file and therefore cannot appear here — which is the correct failure, because
+ * it does not exist to be bought.
  */
+
 export const metadata: Metadata = {
   title: "Store",
-  description: "Not open yet.",
+  description:
+    "Tees, hoodies, caps, beanies, mugs and stickers, carrying nine marks drawn " +
+    "for the Golden Retrievers. Printed to order and posted free within the US.",
 };
 
 export default function StorePage() {
@@ -32,9 +45,35 @@ export default function StorePage() {
           <br />
           <i>store.</i>
         </h1>
+        <p className="hero-p">
+          Nine marks, six things to put them on. Printed to order in the United States
+          and posted free within it.
+        </p>
+
+        <nav className={s.categoryNav} aria-label="Sections">
+          {groups.map((group) => (
+            <a key={group.itemId} href={`#${group.itemId}`}>{group.label}</a>
+          ))}
+        </nav>
       </header>
 
-      <p className={s.soon}>Not open yet.</p>
+      {groups.map((group) => (
+        <section key={group.itemId} id={group.itemId} data-reveal>
+          <h2 className="head">{group.label}</h2>
+          <div className={s.grid} data-stagger>
+            {group.products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      {!products.length && (
+        <p className={s.soon}>
+          The catalog is empty — the shop has not been synced. Nothing is listed
+          rather than something being guessed at.
+        </p>
+      )}
     </div>
   );
 }

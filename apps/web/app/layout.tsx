@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Nav from "../components/Nav";
 import RinkMount from "../components/rink/RinkMount";
+import { CartProvider } from "../components/store/Cart";
 import { FOUNDED } from "../lib/data";
 import "./globals.css";
 
@@ -44,9 +45,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <a href="#main" className="skip">Skip to content</a>
-        <RinkMount />
-        <Nav />
-        <main id="main">{children}</main>
+        {/* Wraps everything because the basket count lives in the masthead and
+            the drawer has to be able to open over any route. It holds no state
+            until something is added, and renders nothing until then. */}
+        <CartProvider>
+          <RinkMount />
+          <Nav />
+          <main id="main">{children}</main>
+        </CartProvider>
       </body>
     </html>
   );

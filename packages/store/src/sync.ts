@@ -312,7 +312,28 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
 
 type CatalogEntry = {
   id: string;
+  title: string;
+  description: string;
   priceCents: number;
+  /** Stripe product tax code. See `Item["taxCode"]` in matrix.ts. */
+  taxCode: string;
+  markId: string;
+  itemId: string;
+  /**
+   * Colour name -> variant id per size, in the same order as `sizes`.
+   *
+   * These ids are what a basket line resolves to and what Printify is handed at
+   * fulfilment, so a selection of "Black / L" becomes 18102 here and nowhere
+   * else. The browser never sends a variant id it made up: it sends a product
+   * id, a colour name and a size, and the Worker looks the number up in its own
+   * copy of this file.
+   */
+  colors: { name: string; hex: string; variants: number[] }[];
+  sizes: string[];
+  /** Buying rules the cart and the Worker both enforce. See `Sale` in matrix.ts. */
+  sale?: { minQuantity?: number; addOnOnly?: boolean; why: string };
+  /** Provider-rendered previews, on Printify's CDN. Mirrored locally at build. */
+  mockups: string[];
   printify?: {
     productId?: string;
     blueprintId?: number;
@@ -332,41 +353,69 @@ type CatalogEntry = {
  * storefront printed the size of every print under its own drawing and that
  * caption could not be allowed to drift from the shop.
  *
- * The storefront is a placeholder rendering one line, nothing in apps/web reads
- * this file, and the matrix is now the source of truth it used to be checked
- * against. A gate guarding a caption that no longer exists does not protect
- * anything — it refuses legitimate work, and it refused a repricing the captain
- * had asked for, on every product, until a file nobody reads was edited by hand.
+ * A gate guarding a caption that no longer exists does not protect anything — it
+ * refuses legitimate work, and it refused a repricing the captain had asked for,
+ * on every product, until a file nobody reads was edited by hand.
  *
  * What guards the shop is `verify()`, which reads each product back and checks
  * visibility, blueprint, provider, variant count, print areas and mockups
  * against what was sent. That is the real check and it is untouched.
  *
- * So this writes. Every figure comes off the read-back rather than off what was
- * asked for, so the file states what the shop ACTUALLY holds — ready for the
- * storefront when it returns.
+ * **It is read again, and by two things now.** The storefront renders from it,
+ * and the checkout Worker carries its own copy as the ONLY prices and variant
+ * ids it will honour. That second reader is why the shape below grew: a browser
+ * posting a basket sends a product id, a colour and a size, never a price and
+ * never a variant id, and the Worker resolves all three against this file. A
+ * customer who edits the page cannot buy a $74 hoodie for $1.
+ *
+ * Two halves, and the join is deliberate. Identity, price and the buying rules
+ * come from the MATRIX, because that is what the captain edits and what the
+ * shop was told to make. Everything the API decided — product ids, the geometry
+ * that came back, the provider's mockups — comes from the verified read-back. A
+ * product that failed to sync is absent from `results` and therefore absent
+ * here, which is the correct failure: it cannot be listed if it does not exist.
  */
 async function writeCatalog(results: SyncResult[]): Promise<void> {
   const path = join(ROOT, "apps/web/data/products.json");
-  const products: CatalogEntry[] = results.map((r) => ({
-    id: r.id,
-    priceCents: r.priceCents,
-    printify: {
-      productId: r.productId,
-      blueprintId: r.blueprintId,
-      printProviderId: r.printProviderId,
-      print: r.placements.map((p) => ({
-        position: p.position,
-        widthIn: p.widthIn,
-        heightIn: p.heightIn,
-        dpi: p.dpi,
-        maxWidthIn: p.maxWidthIn,
-        minDpi: p.minDpi,
-        scale: p.scale,
-        y: p.y,
-      })),
-    },
-  }));
+  const line = new Map(productLine().map((item) => [item.id, item]));
+
+  const products: CatalogEntry[] = results.map((r) => {
+    const item = line.get(r.id);
+    if (!item) {
+      throw new Error(
+        `Synced "${r.id}", which is not in the matrix. The catalog is written by ` +
+          `joining the read-back to MATRIX and there is nothing to join this to.`,
+      );
+    }
+    return {
+      id: r.id,
+      title: item.title,
+      description: item.description,
+      priceCents: r.priceCents,
+      taxCode: item.taxCode,
+      markId: item.markId,
+      itemId: item.itemId,
+      colors: item.colors,
+      sizes: item.sizes,
+      ...(item.sale ? { sale: item.sale } : {}),
+      mockups: r.mockups,
+      printify: {
+        productId: r.productId,
+        blueprintId: r.blueprintId,
+        printProviderId: r.printProviderId,
+        print: r.placements.map((p) => ({
+          position: p.position,
+          widthIn: p.widthIn,
+          heightIn: p.heightIn,
+          dpi: p.dpi,
+          maxWidthIn: p.maxWidthIn,
+          minDpi: p.minDpi,
+          scale: p.scale,
+          y: p.y,
+        })),
+      },
+    };
+  });
   await writeFile(path, `${JSON.stringify({ shopId: SHOP_ID, products }, null, 2)}\n`);
   console.log(`catalog -> ${path}`);
 }

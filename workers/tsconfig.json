@@ -1,0 +1,30 @@
+{
+  // The checkout Worker typechecks on its own.
+  //
+  // It cannot join the root project: that one is `module: NodeNext` with
+  // `types: ["node"]`, and this code runs on workerd — no `node:fs`, no
+  // `process`, and a global `crypto.subtle` and `KVNamespace` that the Node
+  // types do not describe. Running both under one config means either the
+  // packages lose `node` or this file believes it has a filesystem.
+  //
+  // It reaches OUTSIDE its own directory for two things, and both are the point:
+  // `packages/store/src/basket.ts`, so the buying rules are checked in the
+  // browser (where the cart can explain itself) and again here (because the
+  // browser belongs to the customer) from ONE module that cannot disagree with
+  // itself; and `apps/web/data/products.json`, which is the only source of
+  // prices and variant ids this Worker will honour.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["@cloudflare/workers-types"],
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["checkout/**/*.ts", "../packages/store/src/basket.ts"]
+}

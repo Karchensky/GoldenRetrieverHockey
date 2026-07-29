@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FOUNDED } from "../lib/data";
+import { CartButton } from "./store/Cart";
 
 /**
  * The masthead.
@@ -75,6 +76,9 @@ export default function Nav() {
               </li>
             );
           })}
+          {/* Renders nothing until there is something in the basket, so the
+              masthead is unchanged for a reader who is here for the archive. */}
+          <li><CartButton /></li>
         </ul>
       </div>
     </nav>

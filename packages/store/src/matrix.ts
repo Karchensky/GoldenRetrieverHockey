@@ -24,7 +24,7 @@ import type { Reach } from "./artwork.ts";
  *
  * The economics of every line below — cost, margin, shipping — are not in this
  * file and must not be typed into it. Run `npm run store:report`; it reads them
- * live from Printify. See docs/STORE.md.
+ * live from Printify. See STORE.md at the repo root (local, gitignored).
  */
 
 export const ROOT = new URL("../../../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -40,15 +40,20 @@ export const LOGO_SOURCE_DIR = "docs/logos";
 /* ------------------------------------------------------------------ */
 
 /**
- * A body is light or dark, and a mark can only sit on one of them.
+ * A body is light or dark, and a mark states which of them it may sit on. Most
+ * state both; two state one.
  *
  * This is not a style preference and it is the reason the matrix exists at all.
- * The full-colour crest is outlined in black and its banner is black: on a black
- * or navy body it loses its shield edge and the banner becomes a hole. The
- * one-ink gold crest is the same drawing with the cream keyed out, so the
- * garment shows through the banner lettering and the dog's face — which reads on
- * black and reads as nothing at all on white. Pair a mark with a ground it
- * cannot use and `buildLine()` throws rather than printing it.
+ * Every mark in `docs/logos/vector/` is drawn on a black field, so on a dark
+ * body that field stops being ink and becomes the garment. What decides whether
+ * that is a design or a wreck is the EDGE: a mark ringed, bordered or barred in
+ * gold keeps its whole silhouette and reads as intended, and a mark whose outer
+ * shape IS the black loses it entirely. `faceoff` is the second kind. The
+ * mirror case is a mark carried by WHITE — `arched-varsity` is a white wordmark
+ * with a gold keyline, and on a light body it hollows out into its own outline.
+ *
+ * Pair a mark with a ground it cannot use and `buildLine()` throws rather than
+ * printing it, naming both halves and the reason.
  */
 export type Ground = "light" | "dark";
 
@@ -57,7 +62,7 @@ export type Mark = {
   id: string;
   /** First half of every product title. */
   title: string;
-  /** The grounds this mark may sit on. Never both, on this line. */
+  /** The grounds this mark may sit on. Seven of nine sit on both. */
   grounds: Ground[];
   /** Master, relative to the repo root. Rendered by `cli.ts logos`. */
   source: string;
@@ -82,8 +87,22 @@ export type Colourway = {
 };
 
 /**
- * How an item may be bought. **Checkout enforces this; the rule lives here,
- * beside the price, because it IS part of the price.**
+ * How an item may be bought. The rule lives here, beside the price, because it
+ * IS part of the price: the sticker is $6 and sold in threes, and neither half
+ * of that is true without the other.
+ *
+ * **This is enforced, in two places, as of 2026-07-29.** It was written for a
+ * checkout of our own, then sat inert while the store was pointed at a Printify
+ * Pop-Up whose checkout is Printify's and takes no minimum-quantity rule from
+ * us — which would have listed a $6 sticker that loses money on a single sale.
+ * The Pop-Up is gone (it does not make Printify the merchant of record, which
+ * was the only reason to want it), the checkout is ours again, and the rule is
+ * live: `./basket.ts` refuses a basket that breaks it, in the browser so the
+ * cart can say so, and again in the Worker because the browser is not trusted.
+ *
+ * The alternative was a fixed three-pack SKU, and it was rejected: a pack is
+ * three of ONE design, and the measurement below is the whole reason not to
+ * impose that on anybody.
  *
  * It exists because Printify's postage does not merge across product types.
  * Proven on 2026-07-28 against `POST /shops/28277243/orders/shipping.json`: a
@@ -92,6 +111,20 @@ export type Colourway = {
  * rates of $0.09. So quantity of ONE thing is nearly free to post and a second
  * KIND of thing never is, and an item whose postage is larger than the item has
  * exactly one honest shape: sell it in a quantity that carries its own parcel.
+ *
+ * **The merge is by product TYPE, not by product.** Measured against the same
+ * endpoint on 2026-07-29, now that there are five sticker designs to test with:
+ *
+ *   1 sticker                             $4.59
+ *   3 stickers, one design                $4.77
+ *   3 stickers, THREE DIFFERENT designs   $4.77   ← identical
+ *   1 tee                                 $4.75
+ *   1 tee + 3 stickers, three designs     $9.52   = $4.75 + $4.77
+ *
+ * This was an open assumption when the sticker was one design and it is now a
+ * measurement. `minQuantity` therefore counts STICKERS and not copies of one
+ * sticker: three different marks post for exactly what three of one post, so a
+ * customer is never asked to buy three of a design to reach the minimum.
  */
 export type Sale = {
   /** Fewest units of this item a basket may hold. Default 1. */
@@ -112,11 +145,37 @@ export type Item = {
   /**
    * Retail, integer cents, **US postage included** — the store ships free
    * within the US, so the rate is a cost of goods and not a line at checkout.
-   * One price per item, whatever mark is on it. See docs/STORE.md §3.
+   * One price per item, whatever mark is on it. See STORE.md §5.
    */
   priceCents: number;
   /** Buying rules, where the plain "one of these, on its own" does not work. */
   sale?: Sale;
+  /**
+   * Stripe product tax code, which decides what the buyer is charged.
+   *
+   * **This is not a formality and the default is wrong for most of this shop.**
+   * New York exempts clothing and footwear under $110 from the state's 4%, and
+   * Erie County is one of the counties that does NOT waive its own 4.75%, so a
+   * $36 tee to Buffalo is taxed at 4.75% and a $26 mug at the full 8.75%. Ship
+   * every line as `txcd_99999999` and every garment is overcharged — the buyer
+   * pays tax the state does not levy, and the difference is remitted to nobody.
+   *
+   * The codes are Stripe's, from https://docs.stripe.com/tax/tax-codes, and the
+   * mapping to a jurisdiction's own rules is Stripe's job rather than ours. What
+   * is ours is picking the code that describes the object:
+   *
+   *   txcd_30011000  Clothing & Footwear      tee, hoodie
+   *   txcd_30060006  Hats                     cap, beanie
+   *   txcd_99999999  General - Tangible Goods mug, sticker
+   *
+   * The cap and the beanie are the one pairing worth checking before the first
+   * sale. New York's own clothing chart lists "Hats: exempt" and "Caps: exempt",
+   * so they should be treated exactly like the tee here — but that conclusion
+   * runs through Stripe's mapping of its Hats code rather than through anything
+   * this repository can assert. Run a test calculation to a Buffalo ZIP and
+   * confirm a cap comes back at 4.75% and not 8.75%. See STORE.md §5.
+   */
+  taxCode: string;
   sizes: string[];
   /**
    * Print areas this blueprint/provider offers, as the CATALOG reports them —
@@ -176,6 +235,8 @@ export type LineItem = {
   placements: Placement[];
   /** Buying rules checkout must enforce. Undefined means "one, on its own, fine". */
   sale?: Sale;
+  /** Stripe product tax code, from the item. See `Item["taxCode"]`. */
+  taxCode: string;
   claims: string[];
   /** Back-references, so a report can say what a product is made of. */
   markId: string;
@@ -187,61 +248,208 @@ export type LineItem = {
 /* ------------------------------------------------------------------ */
 
 /**
- * Two marks, both `logo_one`, both off the VECTOR masters.
+ * The nine approved marks, every one off the THREE-COLOUR production masters in
+ * `docs/logos/vector/production-3color-svg/`.
  *
- * The flats beside them are why this list is short. Every mark this line used to
- * print was a 1254 px PNG carrying about 900 px of artwork — 158 dpi at six
- * inches, 116 on a 3XL — which is why the crest was once sold at six inches and
- * the wordmark at 5.17. `docs/logos/vector/` has no such ceiling: rendered at
- * 6000 px it trims to 4526 x 5094 of artwork, and 4526 px is 453 dpi at ten
- * inches. Nothing below is sized to its file any more. Everything is sized to
- * the garment.
+ * **`logo_one` and `crest-gold` are retired** and are not coming back. They were
+ * one drawing in two inks; these are nine drawings in one palette — black
+ * `#0B0B0D`, white `#FFFFFF`, athletic gold `#D9A333` — and the palette is what
+ * makes them a line rather than a pile.
  *
- * To add a mark: put the master in `docs/logos/`, add an entry here, run
- * `node packages/store/src/cli.ts marks` to see it measured, then wire it into
- * MATRIX. `cli.ts logos` renders every entry in this list — it is not a separate
- * list any more.
+ * **Why the three-colour SVG and not the detailed master or the 600 dpi PNG.**
+ * `tools/build_vector_assets.py` renders both PNG sets from the DETAILED
+ * masters, which carry 238–1,730 tonal fills apiece. Three flat inks is what a
+ * garment actually is: DTG holds a hard edge and muddies a gradient, embroidery
+ * is thread and has no gradient at all, and vinyl is cut. The three-colour file
+ * is also the one any vendor asks for. Rendered here at 6000 px it trims to
+ * 5,400–5,700 px of artwork, which beats the 4,526 px the retired crest carried.
+ *
+ * **`reach` is "trim" on all nine, and that is not laziness.** These files
+ * already carry alpha, so there is no ground to key. They still get trimmed:
+ * Printify places an image by its file BOX, and the rasteriser leaves the mark
+ * inset in a rectangular canvas — uploading one untrimmed silently shrinks the
+ * print. Do not reach for `"everywhere"` here. Every one of these marks is
+ * OUTLINED in black, so keying black out would dissolve the drawing rather than
+ * free the garment; artwork.ts explains what the two keying modes are for.
+ *
+ * **`grounds` is measured, not chosen.** All nine sit on a black field, so on a
+ * dark body the field becomes the body and what has to survive is the EDGE. On
+ * seven of the nine that edge is a gold ring, border or bar and it carries the
+ * whole silhouette. The two that cannot go both ways say why on their own entry.
+ *
+ * To add a mark: master into `docs/logos/`, an entry here, `cli.ts marks` to see
+ * it measured, then a line in MATRIX. `cli.ts logos` is a loop over this list.
  */
 export const MARKS: Mark[] = [
   {
-    id: "crest",
-    title: "Golden Retrievers Crest",
-    grounds: ["light"],
-    source: "docs/logos/vector/logo-one-transparent-600dpi.png",
-    press: "logos/crest.png",
-    // Already carries alpha. It still gets trimmed: Printify places an image by
-    // its file box and the export is a square canvas with the artwork inset, so
-    // uploading it untrimmed would silently shrink the print.
+    // concept 21 — dense-heritage-seal
+    id: "heritage-seal",
+    title: "Golden Retrievers Heritage Seal",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/21-dense-heritage-seal-3color.svg",
+    press: "logos/heritage-seal.png",
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The crest in full colour — the shield, the banner, the dog — at the size " +
-      "the vector master allows rather than the size an old flat could hold.",
+      "A double gold ring with GOLDEN arched over the top and RETRIEVERS around " +
+      "the foot, the dog in three-quarter profile over crossed sticks. Drawn as " +
+      "a seal, so it wants to be round and it wants an edge.",
     groundNote:
-      "The shield is outlined in black and the banner is black, so this mark " +
-      "needs a light body under it.",
+      "The field inside the rings is black: on a light body it reads as a " +
+      "printed seal, and on a dark one it becomes the body and the gold rings " +
+      "carry the shape.",
   },
   {
-    id: "crest-gold",
-    title: "Golden Retrievers Crest, Gold",
-    grounds: ["dark"],
-    source: "docs/logos/vector/logo-one-one-color-gold.svg",
-    press: "logos/crest-gold.png",
-    // A straight colour key, not a border fill. This file has two colours and
-    // nothing drawn is cream: every cream region is either the ground or
-    // negative space cut into the gold. On a dark garment that negative space is
-    // meant to BE the garment, and DTG lays a white underbase under every
-    // non-transparent pixel — a border fill would print the banner lettering and
-    // the eyes as cream slugs on black.
-    reach: "everywhere",
+    // concept 28 — dual-retriever-faceoff
+    id: "faceoff",
+    title: "Golden Retrievers Faceoff",
+    grounds: ["light"],
+    source: "docs/logos/vector/production-3color-svg/28-dual-retriever-faceoff-3color.svg",
+    press: "logos/faceoff.png",
+    reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The same crest in a single ink. Everything that is cream in the " +
-      "full-colour mark is the garment here: the banner lettering, the muzzle, " +
-      "the eyes, the tape on the blades.",
+      "Two dogs and two pucks inside one disc — one dog in gold, one in white, " +
+      "and the gold line between them where the puck drops.",
+    // The one mark in the set with no edge. Everything else is ringed, bordered
+    // or barred in gold; this is a bare black disc, so on a dark body the disc
+    // is the first thing to go and the dogs are left floating either side of a
+    // gold line that no longer means anything.
     groundNote:
-      "Dark bodies only, and there cannot be a light one — on white the mark " +
-      "has nothing to cut into.",
+      "The disc has no border — it IS the black — so on a dark body it " +
+      "disappears and the dogs float with nothing holding them. Light bodies " +
+      "only.",
+  },
+  {
+    // concept 33 — front-mascot-medallion
+    id: "mascot-medallion",
+    title: "Golden Retrievers Mascot Medallion",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/33-front-mascot-medallion-3color.svg",
+    press: "logos/mascot-medallion.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "The dog head-on and filling the frame, sticks crossed behind, inside a " +
+      "single heavy gold ring. The most drawing of any mark in the set, and the " +
+      "one that most wants room.",
+    groundNote:
+      "The medallion is black inside the ring, and the ring is what holds it on " +
+      "a dark body.",
+  },
+  {
+    // concept 35 — octagon-retrievers-patch. The only portrait mark, 3:2 tall.
+    id: "octagon-patch",
+    title: "Golden Retrievers Octagon Patch",
+    // LIGHT ONLY, and this was decided by a mockup rather than by looking at the
+    // file. It is the only mark in the set whose black is a RECTANGLE — 88.7% of
+    // its bounding box is inked against 55-83% for the rest — because the
+    // octagon is drawn INSIDE a filled black panel rather than cut out of one.
+    // On a black hoodie back the provider's mockup showed exactly that: a
+    // rectangular slab of ink with square corners sitting on the garment. On a
+    // light body the same rectangle reads as what it is, a patch.
+    grounds: ["light"],
+    source: "docs/logos/vector/production-3color-svg/35-octagon-retrievers-patch-3color.svg",
+    press: "logos/octagon-patch.png",
+    reach: "trim",
+    // Portrait, so 6000 would render 8,800 px tall for no gain — `renderWidth`
+    // is a WIDTH. 5000 puts the long edge at about 7,300 and still trims to
+    // ~4,650 px across, which is 437 dpi at the widest it is ever printed.
+    renderWidth: 5000,
+    blurb:
+      "A tall octagon cut like a sewn patch — GOLDEN across the top, the dog in " +
+      "profile between two upright sticks, RETRIEVERS on a white banner at the " +
+      "foot.",
+    groundNote:
+      "The octagon sits inside a filled black panel rather than being cut out " +
+      "of one, so it prints as a rectangle. On a light body that is a patch; on " +
+      "a dark one it is a slab. Light bodies only.",
+  },
+  {
+    // concept 36 — crossed-shield-retriever
+    id: "crossed-shield",
+    title: "Golden Retrievers Crossed Shield",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/36-crossed-shield-retriever-3color.svg",
+    press: "logos/crossed-shield.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "A shield with two sticks crossed through it, GOLDEN on the gold banner " +
+      "above, RETRIEVERS on the banner below, a puck at the point.",
+    groundNote:
+      "The most open drawing in the set — the sticks, the banners and the dog " +
+      "all sit proud of the shield, so it holds together on either body.",
+  },
+  {
+    // concept 38 — arched-varsity-lockup
+    id: "arched-varsity",
+    title: "Golden Retrievers Arched Varsity",
+    grounds: ["dark"],
+    source: "docs/logos/vector/production-3color-svg/38-arched-varsity-lockup-3color.svg",
+    press: "logos/arched-varsity.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "GOLDEN RETRIEVERS arched in white varsity block over a small gold " +
+      "roundel, a stick and a puck running out beneath the word.",
+    // The inverse of the faceoff's problem, and the only WHITE-forward mark in
+    // the set: 26% of its ink is white against 9-18% everywhere else. On a white
+    // or ash body the letterforms hollow out into their own outlines and the
+    // wordmark loses the weight it is built on.
+    groundNote:
+      "The wordmark is white with a gold keyline and the white is the whole " +
+      "weight of it — on a light body it hollows out into an outline. Dark " +
+      "bodies only.",
+  },
+  {
+    // concept 45 — rink-board-lockup. The widest mark in the set, 3:1.
+    id: "rink-board",
+    title: "Golden Retrievers Rink Board",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/45-rink-board-lockup-3color.svg",
+    press: "logos/rink-board.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "The name the way it would be painted on the boards: a long gold-edged " +
+      "bar, the dog in a roundel at the left, a stick and a puck running out to " +
+      "the right.",
+    groundNote:
+      "The board is black inside a gold edge. On a dark body the edge is what " +
+      "you see and the board becomes the garment.",
+  },
+  {
+    // concept 48 — dual-capsule-retrievers
+    id: "nose-to-nose",
+    title: "Golden Retrievers Nose to Nose",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/48-dual-capsule-retrievers-3color.svg",
+    press: "logos/nose-to-nose.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "Two dogs facing each other over a dropped puck inside a gold capsule, " +
+      "GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.",
+    groundNote:
+      "The capsule is black inside a gold outline, and the outline is what " +
+      "holds it on a dark body.",
+  },
+  {
+    // concept 50 — championship-roundel
+    id: "championship-roundel",
+    title: "Golden Retrievers Championship Roundel",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/production-3color-svg/50-championship-roundel-3color.svg",
+    press: "logos/championship-roundel.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white " +
+      "around the foot, the dog centred over crossed sticks and a puck.",
+    groundNote:
+      "Two gold rings around a black field. The rings survive a dark body; the " +
+      "field turns into it.",
   },
 ];
 
@@ -261,7 +469,7 @@ export const MARKS: Mark[] = [
  * the best maker of it, judged on the print method, the size of the canvas, the
  * colourways carried, where it posts from and what it charges to post abroad.
  * Cost decided nothing; it only set the retail price afterwards. The measured
- * costs and the reasoning are in docs/STORE.md §1.
+ * costs and the reasoning are in STORE.md §1.
  *
  * **Postage does not merge across product types**, which is the fact that shapes
  * this list. See `Sale` above: a tee and a cap from the SAME provider quote two
@@ -283,6 +491,7 @@ export const ITEMS: Item[] = [
     // accountable manufacturer. It costs $2.71 more on the dearest size.
     printProviderId: 410,
     priceCents: 3600,
+    taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     // Ten of them, and the whole list has to be declared: store:report compares
     // this against the live catalog and flags a difference in either direction.
@@ -291,9 +500,11 @@ export const ITEMS: Item[] = [
       "large_center_embroidery", "front_left_chest", "front_center_chest",
       "left_sleeve_embroidery", "right_sleeve_embroidery",
     ],
-    // y 0.42 lifts it off the hem. The width is checked by `sync --dry-run`,
-    // which prints the printed size on the smallest garment and the largest.
-    placement: { position: "front", widthIn: 7.375, y: 0.42 },
+    // 8in on the smallest body this shirt is sold in, y 0.42 to lift it off the
+    // hem. A placement is a PROPORTION, so this is ~11in on a 3XL; asking for
+    // ten on a small would put fifteen on a 3XL and cover the shirt. Checked by
+    // `sync --dry-run`, which prints both ends of the range and the dpi at each.
+    placement: { position: "front", widthIn: 8.0, y: 0.42 },
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [18540, 18541, 18542, 18543, 18544, 18545] },
       { name: "Ash", hex: "#c9cbc8", ground: "light", variants: [38602, 38605, 38608, 38611, 38614, 38617] },
@@ -307,7 +518,7 @@ export const ITEMS: Item[] = [
       "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
       "shoulder-taped, unisex sizing. Printed direct-to-garment by Printful, " +
       "front only. The print is a proportion of the garment, so it grows with " +
-      "it — seven and a half inches across on a small, ten on a 3XL.",
+      "it — eight inches across on a small, eleven on a 3XL.",
   },
   {
     id: "hoodie",
@@ -316,8 +527,8 @@ export const ITEMS: Item[] = [
     // budget default: 8 oz of 50/50 blend with a one-ply body. The IND4000 is
     // 10 oz of 80/20, jersey-lined hood, twill-taped neck — the hoodie the
     // merchandise trade treats as the quality tier. It also carries a 15 x 10in
-    // front canvas against the Gildan's 12.4 x 8.2, which is what lets this
-    // crest print eight inches across instead of under seven.
+    // front canvas against the Gildan's 12.4 x 8.2, which is what lets a square
+    // mark print seven inches across on a small instead of under six.
     blueprintId: 2002,
     // SwiftPOD, not Monster Digital, and the reason is stock rather than money:
     // Monster Digital's IND4000 has no black and stops at 2XL. SwiftPOD carries
@@ -325,12 +536,14 @@ export const ITEMS: Item[] = [
     // is also 55 cents cheaper on black.
     printProviderId: 39,
     priceCents: 7400,
+    taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
     // The front is 15 x 10in — wider than it is tall, because the pouch takes
-    // the rest — so a portrait mark is bound by HEIGHT. 8.3in wide puts the
-    // crest at 9.34in tall, just inside the 94% the provider will not trim into.
-    placement: { position: "front", widthIn: 8.3, y: 0.5 },
+    // the rest — so a SQUARE mark is bound by HEIGHT and clamps to 7.15in
+    // however much is asked for. Asking 7.5 says "as big as the height allows"
+    // and gets there without pretending the extra inch exists.
+    placement: { position: "front", widthIn: 7.5, y: 0.5 },
     // Three, and the missing ones are a cost decision made in the open.
     // Measured on 2026-07-28: black is $32.92/$34.16, navy $34.58/$36.74, white
     // $34.58/$35.79 — and every other colour SwiftPOD offers, the heathers and
@@ -345,9 +558,9 @@ export const ITEMS: Item[] = [
     spec:
       "Independent Trading Co. IND4000: 10 oz of 80/20 cotton-polyester " +
       "heavyweight fleece, jersey-lined hood, twill-taped neck, ribbed cuffs and " +
-      "hem, front pouch. The front panel is wider than it is tall, so a portrait " +
-      "mark is limited by height here — just under seven inches across on a " +
-      "small, eight and a third on a 3XL.",
+      "hem, front pouch. The front panel is wider than it is tall, so a square " +
+      "mark is limited by height here and a wide one is not; the back panel is " +
+      "the largest canvas anything in this shop is printed on.",
   },
   {
     id: "sticker",
@@ -357,6 +570,8 @@ export const ITEMS: Item[] = [
     // this blueprint and rejects creation outright — see REJECTS_CREATION.
     printProviderId: 99,
     priceCents: 600,
+    // Vinyl, not apparel. No exemption anywhere applies to it.
+    taxCode: "txcd_99999999",
     // Three at a time, and this is arithmetic rather than merchandising.
     // A single sticker costs $2.00 to make and $4.59 to post, so free shipping
     // needs $7.10 just to break even and about $11 to earn anything — an $11
@@ -368,11 +583,17 @@ export const ITEMS: Item[] = [
       minQuantity: 3,
       why:
         "One sticker costs more to post ($4.59) than to make ($2.00), and free " +
-        "shipping on one would need an $11 price tag. Three post for $4.77.",
+        "shipping on one would need an $11 price tag. Three post for $4.77. " +
+        "The three are three STICKERS and not three of one design: every sticker " +
+        "here is the same blueprint through the same maker, so postage merges " +
+        "across the designs as readily as across copies of one.",
     },
     sizes: ['3" × 3"', '4" × 4"'],
     positions: ["front"],
-    placement: { position: "front", widthIn: 2.3, y: 0.5 },
+    // Kiss-cut, so the vinyl takes the shape of the mark. Ask for more than the
+    // area holds and `place()` clamps to 94% of it, which is the right answer
+    // for a sticker: as large as the sheet allows, whatever shape the mark is.
+    placement: { position: "front", widthIn: 2.8, y: 0.5 },
     colourways: [
       { name: "White vinyl", hex: "#f4f4f2", ground: "light", variants: [45750, 45752] },
     ],
@@ -381,7 +602,9 @@ export const ITEMS: Item[] = [
       "outlast at least two of the platforms this team's record had to be " +
       "recovered from. Sold in threes — one sticker costs more to post than to " +
       "make, and three cost the same to post as one.",
-    colourSentence: { light: "Three inches or four, mix them as you like." },
+    colourSentence: {
+      light: "Three inches or four, and the three in a set can be three different marks.",
+    },
     // A sticker has no body, so the mark's note about needing a light one under
     // it is about the wrong object. The white vinyl IS the light ground.
     groundNote: { light: null },
@@ -401,11 +624,15 @@ export const ITEMS: Item[] = [
     // stitch, 19 cents is not a decision.
     printProviderId: 410,
     priceCents: 4000,
+    // Hats, not general clothing. New York exempts caps the same way it exempts
+    // shirts; the specific code is the one that says so in every other state too.
+    taxCode: "txcd_30060006",
     sizes: ["One size"],
     positions: ["front"],
-    // The embroidery panel is 5.9 x 2in. A portrait mark is bound by the second
-    // figure, which is what puts this at 1.66in rather than anything wider.
-    placement: { position: "front", widthIn: 1.66, y: 0.5 },
+    // The embroidery panel is 5.9 x 2in. A SQUARE mark is bound by the second
+    // figure and clamps to 1.88in, which is the size a seal wants on a cap
+    // front; a bar overrides this in MATRIX and runs most of the panel.
+    placement: { position: "front", widthIn: 1.9, y: 0.5 },
     colourways: [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [118722] },
       { name: "Black / Charcoal", hex: "#232628", ground: "dark", variants: [118723] },
@@ -414,8 +641,9 @@ export const ITEMS: Item[] = [
     ],
     spec:
       "Richardson 112: structured six-panel front, mesh back, pre-curved visor, " +
-      "snapback closure, one size. Stitched rather than printed — the gold is " +
-      "thread and the shapes inside it are bare twill.",
+      "snapback closure, one size. Stitched rather than printed — three thread " +
+      "colours, black, white and gold, and no gradient anywhere, which is why " +
+      "the marks were drawn to three inks in the first place.",
     colourSentence: { dark: "Black, charcoal and two-tone." },
   },
   {
@@ -428,9 +656,12 @@ export const ITEMS: Item[] = [
     // which Printify Choice does not offer at any price.
     printProviderId: 410,
     priceCents: 3200,
+    taxCode: "txcd_30060006",
     sizes: ["One size"],
     positions: ["front"],
-    placement: { position: "front", widthIn: 1.45, y: 0.5 },
+    // 5.0 x 1.75in of cuff, so a square mark clamps to 1.645in — smaller than
+    // the cap, which is why the beanie carries the two simplest marks in the set.
+    placement: { position: "front", widthIn: 1.7, y: 0.5 },
     colourways: [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [116417] },
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [116425] },
@@ -452,12 +683,14 @@ export const ITEMS: Item[] = [
     // provider that carries it. That is a $30 mug, and it is not one.
     printProviderId: 99,
     priceCents: 2600,
+    // Ceramic. Fully taxable everywhere this shop can post to.
+    taxCode: "txcd_99999999",
     sizes: ["11 oz", "15 oz"],
     positions: ["front"],
-    // 3.0in, and the limit is the 11 oz rather than the 15. The two sizes are
-    // not the same SHAPE, so the taller mug is the wider canvas and a scale
-    // that fits it overflows the smaller one.
-    placement: { position: "front", widthIn: 3.0, y: 0.5 },
+    // A square mark clamps to 3.40in, and the limit is the 11 oz rather than the
+    // 15. The two sizes are not the same SHAPE, so the taller mug is the wider
+    // canvas and a scale that fits it overflows the smaller one.
+    placement: { position: "front", widthIn: 3.5, y: 0.5 },
     colourways: [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [65217, 104470] },
     ],
@@ -465,9 +698,13 @@ export const ITEMS: Item[] = [
       "Black ceramic, eleven ounces or fifteen. Dye-sublimated, dishwasher and " +
       "microwave safe, printed on one side.",
     colourSentence: { dark: "" },
+    // The mark's own note is about a garment — what a black field does under a
+    // shirt, and what a white underbase does to it. A mug is neither, so the
+    // sentence is about the object instead.
     groundNote: {
-      dark: "The black body is what makes this mark usable at all — on white it " +
-        "has nothing to cut into.",
+      dark: "Every mark in this shop was drawn on a black field, and this mug is " +
+        "black: the drawing and the object agree, which is the whole reason it " +
+        "is not a white one.",
     },
   },
 ];
@@ -477,27 +714,97 @@ export const ITEMS: Item[] = [
 /* ------------------------------------------------------------------ */
 
 /**
- * One line, one product. Eight lines, eight products.
+ * One line, one product. Twenty-three lines, twenty-three products.
  *
- * `crest` is missing from cap, beanie and mug because those are bought in black
- * and the full-colour mark cannot go on black — `buildLine()` would throw if it
- * were added, naming the ground it cannot use. `crest-gold` is missing from the
- * sticker because the sticker is white vinyl for the same reason in reverse.
+ * **Nine marks against six items is fifty-four products, and fifty-four is a
+ * worse shop than a considered twenty.** So the mark is matched to the garment
+ * rather than multiplied by it, and three things decide the pairing.
  *
- * These eight are the captain's approved line. Adding a line here creates a
- * DRAFT on the next `sync`; it does not publish anything, and nothing in this
- * package can.
+ * **1 — the SHAPE of the canvas.** These are the smallest each garment offers; a
+ * placement is a proportion of it, so the print grows with the size, and
+ * `cli.ts sync --dry-run` prints both ends of the range with the dpi at each.
+ *
+ *   tee front      10.95 x 12.41in portrait   a badge, big, one to a shirt
+ *   hoodie front   12.36 x  8.24in LANDSCAPE  a wide lockup; a square mark caps at 7.15in
+ *   hoodie back    12.36 x 14.01in portrait   the biggest canvas in the line
+ *   cap front       5.90 x  2.00in            EMBROIDERY
+ *   beanie front    5.00 x  1.75in            EMBROIDERY, smaller again
+ *   mug front       7.76 x  3.62in landscape  a wide lockup, or a 3.4in medallion
+ *   sticker        die-cut to the art         whatever shape the mark already is
+ *
+ * **2 — the ground.** `faceoff` and `octagon-patch` are absent from every dark
+ * item and `arched-varsity` from every light one. Not a choice made here:
+ * `buildLine()` refuses those pairings and names the reason.
+ *
+ * **3 — what a needle can hold.** The cap and the beanie are stitched, not
+ * printed, and the provider's own mockups are what settled which marks may go on
+ * them. A dense badge at 1.88in on a cap panel and 1.64in on a cuff loses its
+ * type entirely — the two rings of lettering on the heritage seal and the
+ * championship roundel came back as mush, and a cap is the one thing in this
+ * shop that is looked at from three feet away. Both now carry only the three
+ * WIDE marks, which get 2.9-4.75in of panel and keep their letterforms.
+ *
+ * Every mark appears at least twice; `rink-board` appears on four items because
+ * it is the only one in the set that survives being an inch and a half tall.
+ * Every item carries at least two marks.
+ *
+ * Adding a line creates a DRAFT on the next `sync`. It does not publish
+ * anything, and nothing in this package can.
  */
 export const MATRIX: MatrixEntry[] = [
-  { mark: "crest", item: "tee" },
-  { mark: "crest", item: "hoodie" },
-  { mark: "crest", item: "sticker" },
+  /* Tee — the hero garment. Portrait canvas, DTG, so the four square badges and
+     the one wide wordmark that most deserve a full chest. 8in on a small,
+     ~11in on a 3XL. */
+  { mark: "mascot-medallion", item: "tee" },
+  { mark: "crossed-shield", item: "tee" },
+  { mark: "championship-roundel", item: "tee" },
+  { mark: "faceoff", item: "tee" },
+  // Wider than the badges and it sits higher: a varsity arch belongs across the
+  // chest, not centred on it.
+  { mark: "arched-varsity", item: "tee", placement: { widthIn: 9.0, y: 0.4 } },
+  // The only portrait mark in the set, on the only portrait canvas that can take
+  // it whole. Bound by height to 7.78in wide and 11.66in tall.
+  { mark: "octagon-patch", item: "tee", placement: { widthIn: 8.5 } },
 
-  { mark: "crest-gold", item: "tee" },
-  { mark: "crest-gold", item: "hoodie" },
-  { mark: "crest-gold", item: "cap" },
-  { mark: "crest-gold", item: "beanie" },
-  { mark: "crest-gold", item: "mug" },
+  /* Hoodie. The front is LANDSCAPE — 11.42 x 7.61in, because the pouch takes
+     the rest — so it is the one canvas in the line built for a wide lockup, and
+     a square badge is capped at 7.15in by height. The back is the biggest
+     canvas there is and it takes what the front cannot. */
+  { mark: "rink-board", item: "hoodie", placement: { widthIn: 10.5 } },
+  { mark: "heritage-seal", item: "hoodie" },
+  { mark: "championship-roundel", item: "hoodie", placement: { position: "back", widthIn: 10.0 } },
+  { mark: "arched-varsity", item: "hoodie", placement: { position: "back", widthIn: 10.0, y: 0.45 } },
+
+  /* Cap and beanie — Richardson 112 and Yupoong 1501KC, both EMBROIDERED, and
+     that is the constraint rather than the size of the panel. The provider's
+     own mockups settled it: a dense badge stitched at 1.88in on a cap and
+     1.64in on a cuff turns its two rings of type to mush, and a cap is the one
+     thing in this shop somebody wears at eye level. So the three wide marks
+     take both, at 2.9-4.75in, where the type is still type. */
+  { mark: "rink-board", item: "cap", placement: { widthIn: 4.75 } },
+  { mark: "nose-to-nose", item: "cap", placement: { widthIn: 3.6 } },
+  { mark: "arched-varsity", item: "cap", placement: { widthIn: 3.2 } },
+
+  { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
+  { mark: "nose-to-nose", item: "beanie", placement: { widthIn: 3.2 } },
+
+  /* Mug — landscape, and the two widest marks wrap it the way a mug wants to be
+     wrapped. The medallion is the third because a mug is the one object in the
+     line you look at head-on. */
+  { mark: "rink-board", item: "mug", placement: { widthIn: 6.5 } },
+  { mark: "nose-to-nose", item: "mug", placement: { widthIn: 6.0 } },
+  { mark: "mascot-medallion", item: "mug" },
+
+  /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every
+     badge in the set is already a sticker shape. White vinyl is a light ground,
+     which is why `arched-varsity` is not here and the two light-only marks are.
+     It is also the only item that can carry all five badges without any of them
+     competing for the same garment. */
+  { mark: "heritage-seal", item: "sticker" },
+  { mark: "championship-roundel", item: "sticker" },
+  { mark: "octagon-patch", item: "sticker" },
+  { mark: "crossed-shield", item: "sticker" },
+  { mark: "faceoff", item: "sticker" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -605,9 +912,16 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
 
     const grounds = [...new Set(usable.map((c) => c.ground))];
     const colours = grounds.map((g) => colourSentence(item, g)).filter(Boolean).join(" ");
-    const notes = grounds
-      .map((g) => (g in (item.groundNote ?? {}) ? item.groundNote?.[g] : mark.groundNote))
-      .filter((n): n is string => Boolean(n));
+    // Deduplicated, and that is load bearing now that a mark may sit on BOTH
+    // grounds. The note is looked up per ground and falls back to the mark's
+    // own; a mark offered on light and dark falls back twice and used to print
+    // its one sentence twice in a row. Nothing caught it before because no mark
+    // in the old line was offered on more than one ground.
+    const notes = [...new Set(
+      grounds
+        .map((g) => (g in (item.groundNote ?? {}) ? item.groundNote?.[g] : mark.groundNote))
+        .filter((n): n is string => Boolean(n)),
+    )];
     const closing = item.closing === undefined ? DEFAULT_CLOSING : item.closing;
 
     line.push({
@@ -623,6 +937,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
       sizes: item.sizes,
       placements: [{ ...placement, art: mark.press }],
       ...(item.sale ? { sale: item.sale } : {}),
+      taxCode: item.taxCode,
       claims: entry.claims ?? [],
       markId: mark.id,
       itemId: item.id,

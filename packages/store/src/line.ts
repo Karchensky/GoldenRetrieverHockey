@@ -223,27 +223,28 @@ export type { LineItem, Placement } from "./matrix.ts";
 /**
  * The product line, composed from ./matrix.ts.
  *
- * Eight products, built from two marks and six items. There is no product list
- * in this repository any more: MATRIX holds one line per product and everything
- * else — id, title, colourways, price, placement, description — is derived, so
- * the same tee cannot be priced two ways or carry two different spellings of
- * the same paragraph.
+ * Twenty-three products, built from nine marks and six items. There is no
+ * product list in this repository any more: MATRIX holds one line per product
+ * and everything else — id, title, colourways, price, placement, description —
+ * is derived, so the same tee cannot be priced two ways or carry two different
+ * spellings of the same paragraph.
  *
  * **Resolution is not the binding constraint any more.** Every mark this line
  * used to print was a 1254 px flat carrying about 900 px of artwork, which is
  * 158 dpi at six inches; that is why the crest was once sold at six inches and
- * the wordmark at 5.17. The vector masters have no ceiling. Nothing is sized to
- * its file now. Everything is sized to the garment, and the garment wins first.
+ * the wordmark at 5.17. The vector masters have no ceiling — the three-colour
+ * production SVGs trim to 5,400-5,700 px. Nothing is sized to its file now.
+ * Everything is sized to the garment, and the garment wins first.
  *
  * One trap survives the re-export, and it is why dpi is a range rather than a
  * number: Printify's placement is a PROPORTION of the print area, and the print
  * area is bigger on a 3XL than on an S. One scale is sent for every size. The
- * tee prints 7.38 inches wide on a small and 10.0 on everything from L up, and
- * the second number is the one that decides whether the print looks soft, so
- * sync.ts reports both and products.json stores both.
+ * tee prints 8 inches wide on a small and 10.96 on a 3XL, and the second number
+ * is the one that decides whether the print looks soft, so sync.ts reports both
+ * and products.json stores both.
  *
  * The floor is 300 dpi at the printed size, measured on the LARGEST size
- * offered, and sync.ts refuses to upload under it. The worst in this line is 453.
+ * offered, and sync.ts refuses to upload under it. The worst in this line is 437.
  *
  * **A function rather than a constant, and memoised.** `buildLine()` throws on a
  * matrix that does not hold together — a mark on a ground it cannot use, a

@@ -8,13 +8,15 @@
    Scoped as a module on purpose: app/globals.css belongs to the shell
    and this page does not get to reach into it.
 
-   Two large blocks used to live here and no longer do.
+   The CART came back on 2026-07-29 and lives in cart.module.css, next
+   to the component that uses it. It was deleted twice: once when its
+   Checkout button was permanently disabled because there was no server
+   to take money, and again when the plan was a Printify Pop-Up store
+   that would own the basket itself. Neither holds — the Pop-Up does not
+   make Printify the merchant of record, which was the only reason to
+   want it, so checkout is ours and on this domain.
 
-   The CART — button, drawer, scrim, lines, subtotal, and a Checkout
-   that was permanently disabled and wore a dashed border to say so.
-   Checkout is a Printify Pop-Up store now. It owns the basket, so this
-   side does not need one, and a cart that cannot check out was ~220
-   lines of CSS whose whole job was to look honest about being useless.
+   One block used to live here and does not.
 
    The REVEAL — `.reveal { opacity: 0 }` plus an IntersectionObserver
    plus a <noscript><style> patch plus a `@media (scripting: none)`
@@ -254,13 +256,43 @@
   align-items: baseline;
   gap: 10px;
 }
-/* Sizes are stated, not chosen. There is nothing on this side to choose into —
-   the Pop-Up store takes the order and the size goes in there. */
-.sizeList {
+/* Sizes are CHOSEN now. They were a read-only sentence while the order was
+   placed on somebody else's checkout; there is something on this side to choose
+   into, so they are buttons. */
+.optName {
   font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.optValue {
   font-size: 12px;
-  letter-spacing: 0.08em;
   color: var(--ink);
+}
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sizeBtn {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  min-width: 42px;
+  padding: 9px 11px;
+  color: var(--dim);
+  background: rgba(56,62,78,0.12);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.sizeBtn:hover { color: var(--ink); border-color: rgba(182,186,197,0.22); }
+.sizeOn {
+  color: var(--ink);
+  border-color: var(--paint-b);
+  background: rgba(56,62,78,0.24);
 }
 
 /* ---- the one button that leaves ---- */
@@ -368,33 +400,57 @@
   }
 }
 
-/* NOT OPEN YET.
-   A left rule in the ball's gold rather than a filled banner: the page is a
-   near-black ground with the products as the only lit objects on it, and a box
-   with a background would be the brightest thing on the screen and read as an
-   error. The rule carries it and the type does the work. */
-.notOpen {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 14px;
-  margin: 34px 0 6px;
-  padding: 14px 0 14px 18px;
-  border-left: 2px solid var(--ball);
+/* ---- the mockups ----
+   Provider renders of the real garment, mirrored into the export by
+   scripts/mirror-mockups.mjs. Printify serves them on a white field, which is
+   the one thing on this near-black page that would glare — so they sit on their
+   own faint panel with a radius, and `mix-blend-mode` is deliberately NOT used:
+   it would tint the garment, and the whole argument for showing a mockup rather
+   than a drawing is that it is not a guess about what arrives. */
+.cardImg,
+.stageImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  background: rgba(244,244,242,0.03);
 }
-.notOpen strong {
+.cardImg { aspect-ratio: 1 / 1; object-fit: cover; }
+.cardImgMissing {
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(182,186,197,0.04) 0 8px, transparent 8px 16px);
+}
+.stage { display: grid; gap: 10px; }
+
+/* ---- detail copy ---- */
+.detailPrice {
+  margin: 0 0 18px;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
   color: var(--ink);
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: .01em;
 }
-.notOpen span {
+.detailCopy {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.75;
   color: var(--dim);
-  font-size: 12.5px;
-  line-height: 1.6;
 }
 
-/* The whole page, while there is no store. Sits where the lede sat, in the
+/* The buying rule, printed where it binds. Same left rule as the cart's
+   problems list, because it is the same kind of statement. */
+.saleNote {
+  margin: 0;
+  padding: 2px 0 2px 13px;
+  border-left: 2px solid var(--ball);
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+/* The whole page, when the catalog is empty. Sits where the lede sat, in the
    lede's size, so the hero keeps its proportions with one line under it
    instead of a paragraph and a grid. */
 .soon {

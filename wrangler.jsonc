@@ -1,22 +1,32 @@
 {
-  // Cloudflare Workers, serving the static export.
+  // Cloudflare Workers, serving the static export and the checkout.
   //
-  // There is no `main` and no Worker script: with `assets` and no entrypoint,
-  // the platform serves the directory directly and never runs our code. That is
-  // the whole deployment — the site has no server, no database and no runtime
-  // fetch, and this config should not be the first thing to introduce one.
+  // This used to have no `main`: the platform served the directory and never
+  // ran our code, because the site had no server, no database and no runtime
+  // fetch. The store changed that on 2026-07-29 — a shop that takes money needs
+  // somewhere to hold a secret key, and it is not the browser.
   //
-  // The store's checkout will need a real Worker later. When it does, `main`
-  // points at it and `assets.binding` lets it fall through to these files; the
-  // directory below does not change.
+  // **The archive is untouched by this.** Every one of the 458 pages is still
+  // static HTML written at build time and served straight off disk; the Worker
+  // answers two paths under /api and hands everything else to ASSETS. If the
+  // Worker were deleted tomorrow the archive would still be there.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "goldenretrieverhockey",
   "compatibility_date": "2026-07-28",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "main": "./workers/checkout/index.ts",
+
+  "observability": { "enabled": true },
 
   "assets": {
     // next build with output:"export" writes here. The build command that
     // fills it is npm run build:site.
     "directory": "./apps/web/out",
+
+    // The Worker reaches the export through this. Without a binding the Worker
+    // has no way to serve a page and every non-API path 404s.
+    "binding": "ASSETS",
 
     // SERVE THE EXPORT'S OWN 404, WITH ITS 404 STATUS.
     //
@@ -31,5 +41,26 @@
     // is written without trailing slashes, so this matches how the links in the
     // HTML are already spelled.
     "html_handling": "auto-trailing-slash"
-  }
+  },
+
+  // ONE KEY PER FULFILLED ORDER, and it is the only state this deployment holds.
+  //
+  // Stripe delivers a webhook AT LEAST once and redelivers on any non-2xx
+  // response, so without somewhere durable to record "this session is dealt
+  // with" a slow Printify call gets the parcel printed twice and charges us for
+  // both. Keys expire after 90 days; by then the payment is long settled and a
+  // replay of a three-month-old event is not a thing Stripe does.
+  //
+  // Create it once, then paste the id it prints here:
+  //   npx wrangler kv namespace create ORDERS
+  "kv_namespaces": [
+    { "binding": "ORDERS", "id": "PASTE_THE_ID_FROM_WRANGLER_KV_NAMESPACE_CREATE" }
+  ]
+
+  // The three secrets are NOT here and must never be. Set them once each:
+  //   npx wrangler secret put STRIPE_SECRET_KEY
+  //   npx wrangler secret put STRIPE_WEBHOOK_SECRET
+  //   npx wrangler secret put PRINTIFY_API_TOKEN
+  // They live encrypted on Cloudflare. `wrangler secret list` shows the names
+  // and never the values. See STORE.md.
 }

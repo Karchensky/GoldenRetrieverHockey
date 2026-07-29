@@ -108,3 +108,15 @@ scratchpad/
 /HANDOFF.md
 /GO-LIVE.md
 /.local-archive/
+
+# The store's operating manual. It replaced docs/STORE.md, which was written as
+# if somebody else would read it. Nobody else will: it holds the captain's own
+# costs, margins, take-home per sale, and the dashboard steps to open the shop.
+# That is a private commercial document and it is not the public face of an
+# archive about a beer league hockey team.
+/STORE.md
+
+# Rendered from docs/logos/vector/master-svg/ by tools/build_vector_assets.py.
+# 22 MB of derived PNGs that nothing in the build reads — matrix.ts prints from
+# production-3color-svg/, which IS tracked. Regenerate with the tool.
+docs/logos/vector/high-dpi-png/

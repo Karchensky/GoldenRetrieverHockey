@@ -34,11 +34,15 @@
     "store:report": "node packages/store/src/cli.ts report",
     "store:catalogue": "node packages/store/src/cli.ts catalogue",
     "store:line": "node packages/store/src/cli.ts line",
+    "store:sync": "node packages/store/src/cli.ts sync",
+    "store:mockups": "node scripts/mirror-mockups.mjs",
+    "deploy": "npm run build:site && wrangler deploy",
     "bake:retriever": "blender assets/3d/retriever-original.blend --background --python scripts/blender/bake-retriever.py",
     "bake:compress": "node scripts/compress-bakes.mjs",
     "dev:regen": "npm run build:data && next dev apps/web"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260729.1",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",

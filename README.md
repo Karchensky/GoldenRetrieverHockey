@@ -2,11 +2,6 @@
 
 Archive and store for The Golden Retrievers, Buffalo's premier golden retriever themed hockey team, est. 2011.
 
-Fifteen years of the club's record, reassembled from five platforms that died or
-moved on. Every figure traces back to a stored page.
-
-**31 sessions · 80 players · 328 games · 5,047 captures**
-
 ---
 
 ## Run it
@@ -32,13 +27,6 @@ data/         the corpus
 
 `data/` holds the source bytes. `packages/build` turns them into
 `apps/web/data/site.json`, which is the single source for every rendered page.
-
----
-
-## One rule
-
-**Absence is not zero.** A missing figure renders as unrecorded, never as `0`.
-A season nobody kept and a season nobody played are different facts.
 
 ---
 

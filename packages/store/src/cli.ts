@@ -50,8 +50,8 @@ const USAGE = `
     sync                     Upload art, create the line as DRAFTS, read it back.
 
 The line is composed in src/matrix.ts: a list of marks, a list of items, and the
-matrix of which goes on which. Add a line there to add a product. docs/STORE.md
-is the manual.
+matrix of which goes on which. Add a line there to add a product. STORE.md at
+the repo root is the manual — local only, and not in the repository.
 
 Token: PRINTIFY_API_TOKEN, or .secrets/printify_token.txt
 

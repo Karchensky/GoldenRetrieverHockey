@@ -36,7 +36,16 @@ import type { PrintifyProduct } from "./types.ts";
 /* The assumptions, all of them, in one place                          */
 /* ------------------------------------------------------------------ */
 
-/** Stripe's US card rate. 2.9% + 30c of the FULL charge, shipping included. */
+/**
+ * A US card rate — 2.9% + 30c of the FULL charge, shipping included.
+ *
+ * The store sells through a Printify Pop-Up now, where Printify takes the
+ * customer's money and pays out the difference, so this fee is very likely not
+ * ours to pay at all. It is kept because subtracting a fee we may not owe makes
+ * every take-home figure a FLOOR, and a floor is the safe direction to be wrong
+ * in when a price is being set. Delete it once Printify have confirmed in
+ * writing what they deduct.
+ */
 export const STRIPE_PERCENT = 0.029;
 export const STRIPE_FLAT_CENTS = 30;
 
@@ -680,7 +689,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   const width = 22;
   console.log(` ${"customer pays".padEnd(width)}${usd(retail).padStart(10)}   ${priced} of ${rows.length} products`);
   console.log(` ${"Printify takes".padEnd(width)}${`-${usd(cost + ship)}`.padStart(10)}   ${usd(cost)} goods + ${usd(ship)} post`);
-  console.log(` ${"Stripe takes".padEnd(width)}${`-${usd(stripe)}`.padStart(10)}   ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} per order`);
+  console.log(` ${"card fee".padEnd(width)}${`-${usd(stripe)}`.padStart(10)}   ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} per order, assumed`);
   console.log(` ${"-".repeat(width + 10)}`);
   console.log(` ${"you keep".padEnd(width)}${usd(keep).padStart(10)}   ${pct(keep / retail)} of retail`);
   if (unpriced) {
@@ -768,15 +777,18 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   console.log(` handling  Printify's own handlingTime range for that shipping plan, in days. Their`);
   console.log(`           figure, quoted as given — the US rows are days, the international ones are`);
   console.log(`           a much wider window and read as production plus transit.`);
-  console.log(` Stripe    ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} on the whole charge. US card rate.`);
+  console.log(` card fee  ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} on the whole charge — a US card rate, held here as a`);
+  console.log(`           CONSERVATIVE FLOOR. The store sells through a Printify Pop-Up and Printify`);
+  console.log(`           handles the payment, so every "you keep" above is that figure or better.`);
   console.log(` dpi       the art's pixel width over its printed width on the LARGEST size offered.`);
   console.log(`           The floor is 300 and sync refuses to upload under it.`);
   console.log(` GARMENT   the shop's product is a different blueprint or maker from the matrix's.`);
   console.log(` THIN      under ${pct(THIN_NET_MARGIN)} kept on the dearest variant, after postage and Stripe.`);
   console.log(` POST      US standard postage over ${pct(HEAVY_SHIPPING)} of the price. Covered, but carrier-driven.`);
   console.log("");
-  console.log(` No sales tax in these figures — Stripe Tax adds it at checkout and it is the`);
-  console.log(` customer's, not yours. No returns. No Printify subscription: the free plan is a`);
-  console.log(` per-item price rather than a monthly one.`);
+  console.log(` No sales tax in these figures. On a Pop-Up store you are not the seller of`);
+  console.log(` record, so it is Printify's to collect and remit — STORE.md 6 has the one`);
+  console.log(` question to put to them in writing. No returns. No Printify subscription: the`);
+  console.log(` free plan is a per-item price rather than a monthly one.`);
   console.log("");
 }

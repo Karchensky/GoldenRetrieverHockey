@@ -2,27 +2,26 @@
 
 Creates and verifies the store's products on **shop 28277243** as drafts, and
 reports what they cost and earn. It has been run against the live API and the
-eight products in `apps/web/data/products.json` were made by it. The shop is
-named "Golden Retrievers" in the dashboard now; the id is what matters and the
-id has not changed.
+23 products in `apps/web/data/products.json` were made by it. The shop is named
+"Golden Retrievers" in the dashboard now; the id is what matters and the id has
+not changed.
 
-**Nothing on the site renders any of this.** `/store` is a placeholder as of
-2026-07-28 — the captain's instruction was that none of it was a product yet and
-the line would be listed all at once when it is finished. `products.json` stayed
-because it is not page copy: it is the record `sync` checks the live shop
-against, and deleting it would leave the sync with no witness.
+**Nothing on the site renders any of this.** `/store` is a placeholder — the
+captain's instruction was that the line would be listed all at once when it is
+finished. `products.json` stays because it is not page copy: it is the record of
+what the shop actually holds, regenerated from the read-back on every sync.
 
-**The drafts on the shop are one line behind the matrix.** Seven of the eight
-changed garment, maker or price on 2026-07-28 and none has been rebuilt: `sync`
-only ever creates, and it matches on title, so it will verify the old draft
-rather than replace it. Delete the seven in the dashboard, bring
-`apps/web/data/products.json` up to date, then `cli.ts sync`. Until then
-`store:report` flags each one `GARMENT` and refuses to quote its cost.
+**Selling happens on a Printify Pop-Up store, which is a different shop id and
+is not managed from here.** The 23 drafts on 28277243 are the workbench — this
+is where the line is composed, priced, measured and verified, and the Pop-Up is
+a copy made in the dashboard. `api.ts` will refuse the Pop-Up's id along with
+every other, and that is correct.
 
-**[`docs/STORE.md`](../../docs/STORE.md) is the manual** — where to change a
-brand, where cost and margin live, how shipping works and what is controllable,
-how to add a product, and what is left before anyone can buy. This file is the
-implementation notes underneath it.
+**`STORE.md` at the repo root is the manual** — where to change a brand, where
+cost and margin live, how shipping works and what is controllable, how to add a
+product, and what is left before anyone can buy. It is local and gitignored,
+because it carries costs, margins and take-home per sale. This file is the
+implementation notes underneath it, and it is public.
 
 ```sh
 npm run store:report                        # cost, margin, postage, take-home. LIVE
@@ -60,10 +59,10 @@ is true without the other.
 the pairing:
 
 ```
-crest-gold on sticker: the sticker is offered on light bodies and this mark can
-only sit on dark. Dark bodies only, and there cannot be a light one — on white
-the mark has nothing to cut into. Add a dark colourway to the item, or drop the
-line.
+arched-varsity on sticker: the sticker is offered on light bodies and this mark
+can only sit on dark. The wordmark is white with a gold keyline and the white is
+the whole weight of it — on a light body it hollows out into an outline. Dark
+bodies only. Add a dark colourway to the item, or drop the line.
 ```
 
 It also catches an unknown mark or item, a duplicate line, a colourway whose
@@ -214,10 +213,10 @@ carrying it, and `sync` would create new drafts beside the old ones rather than
 updating them. `store:report` lists anything on the shop the matrix no longer
 knows about, which is how that gets noticed.
 
-The eight drafts that exist were created before the line was composed, so their
-descriptions on Printify are the older hand-written prose rather than the text
-`matrix.ts` composes today. Nothing depends on the two matching; `sync` will not
-overwrite them and the report does not compare them.
+All 23 drafts on the shop were created from the composed line, so their
+descriptions on Printify are the text `matrix.ts` composes. Edit a description
+after the fact and they diverge: `sync` will not overwrite it and the report does
+not compare them.
 
 **Title matching is also why a garment change needs a deletion.** Change the
 blueprint or the provider and the title does not move, so `sync` finds the old
@@ -290,58 +289,70 @@ cleared, only never tried.
 
 ## The artwork, and where it comes from
 
-**One mark, off the vector masters.** On 2026-07-28 the captain cut the line to
-`logo_one` and nothing else: *"remove all items other than the ones with the
-logo_one in some capacity; i believe most of these items are lower DPI than we
-require."* He was right about the dpi. The monogram, the skate-blade wordmark and
-the pixel retriever were 1254px flats carrying ~900px of artwork, which reaches
-300 dpi only by shrinking the print — the wordmark to 5.17 inches, the retriever
-to 2.85. Their source files are off disk. Do not restore them.
+**Nine marks, all off the THREE-COLOUR production masters** in
+`docs/logos/vector/production-3color-svg/`. `logo_one` and its one-ink gold twin
+are retired and their source files are gone from the working tree.
 
-`cli.ts logos` is a loop over `MARKS` — there is no job list in the CLI any more.
-Each mark carries its source, its press name, its `reach` and its render width,
-so adding a logo is one entry rather than an edit in two files that can disagree.
-Both marks render at 6000px and trim to **4526 × 5094** of artwork, which is 453
-dpi at a ten-inch print. The flat `logo_one.png` beside them holds 948px and
-would be 95 dpi at the same size; it is not used by anything any more.
+**The three-colour file, not the detailed master and not the dpi exports.**
+`tools/build_vector_assets.py` builds three things per concept: a detailed SVG
+that keeps the traced tonal shading (238–1,730 fills), a three-colour SVG
+restricted to `#0B0B0D` / `#FFFFFF` / `#D9A333`, and 300/600 dpi PNGs **rendered
+from the detailed one**. Three flat inks is what a garment actually is — DTG
+holds a hard edge and muddies a gradient, embroidery is thread and has no
+gradient at all, vinyl is cut — and it is what a vendor asks for. Rendered at
+6000 px the three-colour files trim to **5,400–5,700 px** of artwork, which beats
+the 4,526 px the retired crest carried.
 
-| Press file | Source | Ground comes off by |
-| --- | --- | --- |
-| `crest.png` | `vector/logo-one-transparent-600dpi.png` | `reach: "trim"` — already transparent |
-| `crest-gold.png` | `vector/logo-one-one-color-gold.svg` | `reach: "everywhere"` |
+`cli.ts logos` is a loop over `MARKS` — there is no job list in the CLI. Each
+mark carries its source, press name, `reach` and render width, so adding a logo
+is one entry rather than an edit in two files that can disagree.
+
+`renderWidth` is a WIDTH, not a long edge. Eight marks render at 6000; the
+octagon patch is portrait 3:2 and renders at 5000, because 6000 there would
+produce an 8,800 px-tall file for no gain.
 
 `cli.ts marks` lists every image under `docs/logos/`, at any depth, and shows
-which are wired in. Two are.
+which are wired in. Nine are.
 
-`reach` is not a preference and getting it wrong destroys the artwork:
+### `reach` is not a preference, and every mark here is `"trim"`
 
-- **`reach: "border"`** — a flood fill inward from the edge, for the FULL-COLOUR
-  crest on a cream ground. It contains large cream areas that are *part of the
-  artwork* — the RETRIEVERS banner, the dog's muzzle, the tape on the stick
-  blades. A global colour key punches holes through all of them. Not used today
-  only because the captain's transparent export has already done this in vector.
-- **`reach: "everywhere"`** — a straight colour key, for the ONE-INK crest. That
-  file has exactly two colours and *nothing drawn is cream*: every cream region
-  is either the ground or negative space cut into the gold, and on a dark garment
-  that negative space is meant to be the garment. A border fill leaves the banner
-  lettering and the eyes opaque, and DTG lays a white underbase under every
-  non-transparent pixel, so they would print as cream slugs on black.
 - **`reach: "trim"`** — nothing removed, for a source that already carries alpha.
-  It still trims: Printify places an image by its file box and the vector exports
-  are square canvases with the artwork inset, so uploading one untrimmed puts a
-  wide transparent border inside the print area and silently shrinks the print.
+  All nine. It still trims: Printify places an image by its file BOX and the
+  rasteriser leaves the mark inset in a rectangular canvas, so uploading one
+  untrimmed puts a wide transparent border inside the print area and silently
+  shrinks the print.
+- **`reach: "everywhere"`** — a straight colour key, for a mark whose ground
+  colour appears nowhere in the drawing. **Do not reach for this here.** Every
+  one of the nine is OUTLINED in black; keying black would dissolve the drawing
+  rather than free the garment.
+- **`reach: "border"`** — a flood fill inward from the edge, for a flat with a
+  paper ground that also uses that colour *as artwork*. Nothing in the line
+  needs it. Kept because the next hand-supplied flat will.
 
-**Deleting the cream *paths* is not the same as keying the cream *pixels*, and it
-was measured.** Stripping every `fill="#faf4ea"` path out of the one-colour SVG
-and rendering the rest leaves a gold blob with no face and an empty banner: those
-paths are drawn ON TOP of the gold and they are the drawing.
+### What a black field does on a dark body
 
-Two things the one-colour gold master does that are worth knowing before it goes
-on a garment. The banner reads **RETRIEVERS** only — "GOLDEN" is gold-on-black in
-the full-colour crest and becomes gold-on-gold here, so it disappears. And the
-dog's head reduces to a mask rather than a portrait. Both are properties of the
-captain's own file, reproduced faithfully; if he wants "GOLDEN" back it has to be
-knocked out in the master, not here.
+All nine marks are drawn on a black field, so on a dark garment that field stops
+being ink and becomes the garment. Whether that reads as a design or a wreck is
+decided by the **edge**, and it is why `Mark.grounds` exists:
+
+- a mark ringed, bordered or barred in **gold** keeps its whole silhouette — the
+  seal, the medallion, the shield, the board, the capsule, the roundel;
+- a mark whose outer shape **is** the black loses it. `faceoff` is a bare disc
+  with no border: on black the two dogs float either side of a gold line that no
+  longer means anything;
+- a mark drawn inside a filled black **rectangle** prints as a slab.
+  `octagon-patch` is one — 88.7% of its bounding box is inked against 55–83% for
+  the rest — and the provider's mockup on a black hoodie back showed exactly
+  that. Both are light-only;
+- the mirror case is a mark carried by **white**. `arched-varsity` is 26% white
+  ink against 9–18% elsewhere, and on a light body the letterforms hollow out
+  into their own outlines. Dark-only.
+
+**Look at the mockups before believing any of this.** `createProduct` returns
+provider mockups on `images[]`, and reading them back is what moved three
+products out of the line: a dense badge stitched at 1.88in on a cap panel and
+1.64in on a beanie cuff loses its lettering entirely, which no measurement of the
+file would have told you.
 
 `prepareLogo` still writes a web-sized WebP alongside the press file, off the
 same source in the same pass, so the mark on a page and the mark on a parcel
