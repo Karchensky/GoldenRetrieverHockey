@@ -33,8 +33,9 @@ import s from "../../components/store/store.module.css";
 export const metadata: Metadata = {
   title: "Store",
   description:
-    "Tees, hoodies, caps, beanies, mugs and stickers, carrying nine marks drawn " +
-    "for the Golden Retrievers. Printed to order and posted free within the US.",
+    "Tees, hoodies, caps, beanies, mugs, stickers and pucks, carrying nine crests " +
+    "drawn for the Golden Retrievers — Buffalo's premier golden retriever " +
+    "themed hockey team since 2011.",
 };
 
 export default function StorePage() {
@@ -47,8 +48,8 @@ export default function StorePage() {
           <i>store.</i>
         </h1>
         <p className="hero-p">
-          Nine marks, six things to put them on. Printed to order in the United States.
-          Postage is added at checkout at exactly what it costs us.
+          Nine crests, drawn for the club and printed one order at a time in the
+          United States. Tees, hoodies, caps, mugs, stickers &mdash; and a puck.
         </p>
 
         <nav className={s.categoryNav} aria-label="Sections">
@@ -77,8 +78,9 @@ export default function StorePage() {
       )}
 
       <p className={s.detailCopy}>
-        Printed to order, 2 to 5 business days to make. Shipping at cost.{" "}
-        <Link href="/store/help">Shipping and returns</Link>.
+        Everything is made to order, so allow 2&ndash;5 business days before it ships.
+        Shipping is charged at cost &mdash; whatever the post office charges us, and
+        nothing on top. <Link href="/store/help">Shipping &amp; returns</Link>
       </p>
     </div>
   );

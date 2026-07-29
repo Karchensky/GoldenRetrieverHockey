@@ -102,8 +102,8 @@ export default function Buy({ product }: { product: Product }) {
         {product.sale && <p className={s.saleNote}>{product.sale.why}</p>}
 
         <p className={s.notLiveB}>
-          Shipping added at checkout at cost. Printed to order — 2 to 5 business days
-          to make, then the post. <a href="/store/help">Shipping and returns</a>.
+          Made to order &mdash; 2&ndash;5 business days, then shipping at cost.{" "}
+          <a href="/store/help">Shipping &amp; returns</a>
         </p>
       </div>
     </div>

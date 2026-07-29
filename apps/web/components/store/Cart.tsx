@@ -145,13 +145,28 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** The count in the nav. Renders nothing until there is something in it. */
+/**
+ * The basket, in the masthead.
+ *
+ * **It is always here.** The first version rendered nothing until something had
+ * been added, on the reasoning that an empty basket is not worth a control. That
+ * is wrong twice over: a shopper cannot check what is in their basket without
+ * first putting something in it, and a store with no visible basket reads as a
+ * store that cannot take money. The captain could not find it, which is the only
+ * evidence needed.
+ *
+ * The count appears when there is one.
+ */
 export function CartButton() {
   const { count, setOpen } = useCart();
-  if (!count) return null;
   return (
-    <button type="button" className={s.navButton} onClick={() => { setOpen(true); }}>
-      Basket <span className={s.navCount}>{count}</span>
+    <button
+      type="button"
+      className={s.navButton}
+      onClick={() => { setOpen(true); }}
+      aria-label={count ? `Basket, ${count} item${count === 1 ? "" : "s"}` : "Basket, empty"}
+    >
+      Basket{count > 0 && <span className={s.navCount}>{count}</span>}
     </button>
   );
 }
@@ -221,7 +236,9 @@ function CartDrawer() {
         </header>
 
         {!lines.length ? (
-          <p className={s.empty}>Nothing in it yet.</p>
+          <p className={s.empty}>
+            Your basket is empty. <a href="/store">Have a look at the shop</a>.
+          </p>
         ) : (
           <>
             <ul className={s.lines}>
@@ -278,10 +295,9 @@ function CartDrawer() {
               <span>{money(subtotal)}</span>
             </div>
             <p className={s.note}>
-              Shipping and sales tax are added at checkout. Postage is Printify&rsquo;s own
-              rate for exactly this order, passed straight through — a second of the same
-              thing costs far less to post than the first. Printed to order, 2 to 5
-              business days to make. <a href="/store/help">Shipping and returns</a>.
+              Shipping and tax are calculated at checkout. Made to order in 2&ndash;5
+              business days. Got a code from the team? Enter it at checkout.{" "}
+              <a href="/store/help">Shipping &amp; returns</a>
             </p>
 
             {failure && <p className={s.failure}>{failure}</p>}

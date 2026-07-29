@@ -59,12 +59,55 @@
    `.catalogHead h2` was 4.2rem at weight 200 while every other h2 on the site
    was 1.9rem at 300, uppercase. It is `.head` now. */
 
-/* ---- grid ---- */
+/* ---- the row ----
+   THREE ACROSS, AND THE REST SCROLLS. The captain's call on 2026-07-29, and it
+   suits what the shop became: nine crests across seven items is thirty products,
+   and an auto-filling grid turned each category into a wall four rows deep.
+   Three is enough to see the range and few enough that each one is big.
+
+   `grid-auto-flow: column` with a fixed auto-column width is what makes a row
+   rather than a wrap. The width is a third of the container less the two gaps,
+   so exactly three sit in view and the fourth is the affordance — you can see
+   its edge, which is what tells anybody there is more.
+
+   Snap points, so a flick lands on a card instead of between two. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 28px) / 3);
   gap: 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* Room for the scrollbar without it sitting on the cards. */
+  padding-bottom: 12px;
+  /* A hint that the row continues, drawn in the page's own ground rather than
+     a gradient over the cards. */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(182,186,197,.22) transparent;
 }
+.grid > * { scroll-snap-align: start; }
+
+.grid::-webkit-scrollbar { height: 6px; }
+.grid::-webkit-scrollbar-track { background: transparent; }
+.grid::-webkit-scrollbar-thumb {
+  background: rgba(182,186,197,.22);
+  border-radius: 3px;
+}
+.grid::-webkit-scrollbar-thumb:hover { background: rgba(182,186,197,.38); }
+
+/* Two on a tablet, one and a bit on a phone — the partial card is deliberate,
+   it is the only thing that says "swipe". */
+@media (max-width: 900px) {
+  .grid { grid-auto-columns: calc((100% - 14px) / 2); }
+}
+@media (max-width: 600px) {
+  .grid { grid-auto-columns: 78%; scroll-snap-type: x mandatory; }
+}
+
+/* The tilt lifts a card out of its box, which a scroll container clips. Off in
+   the row; the detail page keeps it. */
+.grid .card { transform: none; }
 
 /* ---- card ---- */
 .card {

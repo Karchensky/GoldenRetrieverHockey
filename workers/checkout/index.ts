@@ -198,6 +198,16 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
     // without one. Collecting it here is not a preference.
     phone_number_collection: { enabled: true },
 
+    /* PROMOTION CODES, so the captain can hand teammates a code that takes the
+       club's margin off and sells them the thing at cost.
+       Stripe owns the codes; nothing about them is in this repository. Create a
+       coupon in the dashboard, give it a code, share the code. A 20% coupon is
+       almost exactly cost, because 20% is what every variant is priced to earn —
+       see MARGIN_TARGET. STORE.md has the arithmetic and the exact figures.
+       Stripe validates the code, so an expired or unknown one is refused at the
+       till rather than trusted from the browser. */
+    allow_promotion_codes: true,
+
     billing_address_collection: "required",
     success_url: `${SITE}/store/thanks?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${SITE}/store`,

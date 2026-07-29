@@ -722,6 +722,39 @@ export const ITEMS: Item[] = [
     care: "One size. Hand wash cold and lay flat to dry.",
   },
   {
+    /* A HOCKEY PUCK, and the answer to "are there any hockey jersey items?".
+       There are not: Printify's catalog returns nothing for "hockey jersey" and
+       every hit for "jersey" is jersey-KNIT fabric — t-shirts. A real sublimated
+       hockey sweater is teamwear, made by a teamwear supplier, and print-on-
+       demand does not do it. What Printify does have, from exactly one maker, is
+       this: blueprint 1203, a regulation 3-inch puck.
+       One variant, one size, one provider. The print area is 795 x 795 px, which
+       is 2.65in square at 300 dpi — small, and round, so it takes a badge and
+       nothing else. It posts for $7.59, which is most of what it costs. */
+    id: "puck",
+    title: "Puck",
+    blueprintId: 1203,
+    printProviderId: 80,
+    // An anchor only. The reprice pass sets the real figure from the cost the
+    // shop reports — see MARGIN_TARGET.
+    priceCents: 2000,
+    // Not apparel and not a mug: a puck is general tangible goods.
+    taxCode: "txcd_99999999",
+    sizes: ['3"'],
+    positions: ["front"],
+    // 2.65in of canvas, so a square badge clamps to 2.49in. There is no version
+    // of this that takes a wide lockup.
+    placement: { position: "front", widthIn: 2.5, y: 0.5 },
+    colourways: [
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [91951] },
+    ],
+    spec:
+      "A regulation three-inch vulcanised rubber puck, printed on one face. " +
+      "Six ounces of the only object in this shop that has ever been shot at " +
+      "somebody.",
+    care: "One size, because a puck is one size. Not for actual use on ice.",
+  },
+  {
     id: "mug",
     title: "Mug",
     blueprintId: 479,
@@ -752,6 +785,55 @@ export const ITEMS: Item[] = [
     care: "Eleven ounces or fifteen. Dishwasher and microwave safe.",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Quotes                                                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * What the club said about itself, recovered from its own site.
+ *
+ * Every line below is VERBATIM from a game recap in `site.json` — the same
+ * corpus the archive is built from — written by whoever was keeping the site in
+ * 2012. It is a deadpan sports-desk parody with Shakespeare in it, and it is the
+ * best copy anybody is going to write for this shop: nothing invented here could
+ * beat a defenceman comparing glory to a circle in the water.
+ *
+ * The attribution is the player's own name and number as the recap gave it.
+ *
+ * **Do not write new ones.** The value is that a customer is reading the team,
+ * not a marketing department. A quote with no source does not go in this map.
+ */
+const QUOTES: Record<string, string> = {
+  "championship-roundel":
+    "“Glory is like a circle in the water, which never ceaseth to enlarge " +
+    "itself, till by broad spreading it disperses to naught.” " +
+    "— Rich Fedele, defence",
+  "heritage-seal":
+    "“What a piece of work is a Golden Retriever. How noble in reason, how " +
+    "infinite in faculties. In action how like an Angel.” " +
+    "— Brett Koeppel, #18",
+  "crossed-shield":
+    "“The Golden Retrievers are good. Scary Good.” — Justin Wheeler, forward",
+  "arched-varsity":
+    "On first pulling on the golden jersey: “I’m never taking this off, " +
+    "ever.” — Greg Suffoletto, forward",
+  "faceoff":
+    "“It felt like we were skating in circles, just chasing our tails all " +
+    "night.” — Dan Schmitt, defence",
+  "mascot-medallion":
+    "“I do it well, very well.” — Vinny Terrana, forward, " +
+    "after a nine-point game",
+  "rink-board":
+    "“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” " +
+    "— Greg Suffoletto, forward",
+  "nose-to-nose":
+    "“Us Cat’s gotta stick together.” — Brent “The Cat” " +
+    "Seymour, goaltender, on letting in a couple against the CLUB Panthers",
+  "octagon-patch":
+    "“Pain has a structure. It has a floor plan… it is a poem.” " +
+    "— Justin Wheeler, forward, playing injured",
+};
 
 /* ------------------------------------------------------------------ */
 /* 3 — the matrix                                                      */
@@ -796,75 +878,82 @@ export const ITEMS: Item[] = [
  * anything, and nothing in this package can.
  */
 export const MATRIX: MatrixEntry[] = [
-  /* Tee — the hero garment. Portrait canvas, DTG, so the four square badges and
-     the one wide wordmark that most deserve a full chest. 8in on a small,
-     ~11in on a 3XL. */
-  { mark: "mascot-medallion", item: "tee" },
+  /* Tee — the hero garment. Portrait canvas, DTG, 8in on a small and ~11in on a
+     3XL, so this is where a badge gets room to be looked at.
+
+     TWO CAME OFF ON 2026-07-29, both on the captain's eye and one on a
+     measurement:
+
+     `octagon-patch` — his call. It is drawn inside a filled black RECTANGLE
+     rather than cut out of one, so on a shirt it reads as a slab rather than a
+     patch. It stays on the sticker, where a rectangle is what a sticker is.
+
+     `mascot-medallion` — measured. Its gold ring is 74-78px thick on the left,
+     right and bottom and 192px at the TOP: two and a half times heavier, in the
+     drawing itself, not in our rendering. At 3.4in on a mug that reads as hand
+     inked. At eleven inches across a chest it reads as a mistake. It stays on
+     the mug and the puck. **Redraw the ring uniformly and it comes back.** */
   { mark: "crossed-shield", item: "tee" },
   { mark: "championship-roundel", item: "tee" },
   { mark: "faceoff", item: "tee" },
+  { mark: "heritage-seal", item: "tee" },
+  { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 } },
+  { mark: "rink-board", item: "tee", placement: { widthIn: 9.5, y: 0.4 } },
   // Wider than the badges and it sits higher: a varsity arch belongs across the
   // chest, not centred on it.
   { mark: "arched-varsity", item: "tee", placement: { widthIn: 9.0, y: 0.4 } },
-  // The only portrait mark in the set, on the only portrait canvas that can take
-  // it whole. Bound by height to 7.78in wide and 11.66in tall.
-  { mark: "octagon-patch", item: "tee", placement: { widthIn: 8.5 } },
 
   /* Hoodie. The front is LANDSCAPE — 11.42 x 7.61in, because the pouch takes
-     the rest — so it is the one canvas in the line built for a wide lockup, and
-     a square badge is capped at 7.15in by height. The back is the biggest
-     canvas there is and it takes what the front cannot. */
-  { mark: "rink-board", item: "hoodie", placement: { widthIn: 10.5 } },
+     the rest — so a square badge is capped at 7.15in by height. The back is the
+     biggest canvas in the shop and takes what the front cannot.
+
+     `rink-board` came off the hoodie front on the captain's eye: a 3:1 bar
+     printed 10.5in wide on a chest is a bumper sticker. It is the best thing in
+     the shop on a cap, a beanie and a mug, where wide is the shape of the
+     canvas. */
   { mark: "heritage-seal", item: "hoodie" },
+  { mark: "crossed-shield", item: "hoodie" },
   { mark: "championship-roundel", item: "hoodie", placement: { position: "back", widthIn: 10.0 } },
   { mark: "arched-varsity", item: "hoodie", placement: { position: "back", widthIn: 10.0, y: 0.45 } },
+  { mark: "nose-to-nose", item: "hoodie", placement: { position: "back", widthIn: 10.5, y: 0.45 } },
 
   /* Cap and beanie — Richardson 112 and Yupoong 1501KC, both EMBROIDERED, and
-     that is the constraint rather than the size of the panel. The provider's
-     own mockups settled it: a dense badge stitched at 1.88in on a cap and
-     1.64in on a cuff turns its two rings of type to mush, and a cap is the one
-     thing in this shop somebody wears at eye level. So the three wide marks
-     take both, at 2.9-4.75in, where the type is still type. */
+     that is the constraint rather than the size of the panel. A dense badge
+     stitched at under two inches turns its type to mush; `nose-to-nose` proved
+     it twice, reading cleanly at 3.6in on a cap and coming back illegible at
+     3.2in on a cuff. So the cap takes the three wide marks and the beanie takes
+     the widest one only. */
   { mark: "rink-board", item: "cap", placement: { widthIn: 4.75 } },
   { mark: "nose-to-nose", item: "cap", placement: { widthIn: 3.6 } },
   { mark: "arched-varsity", item: "cap", placement: { widthIn: 3.2 } },
 
   { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
-  /* `nose-to-nose` was here and came off on 2026-07-29, on the provider's own
-     mockup. At 3.2in on the cuff its banner — GOLDEN RETRIEVERS in a ribbon
-     under two dog heads — stitched into mush; the same mark at 3.6in on the
-     cap's twill reads cleanly, which is why it stays there.
-     It cannot simply be made bigger. The cuff is 5.0 x 1.75in and this mark is
-     roughly 2:1, so height binds it at 3.38in — a sixth of an inch more than it
-     already had, against a knit that is coarser than the cap's twill to begin
-     with. The beanie carries one mark, and `rink-board` at 4.4in is legible.
-     That is the third product this line has lost to a mockup. The rule holds:
-     dense type does not survive a small stitched panel. */
 
-  /* Mug — and the widths here are smaller than the canvas allows, on purpose.
-     The print area is 7.76in wide but a mug is a CYLINDER: seen head-on, only
-     the middle four inches or so face you and the rest curves away. Printify's
-     mockup renders that honestly, which is how it was caught — `rink-board` at
-     6.5in came back with the dog roundel bisected by the left edge of the mug
-     and the stick running off the right. It was not mispositioned; it was
-     printed correctly onto a surface that bends.
-     So the two wide marks are sized to the VISIBLE face rather than to the
-     canvas, and the medallion — which was already inside it at 3.44in — is
-     untouched. A mug is the one object in this line you look at head-on. */
+  /* Mug — landscape, and the widths are smaller than the canvas allows. The
+     print area is 7.76in wide but a mug is a CYLINDER: seen head-on only the
+     middle four inches face you. `rink-board` at 6.5in came back with the dog
+     bisected by the left edge, so the wide marks are sized to the visible face. */
   { mark: "rink-board", item: "mug", placement: { widthIn: 4.5 } },
   { mark: "nose-to-nose", item: "mug", placement: { widthIn: 4.0 } },
   { mark: "mascot-medallion", item: "mug" },
+  { mark: "championship-roundel", item: "mug" },
 
-  /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every
-     badge in the set is already a sticker shape. White vinyl is a light ground,
-     which is why `arched-varsity` is not here and the two light-only marks are.
-     It is also the only item that can carry all five badges without any of them
-     competing for the same garment. */
+  /* Puck — 2.65in of round canvas on a round object. Badges only, and the two
+     that are drawn as seals are the two that belong on it. */
+  { mark: "championship-roundel", item: "puck" },
+  { mark: "heritage-seal", item: "puck" },
+  { mark: "mascot-medallion", item: "puck" },
+
+  /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every badge
+     in the set is already a sticker shape. White vinyl is a light ground, which
+     is why `arched-varsity` is not here and the two light-only marks are. */
   { mark: "heritage-seal", item: "sticker" },
   { mark: "championship-roundel", item: "sticker" },
   { mark: "octagon-patch", item: "sticker" },
   { mark: "crossed-shield", item: "sticker" },
   { mark: "faceoff", item: "sticker" },
+  { mark: "nose-to-nose", item: "sticker" },
+  { mark: "rink-board", item: "sticker" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -895,7 +984,9 @@ export const REJECTS_CREATION: { blueprintId: number; printProviderId: number; e
 export const markById = (id: string): Mark | undefined => MARKS.find((m) => m.id === id);
 export const itemById = (id: string): Item | undefined => ITEMS.find((i) => i.id === id);
 
-const DEFAULT_CLOSING = "Buffalo, N.Y. Playing since {{firstYear}}.";
+const DEFAULT_CLOSING =
+  "Golden Retriever Hockey — Buffalo's premier golden retriever themed hockey " +
+  "team since {{firstYear}}.";
 
 /**
  * Turn the three lists into the product line, refusing anything that does not
@@ -972,7 +1063,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
     line.push({
       id,
       title: `${mark.title} — ${item.title}`,
-      description: [mark.blurb, item.spec, item.care, closing]
+      description: [mark.blurb, item.spec, item.care, QUOTES[mark.id], closing]
         .filter((p): p is string => Boolean(p))
         .join("\n\n"),
       blueprintId: item.blueprintId,
