@@ -274,9 +274,10 @@ function CartDrawer() {
               <span>{money(subtotal)}</span>
             </div>
             <p className={s.note}>
-              Free shipping within the United States. Sales tax, where it applies, is
-              added at checkout. Printed to order — 2 to 5 business days to make, then
-              the post. <a href="/store/help">Shipping and returns</a>.
+              Shipping and sales tax are added at checkout. Postage is Printify&rsquo;s own
+              rate for exactly this order, passed straight through — a second of the same
+              thing costs far less to post than the first. Printed to order, 2 to 5
+              business days to make. <a href="/store/help">Shipping and returns</a>.
             </p>
 
             {failure && <p className={s.failure}>{failure}</p>}

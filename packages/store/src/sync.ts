@@ -162,7 +162,20 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
   // 3 — the art. Every design is read and measured, because the placement
   // report is worth having for products that already exist too; only the ones
   // a new product needs are actually uploaded.
-  const needed = new Set(todo.flatMap((item) => item.placements.map((p) => p.art)));
+  /* EVERY MARK IS UPLOADED, not just the ones a NEW product needs.
+     This used to be `todo.flatMap(...)` — the art for products that already
+     existed was measured but never sent, on the reasoning that an existing
+     product does not need it. That stopped being true the moment the sync
+     learned to REBUILD one: moving the tee to Monster Digital on 2026-07-29
+     deleted the old product, tried to create its replacement with an upload id
+     of "DRY-RUN", and got a 400 (8253, "Provided images do not exist") having
+     already deleted the original.
+     Predicting which products will rebuild before their geometry is computed is
+     possible but fragile. Uploading everything is neither: an upload is
+     account-scoped, belongs to no shop, costs nothing and is idempotent enough
+     that re-sending the same bytes is simply a second image nobody references.
+     Nine marks, about eleven seconds. */
+  const needed = new Set(LINE.flatMap((item) => item.placements.map((p) => p.art)));
   const art = new Map<string, Art & { uploadId?: string }>();
   for (const file of new Set(LINE.flatMap((item) => item.placements.map((p) => p.art)))) {
     const loaded = await loadArt(file);
@@ -303,21 +316,29 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
        unpublished draft with no orders against it, and `visible` is false on
        the way back in. */
     const already = existing.get(item.title);
-    const moved = already ? placementMoved(already, placeholders) : null;
+    const moved = already ? needsRebuild(already, body, placeholders) : null;
     let created: PrintifyProduct;
     let how: string;
     if (!already) {
       created = await createProduct(body);
       how = "made";
     } else if (moved) {
-      console.log(`     ${item.id}: ${moved} — recreating, PUT cannot carry geometry`);
+      console.log(`     ${item.id}: ${moved} — rebuilding, PUT cannot carry this`);
       await deleteProduct(already.id);
       created = await createProduct(body);
       how = "redr";
     } else {
+      // Title, copy AND prices. `variants` carries `price`, and unlike
+      // `print_areas` it references no uploaded image, so the 8253 that blocks
+      // geometry does not apply — a repricing goes through PUT cleanly. Leaving
+      // it out was why the first run of the 2026-07-29 repricing reported
+      // twenty-three products "sent" and left every one of them at the old
+      // figure, with verify() catching it as "N variants priced at something
+      // other than 2900c".
       created = await updateProduct(already.id, {
         title: body.title,
         description: body.description,
+        variants: body.variants,
       });
       how = "sent";
     }
@@ -465,16 +486,40 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
 }
 
 /**
- * Has the artwork moved or resized since this product was made?
+ * Does this product have to be rebuilt rather than patched?
  *
- * Returns the reason, or null when the shop already holds this geometry. The
- * tolerance matches `verify()`'s: Printify normalises what it is sent, so an
- * exact comparison would recreate all twenty-three products on every run.
+ * PUT can carry the title, the description and the variant prices. It cannot
+ * carry anything that changes what the product IS:
+ *
+ *   the maker      `print_provider_id` is fixed at creation
+ *   the garment    so is `blueprint_id`
+ *   the variants   a colourway added or dropped changes the set
+ *   the geometry   print_areas with a fresh upload id are refused, 8253
+ *
+ * Each of those was learned by trying it. Moving the tee to Monster Digital on
+ * 2026-07-29 reported "sent" and left every shirt on Printful; dropping Ash
+ * left six orphan variants enabled at the old price.
+ *
+ * Returns the reason, or null when the shop already holds this. The tolerance
+ * matches `verify()`'s: Printify normalises what it is sent, so comparing
+ * geometry exactly would rebuild all twenty-three products on every run.
  */
-function placementMoved(
+function needsRebuild(
   existing: PrintifyProduct,
+  sent: CreateProductBody,
   want: PrintArea["placeholders"],
 ): string | null {
+  if (existing.print_provider_id !== sent.print_provider_id) {
+    return `maker ${existing.print_provider_id} → ${sent.print_provider_id}`;
+  }
+  if (existing.blueprint_id !== sent.blueprint_id) {
+    return `garment ${existing.blueprint_id} → ${sent.blueprint_id}`;
+  }
+  const enabled = existing.variants.filter((v) => v.is_enabled).map((v) => v.id).sort();
+  const asked = sent.variants.map((v) => v.id).sort();
+  if (enabled.length !== asked.length || enabled.some((id, i) => id !== asked[i])) {
+    return `${enabled.length} variants on the shop, ${asked.length} in the matrix`;
+  }
   for (const p of want) {
     const image = p.images[0];
     if (!image) continue;

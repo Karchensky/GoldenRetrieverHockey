@@ -98,7 +98,7 @@ export default function Buy({ product }: { product: Product }) {
         {product.sale && <p className={s.saleNote}>{product.sale.why}</p>}
 
         <p className={s.notLiveB}>
-          Posted free within the United States. Printed to order — 2 to 5 business days
+          Shipping added at checkout at cost. Printed to order — 2 to 5 business days
           to make, then the post. <a href="/store/help">Shipping and returns</a>.
         </p>
       </div>

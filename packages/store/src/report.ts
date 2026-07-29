@@ -39,24 +39,22 @@ import type { PrintifyProduct } from "./types.ts";
 /**
  * A US card rate — 2.9% + 30c of the FULL charge, shipping included.
  *
- * The store sells through its own Stripe checkout, so the card fee is ours; the
- * customer's money and pays out the difference, so this fee is very likely not
- * ours to pay at all. It is kept because subtracting a fee we may not owe makes
- * every take-home figure a FLOOR, and a floor is the safe direction to be wrong
- * in when a price is being set. Delete it once Printify have confirmed in
- * writing what they deduct.
+ * The store sells through its own Stripe checkout, so this is a real cost and
+ * not a precaution — and Stripe charges it on the whole charge, which means on
+ * the postage and on the sales tax as well as on the goods.
  */
 export const STRIPE_PERCENT = 0.029;
 export const STRIPE_FLAT_CENTS = 30;
 
 /**
- * **US shipping is free and priced in.** Decided 2026-07-28. So the margin that
- * decides whether a product is worth selling is what is left after the goods,
- * Printify's US standard postage AND Stripe — not the gross margin, which
- * flatters every item by the price of its own parcel. A $6 sticker showed 74%
- * gross and lost $1.06 a sale.
+ * **Postage is passed through at cost.** Decided 2026-07-29, replacing the
+ * baked-in rate of the day before: one figure per product cannot express a
+ * postage table where the second tee costs $2.40 against a $4.75 first, so
+ * every multi-item basket overpaid.
  *
- * Net below this on the dearest variant is called out.
+ * The margin that decides whether a product is worth selling is therefore what
+ * is left after the goods and after Stripe — the postage cancels, being both
+ * collected and paid. Net below this on the dearest variant is called out.
  */
 const THIN_NET_MARGIN = 0.3;
 /**
@@ -96,12 +94,11 @@ const plural = (n: number, word: string): string => `${n} ${word}${n === 1 ? "" 
 /** What Stripe takes off a charge of `cents`. */
 const stripeFee = (cents: number): number => Math.round(cents * STRIPE_PERCENT) + STRIPE_FLAT_CENTS;
 
-/**
- * What one US sale actually leaves, under the policy the store ships on: the
- * customer pays the shelf price, and the postage comes out of it.
- */
-const netOf = (retail: number, cost: number, ship: number): number =>
-  retail - cost - ship - stripeFee(retail);
+/* `netOf(retail, cost, ship)` lived here and was deleted on 2026-07-29. It
+   encoded the old policy — the customer pays the shelf price and the postage
+   comes out of it — and it had no callers, so it was a second, wrong definition
+   of the one number this whole report exists to state. `unitOf` below is the
+   only arithmetic. */
 
 /**
  * The same arithmetic over the SMALLEST BASKET an item may be sold in.
@@ -117,8 +114,22 @@ function unitOf(row: Row, cost: number): Unit {
   const units = Math.max(1, row.sale?.minQuantity ?? 1);
   const rate = row.shipping.find((m) => m.method === "standard")?.byRegion.get("US");
   const post = rate ? rate.first + (units - 1) * rate.additional : 0;
-  const charge = row.retail * units;
   const goods = cost * units;
+
+  /* POSTAGE IS PASSED THROUGH, NOT ABSORBED — changed 2026-07-29.
+     This used to read `keep = charge - goods - post - stripe`, where `charge`
+     was the retail price alone. That was right while every price had a
+     first-item postage rate baked into it. It is wrong now, and wrong in the
+     direction that matters: with postage taken out of the prices, subtracting
+     it from a revenue figure that no longer contains it counted the same
+     dollars twice and reported the $17 mug at MINUS $1.07 — a product losing
+     money on every sale, when it in fact keeps $7.66.
+     What the customer pays is the goods PLUS the real postage. What we pay is
+     the goods cost plus that same postage, so the postage cancels and what is
+     left is the retail less the cost less the card fee — and Stripe's cut is
+     taken on the whole charge including the postage, which is why `post` is
+     still in the arithmetic at all. */
+  const charge = row.retail * units + post;
   const stripe = stripeFee(charge);
   return { units, charge, goods, post, stripe, keep: charge - goods - post - stripe };
 }
@@ -500,10 +511,10 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   /* --- at a glance ------------------------------------------------ */
 
   console.log("");
-  console.log(` US POSTAGE IS FREE AND PRICED IN. Every figure below is after it.`);
+  console.log(" POSTAGE IS PASSED THROUGH AT COST. 'pays' is the goods plus the real postage.");
   console.log("");
   console.log(
-    ` ${"product".padEnd(20)}${"retail".padStart(8)}  ${"your cost".padEnd(17)}` +
+    ` ${"product".padEnd(20)}${"pays".padStart(8)}  ${"your cost".padEnd(17)}` +
       `${"US post".padStart(8)}  ${"you keep".padEnd(17)}${"net".padStart(14)}  flags`,
   );
   console.log(` ${THIN.slice(0, 94)}`);

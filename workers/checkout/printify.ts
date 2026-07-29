@@ -34,6 +34,76 @@ function assertShopPath(path: string): void {
 
 export type OrderLine = { product_id: string; variant_id: number; quantity: number };
 
+/**
+ * `POST /v1/shops/28277243/orders/shipping.json` — what this exact basket costs
+ * to post. Creates nothing.
+ *
+ * **This is why shipping can be passed through at cost rather than guessed at.**
+ * Printify's postage does not merge across product types but DOES merge within
+ * one, and the two rates are unrelated: a second tee adds $2.40 to a $4.75
+ * first, a second mug adds $3.09 to a $6.99 first, and a tee next to a mug pays
+ * both first-item rates in full. No pricing rule expressible in a product's own
+ * retail figure can say that. Baking a first-item rate into every price is the
+ * only approximation available, and it overcharges every multi-item basket —
+ * measured on 2026-07-29, two mugs carried $17.98 of assumed postage against
+ * $10.08 of real postage. The customer was paying $7.90 for nothing.
+ *
+ * **The address is not needed, and that is a measurement rather than a hope.**
+ * Printify quotes per COUNTRY: the same tee-and-mug basket returned $11.74 to
+ * Buffalo, Los Angeles, Anchorage and Miami. So a representative address in the
+ * destination country is enough to get the real figure, which is what lets this
+ * be called BEFORE Stripe collects an address. If that ever stops being true the
+ * symptom is a quote that disagrees with the invoice, and the fix is Stripe's
+ * address-collection webhook rather than a fudge factor here.
+ *
+ * Returns integer cents for each method Printify offers.
+ */
+export async function quoteShipping(
+  token: string,
+  lineItems: OrderLine[],
+  country: string,
+): Promise<{ standard: number; express?: number }> {
+  const path = `/shops/${SHOP_ID}/orders/shipping.json`;
+  assertShopPath(path);
+
+  const sample = SAMPLE_ADDRESS[country];
+  if (!sample) throw new Error(`No sample address for ${country}; cannot quote postage.`);
+
+  const res = await fetch(`https://api.printify.com/v1${path}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "User-Agent": "golden-retrievers-archive (checkout)",
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      line_items: lineItems,
+      address_to: {
+        first_name: "Golden",
+        last_name: "Retrievers",
+        email: "store@goldenretrieverhockey.com",
+        phone: "7160000000",
+        ...sample,
+      },
+    }),
+  });
+
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Printify POST ${path} → ${res.status}: ${text.slice(0, 400)}`);
+  return JSON.parse(text) as { standard: number; express?: number };
+}
+
+/**
+ * One real address per country we post to, used only to ask what postage costs.
+ * Nothing is ordered to it. Add a country here and to ALLOWED_COUNTRIES in
+ * index.ts together — a country in one and not the other either cannot be
+ * quoted or cannot be bought.
+ */
+const SAMPLE_ADDRESS: Record<string, { country: string; region: string; address1: string; city: string; zip: string }> = {
+  US: { country: "US", region: "NY", address1: "1 Main St", city: "Buffalo", zip: "14201" },
+};
+
 export type ShipTo = {
   first_name: string;
   last_name: string;

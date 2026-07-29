@@ -2,7 +2,7 @@ import { resolveBasket } from "../../packages/store/src/basket";
 import type { BasketLine, CatalogProduct } from "../../packages/store/src/basket";
 import catalogJson from "../../apps/web/data/products.json";
 import { createSession, getSessionWithLineItems, verifySignature } from "./stripe";
-import { splitName, submitOrder } from "./printify";
+import { quoteShipping, splitName, submitOrder } from "./printify";
 import type { OrderLine } from "./printify";
 
 /**
@@ -46,22 +46,14 @@ const catalog = (catalogJson as { products: unknown[] }).products as CatalogProd
 const SITE = "https://goldenretrieverhockey.com";
 
 /**
- * United States only, for now, and this is a real limitation rather than an
- * oversight.
+ * Where this shop will post to.
  *
- * Every retail price in this shop has the US standard first-item postage priced
- * into it, which is what makes "free shipping" true rather than a discount. The
- * captain asked for international at cost, and at cost means quoted: Printify's
- * international rates are per blueprint, per provider and per country, and they
- * do not merge across product types, so a flat "international" rate would be
- * either a loss or an overcharge on most baskets.
- *
- * Doing it honestly means quoting `POST /shops/{id}/orders/shipping.json` for
- * the actual destination before the session is created, which needs the country
- * collected BEFORE checkout rather than inside it. That is the next piece of
- * work and it is written up in STORE.md. Until it exists this refuses the order
- * rather than guessing at the postage, because guessing is how a $36 shirt is
- * posted to Australia at a $22 loss.
+ * Still the United States only, but no longer for the reason it used to be.
+ * Postage is now quoted live from Printify for the actual basket, so the
+ * arithmetic that blocked international is solved — what is left is having a
+ * sample address per country (see `SAMPLE_ADDRESS` in printify.ts) and the
+ * captain deciding he wants the parcels going that far. Add a country to both
+ * lists and it works.
  */
 const ALLOWED_COUNTRIES = ["US"];
 
@@ -118,6 +110,36 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
     );
   }
 
+  /* POSTAGE, QUOTED RATHER THAN ASSUMED.
+     Every retail price used to carry a first-item postage rate so shipping
+     could read as free. That could not express what Printify actually charges
+     — a second tee adds $2.40 to a $4.75 first, a second mug adds $3.09 to a
+     $6.99 first, and nothing merges across product types — so every multi-item
+     basket overpaid. Two mugs carried $17.98 of assumed postage against $10.08
+     of real postage.
+     This asks. If Printify will not answer, the order does NOT proceed at a
+     guessed rate: a wrong postage figure is a loss on every unit of a basket
+     nobody can see afterwards. */
+  let postageCents: number;
+  try {
+    const quote = await quoteShipping(
+      env.PRINTIFY_API_TOKEN,
+      resolved.lines.map((l) => ({
+        product_id: l.product.printify?.productId ?? "",
+        variant_id: l.variantId,
+        quantity: l.line.quantity,
+      })),
+      "US",
+    );
+    postageCents = quote.standard;
+  } catch (error) {
+    console.error("postage quote", error instanceof Error ? error.message : error);
+    return json(
+      { error: "Could not work out postage just now. Nothing has been charged — try again in a minute." },
+      502,
+    );
+  }
+
   const params = {
     mode: "payment",
     // The Printify ids ride on the PRODUCT rather than in session metadata:
@@ -153,11 +175,22 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
     automatic_tax: { enabled: true },
 
     shipping_address_collection: { allowed_countries: ALLOWED_COUNTRIES },
+    // Printify's own figure for THIS basket, passed through at cost. Not a
+    // guess, not a flat rate, and not baked into the retail prices — see
+    // `quoteShipping`. Shipping is not taxable as a separate service here; it
+    // carries the same treatment as the goods, which is what `tax_behavior`
+    // and the shipping tax code below tell Stripe.
     shipping_options: [{
       shipping_rate_data: {
         type: "fixed_amount",
-        fixed_amount: { amount: 0, currency: "usd" },
-        display_name: "Free shipping",
+        fixed_amount: { amount: postageCents, currency: "usd" },
+        display_name: "Standard shipping",
+        tax_behavior: "exclusive",
+        tax_code: "txcd_92010001",
+        delivery_estimate: {
+          minimum: { unit: "business_day", value: 4 },
+          maximum: { unit: "business_day", value: 10 },
+        },
       },
     }],
 
@@ -173,7 +206,12 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
   try {
     // Derived from the basket, so a double-clicked button replays one session
     // instead of opening two.
-    const key = await basketFingerprint(resolved.lines.map((l) => `${l.product.id}:${l.variantId}:${l.line.quantity}`));
+    // Postage is in the key: if Printify's rate moves between two clicks the
+    // second click must open a NEW session rather than replay the old total.
+    const key = await basketFingerprint([
+      `post:${postageCents}`,
+      ...resolved.lines.map((l) => `${l.product.id}:${l.variantId}:${l.line.quantity}`),
+    ]);
     const session = await createSession(env.STRIPE_SECRET_KEY, params, key);
     return json({ url: session.url });
   } catch (error) {

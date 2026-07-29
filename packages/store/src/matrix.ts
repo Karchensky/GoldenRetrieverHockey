@@ -143,8 +143,21 @@ export type Item = {
   blueprintId: number;
   printProviderId: number;
   /**
-   * Retail, integer cents, **US postage included** — the store ships free
-   * within the US, so the rate is a cost of goods and not a line at checkout.
+   * Retail, integer cents, **postage NOT included**.
+   *
+   * It used to be. Every price carried a first-item postage rate so shipping
+   * could read as free, and that was abandoned on 2026-07-29 for a reason worth
+   * keeping: a single figure per product cannot express what Printify charges.
+   * A second tee adds $2.40 to a $4.75 first; a second mug adds $3.09 to a
+   * $6.99 first; nothing merges across product types. So the bundled rate was
+   * a first-item rate on EVERY unit, and every multi-item basket overpaid —
+   * two mugs carried $17.98 of assumed postage against $10.08 of real postage.
+   *
+   * Postage is now quoted live for the actual basket at checkout and passed
+   * through at cost. These figures are the goods alone, which is also why they
+   * dropped: the tee went $36 → $29 and the mug $26 → $17 without a cent of
+   * margin moving.
+   *
    * One price per item, whatever mark is on it. See STORE.md §5.
    */
   priceCents: number;
@@ -489,17 +502,28 @@ export const ITEMS: Item[] = [
     // placements on the same shirt that Monster Digital does not offer. It also
     // makes the cap and the beanie, so three of the six items come off one
     // accountable manufacturer. It costs $2.71 more on the dearest size.
-    printProviderId: 410,
-    priceCents: 3600,
+    // MONSTER DIGITAL, not Printful, as of 2026-07-29 — and it is the SAME
+    // SHIRT. Variant ids are per blueprint, so this is Bella+Canvas 3001 either
+    // way; what changes is who prints it and for how much: $11.54/$14.10/$16.44
+    // against Printful's $14.25–$18.43. That is $2.71 off the dearest tee for
+    // no change to the garment, which is exactly the kind of saving the captain
+    // asked for on 2026-07-29 ("get the price as low as possible without this
+    // kind of quality sacrifice").
+    //
+    // What Printful bought was reach: it posts a tee to the EU for $4.79 where
+    // Monster Digital charges $13.49, and it offers embroidery placements on the
+    // same shirt. Checkout is US-only and nothing in this line is embroidered on
+    // a tee, so both were being paid for and neither was being used. **Switch
+    // back the day international opens** — the EU difference is larger than the
+    // saving.
+    printProviderId: 29,
+    priceCents: 2900,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    // Ten of them, and the whole list has to be declared: store:report compares
-    // this against the live catalog and flags a difference in either direction.
-    positions: [
-      "front", "back", "left_sleeve", "right_sleeve", "neck",
-      "large_center_embroidery", "front_left_chest", "front_center_chest",
-      "left_sleeve_embroidery", "right_sleeve_embroidery",
-    ],
+    // Three, not the ten Printful offered: Monster Digital prints and does not
+    // embroider. store:report compares this against the live catalog and flags
+    // a difference in either direction.
+    positions: ["front", "back", "neck"],
     // 8in on the smallest body this shirt is sold in, y 0.42 to lift it off the
     // hem. A placement is a PROPORTION, so this is ~11in on a 3XL; asking for
     // ten on a small would put fifteen on a 3XL and cover the shirt. Checked by
@@ -507,7 +531,10 @@ export const ITEMS: Item[] = [
     placement: { position: "front", widthIn: 8.0, y: 0.42 },
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [18540, 18541, 18542, 18543, 18544, 18545] },
-      { name: "Ash", hex: "#c9cbc8", ground: "light", variants: [38602, 38605, 38608, 38611, 38614, 38617] },
+      // Ash was here and came off with the move to Monster Digital: they carry
+      // 41 of our 42 tee variants and the one they do not is Ash in L. A
+      // colourway missing its most-ordered size is not a colourway. White and
+      // athletic heather still cover the light bodies.
       { name: "Athletic Heather", hex: "#b0b2ad", ground: "light", variants: [18076, 18077, 18078, 18079, 18080, 18081] },
       { name: "Black", hex: "#17191b", ground: "dark", variants: [18100, 18101, 18102, 18103, 18104, 18105] },
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [18396, 18397, 18398, 18399, 18400, 18401] },
@@ -538,7 +565,7 @@ export const ITEMS: Item[] = [
     // black, runs to 3XL, and adds the back and both sleeves as print areas. It
     // is also 55 cents cheaper on black.
     printProviderId: 39,
-    priceCents: 7400,
+    priceCents: 6600,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
@@ -573,7 +600,7 @@ export const ITEMS: Item[] = [
     // Printify Choice, not SPOKE (provider 1). SPOKE appears in the catalog for
     // this blueprint and rejects creation outright — see REJECTS_CREATION.
     printProviderId: 99,
-    priceCents: 600,
+    priceCents: 450,
     // Vinyl, not apparel. No exemption anywhere applies to it.
     taxCode: "txcd_99999999",
     // Three at a time, and this is arithmetic rather than merchandising.
@@ -623,7 +650,7 @@ export const ITEMS: Item[] = [
     // cap. On embroidery, where the difference between shops is visible in the
     // stitch, 19 cents is not a decision.
     printProviderId: 410,
-    priceCents: 4000,
+    priceCents: 3500,
     // Hats, not general clothing. New York exempts caps the same way it exempts
     // shirts; the specific code is the one that says so in every other state too.
     taxCode: "txcd_30060006",
@@ -656,7 +683,7 @@ export const ITEMS: Item[] = [
     // beanie and the same $4.89 to post it. Printful adds Europe at $4.59,
     // which Printify Choice does not offer at any price.
     printProviderId: 410,
-    priceCents: 3200,
+    priceCents: 2700,
     taxCode: "txcd_30060006",
     sizes: ["One size"],
     positions: ["front"],
@@ -684,7 +711,7 @@ export const ITEMS: Item[] = [
     // BRAND in the mug category, was probed and costs $13.08 through the single
     // provider that carries it. That is a $30 mug, and it is not one.
     printProviderId: 99,
-    priceCents: 2600,
+    priceCents: 1700,
     // Ceramic. Fully taxable everywhere this shop can post to.
     taxCode: "txcd_99999999",
     sizes: ["11 oz", "15 oz"],

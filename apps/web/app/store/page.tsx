@@ -47,8 +47,8 @@ export default function StorePage() {
           <i>store.</i>
         </h1>
         <p className="hero-p">
-          Nine marks, six things to put them on. Printed to order in the United States
-          and posted free within it.
+          Nine marks, six things to put them on. Printed to order in the United States.
+          Postage is added at checkout at exactly what it costs us.
         </p>
 
         <nav className={s.categoryNav} aria-label="Sections">
@@ -77,7 +77,7 @@ export default function StorePage() {
       )}
 
       <p className={s.detailCopy}>
-        Printed to order, 2 to 5 business days to make.{" "}
+        Printed to order, 2 to 5 business days to make. Shipping at cost.{" "}
         <Link href="/store/help">Shipping and returns</Link>.
       </p>
     </div>

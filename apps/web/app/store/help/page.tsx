@@ -89,8 +89,28 @@ export default function HelpPage() {
             </tr>
           </tbody>
         </table>
+      </section>
+
+      <section data-reveal>
+        <h2 className="head">What shipping costs</h2>
         <p className={s.detailCopy}>
-          Shipping is free within the United States. We do not ship outside it yet.
+          <b>Whatever it actually costs us, and not a cent more.</b> The exact postage
+          for your order is worked out at checkout and passed straight through — we do
+          not mark it up and we do not hide it inside the prices.
+        </p>
+        <p className={s.detailCopy}>
+          That is worth knowing because <b>a second of the same thing ships far
+          cheaper than the first</b>. One tee is $4.75 to post; two are $7.15, not
+          $9.50. Three stickers cost the same to post as one, which is why they are
+          sold in threes and why the three can be three different designs.
+        </p>
+        <p className={s.detailCopy}>
+          Different kinds of thing do not combine that way — a cap and a mug are made
+          in different places and each carries its own postage. Nothing we can do about
+          that, but you only ever pay the real figure.
+        </p>
+        <p className={s.detailCopy}>
+          We do not ship outside the United States yet.
         </p>
       </section>
 
