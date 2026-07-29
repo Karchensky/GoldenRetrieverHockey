@@ -145,12 +145,17 @@ export function place(
   art: ArtBox,
   widthIn: number,
   areaShape: number = area.height / area.width,
+  wantY = 0.5,
 ): {
   scale: number;
   widthIn: number;
   heightIn: number;
   dpi: number;
   heightFill: number;
+  /** The requested `wantY`, moved if it would have hung the art off the canvas. */
+  y: number;
+  /** Set when `y` had to move, with the arithmetic. Printed by the sync. */
+  yMoved: string | null;
 } {
   // Printify's canvases are quoted at 300 dpi.
   const areaWIn = area.width / 300;
@@ -166,12 +171,36 @@ export function place(
   if (h > maxH) { h = maxH; w = h / aspect; }
   if (w > maxW) { w = maxW; h = w * aspect; }
 
+  /* THE POSITION IS CLAMPED TOO, AND IT WAS NOT UNTIL 2026-07-29.
+     Everything above bounds the SIZE of the print. Nothing bounded where it
+     SAT, and `y` is the centre — so a mark tall enough to fill the canvas hangs
+     off the top of it at any `y` below half its own height.
+     octagon-patch-tee did exactly that and shipped: 11.66in of artwork in a
+     12.41in area at y=0.42 puts the centre 5.21in down and the top edge at
+     5.21 - 5.83 = MINUS 0.62in. The captain saw it as a cropped print on the
+     mockup, which is the only place it was visible — every check passed,
+     because every check was about resolution.
+     The tee's y of 0.42 is right for the 8in badges it was chosen for: it lifts
+     them off the hem. It is simply not expressible for a mark that tall, and
+     the honest response is to centre it and say so rather than print it. */
+  const fill = h / (areaWIn * areaShape);
+  const lowest = fill / 2;
+  const highest = 1 - fill / 2;
+  const y = Math.min(Math.max(wantY, lowest), highest);
+  const yMoved = Math.abs(y - wantY) < 0.0005
+    ? null
+    : `y ${wantY} → ${y.toFixed(4)}: ${h.toFixed(2)}in of art fills ${(fill * 100).toFixed(0)}% ` +
+      `of the canvas, so its centre cannot sit outside ${lowest.toFixed(3)}–${highest.toFixed(3)} ` +
+      `without hanging off the edge`;
+
   return {
     scale: Number((w / areaWIn).toFixed(4)),
     widthIn: Number(w.toFixed(2)),
     heightIn: Number(h.toFixed(2)),
     dpi: Math.round(art.width / w),
     heightFill: Number((h / areaHIn).toFixed(3)),
+    y: Number(y.toFixed(4)),
+    yMoved,
   };
 }
 

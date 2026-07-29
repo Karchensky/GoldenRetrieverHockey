@@ -274,8 +274,9 @@ function CartDrawer() {
               <span>{money(subtotal)}</span>
             </div>
             <p className={s.note}>
-              Shipping is free within the United States. Sales tax, where it applies, is
-              added at checkout.
+              Free shipping within the United States. Sales tax, where it applies, is
+              added at checkout. Printed to order — 2 to 5 business days to make, then
+              the post. <a href="/store/help">Shipping and returns</a>.
             </p>
 
             {failure && <p className={s.failure}>{failure}</p>}

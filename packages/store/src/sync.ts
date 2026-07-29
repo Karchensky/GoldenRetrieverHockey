@@ -6,7 +6,9 @@ import {
   getProduct,
   listPrintProviders,
   listProducts,
+  deleteProduct,
   listVariants,
+  updateProduct,
   uploadImage,
 } from "./api.ts";
 import {
@@ -190,15 +192,19 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       const { smallest, largest, tightestShape } = await canvasesFor(
         item.blueprintId, item.printProviderId, variantIds, p.position,
       );
-      const fitted = place(smallest, loaded.box, p.widthIn, tightestShape);
+      const fitted = place(smallest, loaded.box, p.widthIn, tightestShape, p.y);
       // The same proportion on the biggest canvas the product offers.
       const maxWidthIn = Number(((largest.width / 300) * fitted.scale).toFixed(2));
       const minDpi = Math.round(loaded.box.width / maxWidthIn);
       placements.push({
         position: p.position, art: p.art,
         widthIn: fitted.widthIn, heightIn: fitted.heightIn, dpi: fitted.dpi,
-        maxWidthIn, minDpi, scale: fitted.scale, y: p.y,
+        maxWidthIn, minDpi, scale: fitted.scale, y: fitted.y,
       });
+      // Said out loud. A placement that had to move is a MATRIX line whose `y`
+      // cannot be honoured, and the operator should know which one rather than
+      // discovering it on a mockup.
+      if (fitted.yMoved) console.log(`     ${item.id}/${p.position}: ${fitted.yMoved}`);
       // 300 dpi at the printed size, measured on the LARGEST size offered, is
       // the floor the captain set on 2026-07-28. It used to be a 150 dpi warning
       // because the marks were 1254px flats and half the line would have tripped
@@ -275,13 +281,51 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       continue;
     }
 
+    /* AN EXISTING PRODUCT IS UPDATED, NOT LEFT ALONE.
+       It used to be `already ?? create`, which quietly made this command a
+       no-op for anything already on the shop: a corrected description or a
+       moved placement was written to the matrix, synced without complaint, and
+       never reached Printify. Both happened on 2026-07-29 — every description
+       in the line was rewritten and octagon-patch-tee's artwork was hanging off
+       the top of the canvas — and the sync said "have" twenty-three times and
+       changed nothing.
+
+       TWO PATHS, because Printify's PUT will not take the geometry. Sending
+       print_areas that reference a freshly uploaded image returns
+
+         400 {"code":8253,"reason":"Provided images do not exist"}
+
+       even though the upload succeeded moments earlier and the same id creates
+       a product happily. A description-only PUT is fine — verified on
+       6a69e53e7b6ecfce0608574d. So copy goes through PUT, and a change to where
+       the art SITS goes through delete-and-recreate. That is safe here and
+       nowhere near as drastic as it reads: every product on this shop is an
+       unpublished draft with no orders against it, and `visible` is false on
+       the way back in. */
     const already = existing.get(item.title);
-    const created = already ?? (await createProduct(body));
+    const moved = already ? placementMoved(already, placeholders) : null;
+    let created: PrintifyProduct;
+    let how: string;
+    if (!already) {
+      created = await createProduct(body);
+      how = "made";
+    } else if (moved) {
+      console.log(`     ${item.id}: ${moved} — recreating, PUT cannot carry geometry`);
+      await deleteProduct(already.id);
+      created = await createProduct(body);
+      how = "redr";
+    } else {
+      created = await updateProduct(already.id, {
+        title: body.title,
+        description: body.description,
+      });
+      how = "sent";
+    }
     const read = await getProduct(created.id);
     const result = verify(item.id, item.priceCents, body, read, placements);
     results.push(result);
     console.log(
-      `${already ? "have" : "made"} ${item.id.padEnd(28)} ${read.id}  ` +
+      `${how} ${item.id.padEnd(28)} ${read.id}  ` +
         `visible=${read.visible}  ${result.variants} variants  ` +
         `$${(result.priceCents / 100).toFixed(2)} on $${(result.costCents / 100).toFixed(2)} cost`,
     );
@@ -420,6 +464,93 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
   console.log(`catalog -> ${path}`);
 }
 
+/**
+ * Has the artwork moved or resized since this product was made?
+ *
+ * Returns the reason, or null when the shop already holds this geometry. The
+ * tolerance matches `verify()`'s: Printify normalises what it is sent, so an
+ * exact comparison would recreate all twenty-three products on every run.
+ */
+function placementMoved(
+  existing: PrintifyProduct,
+  want: PrintArea["placeholders"],
+): string | null {
+  for (const p of want) {
+    const image = p.images[0];
+    if (!image) continue;
+    const area = existing.print_areas.find((a) => a.placeholders.some((q) => q.position === p.position));
+    const had = area?.placeholders.find((q) => q.position === p.position)?.images[0];
+    if (!had) return `nothing is printed on the ${p.position} yet`;
+    if (Math.abs(had.scale - image.scale) > 0.02) {
+      return `${p.position} scale ${had.scale} → ${image.scale}`;
+    }
+    if (Math.abs(had.y - image.y) > 0.005) {
+      return `${p.position} y ${had.y} → ${image.y}`;
+    }
+  }
+  return null;
+}
+
+/**
+ * Pick the mockups a shopper should be shown, which is NOT the first four
+ * Printify offers.
+ *
+ * **This shipped wrong and the captain caught it.** The old rule was "every
+ * image flagged `is_default`, first four". `is_default` marks the default photo
+ * for a VARIANT — one per colourway, in whatever camera angle Printify chose —
+ * and it says nothing about whether the print is facing the camera. Four of the
+ * twenty-three products in this line print on the BACK, so their default images
+ * are front shots: `championship-roundel-hoodie` and `arched-varsity-hoodie`
+ * listed with photographs of a **blank hoodie**.
+ *
+ * A store that illustrates a $74 garment with a picture of the garment WITHOUT
+ * the thing you are buying on it is not a near-miss; it is the wrong product.
+ *
+ * So the rule is: show the side that was printed. An image whose `position`
+ * matches a placement wins. Only if the provider rendered no such view does it
+ * fall back — and it records a problem when it does, because a product with no
+ * picture of its own artwork needs a person to look at it.
+ *
+ * Deduplicated by `src`: the same render is returned once per variant it covers,
+ * and a gallery of the same photograph four times is not a gallery.
+ */
+function chooseMockups(
+  got: PrintifyProduct,
+  placements: SyncResult["placements"],
+  problems: string[],
+): string[] {
+  const images = got.images ?? [];
+  if (!images.length) return [];
+
+  const printed = new Set(placements.map((p) => p.position));
+  const facing = images.filter((i) => printed.has(i.position));
+
+  if (!facing.length) {
+    /* NOT EVERY PRODUCT HAS A SIDE TO GET WRONG.
+       Printify labels a mockup's camera angle, and for a cap, a mug or a
+       sticker every render comes back as "other" — there is one view of the
+       object and the art is in it. Flagging those was this check's first
+       version and it cried wolf eleven times out of twenty-three.
+       What is worth flagging is a product whose renders show a NAMED side that
+       is not the side we printed. That is the hoodie failure: a back print
+       illustrated by a photograph of a blank front. */
+    const named = [...new Set(images.map((i) => i.position))].filter((p) => p !== "other");
+    if (named.length) {
+      problems.push(
+        `no mockup faces the ${[...printed].join(" or ")} — Printify rendered ` +
+          `${named.join(", ")}, which ${named.length === 1 ? "is a side" : "are sides"} with nothing on ` +
+          `${named.length === 1 ? "it" : "them"}`,
+      );
+    }
+    return [...new Set(images.filter((i) => i.is_default).map((i) => i.src))].slice(0, 4);
+  }
+
+  // Defaults first — one per colourway, so the gallery opens on a range of
+  // bodies rather than four angles of the same shirt.
+  const ordered = [...facing].sort((a, b) => Number(b.is_default) - Number(a.is_default));
+  return [...new Set(ordered.map((i) => i.src))].slice(0, 4);
+}
+
 /** Compare what came back against what was asked for. Silence here is the point. */
 function verify(
   id: string,
@@ -473,7 +604,7 @@ function verify(
     costCents,
     marginCents: costCents ? priceCents - costCents : 0,
     placements,
-    mockups: (got.images ?? []).filter((i) => i.is_default).map((i) => i.src).slice(0, 4),
+    mockups: chooseMockups(got, placements, problems),
     problems,
   };
 }

@@ -39,7 +39,7 @@ import type { PrintifyProduct } from "./types.ts";
 /**
  * A US card rate — 2.9% + 30c of the FULL charge, shipping included.
  *
- * The store sells through a Printify Pop-Up now, where Printify takes the
+ * The store sells through its own Stripe checkout, so the card fee is ours; the
  * customer's money and pays out the difference, so this fee is very likely not
  * ours to pay at all. It is kept because subtracting a fee we may not owe makes
  * every take-home figure a FLOOR, and a floor is the safe direction to be wrong
@@ -777,18 +777,18 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   console.log(` handling  Printify's own handlingTime range for that shipping plan, in days. Their`);
   console.log(`           figure, quoted as given — the US rows are days, the international ones are`);
   console.log(`           a much wider window and read as production plus transit.`);
-  console.log(` card fee  ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} on the whole charge — a US card rate, held here as a`);
-  console.log(`           CONSERVATIVE FLOOR. The store sells through a Printify Pop-Up and Printify`);
-  console.log(`           handles the payment, so every "you keep" above is that figure or better.`);
+  console.log(` card fee  ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} on the whole charge. Checkout is OURS`);
+  console.log(`           (workers/checkout), so this is a real cost rather than a floor — and`);
+  console.log(`           Stripe charges it on the sales tax as well as on the goods.`);
   console.log(` dpi       the art's pixel width over its printed width on the LARGEST size offered.`);
   console.log(`           The floor is 300 and sync refuses to upload under it.`);
   console.log(` GARMENT   the shop's product is a different blueprint or maker from the matrix's.`);
   console.log(` THIN      under ${pct(THIN_NET_MARGIN)} kept on the dearest variant, after postage and Stripe.`);
   console.log(` POST      US standard postage over ${pct(HEAVY_SHIPPING)} of the price. Covered, but carrier-driven.`);
   console.log("");
-  console.log(` No sales tax in these figures. On a Pop-Up store you are not the seller of`);
-  console.log(` record, so it is Printify's to collect and remit — STORE.md 6 has the one`);
-  console.log(` question to put to them in writing. No returns. No Printify subscription: the`);
-  console.log(` free plan is a per-item price rather than a monthly one.`);
+  console.log(` No sales tax in these figures. YOU are the seller of record — it is yours to`);
+  console.log(` collect and to remit, and STORE.md 5 has the seven steps in order. No returns`);
+  console.log(` here either. No subscription: Printify Premium needs 16-17 orders a MONTH to`);
+  console.log(` pay for itself and this shop will not clear that.`);
   console.log("");
 }

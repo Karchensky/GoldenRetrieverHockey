@@ -187,16 +187,16 @@ export type Item = {
   /** Where a mark goes on this item, unless a MATRIX line overrides it. */
   placement: { position: string; widthIn: number; y: number };
   colourways: Colourway[];
-  /** The garment paragraph of the description. */
-  spec: string;
-  /** Overrides the colour sentence where the generated one reads badly. */
-  colourSentence?: Partial<Record<Ground, string>>;
   /**
-   * Overrides the mark's own `groundNote` on this item, or drops it with `null`.
-   * The mark's note explains a garment ("this needs a light body under it"), and
-   * on a sticker or a mug that sentence is about the wrong object.
+   * The garment paragraph, **written for somebody deciding whether to buy it**.
+   *
+   * What it is, what it is made of, how it fits, how it is decorated. Nothing
+   * about print canvases, nothing about which mark is limited by height, and no
+   * sentence that only makes sense to whoever built the line.
    */
-  groundNote?: Partial<Record<Ground, string | null>>;
+  spec: string;
+  /** Sizing, fit and care — the practical paragraph. */
+  care?: string;
   /** Closing line. `null` prints none. */
   closing?: string | null;
 };
@@ -515,10 +515,13 @@ export const ITEMS: Item[] = [
       { name: "Dark Grey Heather", hex: "#3e4245", ground: "dark", variants: [18148, 18149, 18150, 18151, 18152, 18153] },
     ],
     spec:
-      "Bella+Canvas 3001: 4.2 oz combed ringspun cotton, 32 singles, side-seamed, " +
-      "shoulder-taped, unisex sizing. Printed direct-to-garment by Printful, " +
-      "front only. The print is a proportion of the garment, so it grows with " +
-      "it — eight inches across on a small, eleven on a 3XL.",
+      "Bella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single " +
+      "knit, so it is light and soft rather than boxy. Side-seamed with taped " +
+      "shoulders. Printed direct-to-garment on the chest.",
+    care:
+      "Unisex sizing, true to size, with a slim-ish cut through the body — size " +
+      "up if you want room. Machine wash cold and tumble dry low; the print " +
+      "lasts longer inside out.",
   },
   {
     id: "hoodie",
@@ -556,11 +559,12 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [147880, 147879, 147878, 147881, 147876, 147877] },
     ],
     spec:
-      "Independent Trading Co. IND4000: 10 oz of 80/20 cotton-polyester " +
-      "heavyweight fleece, jersey-lined hood, twill-taped neck, ribbed cuffs and " +
-      "hem, front pouch. The front panel is wider than it is tall, so a square " +
-      "mark is limited by height here and a wide one is not; the back panel is " +
-      "the largest canvas anything in this shop is printed on.",
+      "Independent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight " +
+      "fleece, which is the weight the good ones are. Jersey-lined hood, " +
+      "twill-taped neck, ribbed cuffs and hem, front pouch.",
+    care:
+      "Unisex sizing and true to size, cut a little roomier than the tee. " +
+      "Machine wash cold, tumble dry low. It will soften and not shrink much.",
   },
   {
     id: "sticker",
@@ -598,16 +602,12 @@ export const ITEMS: Item[] = [
       { name: "White vinyl", hex: "#f4f4f2", ground: "light", variants: [45750, 45752] },
     ],
     spec:
-      "UV printed on white vinyl, kiss-cut, rated for outdoor use. It will " +
-      "outlast at least two of the platforms this team's record had to be " +
-      "recovered from. Sold in threes — one sticker costs more to post than to " +
-      "make, and three cost the same to post as one.",
-    colourSentence: {
-      light: "Three inches or four, and the three in a set can be three different marks.",
-    },
-    // A sticker has no body, so the mark's note about needing a light one under
-    // it is about the wrong object. The white vinyl IS the light ground.
-    groundNote: { light: null },
+      "Kiss-cut white vinyl, UV printed and rated for outdoor use — it will " +
+      "survive a water bottle, a laptop lid or a car window.",
+    care:
+      "Three inches or four. Sold in threes, and the three can be three " +
+      "different designs: one sticker costs more to post than it does to make, " +
+      "and three post for the same as one.",
     closing: null,
   },
   {
@@ -640,11 +640,12 @@ export const ITEMS: Item[] = [
       { name: "Charcoal / Black", hex: "#3b3e40", ground: "dark", variants: [118726] },
     ],
     spec:
-      "Richardson 112: structured six-panel front, mesh back, pre-curved visor, " +
-      "snapback closure, one size. Stitched rather than printed — three thread " +
-      "colours, black, white and gold, and no gradient anywhere, which is why " +
-      "the marks were drawn to three inks in the first place.",
-    colourSentence: { dark: "Black, charcoal and two-tone." },
+      "Richardson 112 — the trucker cap the trade embroiders when the cap " +
+      "matters. Structured six-panel front, mesh back, pre-curved visor, " +
+      "snapback. Embroidered rather than printed, in black, white and gold thread.",
+    care:
+      "One size, adjustable. Spot clean; the structured front does not enjoy a " +
+      "washing machine.",
   },
   {
     id: "beanie",
@@ -667,8 +668,9 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [116425] },
     ],
     spec:
-      "Yupoong 1501KC: acrylic knit, double-layer cuff, one size. Embroidered on " +
-      "the cuff face, stitched rather than printed.",
+      "Yupoong 1501KC — acrylic knit with a double-layer cuff, embroidered on " +
+      "the cuff face.",
+    care: "One size. Hand wash cold and lay flat to dry.",
   },
   {
     id: "mug",
@@ -695,17 +697,10 @@ export const ITEMS: Item[] = [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [65217, 104470] },
     ],
     spec:
-      "Black ceramic, eleven ounces or fifteen. Dye-sublimated, dishwasher and " +
-      "microwave safe, printed on one side.",
-    colourSentence: { dark: "" },
-    // The mark's own note is about a garment — what a black field does under a
-    // shirt, and what a white underbase does to it. A mug is neither, so the
-    // sentence is about the object instead.
-    groundNote: {
-      dark: "Every mark in this shop was drawn on a black field, and this mug is " +
-        "black: the drawing and the object agree, which is the whole reason it " +
-        "is not a white one.",
-    },
+      "Black ceramic, dye-sublimated on one side. Every mark in this shop was " +
+      "drawn on a black field, so on a black mug the drawing and the object " +
+      "agree — which is why it is not a white one.",
+    care: "Eleven ounces or fifteen. Dishwasher and microwave safe.",
   },
 ];
 
@@ -835,21 +830,6 @@ export const REJECTS_CREATION: { blueprintId: number; printProviderId: number; e
 export const markById = (id: string): Mark | undefined => MARKS.find((m) => m.id === id);
 export const itemById = (id: string): Item | undefined => ITEMS.find((i) => i.id === id);
 
-/** "White, ash and athletic heather." — an Oxford-free list of what it comes in. */
-function colourSentence(item: Item, ground: Ground): string {
-  // `undefined` means "generate one". An explicit "" means "say nothing" — the
-  // mug comes in one colour and one shape and listing it reads as filler.
-  const override = item.colourSentence?.[ground];
-  if (override !== undefined) return override;
-  const names = item.colourways.filter((c) => c.ground === ground).map((c) => c.name.toLowerCase());
-  const first = names[0];
-  if (!first) return "";
-  const sentence = names.length === 1
-    ? first
-    : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
-  return `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}.`;
-}
-
 const DEFAULT_CLOSING = "Buffalo, N.Y. Playing since {{firstYear}}.";
 
 /**
@@ -910,24 +890,24 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
       );
     }
 
-    const grounds = [...new Set(usable.map((c) => c.ground))];
-    const colours = grounds.map((g) => colourSentence(item, g)).filter(Boolean).join(" ");
-    // Deduplicated, and that is load bearing now that a mark may sit on BOTH
-    // grounds. The note is looked up per ground and falls back to the mark's
-    // own; a mark offered on light and dark falls back twice and used to print
-    // its one sentence twice in a row. Nothing caught it before because no mark
-    // in the old line was offered on more than one ground.
-    const notes = [...new Set(
-      grounds
-        .map((g) => (g in (item.groundNote ?? {}) ? item.groundNote?.[g] : mark.groundNote))
-        .filter((n): n is string => Boolean(n)),
-    )];
+    /* THE DESCRIPTION IS FOR THE SHOPPER, and it was not until 2026-07-29.
+       It used to append the mark's `groundNote` — sentences like "the board is
+       black inside a gold edge, so on a dark body the edge is what you see and
+       the board becomes the garment". That is design rationale. It explains why
+       this repository allows a pairing; it tells somebody deciding whether to
+       buy a hoodie nothing at all, and four of them ran together into a
+       paragraph that read like a build log. The generated colour sentence went
+       with it: the storefront draws swatches and Printify draws a variant
+       picker, so spelling out "White. Black and navy." was the page describing
+       the control immediately below it.
+       `groundNote` stays on the Mark, where it documents the `grounds` list for
+       whoever changes it. It is no longer printed. */
     const closing = item.closing === undefined ? DEFAULT_CLOSING : item.closing;
 
     line.push({
       id,
       title: `${mark.title} — ${item.title}`,
-      description: [mark.blurb, item.spec, [colours, ...notes].filter(Boolean).join(" "), closing]
+      description: [mark.blurb, item.spec, item.care, closing]
         .filter((p): p is string => Boolean(p))
         .join("\n\n"),
       blueprintId: item.blueprintId,

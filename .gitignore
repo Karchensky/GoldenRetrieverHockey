@@ -120,3 +120,4 @@ scratchpad/
 # 22 MB of derived PNGs that nothing in the build reads — matrix.ts prints from
 # production-3color-svg/, which IS tracked. Regenerate with the tool.
 docs/logos/vector/high-dpi-png/
+apps/web/public/store/.sources.json

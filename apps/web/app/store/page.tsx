@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ProductCard from "../../components/store/ProductCard";
 import { groups, products } from "../../lib/store";
 import s from "../../components/store/store.module.css";
@@ -74,6 +75,11 @@ export default function StorePage() {
           rather than something being guessed at.
         </p>
       )}
+
+      <p className={s.detailCopy}>
+        Printed to order, 2 to 5 business days to make.{" "}
+        <Link href="/store/help">Shipping and returns</Link>.
+      </p>
     </div>
   );
 }

@@ -17,6 +17,14 @@ import sharp from "sharp";
  * it no longer names, because a stale mockup of a placement that was corrected
  * is a picture of a shirt nobody can buy.
  *
+ * **It re-fetches on a CHANGED URL, not just a missing file.** The first version
+ * skipped anything already on disk, on the reasoning that the sync deletes and
+ * recreates a product rather than editing one. That stopped being true the day
+ * the sync learned to PUT: correcting octagon-patch-tee's placement and every
+ * description in the line regenerated the mockups on Printify's side, and a
+ * filename-only check would have kept serving pictures of the old print. So the
+ * source URL is recorded beside the file and compared.
+ *
  * Run after a sync:  npm run store:mockups
  */
 
@@ -38,16 +46,19 @@ const existing = new Set(
   (await readdir(OUT).catch(() => [])).filter((f) => f.endsWith(".webp")),
 );
 
+/** filename -> the CDN URL it was fetched from. Gitignored; a cache key, not data. */
+const SOURCES = join(OUT, ".sources.json");
+const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}));
+
 for (const product of catalog.products) {
   const mockups = product.mockups ?? [];
   for (const [index, url] of mockups.entries()) {
     const name = `${product.id}-${index}.webp`;
     wanted.add(name);
 
-    // Already mirrored. The CDN URL changes when the mockup is regenerated, so
-    // a file that exists is a file for the current artwork — the sync deletes
-    // and recreates a product rather than editing one in place.
-    if (existing.has(name)) { skipped += 1; continue; }
+    // Already mirrored FROM THIS URL. A regenerated mockup gets a new URL and
+    // is re-fetched; an unchanged one is left alone.
+    if (existing.has(name) && sources[name] === url) { skipped += 1; continue; }
 
     const res = await fetch(url);
     if (!res.ok) {
@@ -62,6 +73,7 @@ for (const product of catalog.products) {
       .webp({ quality: 82 })
       .toBuffer();
     await writeFile(join(OUT, name), webp);
+    sources[name] = url;
     fetched += 1;
     console.log(`${name.padEnd(44)} ${(webp.length / 1024).toFixed(0)} KB`);
   }
@@ -71,9 +83,12 @@ let removed = 0;
 for (const file of existing) {
   if (wanted.has(file)) continue;
   await unlink(join(OUT, file));
+  delete sources[file];
   removed += 1;
   console.log(`removed ${file}`);
 }
+
+await writeFile(SOURCES, `${JSON.stringify(sources, null, 2)}\n`);
 
 console.log(
   `\n${wanted.size} mockups for ${catalog.products.length} products — ` +
