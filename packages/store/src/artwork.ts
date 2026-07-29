@@ -220,18 +220,55 @@ export async function removeBackground(
 }
 
 /**
- * Rasterise an SVG at an exact pixel width.
+ * Rasterise an SVG at an exact pixel width, **with the edges intact**.
  *
  * `density` is dots per inch against the document's own units, and sharp reads
  * an SVG at 72 units to the inch, so the density that lands on a target width
  * depends on the document. Rounded UP and then resized down: rendering short and
  * scaling up would be the same lost detail the vector masters exist to avoid.
+ *
+ * **THE PADDING IS NOT COSMETIC AND IT FIXED TWO PRODUCTS.**
+ *
+ * None of the production masters carries a `viewBox`. Their coordinate space is
+ * therefore exactly `width` x `height`, and a stroke CENTRED on that boundary
+ * loses its outer half to the canvas edge. Most marks are drawn inset and never
+ * notice. Two are not: `mascot-medallion`'s gold ring came off the press file
+ * with a flat top and bottom, and `faceoff`'s disc was cut flat at both sides.
+ * Both shipped to the shop that way and both were visible on the provider's
+ * mockup — a medallion whose ring does not close.
+ *
+ * A `viewBox` offset by `PAD` on every side renders the same drawing into a
+ * slightly larger frame, so the half-stroke that was falling off the edge lands
+ * inside it. Nothing is scaled, moved or invented: this is the artwork the SVG
+ * always described.
+ *
+ * It costs nothing for the marks that did not need it. `prepare()` trims the
+ * transparent margin immediately afterwards, so a drawing that was already
+ * inset comes back byte-for-byte what it was.
  */
+const PAD = 40;
+
 async function rasterise(svg: Buffer, width: number): Promise<Buffer> {
-  const natural = (await sharp(svg).metadata()).width ?? 0;
-  if (!natural) throw new Error("cannot read the source's natural width");
-  const density = Math.ceil((72 * width) / natural);
-  return sharp(svg, { density }).resize({ width }).png({ compressionLevel: 9 }).toBuffer();
+  const meta = await sharp(svg).metadata();
+  const natural = meta.width ?? 0;
+  const naturalHeight = meta.height ?? 0;
+  if (!natural || !naturalHeight) throw new Error("cannot read the source's natural size");
+
+  const padded = Buffer.from(
+    svg.toString("utf8").replace(/<svg([^>]*)>/, (whole, attrs: string) => {
+      // A document that already declares a viewBox knows its own frame; adding
+      // a second one would fight it. Leave it alone.
+      if (/viewBox\s*=/.test(attrs)) return whole;
+      const resized = attrs
+        .replace(/\bwidth="[^"]*"/, `width="${natural + PAD * 2}"`)
+        .replace(/\bheight="[^"]*"/, `height="${naturalHeight + PAD * 2}"`);
+      return `<svg${resized} viewBox="${-PAD} ${-PAD} ${natural + PAD * 2} ${naturalHeight + PAD * 2}">`;
+    }),
+  );
+
+  const paddedNatural = (await sharp(padded).metadata()).width ?? natural;
+  const density = Math.ceil((72 * width) / paddedNatural);
+  return sharp(padded, { density }).resize({ width }).png({ compressionLevel: 9 }).toBuffer();
 }
 
 /**

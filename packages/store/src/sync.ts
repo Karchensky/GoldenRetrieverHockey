@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import {
@@ -144,6 +145,17 @@ export type SyncResult = {
     y: number;
   }[];
   mockups: string[];
+  /**
+   * SHA-256 of the art bytes actually uploaded, first 16 hex.
+   *
+   * The signal that says "the artwork changed" when nothing about the GEOMETRY
+   * did. Re-rendering the marks with a padded viewBox on 2026-07-29 fixed two
+   * clipped edges and changed the aspect ratio by a fraction of a percent — far
+   * inside `needsRebuild`'s tolerances — so the sync took the PUT path, pushed
+   * only the copy and the prices, and left the OLD clipped art on the shop
+   * while reporting twenty-three products verified.
+   */
+  artHash: string;
   problems: string[];
 };
 
@@ -164,6 +176,20 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
   if (!options.dryRun) {
     for (const p of (await listProducts()).data) existing.set(p.title, p);
   }
+  /* WHAT THE SHOP WAS LAST GIVEN, so a changed drawing can be noticed.
+     products.json is written by this same function out of the read-back, so its
+     artHash is the hash of the bytes the shop currently holds. No new state
+     file, no cache to go stale independently: if the catalog is missing the
+     map is empty and every product rebuilds, which is the safe direction. */
+  const lastArt = new Map<string, string>();
+  try {
+    const prior = JSON.parse(await readFile(join(ROOT, "apps/web/data/products.json"), "utf8")) as
+      { products?: { id?: string; artHash?: string }[] };
+    for (const p of prior.products ?? []) if (p.id && p.artHash) lastArt.set(p.id, p.artHash);
+  } catch {
+    // No catalog yet. Everything is new as far as this run is concerned.
+  }
+
   const todo = LINE.filter((item) => !existing.has(item.title));
   if (existing.size) {
     console.log(`shop already holds ${existing.size} product(s); ${todo.length} to create`);
@@ -302,7 +328,7 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
         blueprintId: item.blueprintId, printProviderId: item.printProviderId,
         visible: false, variants: variantIds.length,
         priceCents: item.priceCents, costCents: 0, marginCents: 0,
-        placements, mockups: [], problems: [],
+        placements, mockups: [], artHash: "(dry run)", problems: [],
       });
       continue;
     }
@@ -328,8 +354,19 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
        nowhere near as drastic as it reads: every product on this shop is an
        unpublished draft with no orders against it, and `visible` is false on
        the way back in. */
+    // The bytes this product is made of, in placement order.
+    const artHash = createHash("sha256")
+      .update(placements.map((p) => art.get(p.art)?.base64 ?? "").join("|"))
+      .digest("hex")
+      .slice(0, 16);
+
     const already = existing.get(item.title);
-    const moved = already ? needsRebuild(already, body, placeholders) : null;
+    const moved = already
+      ? needsRebuild(already, body, placeholders) ??
+        (lastArt.get(item.id) && lastArt.get(item.id) !== artHash
+          ? `artwork changed (${lastArt.get(item.id)} → ${artHash})`
+          : null)
+      : null;
     let created: PrintifyProduct;
     let how: string;
     if (!already) {
@@ -356,7 +393,7 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       how = "sent";
     }
     const read = await getProduct(created.id);
-    const result = verify(item.id, item.priceCents, body, read, placements);
+    const result = verify(item.id, item.priceCents, body, read, placements, artHash);
     results.push(result);
     console.log(
       `${how} ${item.id.padEnd(28)} ${read.id}  ` +
@@ -412,6 +449,8 @@ type CatalogEntry = {
   sale?: { minQuantity?: number; addOnOnly?: boolean; why: string };
   /** Provider-rendered previews, on Printify's CDN. Mirrored locally at build. */
   mockups: string[];
+  /** Hash of the art the shop holds. The next sync compares against it. */
+  artHash: string;
   printify?: {
     productId?: string;
     blueprintId?: number;
@@ -477,6 +516,7 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
       sizes: item.sizes,
       ...(item.sale ? { sale: item.sale } : {}),
       mockups: r.mockups,
+      artHash: r.artHash,
       printify: {
         productId: r.productId,
         blueprintId: r.blueprintId,
@@ -616,6 +656,7 @@ function verify(
   sent: CreateProductBody,
   got: PrintifyProduct,
   placements: SyncResult["placements"],
+  artHash: string,
 ): SyncResult {
   const problems: string[] = [];
 
@@ -664,6 +705,7 @@ function verify(
     marginCents: costCents ? priceCents - costCents : 0,
     placements,
     mockups: chooseMockups(got, placements, problems),
+    artHash,
     problems,
   };
 }

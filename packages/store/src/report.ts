@@ -56,14 +56,14 @@ export const STRIPE_FLAT_CENTS = 30;
  * is left after the goods and after Stripe — the postage cancels, being both
  * collected and paid. Net below this on the dearest variant is called out.
  *
- * **Lowered from 30% to 20% on 2026-07-29**, when the captain set the line at
- * about 25% net: *"We want lower margins; I don't want to be ripping people
- * off."* A threshold above the target flags everything and therefore flags
- * nothing. 20% is where a sale stops being worth making — below it a single
- * customer-error reprint, which Printify charges for, costs more than three
- * sales earn.
+ * **Lowered 30% → 20% → 18% on 2026-07-29**, tracking the captain's own line:
+ * *"We want lower margins; I don't want to be ripping people off"*, then 20%
+ * exactly. A threshold at or above the operating margin flags every row and
+ * therefore flags nothing, so this sits just under it. 18% is where a sale
+ * genuinely stops being worth making — below it one customer-error reprint,
+ * which Printify charges for, costs more than three sales earn.
  */
-const THIN_NET_MARGIN = 0.2;
+const THIN_NET_MARGIN = 0.18;
 /**
  * US first-item shipping above this share of retail is called out separately.
  * It is not a pricing failure once postage is priced in — it is a warning that

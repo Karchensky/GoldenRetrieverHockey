@@ -517,7 +517,7 @@ export const ITEMS: Item[] = [
     // back the day international opens** — the EU difference is larger than the
     // saving.
     printProviderId: 29,
-    priceCents: 2500,
+    priceCents: 2300,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     // Three, not the ten Printful offered: Monster Digital prints and does not
@@ -565,7 +565,7 @@ export const ITEMS: Item[] = [
     // black, runs to 3XL, and adds the back and both sleeves as print areas. It
     // is also 55 cents cheaper on black.
     printProviderId: 39,
-    priceCents: 5500,
+    priceCents: 5100,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
@@ -600,7 +600,7 @@ export const ITEMS: Item[] = [
     // Printify Choice, not SPOKE (provider 1). SPOKE appears in the catalog for
     // this blueprint and rejects creation outright — see REJECTS_CREATION.
     printProviderId: 99,
-    priceCents: 350,
+    priceCents: 320,
     // Vinyl, not apparel. No exemption anywhere applies to it.
     taxCode: "txcd_99999999",
     // Three at a time, and this is arithmetic rather than merchandising.
@@ -650,7 +650,7 @@ export const ITEMS: Item[] = [
     // cap. On embroidery, where the difference between shops is visible in the
     // stitch, 19 cents is not a decision.
     printProviderId: 410,
-    priceCents: 3000,
+    priceCents: 2800,
     // Hats, not general clothing. New York exempts caps the same way it exempts
     // shirts; the specific code is the one that says so in every other state too.
     taxCode: "txcd_30060006",
@@ -683,7 +683,7 @@ export const ITEMS: Item[] = [
     // beanie and the same $4.89 to post it. Printful adds Europe at $4.59,
     // which Printify Choice does not offer at any price.
     printProviderId: 410,
-    priceCents: 2300,
+    priceCents: 2100,
     taxCode: "txcd_30060006",
     sizes: ["One size"],
     positions: ["front"],
@@ -711,7 +711,7 @@ export const ITEMS: Item[] = [
     // BRAND in the mug category, was probed and costs $13.08 through the single
     // provider that carries it. That is a $30 mug, and it is not one.
     printProviderId: 99,
-    priceCents: 1600,
+    priceCents: 1400,
     // Ceramic. Fully taxable everywhere this shop can post to.
     taxCode: "txcd_99999999",
     sizes: ["11 oz", "15 oz"],
@@ -808,7 +808,16 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "arched-varsity", item: "cap", placement: { widthIn: 3.2 } },
 
   { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
-  { mark: "nose-to-nose", item: "beanie", placement: { widthIn: 3.2 } },
+  /* `nose-to-nose` was here and came off on 2026-07-29, on the provider's own
+     mockup. At 3.2in on the cuff its banner — GOLDEN RETRIEVERS in a ribbon
+     under two dog heads — stitched into mush; the same mark at 3.6in on the
+     cap's twill reads cleanly, which is why it stays there.
+     It cannot simply be made bigger. The cuff is 5.0 x 1.75in and this mark is
+     roughly 2:1, so height binds it at 3.38in — a sixth of an inch more than it
+     already had, against a knit that is coarser than the cap's twill to begin
+     with. The beanie carries one mark, and `rink-board` at 4.4in is legible.
+     That is the third product this line has lost to a mockup. The rule holds:
+     dense type does not survive a small stitched panel. */
 
   /* Mug — and the widths here are smaller than the canvas allows, on purpose.
      The print area is 7.76in wide but a mug is a CYLINDER: seen head-on, only
