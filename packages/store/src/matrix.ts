@@ -1516,6 +1516,49 @@ export const REJECTS_CREATION: { blueprintId: number; printProviderId: number; e
     printProviderId: 1,
     error: "Decorator 1 not available for this blueprint 400",
   },
+  {
+    // Refused three separate sweeps, 2026-07-30. The message says nothing about
+    // WHAT failed and the request is the same one nineteen other makers of this
+    // blueprint accepted, so it is recorded rather than diagnosed. It is the
+    // only maker on the platform this line has never been able to price.
+    blueprintId: 12,
+    printProviderId: 54,
+    error: "code 6002: Validation failed. (JAMS Designs, POST /products.json 400)",
+  },
+];
+
+/**
+ * Makers that CAN be created but cannot carry the line, with the reason.
+ *
+ * A colourway's `variants` array is positional against `sizes`, so a maker
+ * missing one size of one colour cannot be used at all without dropping that
+ * colour — there is no representation for a partial run. That makes "is it
+ * cheaper" the wrong first question and "can it make what we sell" the right
+ * one, and the answers are worth keeping so the sweep's top line is not
+ * re-litigated every time somebody reads it.
+ */
+export const CANNOT_CARRY: { blueprintId: number; printProviderId: number; why: string }[] = [
+  {
+    // $0.50 cheaper at target than Printify Choice on the tee — the only maker
+    // in the whole sweep that beats an incumbent on price. It is still not
+    // usable: 16 colourways against 125, and the one it is missing is one we
+    // sell. Taking it would mean dropping Dark Grey Heather to save 50 cents.
+    blueprintId: 12,
+    printProviderId: 42,
+    why: "Drive Fulfillment has no Dark Grey Heather in 2XL (variant 18152)",
+  },
+  {
+    // The withdrawal that stopped a sync mid-run. Recorded because Black is a
+    // colour a hockey club will want back, and this is why it is not there.
+    blueprintId: 41,
+    printProviderId: 29,
+    why: "Monster Digital withdrew Black in M (variant 24997) on 2026-07-30",
+  },
+  {
+    blueprintId: 2002,
+    printProviderId: 29,
+    why: "Monster Digital has no Black and stops at 2XL on the IND4000 hoodie",
+  },
 ];
 
 /* ------------------------------------------------------------------ */

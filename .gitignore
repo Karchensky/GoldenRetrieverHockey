@@ -121,3 +121,8 @@ scratchpad/
 # production-3color-svg/, which IS tracked. Regenerate with the tool.
 docs/logos/vector/high-dpi-png/
 apps/web/public/store/.sources.json
+
+# One page, kept current: where the store and the archive actually stand, what
+# is left, and who has to do it. Private for the same reason STORE.md is — it
+# carries costs, margins and the captain's own dashboard steps.
+/TRACKING.md
