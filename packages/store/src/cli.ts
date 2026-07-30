@@ -8,6 +8,7 @@ import {
 import { prepareLogo } from "./artwork.ts";
 import { catalogue } from "./catalogue.ts";
 import { cost } from "./cost.ts";
+import { sweep } from "./sweep.ts";
 import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
 import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
 import { report } from "./report.ts";
@@ -33,6 +34,8 @@ const USAGE = `
     catalogue <query|bpId>   What else a garment could be, and who makes it.
     cost <bpId> <ppId>       What a garment this shop has never sold would cost.
                              Creates one draft, reads its cost, DELETES it.
+    sweep [itemId]           That same probe against EVERY maker of every garment
+                             this line sells, ranked on landed cost. LIVE, slow.
     marks                    Every logo on disk, and which are wired into the line.
     line                     The matrix, as products, without calling anything.
 
@@ -149,6 +152,9 @@ async function main(argv: string[]): Promise<number> {
 
     case "cost":
       return cost(argv[1], argv[2]);
+
+    case "sweep":
+      return sweep(argv[1]);
 
     case "marks": {
       const onDisk = await marksOnDisk();
