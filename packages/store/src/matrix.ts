@@ -417,27 +417,6 @@ export const MARKS: Mark[] = [
       "all sit proud of the shield, so it holds together on either body.",
   },
   {
-    // concept 38 — arched-varsity-lockup
-    id: "arched-varsity",
-    title: "Golden Retrievers Arched Varsity",
-    grounds: ["dark"],
-    source: "docs/logos/vector/production-3color-svg/38-arched-varsity-lockup-3color.svg",
-    press: "logos/arched-varsity.png",
-    reach: "trim",
-    renderWidth: 6000,
-    blurb:
-      "GOLDEN RETRIEVERS arched in white varsity block over a small gold " +
-      "roundel, a stick and a puck running out beneath the word.",
-    // The inverse of the faceoff's problem, and the only WHITE-forward mark in
-    // the set: 26% of its ink is white against 9-18% everywhere else. On a white
-    // or ash body the letterforms hollow out into their own outlines and the
-    // wordmark loses the weight it is built on.
-    groundNote:
-      "The wordmark is white with a gold keyline and the white is the whole " +
-      "weight of it — on a light body it hollows out into an outline. Dark " +
-      "bodies only.",
-  },
-  {
     // concept 45 — rink-board-lockup. The widest mark in the set, 3:1.
     id: "rink-board",
     title: "Golden Retrievers Rink Board",
@@ -722,39 +701,6 @@ export const ITEMS: Item[] = [
     care: "One size. Hand wash cold and lay flat to dry.",
   },
   {
-    /* A HOCKEY PUCK, and the answer to "are there any hockey jersey items?".
-       There are not: Printify's catalog returns nothing for "hockey jersey" and
-       every hit for "jersey" is jersey-KNIT fabric — t-shirts. A real sublimated
-       hockey sweater is teamwear, made by a teamwear supplier, and print-on-
-       demand does not do it. What Printify does have, from exactly one maker, is
-       this: blueprint 1203, a regulation 3-inch puck.
-       One variant, one size, one provider. The print area is 795 x 795 px, which
-       is 2.65in square at 300 dpi — small, and round, so it takes a badge and
-       nothing else. It posts for $7.59, which is most of what it costs. */
-    id: "puck",
-    title: "Puck",
-    blueprintId: 1203,
-    printProviderId: 80,
-    // An anchor only. The reprice pass sets the real figure from the cost the
-    // shop reports — see MARGIN_TARGET.
-    priceCents: 2000,
-    // Not apparel and not a mug: a puck is general tangible goods.
-    taxCode: "txcd_99999999",
-    sizes: ['3"'],
-    positions: ["front"],
-    // 2.65in of canvas, so a square badge clamps to 2.49in. There is no version
-    // of this that takes a wide lockup.
-    placement: { position: "front", widthIn: 2.5, y: 0.5 },
-    colourways: [
-      { name: "Black", hex: "#17191b", ground: "dark", variants: [91951] },
-    ],
-    spec:
-      "A regulation three-inch vulcanised rubber puck, printed on one face. " +
-      "Six ounces of the only object in this shop that has ever been shot at " +
-      "somebody.",
-    care: "One size, because a puck is one size. Not for actual use on ice.",
-  },
-  {
     id: "mug",
     title: "Mug",
     blueprintId: 479,
@@ -801,36 +747,40 @@ export const ITEMS: Item[] = [
  *
  * The attribution is the player's own name and number as the recap gave it.
  *
- * **Do not write new ones.** The value is that a customer is reading the team,
- * not a marketing department. A quote with no source does not go in this map.
+ * **KEYED BY PRODUCT, not by mark, since 2026-07-29.** It used to be keyed by
+ * mark, which meant a crest on four items printed the same line four times and
+ * anybody browsing a category read it over and over. The captain: "We can only
+ * use a quote one time." One product, one quote, and a product with no entry
+ * simply has no quote — which is a better listing than a repeated one.
+ *
+ * **Do not invent attributions.** Every line here is either verbatim from a
+ * recap or written for the club and attributed to nobody. A made-up quote in a
+ * real player's mouth is the one thing this file must never contain.
  */
 const QUOTES: Record<string, string> = {
-  "championship-roundel":
+  "championship-roundel-tee":
     "“Glory is like a circle in the water, which never ceaseth to enlarge " +
     "itself, till by broad spreading it disperses to naught.” " +
     "— Rich Fedele, defence",
-  "heritage-seal":
+  "heritage-seal-hoodie":
     "“What a piece of work is a Golden Retriever. How noble in reason, how " +
     "infinite in faculties. In action how like an Angel.” " +
     "— Brett Koeppel, #18",
-  "crossed-shield":
+  "crossed-shield-tee":
     "“The Golden Retrievers are good. Scary Good.” — Justin Wheeler, forward",
-  "arched-varsity":
-    "On first pulling on the golden jersey: “I’m never taking this off, " +
-    "ever.” — Greg Suffoletto, forward",
-  "faceoff":
+  "faceoff-tee":
     "“It felt like we were skating in circles, just chasing our tails all " +
     "night.” — Dan Schmitt, defence",
-  "mascot-medallion":
+  "mascot-medallion-mug":
     "“I do it well, very well.” — Vinny Terrana, forward, " +
     "after a nine-point game",
-  "rink-board":
+  "rink-board-cap":
     "“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” " +
     "— Greg Suffoletto, forward",
-  "nose-to-nose":
+  "nose-to-nose-hoodie":
     "“Us Cat’s gotta stick together.” — Brent “The Cat” " +
     "Seymour, goaltender, on letting in a couple against the CLUB Panthers",
-  "octagon-patch":
+  "octagon-patch-sticker":
     "“Pain has a structure. It has a floor plan… it is a poem.” " +
     "— Justin Wheeler, forward, playing injured",
 };
@@ -901,7 +851,6 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "rink-board", item: "tee", placement: { widthIn: 9.5, y: 0.4 } },
   // Wider than the badges and it sits higher: a varsity arch belongs across the
   // chest, not centred on it.
-  { mark: "arched-varsity", item: "tee", placement: { widthIn: 9.0, y: 0.4 } },
 
   /* Hoodie. The front is LANDSCAPE — 11.42 x 7.61in, because the pouch takes
      the rest — so a square badge is capped at 7.15in by height. The back is the
@@ -910,12 +859,20 @@ export const MATRIX: MatrixEntry[] = [
      `rink-board` came off the hoodie front on the captain's eye: a 3:1 bar
      printed 10.5in wide on a chest is a bumper sticker. It is the best thing in
      the shop on a cap, a beanie and a mug, where wide is the shape of the
-     canvas. */
+     canvas.
+
+     **NOTHING PRINTS ON THE BACK ANY MORE.** Three did, and the listings
+     therefore showed a photograph of a hoodie's back — correct, and not what
+     anybody wants to look at while deciding whether to buy one. The captain:
+     "There's a few hoodies where the art is being shown on the BACK of the
+     hoodie, and not the front." So the badges moved to the front, where the
+     panel is 12.36 x 8.24in and a square mark caps at 7.15in by height. If a
+     back print ever comes back it needs a front mockup beside it, not instead
+     of it. */
   { mark: "heritage-seal", item: "hoodie" },
   { mark: "crossed-shield", item: "hoodie" },
-  { mark: "championship-roundel", item: "hoodie", placement: { position: "back", widthIn: 10.0 } },
-  { mark: "arched-varsity", item: "hoodie", placement: { position: "back", widthIn: 10.0, y: 0.45 } },
-  { mark: "nose-to-nose", item: "hoodie", placement: { position: "back", widthIn: 10.5, y: 0.45 } },
+  { mark: "championship-roundel", item: "hoodie" },
+  { mark: "nose-to-nose", item: "hoodie", placement: { widthIn: 10.5 } },
 
   /* Cap and beanie — Richardson 112 and Yupoong 1501KC, both EMBROIDERED, and
      that is the constraint rather than the size of the panel. A dense badge
@@ -925,7 +882,6 @@ export const MATRIX: MatrixEntry[] = [
      the widest one only. */
   { mark: "rink-board", item: "cap", placement: { widthIn: 4.75 } },
   { mark: "nose-to-nose", item: "cap", placement: { widthIn: 3.6 } },
-  { mark: "arched-varsity", item: "cap", placement: { widthIn: 3.2 } },
 
   { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
 
@@ -938,11 +894,11 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "mascot-medallion", item: "mug" },
   { mark: "championship-roundel", item: "mug" },
 
-  /* Puck — 2.65in of round canvas on a round object. Badges only, and the two
-     that are drawn as seals are the two that belong on it. */
-  { mark: "championship-roundel", item: "puck" },
-  { mark: "heritage-seal", item: "puck" },
-  { mark: "mascot-medallion", item: "puck" },
+  /* The PUCK came off on 2026-07-29. Printify has exactly one maker for
+     blueprint 1203 and it charges $18.00 for a three-inch puck plus $7.59 to
+     post it, which priced at $26 — more than a tee, for a rubber disc. The
+     captain: "way too expensive". It is the only genuinely hockey OBJECT in
+     their catalog and it is still not worth $26.
 
   /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every badge
      in the set is already a sticker shape. White vinyl is a light ground, which
@@ -1063,7 +1019,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
     line.push({
       id,
       title: `${mark.title} — ${item.title}`,
-      description: [mark.blurb, item.spec, item.care, QUOTES[mark.id], closing]
+      description: [mark.blurb, item.spec, item.care, QUOTES[id], closing]
         .filter((p): p is string => Boolean(p))
         .join("\n\n"),
       blueprintId: item.blueprintId,

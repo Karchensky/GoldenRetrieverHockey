@@ -392,7 +392,7 @@
     {
       "id": "heritage-seal-tee",
       "title": "Golden Retrievers Heritage Seal — Tee",
-      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\n“What a piece of work is a Golden Retriever. How noble in reason, how infinite in faculties. In action how like an Angel.” — Brett Koeppel, #18\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1700,
       "taxCode": "txcd_30011000",
       "markId": "heritage-seal",
@@ -546,7 +546,7 @@
     {
       "id": "nose-to-nose-tee",
       "title": "Golden Retrievers Nose to Nose — Tee",
-      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\n“Us Cat’s gotta stick together.” — Brent “The Cat” Seymour, goaltender, on letting in a couple against the CLUB Panthers\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1700,
       "taxCode": "txcd_30011000",
       "markId": "nose-to-nose",
@@ -700,7 +700,7 @@
     {
       "id": "rink-board-tee",
       "title": "Golden Retrievers Rink Board — Tee",
-      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\n“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1700,
       "taxCode": "txcd_30011000",
       "markId": "rink-board",
@@ -852,124 +852,6 @@
       }
     },
     {
-      "id": "arched-varsity-tee",
-      "title": "Golden Retrievers Arched Varsity — Tee",
-      "description": "GOLDEN RETRIEVERS arched in white varsity block over a small gold roundel, a stick and a puck running out beneath the word.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\nOn first pulling on the golden jersey: “I’m never taking this off, ever.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 1700,
-      "taxCode": "txcd_30011000",
-      "markId": "arched-varsity",
-      "itemId": "tee",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            18100,
-            18101,
-            18102,
-            18103,
-            18104,
-            18105
-          ]
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d",
-          "variants": [
-            18396,
-            18397,
-            18398,
-            18399,
-            18400,
-            18401
-          ]
-        },
-        {
-          "name": "Heather Navy",
-          "hex": "#2f3a4c",
-          "variants": [
-            18268,
-            18269,
-            18270,
-            18271,
-            18272,
-            18273
-          ]
-        },
-        {
-          "name": "Dark Grey Heather",
-          "hex": "#3e4245",
-          "variants": [
-            18148,
-            18149,
-            18150,
-            18151,
-            18152,
-            18153
-          ]
-        }
-      ],
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a2fa86f1e07720310db/18102/92547/golden-retrievers-arched-varsity-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a2fa86f1e07720310db/18150/92547/golden-retrievers-arched-varsity-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a2fa86f1e07720310db/18270/92547/golden-retrievers-arched-varsity-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a2fa86f1e07720310db/18398/92547/golden-retrievers-arched-varsity-tee.jpg?camera_label=front"
-      ],
-      "artHash": "2bdf3f641341c5a0",
-      "prices": {
-        "18100": 1700,
-        "18101": 1700,
-        "18102": 1700,
-        "18103": 1700,
-        "18104": 2025,
-        "18105": 2325,
-        "18148": 1700,
-        "18149": 1700,
-        "18150": 1700,
-        "18151": 1700,
-        "18152": 2025,
-        "18153": 2325,
-        "18268": 1700,
-        "18269": 1700,
-        "18270": 1700,
-        "18271": 1700,
-        "18272": 2025,
-        "18273": 2325,
-        "18396": 1700,
-        "18397": 1700,
-        "18398": 1700,
-        "18399": 1700,
-        "18400": 2025,
-        "18401": 2325
-      },
-      "postageCents": 475,
-      "printify": {
-        "productId": "6a6a2a2fa86f1e07720310db",
-        "blueprintId": 12,
-        "printProviderId": 29,
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 9,
-            "heightIn": 5.87,
-            "dpi": 576,
-            "maxWidthIn": 12.2,
-            "minDpi": 425,
-            "scale": 0.8135,
-            "y": 0.4
-          }
-        ]
-      }
-    },
-    {
       "id": "heritage-seal-hoodie",
       "title": "Golden Retrievers Heritage Seal — Hoodie",
       "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\n“What a piece of work is a Golden Retriever. How noble in reason, how infinite in faculties. In action how like an Angel.” — Brett Koeppel, #18\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
@@ -1071,7 +953,7 @@
     {
       "id": "crossed-shield-hoodie",
       "title": "Golden Retrievers Crossed Shield — Hoodie",
-      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\n“The Golden Retrievers are good. Scary Good.” — Justin Wheeler, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 4575,
       "taxCode": "txcd_30011000",
       "markId": "crossed-shield",
@@ -1170,7 +1052,7 @@
     {
       "id": "championship-roundel-hoodie",
       "title": "Golden Retrievers Championship Roundel — Hoodie",
-      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\n“Glory is like a circle in the water, which never ceaseth to enlarge itself, till by broad spreading it disperses to naught.” — Rich Fedele, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 4575,
       "taxCode": "txcd_30011000",
       "markId": "championship-roundel",
@@ -1222,9 +1104,9 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a4813cc998f4e005412/123966/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
-        "https://images-api.printify.com/mockup/6a6a2a4813cc998f4e005412/147878/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
-        "https://images-api.printify.com/mockup/6a6a2a4813cc998f4e005412/123843/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back"
+        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front"
       ],
       "artHash": "2410584179152168",
       "prices": {
@@ -1249,99 +1131,19 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6a2a4813cc998f4e005412",
+        "productId": "6a6ac4a0097240048f0cdc38",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
           {
-            "position": "back",
-            "widthIn": 10,
-            "heightIn": 10.04,
-            "dpi": 534,
-            "maxWidthIn": 12.13,
-            "minDpi": 440,
-            "scale": 0.8088,
+            "position": "front",
+            "widthIn": 7.5,
+            "heightIn": 7.53,
+            "dpi": 712,
+            "maxWidthIn": 9.1,
+            "minDpi": 587,
+            "scale": 0.6066,
             "y": 0.5
-          }
-        ]
-      }
-    },
-    {
-      "id": "arched-varsity-hoodie",
-      "title": "Golden Retrievers Arched Varsity — Hoodie",
-      "description": "GOLDEN RETRIEVERS arched in white varsity block over a small gold roundel, a stick and a puck running out beneath the word.\n\nIndependent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight fleece, which is the weight the good ones are. Jersey-lined hood, twill-taped neck, ribbed cuffs and hem, front pouch.\n\nUnisex sizing and true to size, cut a little roomier than the tee. Machine wash cold, tumble dry low. It will soften and not shrink much.\n\nOn first pulling on the golden jersey: “I’m never taking this off, ever.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 4575,
-      "taxCode": "txcd_30011000",
-      "markId": "arched-varsity",
-      "itemId": "hoodie",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            123875,
-            123859,
-            123843,
-            123891,
-            123811,
-            123827
-          ]
-        },
-        {
-          "name": "Navy",
-          "hex": "#1b2a3d",
-          "variants": [
-            147880,
-            147879,
-            147878,
-            147881,
-            147876,
-            147877
-          ]
-        }
-      ],
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a4e4d0279886b0523b7/147878/111673/golden-retrievers-arched-varsity-hoodie.jpg?camera_label=back",
-        "https://images-api.printify.com/mockup/6a6a2a4e4d0279886b0523b7/123843/111673/golden-retrievers-arched-varsity-hoodie.jpg?camera_label=back"
-      ],
-      "artHash": "2bdf3f641341c5a0",
-      "prices": {
-        "123811": 4725,
-        "123827": 4725,
-        "123843": 4575,
-        "123859": 4575,
-        "123875": 4575,
-        "123891": 4575,
-        "147876": 5075,
-        "147877": 5075,
-        "147878": 4800,
-        "147879": 4800,
-        "147880": 4800,
-        "147881": 4800
-      },
-      "postageCents": 849,
-      "printify": {
-        "productId": "6a6a2a4e4d0279886b0523b7",
-        "blueprintId": 2002,
-        "printProviderId": 39,
-        "print": [
-          {
-            "position": "back",
-            "widthIn": 10,
-            "heightIn": 6.52,
-            "dpi": 519,
-            "maxWidthIn": 12.13,
-            "minDpi": 428,
-            "scale": 0.8088,
-            "y": 0.45
           }
         ]
       }
@@ -1401,9 +1203,9 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a850b98e90a6fd702ebca/123966/111673/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=back",
-        "https://images-api.printify.com/mockup/6a6a850b98e90a6fd702ebca/147878/111673/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=back",
-        "https://images-api.printify.com/mockup/6a6a850b98e90a6fd702ebca/123843/111673/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=back"
+        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/123966/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/147878/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/123843/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front"
       ],
       "artHash": "032447761ef684bd",
       "prices": {
@@ -1428,19 +1230,19 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6a850b98e90a6fd702ebca",
+        "productId": "6a6ac4a8097240048f0cdc40",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
           {
-            "position": "back",
+            "position": "front",
             "widthIn": 10.5,
             "heightIn": 5.11,
             "dpi": 508,
             "maxWidthIn": 12.74,
             "minDpi": 419,
             "scale": 0.8493,
-            "y": 0.45
+            "y": 0.5
           }
         ]
       }
@@ -1521,7 +1323,7 @@
     {
       "id": "nose-to-nose-cap",
       "title": "Golden Retrievers Nose to Nose — Cap",
-      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nRichardson 112 — the trucker cap the trade embroiders when the cap matters. Structured six-panel front, mesh back, pre-curved visor, snapback. Embroidered rather than printed, in black, white and gold thread.\n\nOne size, adjustable. Spot clean; the structured front does not enjoy a washing machine.\n\n“Us Cat’s gotta stick together.” — Brent “The Cat” Seymour, goaltender, on letting in a couple against the CLUB Panthers\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nRichardson 112 — the trucker cap the trade embroiders when the cap matters. Structured six-panel front, mesh back, pre-curved visor, snapback. Embroidered rather than printed, in black, white and gold thread.\n\nOne size, adjustable. Spot clean; the structured front does not enjoy a washing machine.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 2800,
       "taxCode": "txcd_30060006",
       "markId": "nose-to-nose",
@@ -1592,82 +1394,9 @@
       }
     },
     {
-      "id": "arched-varsity-cap",
-      "title": "Golden Retrievers Arched Varsity — Cap",
-      "description": "GOLDEN RETRIEVERS arched in white varsity block over a small gold roundel, a stick and a puck running out beneath the word.\n\nRichardson 112 — the trucker cap the trade embroiders when the cap matters. Structured six-panel front, mesh back, pre-curved visor, snapback. Embroidered rather than printed, in black, white and gold thread.\n\nOne size, adjustable. Spot clean; the structured front does not enjoy a washing machine.\n\nOn first pulling on the golden jersey: “I’m never taking this off, ever.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 2800,
-      "taxCode": "txcd_30060006",
-      "markId": "arched-varsity",
-      "itemId": "cap",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            118722
-          ]
-        },
-        {
-          "name": "Black / Charcoal",
-          "hex": "#232628",
-          "variants": [
-            118723
-          ]
-        },
-        {
-          "name": "Black / White",
-          "hex": "#1c1f21",
-          "variants": [
-            118724
-          ]
-        },
-        {
-          "name": "Charcoal / Black",
-          "hex": "#3b3e40",
-          "variants": [
-            118726
-          ]
-        }
-      ],
-      "sizes": [
-        "One size"
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a5d9e376760c80c5df5/118724/110130/golden-retrievers-arched-varsity-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a5d9e376760c80c5df5/118723/110130/golden-retrievers-arched-varsity-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a5d9e376760c80c5df5/118722/110130/golden-retrievers-arched-varsity-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a5d9e376760c80c5df5/118726/110130/golden-retrievers-arched-varsity-cap.jpg?camera_label=front"
-      ],
-      "artHash": "2bdf3f641341c5a0",
-      "prices": {
-        "118722": 2800,
-        "118723": 2800,
-        "118724": 2800,
-        "118726": 2800
-      },
-      "postageCents": 489,
-      "printify": {
-        "productId": "6a6a2a5d9e376760c80c5df5",
-        "blueprintId": 1743,
-        "printProviderId": 410,
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.88,
-            "heightIn": 1.88,
-            "dpi": 1799,
-            "maxWidthIn": 2.88,
-            "minDpi": 1801,
-            "scale": 0.4885,
-            "y": 0.5
-          }
-        ]
-      }
-    },
-    {
       "id": "rink-board-beanie",
       "title": "Golden Retrievers Rink Board — Beanie",
-      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nYupoong 1501KC — acrylic knit with a double-layer cuff, embroidered on the cuff face.\n\nOne size. Hand wash cold and lay flat to dry.\n\n“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nYupoong 1501KC — acrylic knit with a double-layer cuff, embroidered on the cuff face.\n\nOne size. Hand wash cold and lay flat to dry.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 2125,
       "taxCode": "txcd_30060006",
       "markId": "rink-board",
@@ -1724,7 +1453,7 @@
     {
       "id": "rink-board-mug",
       "title": "Golden Retrievers Rink Board — Mug",
-      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\n“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” — Greg Suffoletto, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1200,
       "taxCode": "txcd_99999999",
       "markId": "rink-board",
@@ -1774,7 +1503,7 @@
     {
       "id": "nose-to-nose-mug",
       "title": "Golden Retrievers Nose to Nose — Mug",
-      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\n“Us Cat’s gotta stick together.” — Brent “The Cat” Seymour, goaltender, on letting in a couple against the CLUB Panthers\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1200,
       "taxCode": "txcd_99999999",
       "markId": "nose-to-nose",
@@ -1874,7 +1603,7 @@
     {
       "id": "championship-roundel-mug",
       "title": "Golden Retrievers Championship Roundel — Mug",
-      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\n“Glory is like a circle in the water, which never ceaseth to enlarge itself, till by broad spreading it disperses to naught.” — Rich Fedele, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nBlack ceramic, dye-sublimated on one side. Every mark in this shop was drawn on a black field, so on a black mug the drawing and the object agree — which is why it is not a white one.\n\nEleven ounces or fifteen. Dishwasher and microwave safe.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1200,
       "taxCode": "txcd_99999999",
       "markId": "championship-roundel",
@@ -1922,147 +1651,9 @@
       }
     },
     {
-      "id": "championship-roundel-puck",
-      "title": "Golden Retrievers Championship Roundel — Puck",
-      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nA regulation three-inch vulcanised rubber puck, printed on one face. Six ounces of the only object in this shop that has ever been shot at somebody.\n\nOne size, because a puck is one size. Not for actual use on ice.\n\n“Glory is like a circle in the water, which never ceaseth to enlarge itself, till by broad spreading it disperses to naught.” — Rich Fedele, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 2600,
-      "taxCode": "txcd_99999999",
-      "markId": "championship-roundel",
-      "itemId": "puck",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            91951
-          ]
-        }
-      ],
-      "sizes": [
-        "3\""
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a853499ce1df8a30699e8/91951/70112/golden-retrievers-championship-roundel-puck.jpg?camera_label=front"
-      ],
-      "artHash": "2410584179152168",
-      "prices": {
-        "91951": 2600
-      },
-      "postageCents": 759,
-      "printify": {
-        "productId": "6a6a853499ce1df8a30699e8",
-        "blueprintId": 1203,
-        "printProviderId": 80,
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.48,
-            "heightIn": 2.49,
-            "dpi": 2153,
-            "maxWidthIn": 2.48,
-            "minDpi": 2153,
-            "scale": 0.9358,
-            "y": 0.5
-          }
-        ]
-      }
-    },
-    {
-      "id": "heritage-seal-puck",
-      "title": "Golden Retrievers Heritage Seal — Puck",
-      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nA regulation three-inch vulcanised rubber puck, printed on one face. Six ounces of the only object in this shop that has ever been shot at somebody.\n\nOne size, because a puck is one size. Not for actual use on ice.\n\n“What a piece of work is a Golden Retriever. How noble in reason, how infinite in faculties. In action how like an Angel.” — Brett Koeppel, #18\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 2600,
-      "taxCode": "txcd_99999999",
-      "markId": "heritage-seal",
-      "itemId": "puck",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            91951
-          ]
-        }
-      ],
-      "sizes": [
-        "3\""
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a853ad222fc249a0a7178/91951/70112/golden-retrievers-heritage-seal-puck.jpg?camera_label=front"
-      ],
-      "artHash": "63fd9a8e241d5758",
-      "prices": {
-        "91951": 2600
-      },
-      "postageCents": 759,
-      "printify": {
-        "productId": "6a6a853ad222fc249a0a7178",
-        "blueprintId": 1203,
-        "printProviderId": 80,
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.49,
-            "heightIn": 2.49,
-            "dpi": 2161,
-            "maxWidthIn": 2.49,
-            "minDpi": 2162,
-            "scale": 0.94,
-            "y": 0.5
-          }
-        ]
-      }
-    },
-    {
-      "id": "mascot-medallion-puck",
-      "title": "Golden Retrievers Mascot Medallion — Puck",
-      "description": "The dog head-on and filling the frame, sticks crossed behind, inside a single heavy gold ring. The most drawing of any mark in the set, and the one that most wants room.\n\nA regulation three-inch vulcanised rubber puck, printed on one face. Six ounces of the only object in this shop that has ever been shot at somebody.\n\nOne size, because a puck is one size. Not for actual use on ice.\n\n“I do it well, very well.” — Vinny Terrana, forward, after a nine-point game\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
-      "priceCents": 2600,
-      "taxCode": "txcd_99999999",
-      "markId": "mascot-medallion",
-      "itemId": "puck",
-      "colors": [
-        {
-          "name": "Black",
-          "hex": "#17191b",
-          "variants": [
-            91951
-          ]
-        }
-      ],
-      "sizes": [
-        "3\""
-      ],
-      "mockups": [
-        "https://images-api.printify.com/mockup/6a6a853f98e90a6fd702ebeb/91951/70112/golden-retrievers-mascot-medallion-puck.jpg?camera_label=front"
-      ],
-      "artHash": "8c315f8b47fe3a5b",
-      "prices": {
-        "91951": 2600
-      },
-      "postageCents": 759,
-      "printify": {
-        "productId": "6a6a853f98e90a6fd702ebeb",
-        "blueprintId": 1203,
-        "printProviderId": 80,
-        "print": [
-          {
-            "position": "front",
-            "widthIn": 2.49,
-            "heightIn": 2.47,
-            "dpi": 2148,
-            "maxWidthIn": 2.49,
-            "minDpi": 2149,
-            "scale": 0.94,
-            "y": 0.5
-          }
-        ]
-      }
-    },
-    {
       "id": "heritage-seal-sticker",
       "title": "Golden Retrievers Heritage Seal — Sticker",
-      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“What a piece of work is a Golden Retriever. How noble in reason, how infinite in faculties. In action how like an Angel.” — Brett Koeppel, #18",
+      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "heritage-seal",
@@ -2116,7 +1707,7 @@
     {
       "id": "championship-roundel-sticker",
       "title": "Golden Retrievers Championship Roundel — Sticker",
-      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“Glory is like a circle in the water, which never ceaseth to enlarge itself, till by broad spreading it disperses to naught.” — Rich Fedele, defence",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "championship-roundel",
@@ -2224,7 +1815,7 @@
     {
       "id": "crossed-shield-sticker",
       "title": "Golden Retrievers Crossed Shield — Sticker",
-      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“The Golden Retrievers are good. Scary Good.” — Justin Wheeler, forward",
+      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "crossed-shield",
@@ -2278,7 +1869,7 @@
     {
       "id": "faceoff-sticker",
       "title": "Golden Retrievers Faceoff — Sticker",
-      "description": "Two dogs and two pucks inside one disc — one dog in gold, one in white, and the gold line between them where the puck drops.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“It felt like we were skating in circles, just chasing our tails all night.” — Dan Schmitt, defence",
+      "description": "Two dogs and two pucks inside one disc — one dog in gold, one in white, and the gold line between them where the puck drops.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "faceoff",
@@ -2332,7 +1923,7 @@
     {
       "id": "nose-to-nose-sticker",
       "title": "Golden Retrievers Nose to Nose — Sticker",
-      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“Us Cat’s gotta stick together.” — Brent “The Cat” Seymour, goaltender, on letting in a couple against the CLUB Panthers",
+      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "nose-to-nose",
@@ -2386,7 +1977,7 @@
     {
       "id": "rink-board-sticker",
       "title": "Golden Retrievers Rink Board — Sticker",
-      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.\n\n“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” — Greg Suffoletto, forward",
+      "description": "The name the way it would be painted on the boards: a long gold-edged bar, the dog in a roundel at the left, a stick and a puck running out to the right.\n\nKiss-cut white vinyl, UV printed and rated for outdoor use — it will survive a water bottle, a laptop lid or a car window.\n\nThree inches or four. Sold in threes, and the three can be three different designs: one sticker costs more to post than it does to make, and three post for the same as one.",
       "priceCents": 275,
       "taxCode": "txcd_99999999",
       "markId": "rink-board",

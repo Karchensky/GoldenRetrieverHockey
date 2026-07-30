@@ -59,26 +59,29 @@ const CRACK_FILE = "/audio/ice-crack.ogg";
  * wind, and a bed that swells and recedes never reads as a file on repeat.
  */
 const MIX: Record<BedName, { gain: number; period: number; drift: number }> = {
-  /* Set by the captain on 2026-07-27, after listening — these are his numbers,
-     not a computed balance. He pulled the wind right down and brought the
-     sticks up from 0.18 to 0.50, which turns the mix from a storm with a game
-     somewhere behind it into a game with weather around it. That is the place
-     the page is supposed to be standing in. */
-  wind: { gain: 0.10, period: 41, drift: 0.18 },
-  rink: { gain: 0.15, period: 67, drift: 0.25 },
-  ice: { gain: 0.20, period: 53, drift: 0.20 },
-  blades: { gain: 0.50, period: 31, drift: 0.42 },
+  /* Set by the captain on 2026-07-29, after listening — his numbers, not a
+     computed balance, given to me as 0-100 and written here as fractions.
+     This is a REVERSAL of his 2026-07-27 mix and worth recording as such: that
+     one pushed the blades to 0.50 and buried the wind at 0.10, a game with
+     weather around it. This one puts the ice forward, brings the wind back up
+     and pulls the sticks right down to 0.15 — a cold empty rink you are
+     standing in rather than a game you are watching. */
+  wind: { gain: 0.40, period: 41, drift: 0.18 },
+  rink: { gain: 0.20, period: 67, drift: 0.25 },
+  ice: { gain: 0.50, period: 53, drift: 0.20 },
+  blades: { gain: 0.15, period: 31, drift: 0.42 },
 };
 
 /** Loaded in this order and heard as they land; the first pair is the place. */
 const WAVES: BedName[][] = [["wind", "rink"], ["ice", "blades"]];
 
-const MASTER = 0.50;
+const MASTER = 0.60;
 /** Reduced motion asks for less, so it gets less — and none of the events. */
 /* Held at the same ratio to MASTER as before the captain's numbers landed
    (0.44/0.62), so reduced-motion stays about 3 dB under the standard mix
-   rather than becoming a fixed level that drifts as MASTER is tuned. */
-const MASTER_CALM = 0.35;
+   rather than becoming a fixed level that drifts as MASTER is tuned. Scaled
+   with MASTER when he moved it to 0.60. */
+const MASTER_CALM = 0.42;
 
 export type AmbientBed = {
   /**
