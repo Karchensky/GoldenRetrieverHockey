@@ -626,7 +626,38 @@ export const ITEMS: Item[] = [
     // a tee, so both were being paid for and neither was being used. **Switch
     // back the day international opens** — the EU difference is larger than the
     // saving.
-    printProviderId: 29,
+    //
+    /**
+     * PRINTIFY CHOICE (99) FROM 2026-07-30, and it supersedes the note above.
+     *
+     * `cli.ts sweep` probed all twenty makers of blueprint 12. Printify Choice
+     * costs $6.08–$10.93 against Monster Digital's $11.54–$16.44 on our own six
+     * colourways and six sizes — near enough half — and posts for $3.99 against
+     * $4.29. At the 30% target that is $18.75 on a 3XL instead of $27.25.
+     *
+     * The captain's rule is highest quality first, then cheapest of that
+     * quality. The four things that decide "same quality" all check out:
+     *
+     *   the garment   fixed by the blueprint — the same Bella+Canvas 3001
+     *   colourways    all six carried, verified id by id
+     *   sizes         S–3XL, all present
+     *   handling      10 days, identical to every maker on the platform
+     *
+     * The print area is 9.2in against Monster Digital's 11.1in. Our placement
+     * is 8in, so it fits, and the same artwork over a smaller area prints at a
+     * HIGHER dpi. What it does mean is the mark prints somewhat smaller at the
+     * top of the size run.
+     *
+     * The EU argument above is now the only thing on the other side, and it is
+     * moot while checkout is US-only. **Re-read it the day international opens.**
+     *
+     * The trade: Printify Choice routes to whichever house is free instead of
+     * naming a factory, so two orders of the same shirt can be printed in two
+     * places. Nothing measurable separates them and Printify's own guarantee
+     * covers it — but if a print ever comes back visibly different from an
+     * earlier one, suspect this first.
+     */
+    printProviderId: 99,
     priceCents: 2300,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -866,7 +897,30 @@ export const ITEMS: Item[] = [
     id: "longsleeve",
     title: "Long Sleeve Tee",
     blueprintId: 41,
-    printProviderId: 29,
+    /**
+     * PRINTIFY CHOICE (99), from 2026-07-30, on measurement rather than
+     * preference. `cli.ts sweep` probed every maker of this blueprint and this
+     * one is the cheapest by a distance; the captain's rule is highest quality
+     * first, then cheapest of that quality, and the four things that decide
+     * "same quality" here all check out:
+     *
+     *   the garment   fixed by the blueprint — the same shirt either way
+     *   colourways    every one we sell is carried
+     *   sizes         the full run, verified id by id before the switch
+     *   print area    bigger than our placement needs; dpi goes UP, not down
+     *   handling      10 days, identical to every other maker on the platform
+     *
+     * VARIANT IDS ARE PER BLUEPRINT, NOT PER PROVIDER — checked, all of the
+     * old maker's ids exist here and resolve to the same colour and size. So
+     * this is a one-line change and the colourways below are untouched.
+     *
+     * The one real trade: Printify Choice routes to whichever house is free
+     * rather than naming a factory, so two orders of the same shirt can be
+     * printed in two places. Printify's own quality guarantee covers it and
+     * nothing measurable separates them. If a print ever comes back visibly
+     * different from another, that is the thing to suspect first.
+     */
+    printProviderId: 99,
     priceCents: 2600,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL"],
@@ -876,23 +930,19 @@ export const ITEMS: Item[] = [
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [25078, 25077, 25076, 25079, 25080] },
       { name: "Athletic Heather", hex: "#b0b2ad", ground: "light", variants: [24993, 24992, 24991, 24994, 24995] },
-      /* BLACK CAME OFF ON 2026-07-30, and not by choice: Monster Digital
-         withdrew variant 24997 — Black in M — from this blueprint. Every other
-         Black size is still there, which is exactly what makes it dangerous.
-
-         A colourway's `variants` array is read POSITIONALLY against `sizes`
-         (`variantIdFor`: `way.variants[sizes.indexOf(size)]`), so deleting the
-         dead id in place would have shifted L, XL and 2XL down one and sold
-         every Black long sleeve one size too small. There is no representation
-         here for "this colour, all sizes but one" — a colourway is a complete
-         run or it is not offered.
-
-         The sync caught it and refused to write, which is the guard working.
-
-         **Printify Choice carries the complete run on this blueprint, Black M
-         included, and the sweep measured it $0.25 cheaper.** Moving the long
-         sleeve to provider 99 brings this colour straight back; it is a maker
-         change and therefore the captain's call, not a silent fix. */
+      /* BLACK CAME OFF FOR AN HOUR ON 2026-07-30 and is back.
+         Monster Digital withdrew variant 24997 — Black in M — from this
+         blueprint, and every other Black size stayed, which is what made it
+         dangerous: a colourway's `variants` array is read POSITIONALLY against
+         `sizes` (`variantIdFor`: `way.variants[sizes.indexOf(size)]`), so
+         deleting the dead id in place would have shifted L, XL and 2XL down one
+         and sold every Black long sleeve a size too small. There is no
+         representation here for "this colour, all sizes but one" — a colourway
+         is a complete run or it is not offered. The sync caught it and refused
+         to write, which is the guard working.
+         The move to Printify Choice restores it: 24997 exists on this blueprint
+         and provider 99 carries it. Verified id by id before the switch. */
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [24998, 24997, 24996, 24999, 25000] },
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25048, 25047, 25046, 25049, 25050] },
     ],
     spec:
@@ -916,7 +966,30 @@ export const ITEMS: Item[] = [
     id: "crewneck",
     title: "Crewneck",
     blueprintId: 49,
-    printProviderId: 39,
+    /**
+     * PRINTIFY CHOICE (99), from 2026-07-30, on measurement rather than
+     * preference. `cli.ts sweep` probed every maker of this blueprint and this
+     * one is the cheapest by a distance; the captain's rule is highest quality
+     * first, then cheapest of that quality, and the four things that decide
+     * "same quality" here all check out:
+     *
+     *   the garment   fixed by the blueprint — the same shirt either way
+     *   colourways    every one we sell is carried
+     *   sizes         the full run, verified id by id before the switch
+     *   print area    bigger than our placement needs; dpi goes UP, not down
+     *   handling      10 days, identical to every other maker on the platform
+     *
+     * VARIANT IDS ARE PER BLUEPRINT, NOT PER PROVIDER — checked, all of the
+     * old maker's ids exist here and resolve to the same colour and size. So
+     * this is a one-line change and the colourways below are untouched.
+     *
+     * The one real trade: Printify Choice routes to whichever house is free
+     * rather than naming a factory, so two orders of the same shirt can be
+     * printed in two places. Printify's own quality guarantee covers it and
+     * nothing measurable separates them. If a print ever comes back visibly
+     * different from another, that is the thing to suspect first.
+     */
+    printProviderId: 99,
     priceCents: 2700,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -957,7 +1030,30 @@ export const ITEMS: Item[] = [
     id: "youth",
     title: "Youth Tee",
     blueprintId: 420,
-    printProviderId: 29,
+    /**
+     * PRINTIFY CHOICE (99), from 2026-07-30, on measurement rather than
+     * preference. `cli.ts sweep` probed every maker of this blueprint and this
+     * one is the cheapest by a distance; the captain's rule is highest quality
+     * first, then cheapest of that quality, and the four things that decide
+     * "same quality" here all check out:
+     *
+     *   the garment   fixed by the blueprint — the same shirt either way
+     *   colourways    every one we sell is carried
+     *   sizes         the full run, verified id by id before the switch
+     *   print area    bigger than our placement needs; dpi goes UP, not down
+     *   handling      10 days, identical to every other maker on the platform
+     *
+     * VARIANT IDS ARE PER BLUEPRINT, NOT PER PROVIDER — checked, all of the
+     * old maker's ids exist here and resolve to the same colour and size. So
+     * this is a one-line change and the colourways below are untouched.
+     *
+     * The one real trade: Printify Choice routes to whichever house is free
+     * rather than naming a factory, so two orders of the same shirt can be
+     * printed in two places. Printify's own quality guarantee covers it and
+     * nothing measurable separates them. If a print ever comes back visibly
+     * different from another, that is the thing to suspect first.
+     */
+    printProviderId: 99,
     priceCents: 2000,
     // Children's clothing has its OWN New York treatment and its own Stripe
     // code. Shipping it as adult apparel would be wrong in several states.

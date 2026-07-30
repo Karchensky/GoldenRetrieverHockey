@@ -74,6 +74,8 @@ export type SweepRow = {
   /** Retail needed on the DEAREST variant to hold the target margin. */
   retailAtTarget: number | null;
   printAreaIn: string;
+  /** True when the cost is a SAMPLE, not our own colourways. Do not act on it alone. */
+  indicative?: boolean;
   note?: string;
 };
 
@@ -100,6 +102,17 @@ async function patient<T>(label: string, fn: () => Promise<T>, tries = 5): Promi
   }
 }
 
+/**
+ * Fold a size label to something two catalogues can agree on.
+ *
+ * `ITEMS[].sizes` says `"11 oz"` and Printify says `"11oz"`, which is enough to
+ * make the like-for-like comparison silently fall back to an unmatched range —
+ * all five mug makers dropped out of the ranking that way and the omission read
+ * as "not measured" rather than "compared wrongly". Sizes are labels typed by
+ * two different parties about the same object, so they are compared as labels.
+ */
+const sizeKey = (s: string): string => s.replace(/[\s"×x'-]+/gi, "").toLowerCase();
+
 /** Round-robin by size, sizes we sell first, capped at Printify's hundred. */
 function pickVariants(all: ProbeVariant[], want: string[]): ProbeVariant[] {
   const buckets = new Map<string, ProbeVariant[]>();
@@ -108,9 +121,10 @@ function pickVariants(all: ProbeVariant[], want: string[]): ProbeVariant[] {
     const bucket = buckets.get(size);
     if (bucket) bucket.push(v); else buckets.set(size, [v]);
   }
+  const wantKeys = new Set(want.map(sizeKey));
   const order = [
-    ...want.filter((s) => buckets.has(s)),
-    ...[...buckets.keys()].filter((s) => !want.includes(s)),
+    ...[...buckets.keys()].filter((s) => wantKeys.has(sizeKey(s))),
+    ...[...buckets.keys()].filter((s) => !wantKeys.has(sizeKey(s))),
   ];
   const out: ProbeVariant[] = [];
   for (let round = 0; out.length < MAX_VARIANTS; round += 1) {
@@ -139,7 +153,7 @@ async function probe(
     itemId, blueprintId, providerId,
     provider: provider?.title ?? `provider ${providerId}`,
     country: provider?.location?.country ?? "?",
-    inUse, variants: 0, colours: 0, sizes: [],
+    inUse, variants: 0, colours: 0, sizes: [], indicative: false,
     minCost: 0, maxCost: 0, bySize: {}, missingSizes: [], rawMin: 0, rawMax: 0,
     postCents: null, retailAtTarget: null, printAreaIn: "",
   };
@@ -157,13 +171,67 @@ async function probe(
    * come first, and within them the list is walked round-robin by size so every
    * one of ours is represented before any colour gets a second entry.
    */
-  const want = ITEMS.find((i) => i.id === itemId)?.sizes ?? [];
-  const chosen = pickVariants(all, want);
+  const item = ITEMS.find((i) => i.id === itemId);
+  const want = item?.sizes ?? [];
+
+  /**
+   * PROBE THE VARIANTS WE ACTUALLY SELL, when the maker carries them.
+   *
+   * This is the correction to a wrong answer. The first version sampled by size
+   * across every colourway and reported the CHEAPEST colour at each size, which
+   * on a blueprint with 125 colourways is not a price anybody here can pay. It
+   * reported the tee at $6.08–$10.93 through Printify Choice against Monster
+   * Digital's $11.54–$16.44 — near enough half — and the real product, once
+   * created on our own six colourways, cost $11.29–$16.12. A saving of thirty
+   * cents was reported as a saving of five dollars.
+   *
+   * So when the maker carries our exact colourway variants, those are the ones
+   * probed and there is no cheapest-colour to hide behind. Where it does not —
+   * a maker we have never used, on a blueprint whose ids we have not mapped —
+   * it falls back to the sampled set and `indicative` says so, because a rough
+   * number for a candidate is still worth having and a rough number pretending
+   * to be exact is not.
+   */
+  const ourVariants = (item?.colourways ?? []).flatMap((c) => c.variants);
+  const offered = new Set(all.map((v) => v.id));
+  const exact = ourVariants.length > 0 && ourVariants.every((id) => offered.has(id));
+  const chosen = exact
+    ? all.filter((v) => ourVariants.includes(v.id)).slice(0, MAX_VARIANTS)
+    : pickVariants(all, want);
+  base.indicative = !exact;
   const first = chosen[0];
   if (!first) return { ...base, note: "no variants" };
 
-  const position = (first.placeholders ?? [])[0]?.position;
-  if (!position) return { ...base, note: "no print areas" };
+  /**
+   * PRINT WHERE WE ACTUALLY PRINT. **Cost depends on the print area.**
+   *
+   * This was `placeholders[0]`, and it produced the worst number this tool has
+   * reported. Printify returns the areas in no useful order: for Printify
+   * Choice on a Bella+Canvas 3001 the first one is `neck` — a 2.5 x 2.5in
+   * inside-label print — so the probe was pricing a neck tag and calling it a
+   * tee. It came back at $6.08 against Monster Digital's $11.54, whose own
+   * first placeholder happens to be `front`, and the comparison read as "half
+   * price" when the real answer was thirty cents.
+   *
+   * Verified afterwards: the same variant ids at scale 0.5, 0.72 and 1.0 on the
+   * front all cost $11.29–$16.12, exactly what the live product costs. So the
+   * scale does not matter and the POSITION does, which is the opposite of what
+   * a first guess would say.
+   *
+   * A maker that cannot print where this line prints is not a candidate, so a
+   * missing position is a disqualification rather than a fallback.
+   */
+  const wantPosition = item?.placement.position;
+  const positions = (first.placeholders ?? []).map((p) => p.position);
+  const position = wantPosition && positions.includes(wantPosition) ? wantPosition : undefined;
+  if (!position) {
+    return {
+      ...base,
+      note: positions.length
+        ? `does not offer "${wantPosition}" (has ${positions.join(", ")})`
+        : "no print areas",
+    };
+  }
 
   base.colours = new Set(all.map((v) => v.options.color).filter(Boolean)).size;
   base.sizes = [...new Set(all.map((v) => v.options.size).filter((x): x is string => Boolean(x)))];
@@ -226,12 +294,13 @@ async function probe(
     for (const v of priced) {
       const size = source.get(v.id)?.options.size;
       if (!size) continue;
-      const seen = cheapestFor.get(size);
+      const key = sizeKey(size);
+      const seen = cheapestFor.get(key);
       // Cheapest colourway at that size: colour choice is ours, size is not.
-      if (seen === undefined || v.cost < seen) cheapestFor.set(size, v.cost);
+      if (seen === undefined || v.cost < seen) cheapestFor.set(key, v.cost);
     }
     for (const size of want) {
-      const cost = cheapestFor.get(size);
+      const cost = cheapestFor.get(sizeKey(size));
       if (cost === undefined) base.missingSizes.push(size);
       else base.bySize[size] = cost;
     }
