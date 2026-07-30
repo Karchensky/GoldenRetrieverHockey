@@ -274,9 +274,53 @@ export async function createProduct(body: CreateProductBody): Promise<PrintifyPr
 export const getProduct = (productId: string): Promise<PrintifyProduct> =>
   get<PrintifyProduct>(`/shops/${SHOP_ID}/products/${productId}.json`);
 
-/** `GET /v1/shops/28277243/products.json` */
-export const listProducts = (): Promise<{ data: PrintifyProduct[] }> =>
-  get<{ data: PrintifyProduct[] }>(`/shops/${SHOP_ID}/products.json?limit=50`);
+/**
+ * `GET /v1/shops/28277243/products.json` — EVERY product, following the pages.
+ *
+ * **This used to be one call with `?limit=50` and no pagination**, written when
+ * the shop held eight products. The line reached 59 and the four things that
+ * read this all quietly went wrong at once, none of them noisily:
+ *
+ * - **`sync` builds its "what already exists" map from this.** Nine products
+ *   became invisible to it, so the next sync would have CREATED DUPLICATES of
+ *   products that were already on the shop.
+ * - **`audit` is the shop guard's own proof that nothing was left behind.** An
+ *   audit that cannot see past the fiftieth product cannot prove anything. It
+ *   reported "0 probes left" after a sweep that created 65 of them, and that
+ *   answer was structurally incapable of being anything else.
+ * - `report` priced 50 of 59.
+ * - `catalogue`'s "this shop already has one" marker missed nine.
+ *
+ * A limit is not a page. `?limit=N` without a loop is a silent truncation, and
+ * silent truncation of the list you check your work against is the worst place
+ * to put one.
+ *
+ * The response carries `current_page` and `last_page`; the loop trusts a short
+ * page as well, so it terminates even if those fields ever stop being sent.
+ */
+export async function listProducts(): Promise<{ data: PrintifyProduct[] }> {
+  /**
+   * **50 is Printify's own ceiling, not a choice.** 100 was tried on
+   * 2026-07-30 and the API answered `400 code 8150: limit: The limit may not be
+   * greater than 50`. So the original `?limit=50` was the right number all
+   * along — the bug was never the limit, it was the missing loop.
+   */
+  const PER_PAGE = 50;
+  const data: PrintifyProduct[] = [];
+  for (let page = 1; ; page += 1) {
+    const body = await get<{ data: PrintifyProduct[]; current_page?: number; last_page?: number }>(
+      `/shops/${SHOP_ID}/products.json?limit=${PER_PAGE}&page=${page}`,
+    );
+    const batch = body.data ?? [];
+    data.push(...batch);
+    if (batch.length < PER_PAGE) break;
+    if (body.last_page !== undefined && page >= body.last_page) break;
+    // A shop this size cannot legitimately have this many pages; the guard is
+    // against a server that keeps answering rather than against our own maths.
+    if (page > 50) throw new Error("listProducts: more than 50 pages — refusing to loop further.");
+  }
+  return { data };
+}
 
 /** `DELETE /v1/shops/28277243/products/{id}.json` — for cleaning up a bad run. */
 export async function deleteProduct(productId: string): Promise<void> {

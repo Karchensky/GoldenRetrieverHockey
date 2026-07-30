@@ -9,6 +9,7 @@ import { prepareLogo } from "./artwork.ts";
 import { catalogue } from "./catalogue.ts";
 import { cost } from "./cost.ts";
 import { sweep } from "./sweep.ts";
+import { reconcile } from "./reconcile.ts";
 import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
 import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
 import { report } from "./report.ts";
@@ -46,6 +47,9 @@ const USAGE = `
     variants <bpId> <ppId>   Colour/size variants, with their ids.
     claims                   Re-derive every claim the artwork makes, from site.json.
     audit                    Every product on shop 28277243, and nothing else.
+    reconcile [--delete]     Products on the shop that the storefront does not
+                             name — superseded copies, renamed-away drafts, leaked
+                             probes. Reports; only deletes with the flag.
 
   Writes, to shop 28277243 only
     logos                    Render every mark in MARKS and take its ground off.
@@ -155,6 +159,9 @@ async function main(argv: string[]): Promise<number> {
 
     case "sweep":
       return sweep(argv[1]);
+
+    case "reconcile":
+      return reconcile(argv[1]);
 
     case "marks": {
       const onDisk = await marksOnDisk();
