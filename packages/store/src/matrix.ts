@@ -1146,7 +1146,26 @@ const QUOTES: Record<string, string> = {
     "Stick in mouth. Nothing else required.",
   "oversized-jersey-sticker":
     "The full dog, the full sweater, no notes.",
+  /* --- added 2026-07-30, filling the gaps that had no constraint behind them.
+         Provisional: drawn from the candidate list the captain is choosing
+         from, and every one is a one-line swap. --- */
+  "faceoff-crewneck":
+    "“Lord, what fools these forwards be.” — Devin Arnold, defence",
+  "faceoff-hoodie":
+    "“Something is rotten in the state of our breakout.” " +
+    "— Dan Schmitt, defence",
+  "oversized-jersey-longsleeve":
+    "“You had me at ice time.” — Brent Boeing, forward",
+  "rink-board-longsleeve":
+    "“We came, we saw, we got a point out of it.” " +
+    "— Brett Koeppel, defence",
+  "rink-board-youth":
+    "“Just keep skating.” — Jeremy McDonald, forward",
+  "oversized-jersey-mug":
+    "“I would like to thank the ice, which was cold, and the puck, which " +
+    "was round.” — Rich Fedele, defence",
 };
+
 
 
 
@@ -1240,6 +1259,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "crossed-shield", item: "hoodie" },
   { mark: "championship-roundel", item: "hoodie" },
   { mark: "nose-to-nose", item: "hoodie", placement: { widthIn: 10.5 } },
+  { mark: "faceoff", item: "hoodie" },
   { mark: "majestic-stick-carry", item: "hoodie" },
   { mark: "oversized-jersey", item: "hoodie" },
 
@@ -1265,6 +1285,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "heritage-seal", item: "mug" },
   { mark: "crossed-shield", item: "mug" },
   { mark: "majestic-stick-carry", item: "mug" },
+  { mark: "oversized-jersey", item: "mug", placement: { widthIn: 3.2 } },
 
   /* The PUCK came off on 2026-07-29. Printify has exactly one maker for
      blueprint 1203 and it charges $18.00 for a three-inch puck plus $7.59 to
@@ -1279,6 +1300,13 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "championship-roundel", item: "longsleeve" },
   { mark: "heritage-seal", item: "longsleeve" },
   { mark: "faceoff", item: "longsleeve" },
+  { mark: "oversized-jersey", item: "longsleeve", placement: { widthIn: 8.5 } },
+  /* rink-board goes on the PORTRAIT canvases only, and that distinction is the
+     reason it is here but not on the hoodie. A 3:1 bar 9.5in wide on a portrait
+     chest is a band across the top of it; the same bar on the hoodie's
+     LANDSCAPE panel fills the whole front and reads as a bumper sticker. The
+     long sleeve and the youth tee are the tee's shape, where it already works. */
+  { mark: "rink-board", item: "longsleeve", placement: { widthIn: 9.5, y: 0.4 } },
   { mark: "nose-to-nose", item: "longsleeve", placement: { widthIn: 9.0 } },
   { mark: "majestic-stick-carry", item: "longsleeve" },
 
@@ -1288,6 +1316,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "crossed-shield", item: "crewneck" },
   { mark: "majestic-stick-carry", item: "crewneck" },
   { mark: "oversized-jersey", item: "crewneck" },
+  { mark: "faceoff", item: "crewneck" },
 
   { mark: "crossed-shield", item: "youth" },
   { mark: "championship-roundel", item: "youth" },
@@ -1296,6 +1325,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "nose-to-nose", item: "youth", placement: { widthIn: 7.0 } },
   { mark: "majestic-stick-carry", item: "youth" },
   { mark: "oversized-jersey", item: "youth", placement: { widthIn: 6.5 } },
+  { mark: "rink-board", item: "youth", placement: { widthIn: 7.0, y: 0.4 } },
 
   /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every badge
      in the set is already a sticker shape. White vinyl is a light ground, which

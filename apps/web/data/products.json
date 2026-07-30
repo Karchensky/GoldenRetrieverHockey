@@ -1556,6 +1556,67 @@
       }
     },
     {
+      "id": "faceoff-hoodie",
+      "title": "Golden Retrievers Faceoff — Hoodie",
+      "description": "Two retrievers facing off inside a single disc, one drawn in gold and one in white, with a puck either side and the gold centre line running between them.\n\nIndependent Trading Co. IND4000, a heavyweight hooded sweatshirt at 10 oz/yd² (340 g/m²). 70% cotton and 30% polyester, and the exact composition varies by colour. Fleece-lined hood on a drawcord, split-stitch double-needle sewing on every seam, 1x1 ribbing at the cuffs and waistband, front pouch pocket, tear-away label. The mark is printed on the chest; nothing on the back.\n\nUnisex sizing, S to 3XL, in a classic fit. Take your usual size — it is a heavy fleece and roomy enough without going up, unless you mean to layer under it.\n\nMachine wash cold, inside out, and tumble dry low. A hot dryer flattens fleece, so give it less heat than you think it wants.\n\n“Something is rotten in the state of our breakout.” — Dan Schmitt, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 5625,
+      "taxCode": "txcd_30011000",
+      "markId": "faceoff",
+      "itemId": "hoodie",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            123996,
+            123981,
+            123966,
+            124011,
+            123936,
+            123951
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6e5a67752e590208598c/123966/111658/golden-retrievers-faceoff-hoodie.jpg?camera_label=front"
+      ],
+      "artHash": "06d73fd908759740",
+      "prices": {
+        "123936": 5800,
+        "123951": 5800,
+        "123966": 5625,
+        "123981": 5625,
+        "123996": 5625,
+        "124011": 5625
+      },
+      "postageCents": 849,
+      "printify": {
+        "productId": "6a6b6e5a67752e590208598c",
+        "blueprintId": 2002,
+        "printProviderId": 39,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 7.5,
+            "heightIn": 7.57,
+            "dpi": 683,
+            "maxWidthIn": 9.1,
+            "minDpi": 563,
+            "scale": 0.6066,
+            "y": 0.5
+          }
+        ]
+      }
+    },
+    {
       "id": "majestic-stick-carry-hoodie",
       "title": "Golden Retrievers Stick Carry — Hoodie",
       "description": "The dog in profile carrying a stick across its jaw, set in a gold roundel scored with white curves. The only mark in the shop that is gold all the way out to its edge.\n\nIndependent Trading Co. IND4000, a heavyweight hooded sweatshirt at 10 oz/yd² (340 g/m²). 70% cotton and 30% polyester, and the exact composition varies by colour. Fleece-lined hood on a drawcord, split-stitch double-needle sewing on every seam, 1x1 ribbing at the cuffs and waistband, front pouch pocket, tear-away label. The mark is printed on the chest; nothing on the back.\n\nUnisex sizing, S to 3XL, in a classic fit. Take your usual size — it is a heavy fleece and roomy enough without going up, unless you mean to layer under it.\n\nMachine wash cold, inside out, and tumble dry low. A hot dryer flattens fleece, so give it less heat than you think it wants.\n\n“Bring it back. Every time. That’s the whole sport.” — Anthony Christy, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
@@ -2303,6 +2364,56 @@
       }
     },
     {
+      "id": "oversized-jersey-mug",
+      "title": "Golden Retrievers In Uniform — Mug",
+      "description": "The whole dog, standing, in a gold and black sweater two sizes too big for it with the crest on the chest. A portrait rather than a badge.\n\nBlack ceramic with a glossy finish and a C-shaped handle, dye-sublimated with the mark on one side. Lead-free and BPA-free. The mark's own black background and the mug's black sit a shade apart, so you can make out where the print falls — that is how a sublimated black mug comes out, not a fault in it.\n\nTwo sizes: 11 oz (0.33 l) and 15 oz (0.44 l).\n\nMicrowave and dishwasher safe. Washing it by hand will keep a sublimated print looking new for longer.\n\n“I would like to thank the ice, which was cold, and the puck, which was round.” — Rich Fedele, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 1475,
+      "taxCode": "txcd_99999999",
+      "markId": "oversized-jersey",
+      "itemId": "mug",
+      "colors": [
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            65217,
+            104470
+          ]
+        }
+      ],
+      "sizes": [
+        "11 oz",
+        "15 oz"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/65217/6405/golden-retrievers-in-uniform-mug.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/104470/101581/golden-retrievers-in-uniform-mug.jpg?camera_label=front"
+      ],
+      "artHash": "e13ad3fc154dcee3",
+      "prices": {
+        "65217": 1475,
+        "104470": 1725
+      },
+      "postageCents": 899,
+      "printify": {
+        "productId": "6a6b6e9fd02f1758830a53b0",
+        "blueprintId": 479,
+        "printProviderId": 99,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 3.09,
+            "heightIn": 3.4,
+            "dpi": 1547,
+            "maxWidthIn": 3.25,
+            "minDpi": 1470,
+            "scale": 0.3982,
+            "y": 0.5
+          }
+        ]
+      }
+    },
+    {
       "id": "crossed-shield-longsleeve",
       "title": "Golden Retrievers Crossed Shield — Long Sleeve Tee",
       "description": "A shield with two sticks crossed through it, the dog at its centre, GOLDEN on the gold banner above and RETRIEVERS on the banner below, with a puck at the point.\n\nBella+Canvas 3501, the long-sleeve cut of the same light 4.2 oz/yd² (142 g/m²) jersey as the short-sleeve tee: Airlume combed and ring-spun cotton with a tear-away label. 100% cotton in the solid colours; the Athletic Heather is a cotton-polyester blend. Light enough to wear under a jersey. The mark is printed on the chest; nothing on the back.\n\nUnisex sizing in a retail fit, and it runs true to size — take your usual. S to 2XL; this one does not go up to 3XL.\n\nSame cotton as the short-sleeve tee, so the same rules: machine wash cold, inside out, and tumble dry low.\n\n“Cry ‘Havoc!’ and let slip the dogs of war.” — Corey Muff, goaltender\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
@@ -2364,10 +2475,10 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/25076/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/24996/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/24991/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/25046/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b6ea467752e59020859d7/25076/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ea467752e59020859d7/24996/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ea467752e59020859d7/24991/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ea467752e59020859d7/25046/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front"
       ],
       "artHash": "5a232b7e4a016609",
       "prices": {
@@ -2394,7 +2505,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6b3a900d033dbf6e0cd69e",
+        "productId": "6a6b6ea467752e59020859d7",
         "blueprintId": 41,
         "printProviderId": 29,
         "print": [
@@ -2700,6 +2811,224 @@
             "minDpi": 461,
             "scale": 0.7937,
             "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "oversized-jersey-longsleeve",
+      "title": "Golden Retrievers In Uniform — Long Sleeve Tee",
+      "description": "The whole dog, standing, in a gold and black sweater two sizes too big for it with the crest on the chest. A portrait rather than a badge.\n\nBella+Canvas 3501, the long-sleeve cut of the same light 4.2 oz/yd² (142 g/m²) jersey as the short-sleeve tee: Airlume combed and ring-spun cotton with a tear-away label. 100% cotton in the solid colours; the Athletic Heather is a cotton-polyester blend. Light enough to wear under a jersey. The mark is printed on the chest; nothing on the back.\n\nUnisex sizing in a retail fit, and it runs true to size — take your usual. S to 2XL; this one does not go up to 3XL.\n\nSame cotton as the short-sleeve tee, so the same rules: machine wash cold, inside out, and tumble dry low.\n\n“You had me at ice time.” — Brent Boeing, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 3000,
+      "taxCode": "txcd_30011000",
+      "markId": "oversized-jersey",
+      "itemId": "longsleeve",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25078,
+            25077,
+            25076,
+            25079,
+            25080
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            24993,
+            24992,
+            24991,
+            24994,
+            24995
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            24998,
+            24997,
+            24996,
+            24999,
+            25000
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25048,
+            25047,
+            25046,
+            25049,
+            25050
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6ebdd02f1758830a53f1/25076/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ebdd02f1758830a53f1/24996/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ebdd02f1758830a53f1/24991/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ebdd02f1758830a53f1/25046/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front"
+      ],
+      "artHash": "e13ad3fc154dcee3",
+      "prices": {
+        "24991": 3000,
+        "24992": 3000,
+        "24993": 3000,
+        "24994": 3000,
+        "24995": 3400,
+        "24996": 3000,
+        "24997": 3000,
+        "24998": 3000,
+        "24999": 3000,
+        "25000": 3400,
+        "25046": 3000,
+        "25047": 3000,
+        "25048": 3000,
+        "25049": 3000,
+        "25050": 3400,
+        "25076": 3000,
+        "25077": 3000,
+        "25078": 3000,
+        "25079": 3000,
+        "25080": 3400
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b6ebdd02f1758830a53f1",
+        "blueprintId": 41,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8.5,
+            "heightIn": 9.36,
+            "dpi": 562,
+            "maxWidthIn": 11.11,
+            "minDpi": 430,
+            "scale": 0.7937,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "rink-board-longsleeve",
+      "title": "Golden Retrievers Rink Board — Long Sleeve Tee",
+      "description": "The club name the way it would be painted on the boards: a long gold-edged bar with the dog in a roundel at the left and a stick and puck running out to the right. The widest mark in the shop.\n\nBella+Canvas 3501, the long-sleeve cut of the same light 4.2 oz/yd² (142 g/m²) jersey as the short-sleeve tee: Airlume combed and ring-spun cotton with a tear-away label. 100% cotton in the solid colours; the Athletic Heather is a cotton-polyester blend. Light enough to wear under a jersey. The mark is printed on the chest; nothing on the back.\n\nUnisex sizing in a retail fit, and it runs true to size — take your usual. S to 2XL; this one does not go up to 3XL.\n\nSame cotton as the short-sleeve tee, so the same rules: machine wash cold, inside out, and tumble dry low.\n\n“We came, we saw, we got a point out of it.” — Brett Koeppel, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 3000,
+      "taxCode": "txcd_30011000",
+      "markId": "rink-board",
+      "itemId": "longsleeve",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25078,
+            25077,
+            25076,
+            25079,
+            25080
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            24993,
+            24992,
+            24991,
+            24994,
+            24995
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            24998,
+            24997,
+            24996,
+            24999,
+            25000
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25048,
+            25047,
+            25046,
+            25049,
+            25050
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6ec3d02f1758830a53ff/25076/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ec3d02f1758830a53ff/24996/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ec3d02f1758830a53ff/24991/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ec3d02f1758830a53ff/25046/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front"
+      ],
+      "artHash": "9b674da1240ca7f9",
+      "prices": {
+        "24991": 3000,
+        "24992": 3000,
+        "24993": 3000,
+        "24994": 3000,
+        "24995": 3400,
+        "24996": 3000,
+        "24997": 3000,
+        "24998": 3000,
+        "24999": 3000,
+        "25000": 3400,
+        "25046": 3000,
+        "25047": 3000,
+        "25048": 3000,
+        "25049": 3000,
+        "25050": 3400,
+        "25076": 3000,
+        "25077": 3000,
+        "25078": 3000,
+        "25079": 3000,
+        "25080": 3400
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b6ec3d02f1758830a53ff",
+        "blueprintId": 41,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 9.5,
+            "heightIn": 3.17,
+            "dpi": 581,
+            "maxWidthIn": 12.42,
+            "minDpi": 445,
+            "scale": 0.887,
+            "y": 0.4
           }
         ]
       }
@@ -3631,6 +3960,86 @@
       }
     },
     {
+      "id": "faceoff-crewneck",
+      "title": "Golden Retrievers Faceoff — Crewneck",
+      "description": "Two retrievers facing off inside a single disc, one drawn in gold and one in white, with a puck either side and the gold centre line running between them.\n\nGildan 18000, a heavy-blend crewneck sweatshirt at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body and a tear-away label. No hood and no pouch. The mark is printed on the chest; nothing on the back. One thing worth knowing before you pick a colour: the white may read slightly off-white rather than bright white, and that is the fabric rather than the print.\n\nUnisex sizing, S to 3XL, in a classic fit — roomier than the tee, and lighter on the shoulders than the hoodie. Take your usual size.\n\nMachine wash cold, inside out, and tumble dry low. Half of it is polyester, so it dries quicker than an all-cotton sweatshirt — take it out early rather than late.\n\n“Lord, what fools these forwards be.” — Devin Arnold, defence\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 3200,
+      "taxCode": "txcd_30011000",
+      "markId": "faceoff",
+      "itemId": "crewneck",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25396,
+            25427,
+            25458,
+            25489,
+            25520,
+            25551
+          ]
+        },
+        {
+          "name": "Sport Grey",
+          "hex": "#b6b8b4",
+          "variants": [
+            25395,
+            25426,
+            25457,
+            25488,
+            25519,
+            25550
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6ef7c004ce6c410efa7a/25458/98502/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6ef7c004ce6c410efa7a/25457/98502/golden-retrievers-faceoff-crewneck.jpg?camera_label=front"
+      ],
+      "artHash": "06d73fd908759740",
+      "prices": {
+        "25395": 3200,
+        "25396": 3200,
+        "25426": 3200,
+        "25427": 3200,
+        "25457": 3200,
+        "25458": 3200,
+        "25488": 3200,
+        "25489": 3200,
+        "25519": 3625,
+        "25520": 3625,
+        "25550": 3825,
+        "25551": 3825
+      },
+      "postageCents": 849,
+      "printify": {
+        "productId": "6a6b6ef7c004ce6c410efa7a",
+        "blueprintId": 49,
+        "printProviderId": 39,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8,
+            "heightIn": 8.08,
+            "dpi": 641,
+            "maxWidthIn": 9.71,
+            "minDpi": 528,
+            "scale": 0.6934,
+            "y": 0.45
+          }
+        ]
+      }
+    },
+    {
       "id": "crossed-shield-youth",
       "title": "Golden Retrievers Crossed Shield — Youth Tee",
       "description": "A shield with two sticks crossed through it, the dog at its centre, GOLDEN on the gold banner above and RETRIEVERS on the banner below, with a puck at the point.\n\nBella+Canvas 3001Y, the youth cut of the same shirt the grown-ups get — light 4.2 oz/yd² (142 g/m²) Airlume combed and ring-spun cotton, side seams, taped shoulders, a ribbed knit collar and a tear-away label so nothing scratches. 100% cotton, except in Black and Athletic Heather, which are 90% cotton and 10% polyester. The mark is printed on the chest; nothing on the back.\n\nYouth S, M and L, in the same retail fit as the adult tee. Between two sizes, take the larger one.\n\nMachine wash cold, inside out, and tumble dry low. A kid's shirt sees the machine more than anything else in this shop, and cold water is what keeps the print on it.\n\n“You’re killin’ me, Smalls.” — Brent Boeing, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
@@ -4242,6 +4651,97 @@
       }
     },
     {
+      "id": "rink-board-youth",
+      "title": "Golden Retrievers Rink Board — Youth Tee",
+      "description": "The club name the way it would be painted on the boards: a long gold-edged bar with the dog in a roundel at the left and a stick and puck running out to the right. The widest mark in the shop.\n\nBella+Canvas 3001Y, the youth cut of the same shirt the grown-ups get — light 4.2 oz/yd² (142 g/m²) Airlume combed and ring-spun cotton, side seams, taped shoulders, a ribbed knit collar and a tear-away label so nothing scratches. 100% cotton, except in Black and Athletic Heather, which are 90% cotton and 10% polyester. The mark is printed on the chest; nothing on the back.\n\nYouth S, M and L, in the same retail fit as the adult tee. Between two sizes, take the larger one.\n\nMachine wash cold, inside out, and tumble dry low. A kid's shirt sees the machine more than anything else in this shop, and cold water is what keeps the print on it.\n\n“Just keep skating.” — Jeremy McDonald, forward\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2275,
+      "taxCode": "txcd_30011200",
+      "markId": "rink-board",
+      "itemId": "youth",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            61516,
+            61518,
+            61520
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            61561,
+            61562,
+            61563
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            61515,
+            61517,
+            61519
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            61558,
+            61559,
+            61560
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b6f241119d41a250a85c9/61520/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f241119d41a250a85c9/61519/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f241119d41a250a85c9/61563/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f241119d41a250a85c9/61560/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front"
+      ],
+      "artHash": "9b674da1240ca7f9",
+      "prices": {
+        "61515": 2275,
+        "61516": 2275,
+        "61517": 2275,
+        "61518": 2275,
+        "61519": 2275,
+        "61520": 2275,
+        "61558": 2275,
+        "61559": 2275,
+        "61560": 2275,
+        "61561": 2275,
+        "61562": 2275,
+        "61563": 2275
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b6f241119d41a250a85c9",
+        "blueprintId": 420,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 7,
+            "heightIn": 2.33,
+            "dpi": 789,
+            "maxWidthIn": 8.34,
+            "minDpi": 662,
+            "scale": 0.8468,
+            "y": 0.4
+          }
+        ]
+      }
+    },
+    {
       "id": "heritage-seal-sticker",
       "title": "Golden Retrievers Heritage Seal — Sticker",
       "description": "A round seal inside a double gold ring: GOLDEN arched over the top, RETRIEVERS around the foot, and the dog in three-quarter profile above a pair of crossed sticks.\n\nKiss-cut white vinyl with a glossy finish. The blade cuts the mark's own outline and leaves the backing sheet whole, so it peels away in one piece with no border to trim. Durable vinyl on a strong adhesive, but not waterproof — this is an indoor sticker for a laptop lid, a notebook or a locker door, not one for a bumper or a dishwasher.\n\nTwo sizes, 3\" × 3\" and 4\" × 4\". That measurement is the backing sheet: the sticker itself is cut to the outline of the mark inside it, so it sits a little smaller than the square.\n\nPeel it off the sheet and press it onto a clean, dry, flat surface. Keep it out of the wash and off anything that gets soaked.\n\nSold in threes, and the three can be three different designs. One sticker costs more to post than it does to make, and three post for the same as one.\n\n“Though she be but little, she is fierce.” — three inches of vinyl",
@@ -4376,8 +4876,8 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b35b563c1a2d97209ceb7/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b35b563c1a2d97209ceb7/45752/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b6f356e04fb9c470de450/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f356e04fb9c470de450/45752/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front"
       ],
       "artHash": "e0b6a8bfc1dcc790",
       "prices": {
@@ -4386,7 +4886,7 @@
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6b35b563c1a2d97209ceb7",
+        "productId": "6a6b6f356e04fb9c470de450",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -4430,8 +4930,8 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b35bd386d41eed50bad91/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b35bd386d41eed50bad91/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front"
       ],
       "artHash": "5a232b7e4a016609",
       "prices": {
@@ -4440,7 +4940,7 @@
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6b35bd386d41eed50bad91",
+        "productId": "6a6b6f3ac004ce6c410efab6",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -4484,8 +4984,8 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b35c90d033dbf6e0cd1e3/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b35c90d033dbf6e0cd1e3/45752/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b6f40ff297cecbe053ca2/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f40ff297cecbe053ca2/45752/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front"
       ],
       "artHash": "06d73fd908759740",
       "prices": {
@@ -4494,7 +4994,7 @@
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6b35c90d033dbf6e0cd1e3",
+        "productId": "6a6b6f40ff297cecbe053ca2",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -4592,8 +5092,8 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b35dc63c1a2d97209cf1c/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b35dc63c1a2d97209cf1c/45752/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b6f4a6e04fb9c470de45d/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b6f4a6e04fb9c470de45d/45752/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front"
       ],
       "artHash": "9b674da1240ca7f9",
       "prices": {
@@ -4602,7 +5102,7 @@
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6b35dc63c1a2d97209cf1c",
+        "productId": "6a6b6f4a6e04fb9c470de45d",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
