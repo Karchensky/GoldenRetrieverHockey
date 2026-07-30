@@ -685,6 +685,28 @@ function needsRebuild(
 }
 
 /**
+ * Is this render a photograph of a MODEL rather than of the product?
+ *
+ * **Printify says so itself**, in a query parameter on the mockup URL:
+ * `?camera_label=person-1-front`. Product shots carry `front`, `back` or
+ * `other`; anything with `person` in the label is a human being wearing the
+ * thing. Nothing else in the response distinguishes them — `position` is
+ * `front` for both.
+ *
+ * This replaces a skin-tone pixel heuristic, which was a bad idea for a reason
+ * that should have been obvious before it was written: **this shop's artwork is
+ * a golden retriever.** Tan fur reads as skin under any such rule, so the filter
+ * threw away clean product shots of the stickers — the ones with no person in
+ * them at all — and left eleven broken image links behind.
+ *
+ * It also lives HERE now rather than in the mirroring script, and that is the
+ * structural half of the fix. The catalog is what the storefront renders from;
+ * if filtering happens after the catalog is written, the catalog promises
+ * images that were never saved.
+ */
+const isPersonShot = (src: string): boolean => /camera_label=[^&]*person/i.test(src);
+
+/**
  * Pick the mockups a shopper should be shown, which is NOT the first four
  * Printify offers.
  *
@@ -712,7 +734,7 @@ function chooseMockups(
   placements: SyncResult["placements"],
   problems: string[],
 ): string[] {
-  const images = got.images ?? [];
+  const images = (got.images ?? []).filter((i) => !isPersonShot(i.src));
   if (!images.length) return [];
 
   const printed = new Set(placements.map((p) => p.position));

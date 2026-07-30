@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Buy from "../../../components/store/Buy";
 import Gallery from "../../../components/store/Gallery";
-import { fromLabel, groups, mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
+import { mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -49,10 +49,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
      --dry-run` and store:report, where it is read by whoever is deciding.
      The data stays in products.json. Nothing on the shelf prints it. */
   const copy = paragraphs(product);
-  const siblings = groups
-    .find((g) => g.itemId === product.itemId)
-    ?.products.filter((p) => p.id !== product.id) ?? [];
-
   return (
     <div className="wrap page">
       <header className="hero seq">
@@ -81,24 +77,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         </div>
       </div>
 
-      {siblings.length > 0 && (
-        <section data-reveal>
-          <h2 className="head">The rest of them</h2>
-          <div className={s.otherList}>
-            {siblings.map((other) => (
-              <Link key={other.id} href={`/store/${other.id}`} className={s.otherRow}>
-                <span>
-                  {other.title}
-                  <span className={s.otherKind}> · {other.colors.length === 1
-                    ? other.colors[0]?.name
-                    : `${other.colors.length} colours`}</span>
-                </span>
-                <span className={s.otherPrice}>{fromLabel(other)}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* A way back, and nothing else. This was a "The rest of them" list of every
+          other product sharing this garment — a second navigation surface on a
+          page that already has one, duplicating the row the shopper just came
+          from. */}
+      <p className={s.detailCopy}>
+        <Link href="/store">&larr; Back to the store</Link>
+      </p>
+
     </div>
   );
 }

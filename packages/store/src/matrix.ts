@@ -459,6 +459,17 @@ export const MARKS: Mark[] = [
     grounds: ["light", "dark"],
     source: "docs/logos/vector/master-svg/majestic-stick-carry.svg",
     press: "logos/majestic-stick-carry.png",
+    // Back to "trim", because the background is gone before the trace now.
+    //
+    // These two arrived as OPAQUE PNGs — a white photographic background rather
+    // than transparency — and vtracer traced that background into a filled white
+    // path, so the mark printed on a white card. Keying it afterwards with
+    // `reach: "border"` did not work: the SVG's background is a PATH, not a
+    // flat field, and the flood could not get under it.
+    // `tools/dealpha_and_trace.py` fixes it at the source instead — it floods
+    // near-white inward from the border of the PNG, sets those pixels
+    // transparent, and traces THAT. White inside the drawing survives because
+    // the artist outlined every shape in black, which fences the flood out.
     reach: "trim",
     renderWidth: 6000,
     blurb:
@@ -478,6 +489,17 @@ export const MARKS: Mark[] = [
     grounds: ["light", "dark"],
     source: "docs/logos/vector/master-svg/oversized-jersey.svg",
     press: "logos/oversized-jersey.png",
+    // Back to "trim", because the background is gone before the trace now.
+    //
+    // These two arrived as OPAQUE PNGs — a white photographic background rather
+    // than transparency — and vtracer traced that background into a filled white
+    // path, so the mark printed on a white card. Keying it afterwards with
+    // `reach: "border"` did not work: the SVG's background is a PATH, not a
+    // flat field, and the flood could not get under it.
+    // `tools/dealpha_and_trace.py` fixes it at the source instead — it floods
+    // near-white inward from the border of the PNG, sets those pixels
+    // transparent, and traces THAT. White inside the drawing survives because
+    // the artist outlined every shape in black, which fences the flood out.
     reach: "trim",
     renderWidth: 6000,
     blurb:

@@ -72,11 +72,12 @@ const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}
  *
  * TWO THINGS GO WRONG IF THIS IS LEFT TO PRINTIFY.
  *
- * **Models.** Some blueprints return on-body shots. The captain does not want
- * them — "preferably the images are just of the products themselves" — and a
- * stock model is the fastest way to make a club shop look like a drop-shipper.
- * A flat lay against a studio white is essentially skin-free, so a mockup with
- * any real fraction of skin tone in it is a person, and it is dropped.
+ * **Models are no longer this file's problem.** They are filtered in sync.ts,
+ * off Printify's own `camera_label=person-…` marker, so the catalog never lists
+ * one and this script never sees one. The skin-tone heuristic that used to live
+ * here was wrong twice over: it dropped clean sticker shots because a golden
+ * retriever's fur reads as skin, and it filtered AFTER the catalog was written,
+ * so the storefront was left pointing at eleven files that were never saved.
  *
  * **Sameness.** The first version of this sorted DARKEST FIRST, which fixed
  * "everything is white" by creating "everything is black": every hoodie navy,
@@ -89,40 +90,12 @@ const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}
  * produces the same grid), and no product ever leads with a colour it does not
  * come in.
  */
-const SKIN_LIMIT = 0.04;
-
-async function skinFraction(buf) {
-  // Downsample hard: this is a proportion, not a diagnosis, and 64px is plenty.
-  const { data, info } = await sharp(buf)
-    .resize({ width: 64, height: 64, fit: "inside" })
-    .removeAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  let skin = 0;
-  const px = info.width * info.height;
-  for (let i = 0; i < data.length; i += info.channels) {
-    const r = data[i], g = data[i + 1], b = data[i + 2];
-    // The classic RGB skin rule, and deliberately narrow: the shop's own gold is
-    // #D9A333, which is far more saturated than skin and must not trip it.
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    if (r > 95 && g > 40 && b > 20 && r > g && r > b && r - g > 15 && max - min > 15 && max - min < 90) {
-      skin += 1;
-    }
-  }
-  return skin / px;
-}
-
 async function chooseAndOrder(urls, rotation) {
   const kept = [];
   for (const url of urls) {
     const res = await fetch(url);
     if (!res.ok) continue;
     const buf = Buffer.from(await res.arrayBuffer());
-    const skin = await skinFraction(buf);
-    if (skin > SKIN_LIMIT) {
-      console.log(`  dropped a model shot (${(skin * 100).toFixed(0)}% skin tone)`);
-      continue;
-    }
     const { channels } = await sharp(buf).extract(await centreBox(buf)).stats();
     const [r, g, b] = channels;
     kept.push({ url, lum: (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255 });
