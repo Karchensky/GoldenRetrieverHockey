@@ -68,6 +68,10 @@
   width: min(420px, 100vw);
   height: 100dvh;
   overflow-y: auto;
+  /* Without this, a wheel over the drawer moved the page behind it 35px once
+     the list hit its end. `Cart.tsx` also locks `document.body` while open —
+     containment alone does not stop a touch drag on iOS. */
+  overscroll-behavior: contain;
   padding: 22px 22px 28px;
   background: rgba(18, 21, 28, 0.94);
   border-left: 1px solid rgba(182, 186, 197, 0.12);
@@ -156,7 +160,11 @@
   align-items: center;
   gap: 2px;
 }
+/* 24x24 measured, against a 44px guideline. The disc stays 24 so the drawer
+   does not become a row of slabs; the ::before below takes the hit area out to
+   44 in both directions without touching layout. */
 .lineQty button {
+  position: relative;
   width: 24px;
   height: 24px;
   display: grid;
@@ -188,21 +196,39 @@
   white-space: nowrap;
 }
 
+/* MEASURED AT 1.02:1 — `var(--line)` IS the drawer's own background, so the
+   only control that takes a line out of the basket was drawn in the colour
+   behind it. A shopper who picked the wrong size could recover only by finding
+   something invisible. `--dim` measures 4.9:1 on this ground.
+
+   The box was also 37x10px against a 44px guideline. The transparent ::before
+   takes the hit area to 44 tall without moving the label, which stays small
+   because it is a secondary action. */
 .lineDrop {
   grid-area: drop;
   justify-self: start;
+  position: relative;
   background: none;
   border: 0;
-  padding: 0;
+  padding: 4px 6px;
+  margin: -4px -6px;
   cursor: pointer;
   font-family: var(--mono);
   font-size: 8.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--line);
+  color: var(--dim);
   transition: color .2s ease;
 }
-.lineDrop:hover { color: var(--dim) }
+.lineDrop::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 44px;
+  transform: translateY(-50%);
+}
+.lineDrop:hover,
+.lineDrop:focus-visible { color: var(--ink) }
 
 /* The buying rules, said where they happen. A left rule in the ball's gold
    rather than a filled warning box — same reasoning as `.notOpen` in
@@ -270,9 +296,70 @@
   border-color: rgba(182, 186, 197, .2);
 }
 .checkout:active:not(:disabled) { transform: translateY(1px) }
+/* MEASURED AT 1.08:1 — the lightest pixel in the whole 375x46 control was
+   darker than text needs to be, so at the exact moment the shop refuses a
+   basket the shopper read a rule they had broken and saw no button at all. The
+   problems list beside it measures 4.92:1; this now matches it. Disabled must
+   read as disabled, not as absent. */
 .checkout:disabled {
   background: none;
-  color: var(--line);
-  border-color: var(--line);
-  cursor: default;
+  color: var(--dim);
+  border-color: var(--dim);
+  opacity: .85;
+  cursor: not-allowed;
 }
+
+/* Hit areas, added after the interface was measured against the 44px guideline.
+   Every one of these keeps its drawn size and grows only the target. */
+.lineQty button::before,
+.close::before,
+.navButton::before {
+  content: "";
+  position: absolute;
+  inset: 50% 50% auto auto;
+  width: max(100%, 44px);
+  height: 44px;
+  transform: translate(50%, -50%);
+}
+.close, .navButton { position: relative }
+
+/* MEASURED AT 4.42:1 — `--dim` was lifted specifically to clear 4.5 on the
+   near-black ground, and this line sits on `.line`'s local `rgba(56,62,78,.06)`
+   wash, which is not that ground. It is the line that tells a shopper which
+   colour and size they picked. */
+.lineOpts { color: var(--ink) }
+
+/* The pruned-basket notice. Not a warning box: on this ground a filled box is
+   the brightest thing on screen and reads as a crash — same reasoning as
+   `.problems` above. */
+.dropped {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--ball);
+  background: rgba(56, 62, 78, .12);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.droppedOk {
+  position: relative;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  margin: -4px -6px;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.droppedOk::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 44px;
+  transform: translateY(-50%);
+}
+.droppedOk:hover,
+.droppedOk:focus-visible { color: var(--ink) }

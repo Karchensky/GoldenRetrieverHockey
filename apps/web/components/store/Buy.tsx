@@ -56,7 +56,7 @@ export default function Buy({ product }: { product: Product }) {
               <button
                 key={c.name}
                 type="button"
-                className={`${s.swatch} ${c.name === color ? s.swatchOn : ""}`}
+                className={`${s.swatch} ${s.swatchBtn} ${c.name === color ? s.swatchOn : ""}`}
                 style={{ background: c.hex }}
                 title={c.name}
                 aria-label={c.name}
@@ -65,6 +65,28 @@ export default function Buy({ product }: { product: Product }) {
               />
             ))}
           </div>
+          {/**
+           * WHAT THE PHOTOGRAPH SHOWS IS NOT WHAT THE SWATCH SAYS, and we
+           * cannot make it be.
+           *
+           * Printify's response does not name the colourway a mockup depicts,
+           * so the catalogue genuinely does not know. `mirror-mockups.mjs` then
+           * sorts the views darkest-first and rotates them per category, on
+           * purpose, so a grid of twenty tees is not twenty white tees — which
+           * means the hero is *deliberately* usually not `colors[0]`. Measured:
+           * the picture disagrees with the default swatch on most multi-colour
+           * products.
+           *
+           * A wrong colour expectation is the biggest driver of apparel
+           * returns, and /store/help declines returns for a correctly-made item
+           * somebody changed their mind about. So the page says the one true
+           * thing available to it rather than letting the picture imply
+           * something the policy will not honour.
+           */}
+          <p className={s.shownIn}>
+            The photographs show a few of the colourways. The swatch above is
+            the one that will be made.
+          </p>
         </div>
       )}
 

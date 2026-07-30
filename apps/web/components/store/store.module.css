@@ -66,15 +66,29 @@
    Three is enough to see the range and few enough that each one is big.
 
    `grid-auto-flow: column` with a fixed auto-column width is what makes a row
-   rather than a wrap. The width is a third of the container less the two gaps,
-   so exactly three sit in view and the fourth is the affordance — you can see
-   its edge, which is what tells anybody there is more.
+   rather than a wrap.
+
+   **THE FOURTH CARD IS THE AFFORDANCE, AND IT USED TO BE 0 PIXELS WIDE.** The
+   width was `(100% - 28px) / 3` — exactly three columns and both gaps — so the
+   fourth card began 14px PAST the right edge and none of it was on screen. The
+   comment here claimed "you can see its edge"; measured at 1280 the visible
+   width was zero, `scrollbar-width: thin` is an overlay scrollbar that reserves
+   no space and paints only while scrolling, and there were no arrows. So
+   **35 of 59 products were undiscoverable at the width most desktop shoppers
+   use** — 3 of 8 tees, 3 of 10 stickers, 3 of 8 mugs. Below 600px the rule
+   changes to `78%` and a partial card genuinely does show, so the affordance
+   worked on a phone and failed on every desktop.
+
+   Dividing by 3.25 instead leaves ~60px of card four in view at 1280, which is
+   what the sentence above always claimed. The `.more` button after the row is
+   the belt to this braces — an affordance you can see is better than one you
+   have to notice.
 
    Snap points, so a flick lands on a card instead of between two. */
 .grid {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 28px) / 3);
+  grid-auto-columns: calc((100% - 28px) / 3.25);
   gap: 14px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -207,17 +221,41 @@
   position: relative;
   z-index: 3; /* above the card-wide link overlay */
 }
+/* 17x17 measured — 289px² against the 44px guideline's 1,936, which is 15% of
+   the recommended area for the control that decides what colour arrives. The
+   disc stays 17 because a row of 44px circles is not this design; the
+   transparent ::before grows the target instead.
+
+   `cursor: pointer` and the hover scale are NOT here any more — they belong to
+   `.swatchBtn` below. On a product card the swatch is a `<span>` with no
+   handler, and `ProductCard.tsx` gives a sound reason for that. What it does
+   not justify is drawing something inert to look clickable, which is what a
+   pointer cursor and a hover animation do. */
 .swatch {
+  position: relative;
   width: 17px;
   height: 17px;
   border-radius: 50%;
   border: 1px solid rgba(182,186,197,0.2);
   padding: 0;
-  cursor: pointer;
   background-clip: padding-box;
+  transition: box-shadow 0.18s ease;
+}
+
+/* The swatch on the product page, which IS a button. */
+.swatchBtn {
+  cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.swatch:hover {
+.swatchBtn::before {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+.swatchBtn:hover {
   transform: scale(1.14);
 }
 .swatchOn {
@@ -607,3 +645,85 @@
   color: var(--ink);
 }
 .lightboxClose:hover { border-color: rgba(182, 186, 197, .3); }
+
+/* Available to a screen reader, drawn nowhere. Used for the colour names on a
+   card, where the visible label only has room for a count. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* MEASURED AT 4.44:1 — the category links sit on the store hero's pond render,
+   not on the near-black ground `--dim` was tuned against. */
+.categoryNav a { color: var(--ink) }
+
+/* Which colourway the photograph actually shows. Printify does not tell us, so
+   this states what CAN be said honestly — see `Buy.tsx`. */
+.shownIn {
+  margin: 10px 0 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+/* The same crest on the other garments. Uses `.grid`, so it scrolls the same
+   way the category rows do and inherits the same affordance. */
+.also {
+  margin-top: 54px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+}
+.also .grid { margin-top: 18px }
+
+/* How many are in this row. Three are in view; the count is what says the rest
+   exist without making the shopper discover a horizontal scroll first. */
+.headCount {
+  margin-left: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+/* Shipping and lead time, in the hero rather than 6,500 pixels down. */
+.terms {
+  margin: 22px 0 0;
+  max-width: 62ch;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--dim);
+}
+.terms a { color: var(--ink) }
+
+/* ---- the gallery on a phone ----
+   `.stage` is a vertical stack, which is right on a desktop where it sits in
+   its own column beside the picker. Below 860 the grid collapses to one column
+   and that stack goes in FRONT of everything buyable: measured, the Add button
+   was 2,836px down at 360 — 3.83 screens — with four 294x294 photographs and
+   the copy above it.
+
+   Same horizontal snap-scroll as the category rows, so it is one photograph
+   tall and the others are a swipe away. Three image-heights come out of the
+   scroll and the pattern is one the shopper has already met on /store. */
+@media (max-width: 860px) {
+  .stage {
+    grid-auto-flow: column;
+    grid-auto-columns: 88%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(182,186,197,.22) transparent;
+  }
+  .stage > * { scroll-snap-align: center }
+}

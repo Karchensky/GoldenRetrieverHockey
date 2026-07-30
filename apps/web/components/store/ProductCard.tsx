@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { blurb, fromLabel, heroMockup } from "../../lib/store";
+import { blurb, fromLabel, heroMockup, mockupSrcSet } from "../../lib/store";
 import type { Product } from "../../lib/store";
 import s from "./store.module.css";
 
@@ -28,6 +28,11 @@ export default function ProductCard({ product }: { product: Product }) {
           <img
             className={s.cardImg}
             src={hero}
+            srcSet={mockupSrcSet(product.id, 0)}
+            /* Three across on a desktop row, two on a tablet, one and a bit on
+               a phone — matching `.grid`'s own breakpoints, so the browser is
+               told the truth rather than the default 100vw. */
+            sizes="(max-width: 600px) 78vw, (max-width: 900px) 45vw, 30vw"
             alt={product.title}
             width={1200}
             height={1200}
@@ -58,10 +63,18 @@ export default function ProductCard({ product }: { product: Product }) {
               title={color.name}
             />
           ))}
-          <span className={s.swatchName}>
+          {/* The count is what fits; the NAMES are what a screen reader needs.
+              A card's accessible text used to end "…6 colours" and the colour
+              names were unavailable anywhere on /store. */}
+          <span className={s.swatchName} aria-hidden="true">
             {product.colors.length === 1
               ? product.colors[0]?.name
               : `${product.colors.length} colours`}
+          </span>
+          <span className={s.srOnly}>
+            {product.colors.length === 1
+              ? `Colour: ${product.colors[0]?.name}`
+              : `${product.colors.length} colours: ${product.colors.map((c) => c.name).join(", ")}`}
           </span>
         </div>
       </div>

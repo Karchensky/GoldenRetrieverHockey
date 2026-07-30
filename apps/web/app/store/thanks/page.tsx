@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ClearBasket from "../../../components/store/ClearBasket";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
 export default function ThanksPage() {
   return (
     <div className="wrap page">
+      <ClearBasket />
       <header className="hero seq">
         <h1 className="hero-h">
           That&rsquo;s

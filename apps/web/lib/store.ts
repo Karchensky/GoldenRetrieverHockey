@@ -110,6 +110,22 @@ export const groups: ItemGroup[] = (() => {
 export const mockupPath = (productId: string, index: number): string =>
   `/store/${productId}-${index}.webp`;
 
+/**
+ * The same mockup at 400 and 800, for a card that draws it at 220–314 CSS px.
+ *
+ * **The grid used to ship 1.68 MB before a single product was on screen** — 38
+ * files at 1280, 35 at 360 — because every card carried the same 1200px source
+ * the lightbox needs. At 360 with DPR 2 that is 1200 shipped for 440 needed,
+ * 7.4x the pixels, on the connection least able to carry them.
+ *
+ * `scripts/mirror-mockups.mjs` writes the derivatives beside the original. The
+ * 1200 stays in `srcset` and is what the lightbox loads once someone asks for
+ * it, which is the only place it was ever the right file.
+ */
+export const mockupSrcSet = (productId: string, index: number): string =>
+  [400, 800].map((w) => `/store/${productId}-${index}-${w}.webp ${w}w`).join(", ") +
+  `, /store/${productId}-${index}.webp 1200w`;
+
 /** The first mockup, which is the provider's default view. */
 export const heroMockup = (product: Product): string | null =>
   product.mockups.length ? mockupPath(product.id, 0) : null;
@@ -133,6 +149,19 @@ export {
 } from "../../../packages/store/src/basket";
 
 /**
+ * "Golden Retrievers Crossed Shield" out of "…Crossed Shield — Tee".
+ *
+ * The catalogue carries `markId` but not the mark's title — `matrix.ts` has it
+ * and `products.json` does not, because nothing needed it until the product
+ * page grew a "this crest on everything else" section. The title is composed as
+ * `${mark.title} — ${item.title}` in `buildLine()`, so the em dash is a
+ * reliable seam, and the fallback is the whole title rather than an empty
+ * heading.
+ */
+export const markTitle = (product: Product): string =>
+  product.title.split(" — ")[0] ?? product.title;
+
+/**
  * "$17.00" or "$17.00 – $23.50".
  *
  * Every size is priced off its own cost so that a 3XL and a small earn the same
@@ -141,11 +170,30 @@ export {
  */
 export function priceLabel(product: Product): string {
   const { from, to } = priceRange(product);
+  const each = product.sale?.minQuantity ?? 1;
+  if (each > 1) {
+    // A price nobody can pay is worse than no price. See `fromLabel`.
+    return from === to
+      ? `${money(from * each)} for ${each}`
+      : `${money(from * each)} – ${money(to * each)} for ${each}`;
+  }
   return from === to ? money(from) : `${money(from)} – ${money(to)}`;
 }
 
-/** For a card, where the range is too much: "from $17.00". */
+/**
+ * For a card, where the range is too much: "from $17.00".
+ *
+ * **A MINIMUM QUANTITY IS PART OF THE PRICE.** A sticker card read "from $3.50"
+ * and the only button that could be pressed read "Add 3 — $10.50", so the
+ * shopper's anchor was a third of the real one until they reached the basket.
+ * Ten of the 59 products are stickers — a sixth of the catalogue quoting a
+ * number that cannot be bought. One sticker genuinely does cost $3.50 to make
+ * and $4.59 to post, which is exactly why the minimum exists; the fix is to say
+ * what it costs to buy, not to pretend the minimum is not there.
+ */
 export const fromLabel = (product: Product): string => {
   const { from, to } = priceRange(product);
+  const each = product.sale?.minQuantity ?? 1;
+  if (each > 1) return `${money(from * each)} for ${each}`;
   return from === to ? money(from) : `from ${money(from)}`;
 };

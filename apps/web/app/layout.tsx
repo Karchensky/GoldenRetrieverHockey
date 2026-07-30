@@ -52,6 +52,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RinkMount />
           <Nav />
           <main id="main">{children}</main>
+          {/* THERE WAS NO FOOTER ANYWHERE ON THE SITE — measured, zero <footer>
+              elements — and once the archive started taking money that stopped
+              being a stylistic choice. A shop is entitled to say who it is and
+              where to write; before this, the contact address existed on
+              /store/help alone and the only link to that page sat 99.7% of the
+              way down /store. Deliberately quiet: three lines, the site's own
+              rule above it, no columns of links a twelve-person team does not
+              have. */}
+          <footer className="siteFoot">
+            <p>
+              <strong>Golden Retriever Hockey</strong> &middot; Buffalo, New York
+              &middot; est. 2011
+            </p>
+            <p>
+              <a href="/store">Store</a>
+              <a href="/store/help">Shipping &amp; returns</a>
+              <a href="mailto:store@goldenretrieverhockey.com">store@goldenretrieverhockey.com</a>
+            </p>
+          </footer>
         </CartProvider>
       </body>
     </html>

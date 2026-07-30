@@ -47,6 +47,17 @@ export default function StorePage() {
           <br />
           <i>store.</i>
         </h1>
+        {/* THE TERMS, WHERE THE SHOPPER DECIDES WHETHER THIS SHOP IS REAL.
+            This paragraph used to exist only at the very bottom — measured at
+            y=6572 of a 6617px page, with the single link to /store/help at
+            y=6597, which is 99.7% of the way down. The product page and the
+            basket both carry it, so a doubt raised at the picker or the till
+            had a route out; the grid, where the doubt starts, did not. */}
+        <p className={s.terms}>
+          Made to order, 2&ndash;5 business days. Shipping charged at cost &mdash;
+          whatever the post office charges us, nothing on top.{" "}
+          <Link href="/store/help">Shipping &amp; returns</Link>
+        </p>
         <nav className={s.categoryNav} aria-label="Sections">
           {groups.map((group) => (
             <a key={group.itemId} href={`#${group.itemId}`}>{group.label}</a>
@@ -56,7 +67,13 @@ export default function StorePage() {
 
       {groups.map((group) => (
         <section key={group.itemId} id={group.itemId} data-reveal>
-          <h2 className="head">{group.label}</h2>
+          {/* The count is not decoration: three cards are in view and the rest
+              are along the row, so "8" is the only thing that tells a shopper
+              at a glance that there are five more. */}
+          <h2 className="head">
+            {group.label}
+            <span className={s.headCount}>{group.products.length}</span>
+          </h2>
           <div className={s.grid} data-stagger>
             {group.products.map((product) => (
               <ProductCard key={product.id} product={product} />

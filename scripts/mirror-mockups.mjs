@@ -35,6 +35,19 @@ const OUT = join(ROOT, "apps/web/public/store");
 /** Wide enough for a 2x hero on a laptop; past that the garment is not the point. */
 const WIDTH = 1200;
 
+/**
+ * Card-sized derivatives, written beside the original.
+ *
+ * **The grid shipped 1.68 MB before a single product was on screen**, because
+ * every card carried this same 1200px file. Measured: a card draws 314 CSS px
+ * at 1280 and 220 at 360 — where DPR 2 makes it 440 device pixels, so 1200 was
+ * 7.4x what was needed on the connection least able to carry it.
+ *
+ * The 1200 stays: it is what the lightbox loads, which is the one place it was
+ * ever the right file, and `srcset` only fetches it when something asks.
+ */
+const DERIVATIVES = [400, 800];
+
 const catalog = JSON.parse(await readFile(CATALOG, "utf8"));
 await mkdir(OUT, { recursive: true });
 
@@ -125,27 +138,66 @@ for (const product of catalog.products) {
   for (const [index, url] of mockups.entries()) {
     const name = `${product.id}-${index}.webp`;
     wanted.add(name);
+    // The derivatives are claimed BEFORE the skip below, not after it. Claiming
+    // them inside the fetch branch would leave them unclaimed on every run that
+    // skipped an unchanged mockup, and the sweep at the bottom of this file
+    // deletes whatever is not claimed — so a second run would have removed
+    // every card-sized image and the srcset would 404 across the whole grid.
+    const derivatives = DERIVATIVES.map((w) => `${product.id}-${index}-${w}.webp`);
+    for (const d of derivatives) wanted.add(d);
 
-    // Already mirrored FROM THIS URL. A regenerated mockup gets a new URL and
-    // is re-fetched; an unchanged one is left alone.
-    if (existing.has(name) && sources[name] === url) { skipped += 1; continue; }
+    const currentOriginal = existing.has(name) && sources[name] === url;
+    const missing = derivatives.filter((d) => !existing.has(d));
+    if (currentOriginal && !missing.length) { skipped += 1; continue; }
 
-    const res = await fetch(url);
-    if (!res.ok) {
-      throw new Error(
-        `${product.id} mockup ${index}: ${res.status} ${res.statusText}\n${url}\n` +
-          `The catalog names a mockup the CDN will not serve. Re-run the sync.`,
-      );
+    /**
+     * WHEN ONLY THE DERIVATIVES ARE MISSING, RESIZE THE FILE WE ALREADY HAVE.
+     *
+     * The card sizes were added after 59 products had already been mirrored, so
+     * the first run under the new code found every original current and every
+     * derivative absent. Re-fetching 200 files from a CDN to produce downscales
+     * of images sitting on disk is work for nothing, and it is the branch that
+     * runs every time a size is added to DERIVATIVES.
+     */
+    let source;
+    if (currentOriginal) {
+      source = await readFile(join(OUT, name));
+    } else {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(
+          `${product.id} mockup ${index}: ${res.status} ${res.statusText}\n${url}\n` +
+            `The catalog names a mockup the CDN will not serve. Re-run the sync.`,
+        );
+      }
+      source = Buffer.from(await res.arrayBuffer());
+      const webp = await sharp(source)
+        .resize({ width: WIDTH, withoutEnlargement: true })
+        .webp({ quality: 82 })
+        .toBuffer();
+      await writeFile(join(OUT, name), webp);
+      sources[name] = url;
+      fetched += 1;
     }
-    const source = Buffer.from(await res.arrayBuffer());
-    const webp = await sharp(source)
-      .resize({ width: WIDTH, withoutEnlargement: true })
-      .webp({ quality: 82 })
-      .toBuffer();
-    await writeFile(join(OUT, name), webp);
-    sources[name] = url;
-    fetched += 1;
-    console.log(`${name.padEnd(44)} ${(webp.length / 1024).toFixed(0)} KB`);
+
+    // The card sizes. Named `<id>-<index>-<width>.webp`, which is what
+    // `mockupSrcSet` in apps/web/lib/store.ts builds — change one, change both.
+    let derived = "";
+    for (const width of DERIVATIVES) {
+      const small = `${product.id}-${index}-${width}.webp`;
+      const buf = await sharp(source)
+        .resize({ width, withoutEnlargement: true })
+        .webp({ quality: 80 })
+        .toBuffer();
+      await writeFile(join(OUT, small), buf);
+      sources[small] = url;
+      derived += ` ${width}:${(buf.length / 1024).toFixed(0)}KB`;
+    }
+    if (currentOriginal) {
+      console.log(`${name.padEnd(44)} derivatives only —${derived}`);
+      continue;
+    }
+    console.log(`${name.padEnd(44)} ${(source.length / 1024).toFixed(0)} KB fetched —${derived}`);
   }
 }
 

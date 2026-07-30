@@ -2,7 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Buy from "../../../components/store/Buy";
 import Gallery from "../../../components/store/Gallery";
-import { mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
+import ProductCard from "../../../components/store/ProductCard";
+import { markTitle, mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -49,6 +50,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
      --dry-run` and store:report, where it is read by whoever is deciding.
      The data stays in products.json. Nothing on the shelf prints it. */
   const copy = paragraphs(product);
+  /* The same crest on the other garments. Ordered as MATRIX orders them, so it
+     is stable between builds and does not need a rule of its own. */
+  const alsoWearing = products.filter((p) => p.markId === product.markId && p.id !== product.id);
   return (
     <div className="wrap page">
       <header className="hero seq">
@@ -68,19 +72,41 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         />
 
         <div>
+          {/* PRICE, THEN THE THING THAT SPENDS IT, THEN THE PROSE.
+              The picker used to sit under six paragraphs of fabric copy: the
+              Add button measured 602px below the fold at 1280x900 and 2,836px
+              down — 3.8 screens — at 360. Nothing purchasable was on screen at
+              any width. The copy has not moved anywhere a reader will miss it;
+              it is simply no longer in front of the shop. */}
           <p className={s.detailPrice}>{priceLabel(product)}</p>
+
+          <Buy product={product} />
+
           {copy.map((para) => (
             <p key={para} className={s.detailCopy}>{para}</p>
           ))}
-
-          <Buy product={product} />
         </div>
       </div>
 
-      {/* A way back, and nothing else. This was a "The rest of them" list of every
-          other product sharing this garment — a second navigation surface on a
-          page that already has one, duplicating the row the shopper just came
-          from. */}
+      {/* THE MARK AXIS, which has never been answerable.
+          The catalogue is ten crests across nine garments and the interface
+          exposed only the garment axis — /store groups by item, and this page's
+          entire link inventory was three links, none of them to another
+          product. Somebody who came for the Crossed Shield and wants it on a
+          hoodie had to memorise the crest and hand-scan a horizontal row.
+          This is NOT the "The rest of them" list that was removed: that was the
+          item axis, which the shopper had just come from. */}
+      {alsoWearing.length > 0 && (
+        <section className={s.also}>
+          <h2 className="head">{markTitle(product)} on everything else</h2>
+          <div className={s.grid}>
+            {alsoWearing.map((other) => (
+              <ProductCard key={other.id} product={other} />
+            ))}
+          </div>
+        </section>
+      )}
+
       <p className={s.detailCopy}>
         <Link href="/store">&larr; Back to the store</Link>
       </p>

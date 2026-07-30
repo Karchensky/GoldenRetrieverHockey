@@ -876,7 +876,23 @@ export const ITEMS: Item[] = [
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [25078, 25077, 25076, 25079, 25080] },
       { name: "Athletic Heather", hex: "#b0b2ad", ground: "light", variants: [24993, 24992, 24991, 24994, 24995] },
-      { name: "Black", hex: "#17191b", ground: "dark", variants: [24998, 24997, 24996, 24999, 25000] },
+      /* BLACK CAME OFF ON 2026-07-30, and not by choice: Monster Digital
+         withdrew variant 24997 — Black in M — from this blueprint. Every other
+         Black size is still there, which is exactly what makes it dangerous.
+
+         A colourway's `variants` array is read POSITIONALLY against `sizes`
+         (`variantIdFor`: `way.variants[sizes.indexOf(size)]`), so deleting the
+         dead id in place would have shifted L, XL and 2XL down one and sold
+         every Black long sleeve one size too small. There is no representation
+         here for "this colour, all sizes but one" — a colourway is a complete
+         run or it is not offered.
+
+         The sync caught it and refused to write, which is the guard working.
+
+         **Printify Choice carries the complete run on this blueprint, Black M
+         included, and the sweep measured it $0.25 cheaper.** Moving the long
+         sleeve to provider 99 brings this colour straight back; it is a maker
+         change and therefore the captain's call, not a silent fix. */
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25048, 25047, 25046, 25049, 25050] },
     ],
     spec:
