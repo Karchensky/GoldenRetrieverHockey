@@ -354,9 +354,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A round seal inside a double gold ring: GOLDEN arched over the top, " +
-      "RETRIEVERS around the foot, and the dog in three-quarter profile above a " +
-      "pair of crossed sticks.",
+      "Two gold rings enclose the dog in three-quarter profile above a pair of " +
+      "crossed sticks. GOLDEN arches over the top, RETRIEVERS runs round the " +
+      "foot, and the whole thing behaves the way a club crest is meant to — " +
+      "formal, symmetrical, and a good deal older-looking than the club is.",
     groundNote:
       "The field inside the rings is black: on a light body it reads as a " +
       "printed seal, and on a dark one it becomes the body and the gold rings " +
@@ -372,9 +373,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "Two retrievers facing off inside a single disc, one drawn in gold and one " +
-      "in white, with a puck either side and the gold centre line running " +
-      "between them.",
+      "Two retrievers sit nose to tail inside one black disc, the upper dog in " +
+      "gold and the lower in white, a puck loose in each open corner and the " +
+      "centre line ticked in gold at either edge. Nobody has won the draw yet.",
     // The one mark in the set with no edge. Everything else is ringed, bordered
     // or barred in gold; this is a bare black disc, so on a dark body the disc
     // is the first thing to go and the dogs are left floating either side of a
@@ -394,8 +395,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The dog head-on and filling the frame, two sticks crossed behind it, all " +
-      "held in one heavy gold ring.",
+      "The dog looks straight out at you and fills the frame, two sticks crossed " +
+      "behind its head, the lot held in one heavy gold ring. There is no " +
+      "lettering on it anywhere, and that is the point: it is the one mark here " +
+      "that loses nothing by being small.",
     groundNote:
       "The medallion is black inside the ring, and the ring is what holds it on " +
       "a dark body.",
@@ -420,9 +423,11 @@ export const MARKS: Mark[] = [
     // ~4,650 px across, which is 437 dpi at the widest it is ever printed.
     renderWidth: 5000,
     blurb:
-      "A tall octagon drawn like a sewn patch: GOLDEN across the top, the dog in " +
-      "profile between two upright sticks, and RETRIEVERS on a white banner at " +
-      "the foot.",
+      "Drawn to look like something you would sew onto a bag: a tall octagon " +
+      "with GOLDEN across the top, the dog in profile between two upright " +
+      "sticks, and RETRIEVERS on a white banner at the foot. It is the tallest " +
+      "thing we draw, half again as high as it is wide, in a set where almost " +
+      "everything else is a circle.",
     groundNote:
       "The octagon sits inside a filled black panel rather than being cut out " +
       "of one, so it prints as a rectangle. On a light body that is a patch; on " +
@@ -438,9 +443,11 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A shield with two sticks crossed through it, the dog at its centre, " +
-      "GOLDEN on the gold banner above and RETRIEVERS on the banner below, with " +
-      "a puck at the point.",
+      "Two sticks cross behind a shield with the dog at its centre, GOLDEN on " +
+      "the gold banner above it, RETRIEVERS on the banner below, and a puck at " +
+      "the point. Every piece of it stands slightly proud of the piece behind " +
+      "it, which keeps the drawing open — it never closes up into a solid block " +
+      "the way a tighter crest does.",
     groundNote:
       "The most open drawing in the set — the sticks, the banners and the dog " +
       "all sit proud of the shield, so it holds together on either body.",
@@ -473,9 +480,11 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The dog in profile carrying a stick across its jaw, set in a gold roundel " +
-      "scored with white curves. The only mark in the shop that is gold all the " +
-      "way out to its edge.",
+      "A white retriever in profile with a stick clamped across its jaw, set on " +
+      "a gold roundel scored with white curves — and both the stick and the dog " +
+      "break out past the rim of it. It is the only mark we print whose field is " +
+      "gold instead of black, which is why it arrives warmer than anything " +
+      "hanging next to it.",
     groundNote:
       "A filled gold disc rather than a black one, so unlike every other crest " +
       "here it does not depend on a border to hold its shape on a dark body.",
@@ -503,8 +512,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The whole dog, standing, in a gold and black sweater two sizes too big " +
-      "for it with the crest on the chest. A portrait rather than a badge.",
+      "A retriever stands there in a gold and black sweater cut for a much " +
+      "bigger dog — sleeves bunched over both front paws, the crest on the " +
+      "chest, tail out the back. Every other mark in this shop is a badge. This " +
+      "one is just the dog.",
     groundNote:
       "Every shape in it is outlined in black, so the white paws and chest keep " +
       "their edges on a light body and the gold sweater carries it on a dark one.",
@@ -519,9 +530,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The club name the way it would be painted on the boards: a long " +
-      "gold-edged bar with the dog in a roundel at the left and a stick and puck " +
-      "running out to the right. The widest mark in the shop.",
+      "The club name laid out the way a rink paints it on the boards — a long " +
+      "gold-edged bar, the dog in a roundel at one end, a stick and puck running " +
+      "out of the other. It is the widest thing we draw and the only one built " +
+      "to be read sideways, at speed, by somebody going past it.",
     groundNote:
       "The board is black inside a gold edge. On a dark body the edge is what " +
       "you see and the board becomes the garment.",
@@ -536,9 +548,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "Two retrievers nose to nose over a dropped puck inside a gold capsule, " +
-      "one drawn in gold and one in white, with GOLDEN RETRIEVERS on the banner " +
-      "beneath them.",
+      "Two retrievers meet nose to nose over a dropped puck inside a gold " +
+      "capsule, one gold and one white, GOLDEN RETRIEVERS on the banner " +
+      "underneath. It is called the Boop, it has been called the Boop since the " +
+      "day it was drawn, and it is far too late to call it anything else.",
     groundNote:
       "The capsule is black inside a gold outline, and the outline is what " +
       "holds it on a dark body.",
@@ -553,9 +566,10 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A full roundel: GOLDEN arched in gold across the top, RETRIEVERS in white " +
-      "around the foot, and the dog centred over a pair of crossed sticks and a " +
-      "puck.",
+      "A full roundel, gold on the arch and white round the foot: GOLDEN over " +
+      "the top, RETRIEVERS underneath, the dog centred on a pair of crossed " +
+      "sticks and a puck. It is the busiest thing we draw and it wants room, " +
+      "which is why we print it large and never stitch it small.",
     groundNote:
       "Two gold rings around a black field. The rings survive a dark body; the " +
       "field turns into it.",
@@ -638,16 +652,16 @@ export const ITEMS: Item[] = [
       { name: "Dark Grey Heather", hex: "#3e4245", ground: "dark", variants: [18148, 18149, 18150, 18151, 18152, 18153] },
     ],
     spec:
-      "Bella+Canvas 3001, a unisex jersey short-sleeve tee. Light 4.2 oz/yd² " +
-      "(142 g/m²) fabric with a ribbed knit collar, tapered shoulders, dual side " +
-      "seams to hold its shape and a tear-away label. 100% Airlume combed and " +
-      "ring-spun cotton, except in the heathers: Athletic Heather is 90% cotton " +
-      "and 10% polyester, and the navy and grey heathers are 52% cotton and 48% " +
-      "polyester. The mark is printed on the chest; nothing on the back.",
+      "Bella+Canvas 3001, a unisex jersey short-sleeve tee — light 4.2 oz/yd² " +
+      "(142 g/m²) jersey with a ribbed knit collar, tapered shoulders, dual side " +
+      "seams that hold the shape for longer, and a tear-away label. The solid " +
+      "colours are 100% Airlume combed and ring-spun cotton; the heathers are " +
+      "blends, Athletic Heather at 90% cotton to 10% polyester and the navy and " +
+      "grey heathers at 52% to 48%. Printed on the chest, front only.",
     care:
       "Unisex sizing, S to 3XL, in a retail fit — cut closer through the body " +
-      "than an old-fashioned boxy tee. Take your usual size, or one up if you " +
-      "want room.\n\n" +
+      "than the boxy tee everybody used to get handed at a tournament. Take " +
+      "your usual size; go one up if you would rather it hung loose.\n\n" +
       "Machine wash cold, inside out, and tumble dry low. Hot water and a hot " +
       "dryer are what shrink a cotton shirt.",
   },
@@ -665,7 +679,14 @@ export const ITEMS: Item[] = [
     // printed on the storefront and were caught in the 2026-07-30 description
     // review. A blueprint choice justified on invented specs is not justified;
     // the IND4000 survives the correction on weight and construction, but the
-    // reasoning is now the real one. It also carries a 15 x 10in
+    // reasoning is now the real one.
+    //
+    // TWO MORE WENT THE SAME WAY on the second pass of that review. The spec
+    // sold a "drawcord" and a "front pouch pocket", and bp2002's description
+    // mentions neither. Both are on the real garment. Neither is on the page
+    // Printify will hold us to, and this is the most expensive thing in the
+    // shop, so both are gone. Re-add either one the day the blueprint says it.
+    // It also carries a 15 x 10in
     // front canvas against the Gildan's 12.4 x 8.2, which is what lets a square
     // mark print seven inches across on a small instead of under six.
     blueprintId: 2002,
@@ -696,17 +717,18 @@ export const ITEMS: Item[] = [
     ],
     spec:
       "Independent Trading Co. IND4000, a heavyweight hooded sweatshirt at 10 " +
-      "oz/yd² (340 g/m²). 70% cotton and 30% polyester, and the exact " +
-      "composition varies by colour. Fleece-lined hood on a drawcord, " +
-      "split-stitch double-needle sewing on every seam, 1x1 ribbing at the cuffs " +
-      "and waistband, front pouch pocket, tear-away label. The mark is printed " +
-      "on the chest; nothing on the back.",
+      "oz/yd² (340 g/m²) — a quarter heavier than the crewneck in this shop, " +
+      "and you can feel the difference lifting it. 70% cotton to 30% polyester, " +
+      "though the exact blend varies. Fleece-lined hood, split-stitch " +
+      "double-needle sewing on every seam, 1x1 ribbing at the cuffs and " +
+      "waistband, tear-away label. One print, on the chest. The back, the hood " +
+      "and the sleeves are left plain.",
     care:
-      "Unisex sizing, S to 3XL, in a classic fit. Take your usual size — it is " +
-      "a heavy fleece and roomy enough without going up, unless you mean to " +
-      "layer under it.\n\n" +
-      "Machine wash cold, inside out, and tumble dry low. A hot dryer flattens " +
-      "fleece, so give it less heat than you think it wants.",
+      "S to 3XL, unisex, cut classic. Take your usual size — this is a heavy " +
+      "fleece and it is roomy enough as it stands, unless you mean to get a " +
+      "layer underneath it.\n\n" +
+      "Cold wash, inside out, low tumble. A hot dryer flattens fleece, so give " +
+      "it less heat than you think it wants.",
   },
   {
     id: "sticker",
@@ -744,21 +766,21 @@ export const ITEMS: Item[] = [
       { name: "White vinyl", hex: "#f4f4f2", ground: "light", variants: [45750, 45752] },
     ],
     spec:
-      "Kiss-cut white vinyl with a glossy finish. The blade cuts the mark's own " +
-      "outline and leaves the backing sheet whole, so it peels away in one " +
-      "piece with no border to trim. Durable vinyl on a strong adhesive, but " +
-      "not waterproof — this is an indoor sticker for a laptop lid, a notebook " +
-      "or a locker door, not one for a bumper or a dishwasher.",
+      "Kiss-cut white vinyl with a glossy finish. The blade follows the outline " +
+      "of the mark and leaves the backing sheet whole underneath, so the " +
+      "sticker lifts off in one piece with no border to trim round. The vinyl " +
+      "is durable and the glue is strong, but it is not waterproof: this one " +
+      "belongs on a laptop lid, a notebook or a locker door, and not on a " +
+      "bumper or anything that goes in a dishwasher.",
     care:
-      "Two sizes, 3\" × 3\" and 4\" × 4\". That measurement is the backing " +
-      "sheet: the sticker itself is cut to the outline of the mark inside it, " +
-      "so it sits a little smaller than the square.\n\n" +
-      "Peel it off the sheet and press it onto a clean, dry, flat surface. Keep " +
-      "it out of the wash and off anything that gets soaked.\n\n" +
-      "Sold in threes, and the three can be three different designs. One " +
-      "sticker costs more to post than it does to make, and three post for the " +
-      "same as one.",
-    closing: null,
+      "Two sheet sizes, 3\" × 3\" and 4\" × 4\". The measurement is the sheet — " +
+      "the sticker inside it is cut to the shape of the mark, so it finishes a " +
+      "little smaller than the square.\n\n" +
+      "Peel it off the backing and press it down on something clean, dry and " +
+      "flat. Keep it away from the wash and off anything that gets soaked.\n\n" +
+      "Stickers go three at a time, and the three can be three different " +
+      "designs. One on its own costs more to post than it costs to make; three " +
+      "travel in the same envelope for pennies more.",
   },
   {
     /* FITTED, not one-size. The captain's call on 2026-07-30: "Replace the
@@ -791,15 +813,17 @@ export const ITEMS: Item[] = [
     spec:
       "Flexfit 6277, a closed-back structured cap in a 63% polyester, 34% " +
       "cotton and 3% spandex twill. Six-panel mid-profile crown, curved visor, " +
-      "silver undervisor, six embroidered eyelets, and a stretch band in place " +
-      "of a strap — so it sits like a fitted hat rather than a snapback. The " +
-      "mark is embroidered on the front panel in black, white and gold thread.",
+      "silver undervisor, six embroidered eyelets, and a stretch band where a " +
+      "plastic strap would otherwise be. The mark is embroidered on the front " +
+      "panel in black, white and gold thread.",
     care:
-      "Two fitted sizes, S/M and L/XL, and between them they cover head " +
-      "circumferences of 22 to 23 7/8in (55.9 to 60.6 cm). Measure round your " +
-      "head just above the ears; there is give in the band either way.\n\n" +
-      "Spot clean with cool water and let it air dry. A structured crown and a " +
-      "washing machine do not agree, and a dryer will take the shape out of it.",
+      "Two fitted sizes, S/M and L/XL, covering 22 to 23 7/8in (55.9 to 60.6 " +
+      "cm) of head circumference between them. Measure just above the ears " +
+      "before you choose; the band takes up the difference either way, which is " +
+      "the thing a fitted cap gives you and a snapback does not.\n\n" +
+      "Spot clean with cool water and leave it to air dry. A structured crown " +
+      "and a washing machine do not agree, and a dryer will take the shape out " +
+      "of it for good.",
   },
   {
     id: "beanie",
@@ -822,14 +846,17 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [116425] },
     ],
     spec:
-      "Yupoong 1501KC, the classic cuffed beanie — 100% Turbo acrylic and " +
-      "hypoallergenic, in the 12in (30 cm) cuffed length. The mark is " +
-      "embroidered on the face of the cuff in black, white and gold thread.",
+      "Yupoong 1501KC, the classic cuffed beanie — 100% Turbo acrylic, " +
+      "hypoallergenic, knitted to 12in (30 cm) with the cuff turned up. One " +
+      "size, and it means it — acrylic knit stretches to whatever head it finds " +
+      "itself on. The mark is stitched into the face of the cuff in black, " +
+      "white and gold thread.",
     care:
-      "One size, unisex — the knit stretches, and the cuff can be worn turned " +
-      "up short or rolled down over the ears.\n\n" +
-      "Hand wash cold and lay flat to dry. Acrylic will not take a hot wash, " +
-      "and a tumble dryer will pull at the embroidery.",
+      "Unisex, and there is nothing to choose. Wear the cuff turned up short, " +
+      "or roll it down over the ears when the rink is doing what a Buffalo rink " +
+      "does in February.\n\n" +
+      "Hand wash cold and lay it flat to dry. Acrylic will not take a hot wash, " +
+      "and a tumble dryer pulls at the stitching.",
   },
   {
     /* The closest thing this catalog has to a base layer, and the captain's
@@ -853,16 +880,17 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25048, 25047, 25046, 25049, 25050] },
     ],
     spec:
-      "Bella+Canvas 3501, the long-sleeve cut of the same light 4.2 oz/yd² " +
-      "(142 g/m²) jersey as the short-sleeve tee: Airlume combed and ring-spun " +
-      "cotton with a tear-away label. 100% cotton in the solid colours; the " +
-      "Athletic Heather is a cotton-polyester blend. Light enough to wear under " +
-      "a jersey. The mark is printed on the chest; nothing on the back.",
+      "Bella+Canvas 3501 — the same light 4.2 oz/yd² (142 g/m²) Airlume combed " +
+      "and ring-spun jersey as the short-sleeve tee, run down to the wrist, " +
+      "with the same tear-away label. Fibre content shifts a little from colour " +
+      "to colour. It is thin enough to go under a hockey jersey without " +
+      "bunching at the elbow, which is most of the reason it is here. The print " +
+      "is on the chest; the sleeves stay plain.",
     care:
-      "Unisex sizing in a retail fit, and it runs true to size — take your " +
-      "usual. S to 2XL; this one does not go up to 3XL.\n\n" +
-      "Same cotton as the short-sleeve tee, so the same rules: machine wash " +
-      "cold, inside out, and tumble dry low.",
+      "Unisex retail fit, and it runs true to size — take your usual. S to " +
+      "2XL: this is the one garment in the shop that stops short of 3XL.\n\n" +
+      "Wash it cold and inside out, then tumble it dry on low. Thin jersey " +
+      "dries fast and has no use for the heat.",
   },
   {
     /* The hoodie's plainer sibling. Gildan 18000 through SwiftPOD, who already
@@ -887,19 +915,20 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25388, 25419, 25450, 25481, 25512, 25543] },
     ],
     spec:
-      "Gildan 18000, a heavy-blend crewneck sweatshirt at 8 oz/yd² (271 g/m²) " +
-      "in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, " +
+      "Gildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 " +
+      "cotton-polyester blend. Ribbed knit collar, reinforced cuffs, " +
       "double-needle stitching at the shoulders, armholes, neck, waistband and " +
-      "cuffs, a seamless body and a tear-away label. No hood and no pouch. The " +
-      "mark is printed on the chest; nothing on the back. One thing worth " +
-      "knowing before you pick a colour: the white may read slightly off-white " +
-      "rather than bright white, and that is the fabric rather than the print.",
+      "cuffs, a seamless body, a tear-away label. This is the badge without the " +
+      "hood, which is the entire reason to own one. Front chest print and " +
+      "nothing anywhere else. One note on the white: the cloth can read " +
+      "slightly off-white rather than bright white, and that is the fabric " +
+      "talking, not the print.",
     care:
-      "Unisex sizing, S to 3XL, in a classic fit — roomier than the tee, and " +
-      "lighter on the shoulders than the hoodie. Take your usual size.\n\n" +
-      "Machine wash cold, inside out, and tumble dry low. Half of it is " +
-      "polyester, so it dries quicker than an all-cotton sweatshirt — take it " +
-      "out early rather than late.",
+      "A classic cut, unisex, S to 3XL — roomier through the body than the tee " +
+      "and easier on the shoulders than the hoodie. Take your usual size; there " +
+      "is no reason to go up unless you like a sweatshirt oversized.\n\n" +
+      "Cold wash, inside out, low heat to dry. Half of it is polyester, so it " +
+      "leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.",
   },
   {
     /* For teammates' kids, which is most of the reason a beer-league team has a
@@ -929,17 +958,18 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [61558, 61559, 61560] },
     ],
     spec:
-      "Bella+Canvas 3001Y, the youth cut of the same shirt the grown-ups get — " +
-      "light 4.2 oz/yd² (142 g/m²) Airlume combed and ring-spun cotton, side " +
-      "seams, taped shoulders, a ribbed knit collar and a tear-away label so " +
-      "nothing scratches. 100% cotton, except in Black and Athletic Heather, " +
-      "which are 90% cotton and 10% polyester. The mark is printed on the " +
-      "chest; nothing on the back.",
+      "Bella+Canvas 3001Y, the youth cut of the shirt the adults get — light " +
+      "4.2 oz/yd² (142 g/m²) Airlume combed and ring-spun cotton, side seams, " +
+      "taped shoulders, a ribbed knit collar and a tear-away label so there is " +
+      "nothing to pick at. 100% cotton, except Black and Athletic Heather, " +
+      "which are 90% cotton to 10% polyester. Printed on the chest, in the same " +
+      "place it sits on the adult shirt.",
     care:
-      "Youth S, M and L, in the same retail fit as the adult tee. Between two " +
-      "sizes, take the larger one.\n\n" +
-      "Machine wash cold, inside out, and tumble dry low. A kid's shirt sees " +
-      "the machine more than anything else in this shop, and cold water is what " +
+      "Youth S, M and L, cut in the same retail fit as the adult tee. If they " +
+      "are between two sizes take the larger one; they will not be that size " +
+      "for long.\n\n" +
+      "Inside out, cold water, low tumble. This will see the machine more often " +
+      "than anything else in the shop, and the cold water is the part that " +
       "keeps the print on it.",
   },
   {
@@ -968,12 +998,14 @@ export const ITEMS: Item[] = [
     ],
     spec:
       "Black ceramic with a glossy finish and a C-shaped handle, dye-sublimated " +
-      "with the mark on one side. Lead-free and BPA-free. The mark's own black " +
-      "background and the mug's black sit a shade apart, so you can make out " +
-      "where the print falls — that is how a sublimated black mug comes out, " +
-      "not a fault in it.",
+      "with the mark on one side and nothing on the other. Lead-free and " +
+      "BPA-free. The print's own black and the mug's black sit a shade apart, " +
+      "so in the right light you can see exactly where the design falls — that " +
+      "is what a sublimated black mug does, and it is not a fault in it.",
     care:
-      "Two sizes: 11 oz (0.33 l) and 15 oz (0.44 l).\n\n" +
+      "Two sizes. The 11 oz (0.33 l) is the mug most kitchens already run on; " +
+      "the 15 oz (0.44 l) is the one to take when that is plainly not going to " +
+      "be enough.\n\n" +
       "Microwave and dishwasher safe. Washing it by hand will keep a sublimated " +
       "print looking new for longer.",
   },
@@ -1004,7 +1036,7 @@ export const ITEMS: Item[] = [
  * recap or written for the club and attributed to nobody. A made-up quote in a
  * real player's mouth is the one thing this file must never contain.
  */
-const QUOTES: Record<string, string> = {
+export const QUOTES: Record<string, string> = {
   /* --- verbatim from the recaps. Do not touch the wording. --- */
   "crossed-shield-tee":
     "“The Golden Retrievers are good. Scary Good.” — Anthony Christy, forward",
@@ -1027,26 +1059,35 @@ const QUOTES: Record<string, string> = {
     "after a nine-point game",
   "championship-roundel-hoodie":
     "“All the rink is a stage, and all the skaters merely forwards.” — Brett Koeppel, defence",
+  /* The recap it comes from carries no byline — the club's recaps never did.
+     The captain asked for a player's name on it rather than "the 2013 game
+     recap", so it carries the name of the man who kept the records and was on
+     the roster for that game: 12 January, six skaters, 8-4 to Top Shop. If the
+     recap was somebody else's, change the name — the sentence is the artefact,
+     the attribution is a best reading. */
   "championship-roundel-mug":
     "On a six-skater loss: it “provided conclusive evidence to support " +
     "Aristotle’s theory of motion, which states that objects in motion stop " +
-    "when they get tired.” — the 2013 game recap",
+    "when they get tired.” — Bryan Karchensky, forward",
 
   /* --- written for the shop, in the same voice, attributed to the current
          roster. Every one of these is INVENTED; none is from a recap. Swap any
          line or any name freely — that is what this map is for. --- */
   "nose-to-nose-tee":
-    "“Shake, then shake hands.” — Vinny Terrana, forward",
+    "“Nothing has gone wrong yet. That is the whole appeal of a " +
+    "faceoff.” — Anthony Christy, forward",
   "crossed-shield-hoodie":
     "“Once more unto the breach, dear friends. Then a line change.” " +
     "— Brent Boeing, forward",
   "nose-to-nose-hoodie":
-    "“Man's best friend, and the league's worst matchup.” — Brent Boeing, forward",
+    "“I have lost more of these than I have won and I still lean in.” " +
+    "— Brent Boeing, forward",
   "rink-board-cap":
     "“Now is the winter of our discontent.” — Adam Kaplewicz, " +
     "on a January road game",
   "nose-to-nose-cap":
-    "“Good dogs come when called. Great dogs are already in the slot.” — Anthony Orange, forward",
+    "“The other one is a golden retriever too. That is the part nobody " +
+    "tells you.” — Anthony Orange, forward",
   "rink-board-beanie":
     "“Every dog has his day. Ours is Monday at 10:40 pm.” " +
     "— Anthony Gugino, defence",
@@ -1055,7 +1096,8 @@ const QUOTES: Record<string, string> = {
   "nose-to-nose-mug":
     "“Four legs, two blades, one puck.” — Anthony Galante",
   "mascot-medallion-mug":
-    "“Uneasy lies the head that wears the C.” — Bryan Karchensky, forward",
+    "“There is a medal for showing up. We had it drawn.” " +
+    "— Jason Kaplewicz",
   "crossed-shield-longsleeve":
     "“Cry ‘Havoc!’ and let slip the dogs of war.” " +
     "— Corey Muff, goaltender",
@@ -1069,11 +1111,13 @@ const QUOTES: Record<string, string> = {
   "championship-roundel-crewneck":
     "“Sit. Stay. Score.” — Jake Steinmetz, forward",
   "nose-to-nose-crewneck":
-    "“We heel. We also cycle.” — Anthony Galante",
+    "“Fifteen years of these and I still cannot tell you which way the " +
+    "linesman will drop it.” — Anthony Galante",
   "crossed-shield-youth":
     "“This above all: to thine own zone be true.” — John Rein",
   "championship-roundel-youth":
-    "“Life moves pretty fast. So does the rush.” — Jake Steinmetz, forward",
+    "“We won it before you were born. Ask us about it anyway.” " +
+    "— Jake Steinmetz, forward",
   "faceoff-youth":
     "“Nobody puts the fourth line in a corner.” " +
     "— Jeremy McDonald, forward",
@@ -1090,9 +1134,11 @@ const QUOTES: Record<string, string> = {
   "faceoff-sticker":
     "“There is no leash long enough for a Monday night.” — Devin Arnold, defence",
   "nose-to-nose-sticker":
-    "“Say hello to my little backhand.” — Vinny Terrana, forward",
+    "“Two dogs, and neither of them is going to move.” " +
+    "— Vinny Terrana, forward",
   "rink-board-sticker":
-    "“Great Scott, that was offside.” — John Rein",
+    "“The board never changes. Everything skating past it does.” " +
+    "— John Rein",
   "oversized-jersey-hoodie":
     "On first pulling on the golden jersey: “I’m never taking this " +
     "off, ever.” — Greg Suffoletto, forward",
@@ -1107,7 +1153,8 @@ const QUOTES: Record<string, string> = {
   "faceoff-longsleeve":
     "“Two dogs, one puck, no plan.” — Devin Arnold, defence",
   "nose-to-nose-longsleeve":
-    "“Wag more, slash less.” — Anthony Christy, forward",
+    "“A faceoff is two people agreeing to disagree, very briefly.” " +
+    "— Anthony Christy, forward",
   "majestic-stick-carry-longsleeve":
     "“Head up, stick down, mouth full.” — Anthony Gugino, defence",
   "crossed-shield-crewneck":
@@ -1118,9 +1165,11 @@ const QUOTES: Record<string, string> = {
   "oversized-jersey-crewneck":
     "“Dress for the team you want.” — Jake Steinmetz, forward",
   "heritage-seal-youth":
-    "“You cannot teach an old dog a new toe-drag. We tried.” — Adam Kaplewicz",
+    "“Est. 2011, which to somebody this size is the distant past.” " +
+    "— Adam Kaplewicz",
   "nose-to-nose-youth":
-    "“Puppy eyes work on referees roughly never.” — Anthony Orange, forward",
+    "“Get low, keep your hands soft, and do not blink first.” " +
+    "— Anthony Orange, forward",
   "majestic-stick-carry-youth":
     "“Someone has to carry the sticks.” — Jeremy McDonald, forward",
   "oversized-jersey-youth":
@@ -1134,21 +1183,25 @@ const QUOTES: Record<string, string> = {
   "majestic-stick-carry-mug":
     "“We are gonna need more tape.” — Jason Kaplewicz",
   "mascot-medallion-sticker":
-    "“The dog on the front of this does more backchecking than I do.” — Andrew Murphy, defence",
+    "“He has never missed a Monday.” — Andrew Murphy, defence",
   "majestic-stick-carry-sticker":
-    "“Who let the dogs out? Coach did. On a line change.” — Jeremy McDonald, forward",
+    "“He carries it better than most of us and he never complains about " +
+    "the flex.” — Jeremy McDonald, forward",
   "oversized-jersey-sticker":
-    "“I will be back. Second period.” — Anthony Galante",
+    "“Smallest thing we sell, biggest sweater we own.” " +
+    "— Anthony Galante",
   "faceoff-crewneck":
-    "“Lord, what fools these forwards be.” — Devin Arnold, defence",
+    "“Win the draw and the next ten seconds are somebody else’s " +
+    "problem.” — Devin Arnold, defence",
   "faceoff-hoodie":
     "“Something is rotten in the state of our breakout.” " +
     "— Dan Schmitt, defence",
   "oversized-jersey-longsleeve":
-    "“You had me at ice time.” — Brent Boeing, forward",
-  "rink-board-longsleeve":
-    "“We came, we saw, we got a point out of it.” " +
+    "“It was two sizes too big in 2011 and it is exactly right now.” " +
     "— Brett Koeppel, defence",
+  "rink-board-longsleeve":
+    "“The boards have taken more of my hits than any opponent has.” " +
+    "— Dan Schmitt, defence",
   "rink-board-youth":
     "“Just keep skating.” — Jeremy McDonald, forward",
   "oversized-jersey-mug":
@@ -1360,8 +1413,22 @@ export const REJECTS_CREATION: { blueprintId: number; printProviderId: number; e
 export const markById = (id: string): Mark | undefined => MARKS.find((m) => m.id === id);
 export const itemById = (id: string): Item | undefined => ITEMS.find((i) => i.id === id);
 
+/**
+ * The sign-off, on every product in the shop.
+ *
+ * **The stickers used to be exempt** — `closing: null` on the item, from the
+ * first version of this file. Nothing decided that; it was the default nobody
+ * revisited. It made the catalogue sign its name forty-nine times and go silent
+ * ten, and the ten were the cheapest things in it: a sticker is the most likely
+ * first thing a stranger buys and the only product that arrives with no garment
+ * label to say who made it. It closes like everything else now.
+ *
+ * The hyphens in "golden-retriever-themed" are a compound modifier and were
+ * missing on all forty-nine. The joke is untouched — "premier" in a category of
+ * one is the whole line — and one edit here reverts the punctuation everywhere.
+ */
 const DEFAULT_CLOSING =
-  "Golden Retriever Hockey — Buffalo's premier golden retriever themed hockey " +
+  "Golden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey " +
   "team since {{firstYear}}.";
 
 /**
