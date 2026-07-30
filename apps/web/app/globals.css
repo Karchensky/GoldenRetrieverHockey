@@ -539,7 +539,19 @@ footer.site {
   justify-content: space-between;
   gap: 24px;
 }
-.nav a { pointer-events: auto; }
+/* THE CARVE-OUT IS BY ELEMENT, WHICH IS A TRAP, AND IT CAUGHT US.
+   `.nav` is pointer-events: none so the ice stays interactive right up to the
+   edge of the links, and only what is listed here takes the pointer back. That
+   allow-list said `a` and nothing else, so the basket — a <button>, correctly,
+   because it opens a drawer rather than navigating — was rendered, visible, and
+   completely unclickable. There was no other route to checkout, so the whole
+   till was unreachable from the site.
+   store.module.css already had this written down as the reason it deleted its
+   own copy of this pattern: "any element type missing from its allow-list
+   silently stopped being clickable." It was right, and this is the same bug in
+   the original. */
+.nav a,
+.nav button { pointer-events: auto; }
 
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-mark {
