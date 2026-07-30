@@ -38,8 +38,17 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const product = productById(id);
   if (!product) notFound();
 
+  /* THE PRINT GEOMETRY IS NOT RENDERED, and that is deliberate.
+     `product.printify.print` carries the printed width at both ends of the size
+     range and the dpi at each, and this page used to set it in a table: "the
+     front print runs 4.4in across on the smallest size and 4.4in on the
+     largest, at 1255-1255 dpi. The floor is 300." The captain, on reading it:
+     "is this useful information for the user?" It is not. It is the sync's own
+     acceptance check — the numbers that decide whether this repository is
+     willing to upload the art at all — and it belongs in `cli.ts sync
+     --dry-run` and store:report, where it is read by whoever is deciding.
+     The data stays in products.json. Nothing on the shelf prints it. */
   const copy = paragraphs(product);
-  const print = product.printify?.print ?? [];
   const siblings = groups
     .find((g) => g.itemId === product.itemId)
     ?.products.filter((p) => p.id !== product.id) ?? [];
@@ -69,23 +78,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           ))}
 
           <Buy product={product} />
-
-          {print.length > 0 && (
-            <table className={s.specTable}>
-              <tbody>
-                {print.map((p) => (
-                  <tr key={p.position}>
-                    <td />
-                    <td>
-                      The {p.position.replace(/_/g, " ")} print runs {p.widthIn}in across on
-                      the smallest size and {p.maxWidthIn}in on the largest, at {p.minDpi}–
-                      {p.dpi} dpi. The floor is 300.
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
         </div>
       </div>
 

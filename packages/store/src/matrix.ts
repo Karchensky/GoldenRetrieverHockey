@@ -230,7 +230,19 @@ export type Item = {
    * sentence that only makes sense to whoever built the line.
    */
   spec: string;
-  /** Sizing, fit and care — the practical paragraph. */
+  /**
+   * The practical half: how it fits and how to look after it.
+   *
+   * TWO paragraphs, separated by a blank line — fit and sizing first, then
+   * washing. `paragraphs()` in apps/web/lib/store.ts splits the description on
+   * blank lines, so the shopper gets "will it fit me" and "can I wash it"
+   * as two things to read rather than one run-on.
+   *
+   * **Care is per material and never copied between items.** An embroidered cap
+   * is spot clean, an acrylic beanie is hand wash, a ceramic mug is dishwasher
+   * safe and a vinyl sticker is not washed at all. A machine-wash line pasted
+   * onto any of those four is a ruined product and a refund.
+   */
   care?: string;
   /** Closing line. `null` prints none. */
   closing?: string | null;
@@ -342,9 +354,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A double gold ring with GOLDEN arched over the top and RETRIEVERS around " +
-      "the foot, the dog in three-quarter profile over crossed sticks. Drawn as " +
-      "a seal, so it wants to be round and it wants an edge.",
+      "A round seal inside a double gold ring: GOLDEN arched over the top, " +
+      "RETRIEVERS around the foot, and the dog in three-quarter profile above a " +
+      "pair of crossed sticks.",
     groundNote:
       "The field inside the rings is black: on a light body it reads as a " +
       "printed seal, and on a dark one it becomes the body and the gold rings " +
@@ -360,8 +372,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "Two dogs and two pucks inside one disc — one dog in gold, one in white, " +
-      "and the gold line between them where the puck drops.",
+      "Two retrievers facing off inside a single disc, one drawn in gold and one " +
+      "in white, with a puck either side and the gold centre line running " +
+      "between them.",
     // The one mark in the set with no edge. Everything else is ringed, bordered
     // or barred in gold; this is a bare black disc, so on a dark body the disc
     // is the first thing to go and the dogs are left floating either side of a
@@ -381,9 +394,8 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The dog head-on and filling the frame, sticks crossed behind, inside a " +
-      "single heavy gold ring. The most drawing of any mark in the set, and the " +
-      "one that most wants room.",
+      "The dog head-on and filling the frame, two sticks crossed behind it, all " +
+      "held in one heavy gold ring.",
     groundNote:
       "The medallion is black inside the ring, and the ring is what holds it on " +
       "a dark body.",
@@ -408,9 +420,9 @@ export const MARKS: Mark[] = [
     // ~4,650 px across, which is 437 dpi at the widest it is ever printed.
     renderWidth: 5000,
     blurb:
-      "A tall octagon cut like a sewn patch — GOLDEN across the top, the dog in " +
-      "profile between two upright sticks, RETRIEVERS on a white banner at the " +
-      "foot.",
+      "A tall octagon drawn like a sewn patch: GOLDEN across the top, the dog in " +
+      "profile between two upright sticks, and RETRIEVERS on a white banner at " +
+      "the foot.",
     groundNote:
       "The octagon sits inside a filled black panel rather than being cut out " +
       "of one, so it prints as a rectangle. On a light body that is a patch; on " +
@@ -426,8 +438,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A shield with two sticks crossed through it, GOLDEN on the gold banner " +
-      "above, RETRIEVERS on the banner below, a puck at the point.",
+      "A shield with two sticks crossed through it, the dog at its centre, " +
+      "GOLDEN on the gold banner above and RETRIEVERS on the banner below, with " +
+      "a puck at the point.",
     groundNote:
       "The most open drawing in the set — the sticks, the banners and the dog " +
       "all sit proud of the shield, so it holds together on either body.",
@@ -449,9 +462,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The dog in profile with a stick across its jaw, set in a gold roundel " +
-      "scored like a ball. The only mark in the shop that is gold all the way to " +
-      "its edge.",
+      "The dog in profile carrying a stick across its jaw, set in a gold roundel " +
+      "scored with white curves. The only mark in the shop that is gold all the " +
+      "way out to its edge.",
     groundNote:
       "A filled gold disc rather than a black one, so unlike every other crest " +
       "here it does not depend on a border to hold its shape on a dark body.",
@@ -468,8 +481,8 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A retriever standing in a gold and black sweater two sizes too big for " +
-      "it, crest on the chest. Not a badge — a portrait.",
+      "The whole dog, standing, in a gold and black sweater two sizes too big " +
+      "for it with the crest on the chest. A portrait rather than a badge.",
     groundNote:
       "Every shape in it is outlined in black, so the white paws and chest keep " +
       "their edges on a light body and the gold sweater carries it on a dark one.",
@@ -484,9 +497,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "The name the way it would be painted on the boards: a long gold-edged " +
-      "bar, the dog in a roundel at the left, a stick and a puck running out to " +
-      "the right.",
+      "The club name the way it would be painted on the boards: a long " +
+      "gold-edged bar with the dog in a roundel at the left and a stick and puck " +
+      "running out to the right. The widest mark in the shop.",
     groundNote:
       "The board is black inside a gold edge. On a dark body the edge is what " +
       "you see and the board becomes the garment.",
@@ -501,8 +514,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "Two dogs facing each other over a dropped puck inside a gold capsule, " +
-      "GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.",
+      "Two retrievers nose to nose over a dropped puck inside a gold capsule, " +
+      "one drawn in gold and one in white, with GOLDEN RETRIEVERS on the banner " +
+      "beneath them.",
     groundNote:
       "The capsule is black inside a gold outline, and the outline is what " +
       "holds it on a dark body.",
@@ -517,8 +531,9 @@ export const MARKS: Mark[] = [
     reach: "trim",
     renderWidth: 6000,
     blurb:
-      "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white " +
-      "around the foot, the dog centred over crossed sticks and a puck.",
+      "A full roundel: GOLDEN arched in gold across the top, RETRIEVERS in white " +
+      "around the foot, and the dog centred over a pair of crossed sticks and a " +
+      "puck.",
     groundNote:
       "Two gold rings around a black field. The rings survive a dark body; the " +
       "field turns into it.",
@@ -601,21 +616,34 @@ export const ITEMS: Item[] = [
       { name: "Dark Grey Heather", hex: "#3e4245", ground: "dark", variants: [18148, 18149, 18150, 18151, 18152, 18153] },
     ],
     spec:
-      "Bella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single " +
-      "knit, so it is light and soft rather than boxy. Side-seamed with taped " +
-      "shoulders. Printed direct-to-garment on the chest.",
+      "Bella+Canvas 3001, a unisex jersey short-sleeve tee. Light 4.2 oz/yd² " +
+      "(142 g/m²) fabric with a ribbed knit collar, tapered shoulders, dual side " +
+      "seams to hold its shape and a tear-away label. 100% Airlume combed and " +
+      "ring-spun cotton, except in the heathers: Athletic Heather is 90% cotton " +
+      "and 10% polyester, and the navy and grey heathers are 52% cotton and 48% " +
+      "polyester. The mark is printed on the chest; nothing on the back.",
     care:
-      "Unisex sizing, true to size, with a slim-ish cut through the body — size " +
-      "up if you want room. Machine wash cold and tumble dry low; the print " +
-      "lasts longer inside out.",
+      "Unisex sizing, S to 3XL, in a retail fit — cut closer through the body " +
+      "than an old-fashioned boxy tee. Take your usual size, or one up if you " +
+      "want room.\n\n" +
+      "Machine wash cold, inside out, and tumble dry low. Hot water and a hot " +
+      "dryer are what shrink a cotton shirt.",
   },
   {
     id: "hoodie",
     title: "Hoodie",
     // Independent Trading Co. IND4000, not Gildan 18500. The Gildan is the
     // budget default: 8 oz of 50/50 blend with a one-ply body. The IND4000 is
-    // 10 oz of 80/20, jersey-lined hood, twill-taped neck — the hoodie the
-    // merchandise trade treats as the quality tier. It also carries a 15 x 10in
+    // 10 oz, fleece-lined hood, tear-away label, double-needle stitching — the
+    // hoodie the merchandise trade treats as the quality tier.
+    //
+    // This comment used to read "80/20, jersey-lined hood, twill-taped neck".
+    // All three were wrong: Printify's own blueprint description says 70/30 and
+    // fleece-lined with a tear-away label. The same three errors had been
+    // printed on the storefront and were caught in the 2026-07-30 description
+    // review. A blueprint choice justified on invented specs is not justified;
+    // the IND4000 survives the correction on weight and construction, but the
+    // reasoning is now the real one. It also carries a 15 x 10in
     // front canvas against the Gildan's 12.4 x 8.2, which is what lets a square
     // mark print seven inches across on a small instead of under six.
     blueprintId: 2002,
@@ -645,12 +673,18 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [147880, 147879, 147878, 147881, 147876, 147877] },
     ],
     spec:
-      "Independent Trading Co. IND4000 — 10 oz of 80/20 cotton-poly heavyweight " +
-      "fleece, which is the weight the good ones are. Jersey-lined hood, " +
-      "twill-taped neck, ribbed cuffs and hem, front pouch.",
+      "Independent Trading Co. IND4000, a heavyweight hooded sweatshirt at 10 " +
+      "oz/yd² (340 g/m²). 70% cotton and 30% polyester, and the exact " +
+      "composition varies by colour. Fleece-lined hood on a drawcord, " +
+      "split-stitch double-needle sewing on every seam, 1x1 ribbing at the cuffs " +
+      "and waistband, front pouch pocket, tear-away label. The mark is printed " +
+      "on the chest; nothing on the back.",
     care:
-      "Unisex sizing and true to size, cut a little roomier than the tee. " +
-      "Machine wash cold, tumble dry low. It will soften and not shrink much.",
+      "Unisex sizing, S to 3XL, in a classic fit. Take your usual size — it is " +
+      "a heavy fleece and roomy enough without going up, unless you mean to " +
+      "layer under it.\n\n" +
+      "Machine wash cold, inside out, and tumble dry low. A hot dryer flattens " +
+      "fleece, so give it less heat than you think it wants.",
   },
   {
     id: "sticker",
@@ -688,12 +722,20 @@ export const ITEMS: Item[] = [
       { name: "White vinyl", hex: "#f4f4f2", ground: "light", variants: [45750, 45752] },
     ],
     spec:
-      "Kiss-cut white vinyl, UV printed and rated for outdoor use — it will " +
-      "survive a water bottle, a laptop lid or a car window.",
+      "Kiss-cut white vinyl with a glossy finish. The blade cuts the mark's own " +
+      "outline and leaves the backing sheet whole, so it peels away in one " +
+      "piece with no border to trim. Durable vinyl on a strong adhesive, but " +
+      "not waterproof — this is an indoor sticker for a laptop lid, a notebook " +
+      "or a locker door, not one for a bumper or a dishwasher.",
     care:
-      "Three inches or four. Sold in threes, and the three can be three " +
-      "different designs: one sticker costs more to post than it does to make, " +
-      "and three post for the same as one.",
+      "Two sizes, 3\" × 3\" and 4\" × 4\". That measurement is the backing " +
+      "sheet: the sticker itself is cut to the outline of the mark inside it, " +
+      "so it sits a little smaller than the square.\n\n" +
+      "Peel it off the sheet and press it onto a clean, dry, flat surface. Keep " +
+      "it out of the wash and off anything that gets soaked.\n\n" +
+      "Sold in threes, and the three can be three different designs. One " +
+      "sticker costs more to post than it does to make, and three post for the " +
+      "same as one.",
     closing: null,
   },
   {
@@ -725,12 +767,17 @@ export const ITEMS: Item[] = [
       { name: "Dark Grey", hex: "#3b3e40", ground: "dark", variants: [118706, 118707] },
     ],
     spec:
-      "Flexfit 6277 — a closed-back structured cap on a stretch band, so it " +
-      "sits like a fitted hat rather than a snapback. Embroidered in black, white " +
-      "and gold thread.",
+      "Flexfit 6277, a closed-back structured cap in a 63% polyester, 34% " +
+      "cotton and 3% spandex twill. Six-panel mid-profile crown, curved visor, " +
+      "silver undervisor, six embroidered eyelets, and a stretch band in place " +
+      "of a strap — so it sits like a fitted hat rather than a snapback. The " +
+      "mark is embroidered on the front panel in black, white and gold thread.",
     care:
-      "Two sizes: S/M and L/XL. Spot clean — the structured front does not " +
-      "enjoy a washing machine.",
+      "Two fitted sizes, S/M and L/XL, and between them they cover head " +
+      "circumferences of 22 to 23 7/8in (55.9 to 60.6 cm). Measure round your " +
+      "head just above the ears; there is give in the band either way.\n\n" +
+      "Spot clean with cool water and let it air dry. A structured crown and a " +
+      "washing machine do not agree, and a dryer will take the shape out of it.",
   },
   {
     id: "beanie",
@@ -753,9 +800,14 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [116425] },
     ],
     spec:
-      "Yupoong 1501KC — acrylic knit with a double-layer cuff, embroidered on " +
-      "the cuff face.",
-    care: "One size. Hand wash cold and lay flat to dry.",
+      "Yupoong 1501KC, the classic cuffed beanie — 100% Turbo acrylic and " +
+      "hypoallergenic, in the 12in (30 cm) cuffed length. The mark is " +
+      "embroidered on the face of the cuff in black, white and gold thread.",
+    care:
+      "One size, unisex — the knit stretches, and the cuff can be worn turned " +
+      "up short or rolled down over the ears.\n\n" +
+      "Hand wash cold and lay flat to dry. Acrylic will not take a hot wash, " +
+      "and a tumble dryer will pull at the embroidery.",
   },
   {
     /* The closest thing this catalog has to a base layer, and the captain's
@@ -779,11 +831,16 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25048, 25047, 25046, 25049, 25050] },
     ],
     spec:
-      "Bella+Canvas 3501 — the long-sleeve cut of the same 4.2 oz combed " +
-      "ring-spun cotton as the tee. Side-seamed, ribbed cuffs, printed on the chest.",
+      "Bella+Canvas 3501, the long-sleeve cut of the same light 4.2 oz/yd² " +
+      "(142 g/m²) jersey as the short-sleeve tee: Airlume combed and ring-spun " +
+      "cotton with a tear-away label. 100% cotton in the solid colours; the " +
+      "Athletic Heather is a cotton-polyester blend. Light enough to wear under " +
+      "a jersey. The mark is printed on the chest; nothing on the back.",
     care:
-      "Unisex sizing, true to size. Machine wash cold, tumble dry low. The one " +
-      "thing in this shop you could plausibly wear under a jersey.",
+      "Unisex sizing in a retail fit, and it runs true to size — take your " +
+      "usual. S to 2XL; this one does not go up to 3XL.\n\n" +
+      "Same cotton as the short-sleeve tee, so the same rules: machine wash " +
+      "cold, inside out, and tumble dry low.",
   },
   {
     /* The hoodie's plainer sibling. Gildan 18000 through SwiftPOD, who already
@@ -808,9 +865,19 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25388, 25419, 25450, 25481, 25512, 25543] },
     ],
     spec:
-      "Gildan 18000 — 8 oz of 50/50 cotton-poly, set-in sleeves, ribbed " +
-      "collar, cuffs and waistband. No hood, no pouch, nothing to catch.",
-    care: "Unisex sizing, runs a touch generous. Machine wash cold, tumble dry low.",
+      "Gildan 18000, a heavy-blend crewneck sweatshirt at 8 oz/yd² (271 g/m²) " +
+      "in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, " +
+      "double-needle stitching at the shoulders, armholes, neck, waistband and " +
+      "cuffs, a seamless body and a tear-away label. No hood and no pouch. The " +
+      "mark is printed on the chest; nothing on the back. One thing worth " +
+      "knowing before you pick a colour: the white may read slightly off-white " +
+      "rather than bright white, and that is the fabric rather than the print.",
+    care:
+      "Unisex sizing, S to 3XL, in a classic fit — roomier than the tee, and " +
+      "lighter on the shoulders than the hoodie. Take your usual size.\n\n" +
+      "Machine wash cold, inside out, and tumble dry low. Half of it is " +
+      "polyester, so it dries quicker than an all-cotton sweatshirt — take it " +
+      "out early rather than late.",
   },
   {
     /* For teammates' kids, which is most of the reason a beer-league team has a
@@ -840,9 +907,18 @@ export const ITEMS: Item[] = [
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [61558, 61559, 61560] },
     ],
     spec:
-      "Bella+Canvas 3001Y — the youth cut of the same shirt the grown-ups " +
-      "get. 4.2 oz combed ring-spun cotton, side-seamed.",
-    care: "Youth S, M and L. Machine wash cold, tumble dry low.",
+      "Bella+Canvas 3001Y, the youth cut of the same shirt the grown-ups get — " +
+      "light 4.2 oz/yd² (142 g/m²) Airlume combed and ring-spun cotton, side " +
+      "seams, taped shoulders, a ribbed knit collar and a tear-away label so " +
+      "nothing scratches. 100% cotton, except in Black and Athletic Heather, " +
+      "which are 90% cotton and 10% polyester. The mark is printed on the " +
+      "chest; nothing on the back.",
+    care:
+      "Youth S, M and L, in the same retail fit as the adult tee. Between two " +
+      "sizes, take the larger one.\n\n" +
+      "Machine wash cold, inside out, and tumble dry low. A kid's shirt sees " +
+      "the machine more than anything else in this shop, and cold water is what " +
+      "keeps the print on it.",
   },
   {
     id: "mug",
@@ -869,10 +945,15 @@ export const ITEMS: Item[] = [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [65217, 104470] },
     ],
     spec:
-      "Black ceramic, dye-sublimated on one side. Every mark in this shop was " +
-      "drawn on a black field, so on a black mug the drawing and the object " +
-      "agree — which is why it is not a white one.",
-    care: "Eleven ounces or fifteen. Dishwasher and microwave safe.",
+      "Black ceramic with a glossy finish and a C-shaped handle, dye-sublimated " +
+      "with the mark on one side. Lead-free and BPA-free. The mark's own black " +
+      "background and the mug's black sit a shade apart, so you can make out " +
+      "where the print falls — that is how a sublimated black mug comes out, " +
+      "not a fault in it.",
+    care:
+      "Two sizes: 11 oz (0.33 l) and 15 oz (0.44 l).\n\n" +
+      "Microwave and dishwasher safe. Washing it by hand will keep a sublimated " +
+      "print looking new for longer.",
   },
 ];
 
