@@ -92,12 +92,12 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a18606d40bf090bbc2d/18542/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a18606d40bf090bbc2d/18102/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a18606d40bf090bbc2d/18078/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a18606d40bf090bbc2d/18150/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b3506a7b949c236006509/18542/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3506a7b949c236006509/18102/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3506a7b949c236006509/18078/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3506a7b949c236006509/18150/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front"
       ],
-      "artHash": "98b6e341f9a5f412",
+      "artHash": "5a232b7e4a016609",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -138,7 +138,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a2a18606d40bf090bbc2d",
+        "productId": "6a6b3506a7b949c236006509",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -146,7 +146,7 @@
             "position": "front",
             "widthIn": 8,
             "heightIn": 8.14,
-            "dpi": 660,
+            "dpi": 659,
             "maxWidthIn": 10.85,
             "minDpi": 486,
             "scale": 0.7231,
@@ -246,12 +246,12 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a20c5cf44fde20dc5d0/18542/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a20c5cf44fde20dc5d0/18102/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a20c5cf44fde20dc5d0/18078/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a20c5cf44fde20dc5d0/18150/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b351663c1a2d97209ce4c/18542/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b351663c1a2d97209ce4c/18102/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b351663c1a2d97209ce4c/18078/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b351663c1a2d97209ce4c/18150/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front"
       ],
-      "artHash": "2410584179152168",
+      "artHash": "2c0141e4c1d590bc",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -292,17 +292,17 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a2a20c5cf44fde20dc5d0",
+        "productId": "6a6b351663c1a2d97209ce4c",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
-            "heightIn": 8.04,
-            "dpi": 668,
+            "heightIn": 8,
+            "dpi": 670,
             "maxWidthIn": 10.85,
-            "minDpi": 492,
+            "minDpi": 494,
             "scale": 0.7231,
             "y": 0.42
           }
@@ -352,10 +352,10 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a27c5cf44fde20dc5d6/18542/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a27c5cf44fde20dc5d6/18078/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b352295a99540c70490a3/18542/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b352295a99540c70490a3/18078/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front"
       ],
-      "artHash": "0925a5a0be7b4d9e",
+      "artHash": "06d73fd908759740",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -372,7 +372,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a2a27c5cf44fde20dc5d6",
+        "productId": "6a6b352295a99540c70490a3",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -382,7 +382,7 @@
             "heightIn": 8.08,
             "dpi": 641,
             "maxWidthIn": 10.85,
-            "minDpi": 473,
+            "minDpi": 472,
             "scale": 0.7231,
             "y": 0.42
           }
@@ -480,12 +480,12 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a84c74b8f1b85340a091a/18542/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84c74b8f1b85340a091a/18102/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84c74b8f1b85340a091a/18078/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84c74b8f1b85340a091a/18150/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b352ee0ac3ed18e04adae/18542/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b352ee0ac3ed18e04adae/18102/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b352ee0ac3ed18e04adae/18078/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b352ee0ac3ed18e04adae/18150/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front"
       ],
-      "artHash": "63fd9a8e241d5758",
+      "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -526,7 +526,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a84c74b8f1b85340a091a",
+        "productId": "6a6b352ee0ac3ed18e04adae",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -634,12 +634,12 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a84d41ae50363bd0e3ed6/18542/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84d41ae50363bd0e3ed6/18102/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84d41ae50363bd0e3ed6/18078/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84d41ae50363bd0e3ed6/18150/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18542/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18102/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18078/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18150/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front"
       ],
-      "artHash": "032447761ef684bd",
+      "artHash": "7fa9134d6c2794bb",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -680,7 +680,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a84d41ae50363bd0e3ed6",
+        "productId": "6a6b353a63c1a2d97209ce55",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -690,7 +690,7 @@
             "heightIn": 4.38,
             "dpi": 593,
             "maxWidthIn": 12.2,
-            "minDpi": 438,
+            "minDpi": 437,
             "scale": 0.8135,
             "y": 0.42
           }
@@ -788,12 +788,12 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a84e0c0365d0ef00f57b1/18542/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84e0c0365d0ef00f57b1/18102/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84e0c0365d0ef00f57b1/18078/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84e0c0365d0ef00f57b1/18150/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b354a95a99540c70490bb/18542/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b354a95a99540c70490bb/18102/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b354a95a99540c70490bb/18078/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b354a95a99540c70490bb/18150/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front"
       ],
-      "artHash": "3169869885e2139c",
+      "artHash": "9b674da1240ca7f9",
       "prices": {
         "18076": 1700,
         "18077": 1700,
@@ -834,7 +834,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6a84e0c0365d0ef00f57b1",
+        "productId": "6a6b354a95a99540c70490bb",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -906,11 +906,11 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a4313cc998f4e00540a/123966/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a4313cc998f4e00540a/147878/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a4313cc998f4e00540a/123843/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b355663c1a2d97209ce6a/123966/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b355663c1a2d97209ce6a/147878/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b355663c1a2d97209ce6a/123843/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front"
       ],
-      "artHash": "63fd9a8e241d5758",
+      "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "123811": 4725,
         "123827": 4725,
@@ -933,7 +933,7 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6a2a4313cc998f4e00540a",
+        "productId": "6a6b355663c1a2d97209ce6a",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
@@ -943,7 +943,7 @@
             "heightIn": 7.48,
             "dpi": 718,
             "maxWidthIn": 9.1,
-            "minDpi": 592,
+            "minDpi": 591,
             "scale": 0.6066,
             "y": 0.5
           }
@@ -1005,11 +1005,11 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a84fac0365d0ef00f57cf/123966/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84fac0365d0ef00f57cf/147878/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a84fac0365d0ef00f57cf/123843/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35620d033dbf6e0cd136/123966/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35620d033dbf6e0cd136/147878/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35620d033dbf6e0cd136/123843/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front"
       ],
-      "artHash": "98b6e341f9a5f412",
+      "artHash": "5a232b7e4a016609",
       "prices": {
         "123811": 4725,
         "123827": 4725,
@@ -1032,15 +1032,15 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6a84fac0365d0ef00f57cf",
+        "productId": "6a6b35620d033dbf6e0cd136",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 7.5,
-            "heightIn": 7.63,
-            "dpi": 704,
+            "heightIn": 7.64,
+            "dpi": 703,
             "maxWidthIn": 9.1,
             "minDpi": 580,
             "scale": 0.6066,
@@ -1104,11 +1104,11 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ac4a0097240048f0cdc38/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b356a63c1a2d97209ce78/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b356a63c1a2d97209ce78/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b356a63c1a2d97209ce78/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front"
       ],
-      "artHash": "2410584179152168",
+      "artHash": "2c0141e4c1d590bc",
       "prices": {
         "123811": 4725,
         "123827": 4725,
@@ -1131,17 +1131,17 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ac4a0097240048f0cdc38",
+        "productId": "6a6b356a63c1a2d97209ce78",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 7.5,
-            "heightIn": 7.53,
-            "dpi": 712,
+            "heightIn": 7.5,
+            "dpi": 715,
             "maxWidthIn": 9.1,
-            "minDpi": 587,
+            "minDpi": 589,
             "scale": 0.6066,
             "y": 0.5
           }
@@ -1203,11 +1203,11 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/123966/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/147878/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ac4a8097240048f0cdc40/123843/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b357263c1a2d97209ce83/123966/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357263c1a2d97209ce83/147878/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357263c1a2d97209ce83/123843/111658/golden-retrievers-nose-to-nose-hoodie.jpg?camera_label=front"
       ],
-      "artHash": "032447761ef684bd",
+      "artHash": "7fa9134d6c2794bb",
       "prices": {
         "123811": 4725,
         "123827": 4725,
@@ -1230,7 +1230,7 @@
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ac4a8097240048f0cdc40",
+        "productId": "6a6b357263c1a2d97209ce83",
         "blueprintId": 2002,
         "printProviderId": 39,
         "print": [
@@ -1289,12 +1289,12 @@
         "One size"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a54387612a3890b1f11/118724/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a54387612a3890b1f11/118723/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a54387612a3890b1f11/118722/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a54387612a3890b1f11/118726/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b357a0d033dbf6e0cd15f/118724/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357a0d033dbf6e0cd15f/118723/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357a0d033dbf6e0cd15f/118722/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357a0d033dbf6e0cd15f/118726/110130/golden-retrievers-rink-board-cap.jpg?camera_label=front"
       ],
-      "artHash": "3169869885e2139c",
+      "artHash": "9b674da1240ca7f9",
       "prices": {
         "118722": 2800,
         "118723": 2800,
@@ -1303,7 +1303,7 @@
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6a2a54387612a3890b1f11",
+        "productId": "6a6b357a0d033dbf6e0cd15f",
         "blueprintId": 1743,
         "printProviderId": 410,
         "print": [
@@ -1362,12 +1362,12 @@
         "One size"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a58a86f1e0772031109/118724/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a58a86f1e0772031109/118723/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a58a86f1e0772031109/118722/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a58a86f1e0772031109/118726/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b357f63c1a2d97209ce94/118724/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357f63c1a2d97209ce94/118723/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357f63c1a2d97209ce94/118722/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b357f63c1a2d97209ce94/118726/110130/golden-retrievers-nose-to-nose-cap.jpg?camera_label=front"
       ],
-      "artHash": "032447761ef684bd",
+      "artHash": "7fa9134d6c2794bb",
       "prices": {
         "118722": 2800,
         "118723": 2800,
@@ -1376,7 +1376,7 @@
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6a2a58a86f1e0772031109",
+        "productId": "6a6b357f63c1a2d97209ce94",
         "blueprintId": 1743,
         "printProviderId": 410,
         "print": [
@@ -1384,9 +1384,9 @@
             "position": "front",
             "widthIn": 3.6,
             "heightIn": 1.75,
-            "dpi": 1483,
+            "dpi": 1482,
             "maxWidthIn": 3.6,
-            "minDpi": 1483,
+            "minDpi": 1482,
             "scale": 0.6102,
             "y": 0.5
           }
@@ -1421,19 +1421,19 @@
         "One size"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a6113cc998f4e005428/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a6113cc998f4e005428/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a6113cc998f4e005428/116425/109988/golden-retrievers-rink-board-beanie.jpg?camera_label=person-1-front",
-        "https://images-api.printify.com/mockup/6a6a2a6113cc998f4e005428/116425/109990/golden-retrievers-rink-board-beanie.jpg?camera_label=person-1-back"
+        "https://images-api.printify.com/mockup/6a6b358495a99540c70490f1/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b358495a99540c70490f1/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b358495a99540c70490f1/116425/109988/golden-retrievers-rink-board-beanie.jpg?camera_label=person-1-front",
+        "https://images-api.printify.com/mockup/6a6b358495a99540c70490f1/116425/109990/golden-retrievers-rink-board-beanie.jpg?camera_label=person-1-back"
       ],
-      "artHash": "3169869885e2139c",
+      "artHash": "9b674da1240ca7f9",
       "prices": {
         "116417": 2125,
         "116425": 2125
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6a2a6113cc998f4e005428",
+        "productId": "6a6b358495a99540c70490f1",
         "blueprintId": 1691,
         "printProviderId": 410,
         "print": [
@@ -1473,17 +1473,17 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a6aa86f1e0772031125/65217/6405/golden-retrievers-rink-board-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a6aa86f1e0772031125/104470/101581/golden-retrievers-rink-board-mug.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b358c386d41eed50bad60/65217/6405/golden-retrievers-rink-board-mug.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b358c386d41eed50bad60/104470/101581/golden-retrievers-rink-board-mug.jpg?camera_label=front"
       ],
-      "artHash": "3169869885e2139c",
+      "artHash": "9b674da1240ca7f9",
       "prices": {
         "65217": 1200,
         "104470": 1400
       },
       "postageCents": 899,
       "printify": {
-        "productId": "6a6a2a6aa86f1e0772031125",
+        "productId": "6a6b358c386d41eed50bad60",
         "blueprintId": 479,
         "printProviderId": 99,
         "print": [
@@ -1523,17 +1523,17 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a6fa86f1e077203112c/65217/6405/golden-retrievers-nose-to-nose-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a6fa86f1e077203112c/104470/101581/golden-retrievers-nose-to-nose-mug.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b359395a99540c70490fc/65217/6405/golden-retrievers-nose-to-nose-mug.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b359395a99540c70490fc/104470/101581/golden-retrievers-nose-to-nose-mug.jpg?camera_label=front"
       ],
-      "artHash": "032447761ef684bd",
+      "artHash": "7fa9134d6c2794bb",
       "prices": {
         "65217": 1200,
         "104470": 1400
       },
       "postageCents": 899,
       "printify": {
-        "productId": "6a6a2a6fa86f1e077203112c",
+        "productId": "6a6b359395a99540c70490fc",
         "blueprintId": 479,
         "printProviderId": 99,
         "print": [
@@ -1541,9 +1541,9 @@
             "position": "front",
             "widthIn": 4,
             "heightIn": 1.95,
-            "dpi": 1335,
+            "dpi": 1334,
             "maxWidthIn": 4.21,
-            "minDpi": 1268,
+            "minDpi": 1267,
             "scale": 0.5157,
             "y": 0.5
           }
@@ -1573,28 +1573,28 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a739e376760c80c5e03/65217/6405/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a739e376760c80c5e03/104470/101581/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b359a63c1a2d97209cea2/65217/6405/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b359a63c1a2d97209cea2/104470/101581/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front"
       ],
-      "artHash": "8c315f8b47fe3a5b",
+      "artHash": "62d5a6c8cbff3b30",
       "prices": {
         "65217": 1200,
         "104470": 1400
       },
       "postageCents": 899,
       "printify": {
-        "productId": "6a6a2a739e376760c80c5e03",
+        "productId": "6a6b359a63c1a2d97209cea2",
         "blueprintId": 479,
         "printProviderId": 99,
         "print": [
           {
             "position": "front",
-            "widthIn": 3.44,
+            "widthIn": 3.39,
             "heightIn": 3.4,
-            "dpi": 1557,
-            "maxWidthIn": 3.62,
-            "minDpi": 1478,
-            "scale": 0.4431,
+            "dpi": 1579,
+            "maxWidthIn": 3.56,
+            "minDpi": 1502,
+            "scale": 0.4367,
             "y": 0.5
           }
         ]
@@ -1623,28 +1623,28 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a852f4b8f1b85340a095a/65217/6405/golden-retrievers-championship-roundel-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a852f4b8f1b85340a095a/104470/101581/golden-retrievers-championship-roundel-mug.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35a063c1a2d97209cea9/65217/6405/golden-retrievers-championship-roundel-mug.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35a063c1a2d97209cea9/104470/101581/golden-retrievers-championship-roundel-mug.jpg?camera_label=front"
       ],
-      "artHash": "2410584179152168",
+      "artHash": "2c0141e4c1d590bc",
       "prices": {
         "65217": 1200,
         "104470": 1400
       },
       "postageCents": 899,
       "printify": {
-        "productId": "6a6a852f4b8f1b85340a095a",
+        "productId": "6a6b35a063c1a2d97209cea9",
         "blueprintId": 479,
         "printProviderId": 99,
         "print": [
           {
             "position": "front",
-            "widthIn": 3.39,
+            "widthIn": 3.4,
             "heightIn": 3.4,
-            "dpi": 1576,
-            "maxWidthIn": 3.56,
-            "minDpi": 1500,
-            "scale": 0.4367,
+            "dpi": 1575,
+            "maxWidthIn": 3.58,
+            "minDpi": 1497,
+            "scale": 0.4388,
             "y": 0.5
           }
         ]
@@ -1677,17 +1677,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a77a86f1e0772031134/45750/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a77a86f1e0772031134/45752/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35a663c1a2d97209ceae/45750/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35a663c1a2d97209ceae/45752/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front"
       ],
-      "artHash": "63fd9a8e241d5758",
+      "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a2a77a86f1e0772031134",
+        "productId": "6a6b35a663c1a2d97209ceae",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -1695,7 +1695,7 @@
             "position": "front",
             "widthIn": 2.61,
             "heightIn": 2.6,
-            "dpi": 2065,
+            "dpi": 2064,
             "maxWidthIn": 3.49,
             "minDpi": 1542,
             "scale": 0.94,
@@ -1731,28 +1731,28 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a7cc5cf44fde20dc619/45750/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a7cc5cf44fde20dc619/45752/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35aee0ac3ed18e04ae15/45750/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35aee0ac3ed18e04ae15/45752/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front"
       ],
-      "artHash": "2410584179152168",
+      "artHash": "2c0141e4c1d590bc",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a2a7cc5cf44fde20dc619",
+        "productId": "6a6b35aee0ac3ed18e04ae15",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
           {
             "position": "front",
-            "widthIn": 2.6,
+            "widthIn": 2.61,
             "heightIn": 2.61,
-            "dpi": 2058,
-            "maxWidthIn": 3.47,
-            "minDpi": 1539,
-            "scale": 0.9358,
+            "dpi": 2056,
+            "maxWidthIn": 3.49,
+            "minDpi": 1536,
+            "scale": 0.94,
             "y": 0.5
           }
         ]
@@ -1785,17 +1785,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a809e376760c80c5e0c/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a809e376760c80c5e0c/45752/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35b563c1a2d97209ceb7/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35b563c1a2d97209ceb7/45752/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front"
       ],
-      "artHash": "5f243722598eb488",
+      "artHash": "e0b6a8bfc1dcc790",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a2a809e376760c80c5e0c",
+        "productId": "6a6b35b563c1a2d97209ceb7",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -1839,17 +1839,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a859e376760c80c5e0d/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a859e376760c80c5e0d/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35bd386d41eed50bad91/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35bd386d41eed50bad91/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front"
       ],
-      "artHash": "98b6e341f9a5f412",
+      "artHash": "5a232b7e4a016609",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a2a859e376760c80c5e0d",
+        "productId": "6a6b35bd386d41eed50bad91",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -1857,10 +1857,10 @@
             "position": "front",
             "widthIn": 2.56,
             "heightIn": 2.61,
-            "dpi": 2059,
+            "dpi": 2060,
             "maxWidthIn": 3.43,
             "minDpi": 1538,
-            "scale": 0.9241,
+            "scale": 0.9234,
             "y": 0.5
           }
         ]
@@ -1893,17 +1893,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a2a899e376760c80c5e15/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a2a899e376760c80c5e15/45752/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35c90d033dbf6e0cd1e3/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35c90d033dbf6e0cd1e3/45752/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front"
       ],
-      "artHash": "0925a5a0be7b4d9e",
+      "artHash": "06d73fd908759740",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a2a899e376760c80c5e15",
+        "productId": "6a6b35c90d033dbf6e0cd1e3",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -1911,10 +1911,10 @@
             "position": "front",
             "widthIn": 2.58,
             "heightIn": 2.61,
-            "dpi": 1986,
+            "dpi": 1985,
             "maxWidthIn": 3.45,
             "minDpi": 1486,
-            "scale": 0.9309,
+            "scale": 0.9311,
             "y": 0.5
           }
         ]
@@ -1947,17 +1947,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a855ee34708698d04a403/45750/16655/golden-retrievers-nose-to-nose-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a855ee34708698d04a403/45752/16655/golden-retrievers-nose-to-nose-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35d4386d41eed50badfb/45750/16655/golden-retrievers-nose-to-nose-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35d4386d41eed50badfb/45752/16655/golden-retrievers-nose-to-nose-sticker.jpg?camera_label=front"
       ],
-      "artHash": "032447761ef684bd",
+      "artHash": "7fa9134d6c2794bb",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a855ee34708698d04a403",
+        "productId": "6a6b35d4386d41eed50badfb",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
@@ -1965,9 +1965,9 @@
             "position": "front",
             "widthIn": 2.61,
             "heightIn": 1.27,
-            "dpi": 2048,
+            "dpi": 2046,
             "maxWidthIn": 3.49,
-            "minDpi": 1530,
+            "minDpi": 1529,
             "scale": 0.94,
             "y": 0.5
           }
@@ -2001,17 +2001,17 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6a85641ae50363bd0e3f5b/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6a85641ae50363bd0e3f5b/45752/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b35dc63c1a2d97209cf1c/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b35dc63c1a2d97209cf1c/45752/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front"
       ],
-      "artHash": "3169869885e2139c",
+      "artHash": "9b674da1240ca7f9",
       "prices": {
         "45750": 275,
         "45752": 325
       },
       "postageCents": 477,
       "printify": {
-        "productId": "6a6a85641ae50363bd0e3f5b",
+        "productId": "6a6b35dc63c1a2d97209cf1c",
         "blueprintId": 400,
         "printProviderId": 99,
         "print": [
