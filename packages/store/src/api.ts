@@ -297,6 +297,13 @@ export const getProduct = (productId: string): Promise<PrintifyProduct> =>
  *
  * The response carries `current_page` and `last_page`; the loop trusts a short
  * page as well, so it terminates even if those fields ever stop being sent.
+ *
+ * **Paging over a collection that is being written is racy, and that is not
+ * fixable here.** `sweep` creates and deletes a probe every few seconds, so a
+ * row can shift across a page boundary between two requests and be seen twice
+ * or missed. Callers that count products — `reconcile`, `audit` — will disagree
+ * with each other by one or two while a write command is running. Take the
+ * census when nothing else is touching the shop.
  */
 export async function listProducts(): Promise<{ data: PrintifyProduct[] }> {
   /**
