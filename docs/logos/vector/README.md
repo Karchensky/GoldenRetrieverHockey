@@ -20,10 +20,11 @@ This folder contains vector and high-resolution production exports for the appro
 3. `33-front-mascot-medallion`
 4. `35-octagon-retrievers-patch`
 5. `36-crossed-shield-retriever`
-6. `38-arched-varsity-lockup`
-7. `45-rink-board-lockup`
-8. `48-dual-capsule-retrievers`
-9. `50-championship-roundel`
+6. `45-rink-board-lockup`
+7. `48-dual-capsule-retrievers`
+8. `50-championship-roundel`
+9. `51-standing-oversized-jersey`
+10. `52-diagonal-tennis-ball-roundel`
 
 ## Production palette
 

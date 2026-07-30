@@ -35,15 +35,24 @@ PALETTE = {
 }
 
 APPROVED = [
-    ("21-dense-heritage-seal", "Dense Heritage Seal"),
-    ("28-dual-retriever-faceoff", "Dual Retriever Faceoff"),
-    ("33-front-mascot-medallion", "Front Mascot Medallion"),
-    ("35-octagon-retrievers-patch", "Octagon Retrievers Patch"),
-    ("36-crossed-shield-retriever", "Crossed Shield Retriever"),
-    ("38-arched-varsity-lockup", "Arched Varsity Lockup"),
-    ("45-rink-board-lockup", "Rink Board Lockup"),
-    ("48-dual-capsule-retrievers", "Dual Capsule Retrievers"),
-    ("50-championship-roundel", "Championship Roundel"),
+    ("21-dense-heritage-seal", "Dense Heritage Seal", "21-dense-heritage-seal.png"),
+    ("28-dual-retriever-faceoff", "Dual Retriever Faceoff", "28-dual-retriever-faceoff.png"),
+    ("33-front-mascot-medallion", "Front Mascot Medallion", "33-front-mascot-medallion.png"),
+    ("35-octagon-retrievers-patch", "Octagon Retrievers Patch", "35-octagon-retrievers-patch.png"),
+    ("36-crossed-shield-retriever", "Crossed Shield Retriever", "36-crossed-shield-retriever.png"),
+    ("45-rink-board-lockup", "Rink Board Lockup", "45-rink-board-lockup.png"),
+    ("48-dual-capsule-retrievers", "Dual Capsule Retrievers", "48-dual-capsule-retrievers.png"),
+    ("50-championship-roundel", "Championship Roundel", "50-championship-roundel.png"),
+    (
+        "51-standing-oversized-jersey",
+        "Standing Oversized Jersey",
+        "oversized-jersey/04-standing-oversized.png",
+    ),
+    (
+        "52-diagonal-tennis-ball-roundel",
+        "Diagonal Tennis Ball Roundel",
+        "majestic-stick-carry/13-diagonal-tennis-roundel.png",
+    ),
 ]
 
 
@@ -111,7 +120,59 @@ def remove_exterior_white(source: Image.Image) -> Image.Image:
     return padded
 
 
-def convert_to_three_color(source: Image.Image) -> Image.Image:
+def remove_circular_exterior(source: Image.Image) -> Image.Image:
+    """Remove the white canvas outside a circular mark while preserving white art."""
+    rgb = source.convert("RGB")
+    pixels = np.asarray(rgb, dtype=np.uint8)
+    channel_max = pixels.max(axis=2)
+    channel_min = pixels.min(axis=2)
+    non_background = (channel_min < 238) | ((channel_max - channel_min) > 24)
+    if not non_background.any():
+        raise ValueError("Circular background removal found no visible artwork")
+
+    horizontal_fill = np.zeros(non_background.shape, dtype=bool)
+    for row_index, row in enumerate(non_background):
+        columns = np.flatnonzero(row)
+        if columns.size:
+            horizontal_fill[row_index, columns[0] : columns[-1] + 1] = True
+
+    vertical_fill = np.zeros(non_background.shape, dtype=bool)
+    for column_index, column in enumerate(non_background.T):
+        rows = np.flatnonzero(column)
+        if rows.size:
+            vertical_fill[rows[0] : rows[-1] + 1, column_index] = True
+
+    silhouette = horizontal_fill & vertical_fill
+    alpha = Image.fromarray((silhouette * 255).astype(np.uint8), mode="L")
+    rgba = rgb.convert("RGBA")
+    rgba.putalpha(alpha)
+
+    coordinates = np.argwhere(silhouette)
+    top, left = coordinates.min(axis=0)
+    bottom, right = coordinates.max(axis=0) + 1
+    side = max(right - left, bottom - top)
+    padding = max(12, round(side * 0.025))
+    crop_box = (
+        max(0, left - padding),
+        max(0, top - padding),
+        min(rgb.width, right + padding),
+        min(rgb.height, bottom + padding),
+    )
+    cropped = rgba.crop(crop_box)
+    padded = Image.new(
+        "RGBA",
+        (cropped.width + padding * 2, cropped.height + padding * 2),
+        (0, 0, 0, 0),
+    )
+    padded.alpha_composite(cropped, (padding, padding))
+    return padded
+
+
+def convert_to_three_color(
+    source: Image.Image,
+    *,
+    snap_neutral_shading: bool = False,
+) -> Image.Image:
     """Snap all visible artwork to the official black/white/gold palette."""
     rgba = source.convert("RGBA")
     alpha = rgba.getchannel("A")
@@ -141,6 +202,23 @@ def convert_to_three_color(source: Image.Image) -> Image.Image:
     )
     result = quantized.convert("RGBA")
     result.putalpha(alpha)
+    if snap_neutral_shading:
+        source_pixels = np.asarray(rgba, dtype=np.uint8)
+        result_pixels = np.asarray(result, dtype=np.uint8).copy()
+        source_rgb = source_pixels[:, :, :3]
+        spread = source_rgb.max(axis=2) - source_rgb.min(axis=2)
+        lightness = source_rgb.mean(axis=2)
+        visible = source_pixels[:, :, 3] > 0
+        neutral = visible & (spread < 28)
+        result_pixels[neutral & (lightness >= 128), :3] = np.array(
+            [255, 255, 255],
+            dtype=np.uint8,
+        )
+        result_pixels[neutral & (lightness < 128), :3] = np.array(
+            [11, 11, 13],
+            dtype=np.uint8,
+        )
+        result = Image.fromarray(result_pixels, mode="RGBA")
     return result
 
 
@@ -402,15 +480,21 @@ def build() -> None:
     }
     comparison_rows: list[dict[str, object]] = []
 
-    for slug, title in APPROVED:
-        source_path = SOURCE_DIR / f"{slug}.png"
+    for slug, title, source_relative_path in APPROVED:
+        source_path = SOURCE_DIR / source_relative_path
         if not source_path.exists():
             raise FileNotFoundError(f"Approved source is missing: {source_path}")
 
         with Image.open(source_path) as source:
-            cleaned = remove_exterior_white(source)
+            if slug == "52-diagonal-tennis-ball-roundel":
+                cleaned = remove_circular_exterior(source)
+            else:
+                cleaned = remove_exterior_white(source)
         cleaned = clean_detail_neutrals(cleaned)
-        three_color = convert_to_three_color(cleaned)
+        three_color = convert_to_three_color(
+            cleaned,
+            snap_neutral_shading=slug == "51-standing-oversized-jersey",
+        )
 
         detailed_input = WORK_DIR / f"{slug}-detailed-input.png"
         three_color_input = WORK_DIR / f"{slug}-3color-input.png"

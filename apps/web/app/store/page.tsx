@@ -47,11 +47,6 @@ export default function StorePage() {
           <br />
           <i>store.</i>
         </h1>
-        <p className="hero-p">
-          Nine crests, drawn for the club and printed one order at a time in the
-          United States. Tees, hoodies, caps, mugs, stickers &mdash; and a puck.
-        </p>
-
         <nav className={s.categoryNav} aria-label="Sections">
           {groups.map((group) => (
             <a key={group.itemId} href={`#${group.itemId}`}>{group.label}</a>

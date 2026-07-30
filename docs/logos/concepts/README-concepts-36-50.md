@@ -8,7 +8,6 @@ Every new design uses only `GOLDEN RETRIEVERS`, `GR`, or no text. No concept use
 | --- | --- | --- |
 | 36 | Crossed Shield Retriever | Dense heraldic shield with a detailed retriever, full crossed sticks, banners, and puck |
 | 37 | Dual Negative-Space Puck | Gold and white retriever profiles arranged around a central puck |
-| 38 | Arched Varsity Lockup | Wide two-line team name, retriever medallion, precise stick underline, and puck |
 | 39 | Full-Body Oval Crest | Anatomically controlled standing retriever with four visible legs, crossed sticks, and puck |
 | 40 | Precision GR Monogram | Clear interlocking `GR`, retriever in the `R` counter, and a taped blade terminal |
 | 41 | GR Puck Tag | Front-facing retriever wearing a collar with a puck-shaped `GR` tag |

@@ -66,20 +66,71 @@ const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}
  * The app stays dumb: `mockups[0]` is the hero, and it is now the black hoodie
  * rather than the white one.
  */
-async function darkestFirst(urls) {
-  const scored = [];
+/**
+ * Choose and order a product's mockups: no people, and a different body colour
+ * from the product next to it.
+ *
+ * TWO THINGS GO WRONG IF THIS IS LEFT TO PRINTIFY.
+ *
+ * **Models.** Some blueprints return on-body shots. The captain does not want
+ * them — "preferably the images are just of the products themselves" — and a
+ * stock model is the fastest way to make a club shop look like a drop-shipper.
+ * A flat lay against a studio white is essentially skin-free, so a mockup with
+ * any real fraction of skin tone in it is a person, and it is dropped.
+ *
+ * **Sameness.** The first version of this sorted DARKEST FIRST, which fixed
+ * "everything is white" by creating "everything is black": every hoodie navy,
+ * every tee black, an entire category in one colour. Sorting is the wrong tool —
+ * any total order over a set of near-identical products produces a uniform row.
+ *
+ * So the list is sorted by luminance and then ROTATED by the product's position
+ * in its own category. Neighbouring products therefore lead with different
+ * colourways by construction, it is deterministic (the same catalog always
+ * produces the same grid), and no product ever leads with a colour it does not
+ * come in.
+ */
+const SKIN_LIMIT = 0.04;
+
+async function skinFraction(buf) {
+  // Downsample hard: this is a proportion, not a diagnosis, and 64px is plenty.
+  const { data, info } = await sharp(buf)
+    .resize({ width: 64, height: 64, fit: "inside" })
+    .removeAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  let skin = 0;
+  const px = info.width * info.height;
+  for (let i = 0; i < data.length; i += info.channels) {
+    const r = data[i], g = data[i + 1], b = data[i + 2];
+    // The classic RGB skin rule, and deliberately narrow: the shop's own gold is
+    // #D9A333, which is far more saturated than skin and must not trip it.
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    if (r > 95 && g > 40 && b > 20 && r > g && r > b && r - g > 15 && max - min > 15 && max - min < 90) {
+      skin += 1;
+    }
+  }
+  return skin / px;
+}
+
+async function chooseAndOrder(urls, rotation) {
+  const kept = [];
   for (const url of urls) {
     const res = await fetch(url);
-    if (!res.ok) { scored.push({ url, lum: 1 }); continue; }
+    if (!res.ok) continue;
     const buf = Buffer.from(await res.arrayBuffer());
-    // The CENTRE square, not a corner: the corner is the studio backdrop on
-    // every one of these and would rank them all identically.
+    const skin = await skinFraction(buf);
+    if (skin > SKIN_LIMIT) {
+      console.log(`  dropped a model shot (${(skin * 100).toFixed(0)}% skin tone)`);
+      continue;
+    }
     const { channels } = await sharp(buf).extract(await centreBox(buf)).stats();
     const [r, g, b] = channels;
-    scored.push({ url, lum: (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255 });
+    kept.push({ url, lum: (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255 });
   }
-  scored.sort((a, b) => a.lum - b.lum);
-  return scored.map((s) => s.url);
+  kept.sort((a, b) => a.lum - b.lum);
+  if (!kept.length) return [];
+  const at = ((rotation % kept.length) + kept.length) % kept.length;
+  return [...kept.slice(at), ...kept.slice(0, at)].map((k) => k.url);
 }
 
 async function centreBox(buf) {
@@ -89,8 +140,15 @@ async function centreBox(buf) {
   return { left: Math.round((width - w) / 2), top: Math.round((height - h) / 2), width: w, height: h };
 }
 
+// Rotation counted PER CATEGORY, so it is the products sitting next to each
+// other in a row that differ, which is the only place sameness is visible.
+const seenInCategory = new Map();
+
 for (const product of catalog.products) {
-  const mockups = await darkestFirst(product.mockups ?? []);
+  const category = product.itemId ?? "other";
+  const rank = seenInCategory.get(category) ?? 0;
+  seenInCategory.set(category, rank + 1);
+  const mockups = await chooseAndOrder(product.mockups ?? [], rank);
   for (const [index, url] of mockups.entries()) {
     const name = `${product.id}-${index}.webp`;
     wanted.add(name);

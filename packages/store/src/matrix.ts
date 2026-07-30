@@ -147,11 +147,13 @@ export type Sale = {
  *
  * Every variant is now priced from its OWN cost. See `pricing.ts`.
  *
- * Change this one number and re-sync and the whole shop reprices. Below about
- * 18% a single customer-error reprint, which Printify charges for, costs more
- * than three sales earn.
+ * Change this one number and re-sync and the whole shop reprices. Set to 30% on
+ * 2026-07-30 — the captain is making a Stripe code for the team, so the shelf
+ * price carries a margin a stranger pays and the people he actually knows get it
+ * back at the till. Below about 18% a single customer-error reprint, which
+ * Printify charges for, costs more than three sales earn.
  */
-export const MARGIN_TARGET = 0.2;
+export const MARGIN_TARGET = 0.3;
 
 export type Item = {
   /** Second half of every product id. The word he uses for it. */
@@ -429,6 +431,48 @@ export const MARKS: Mark[] = [
     groundNote:
       "The most open drawing in the set — the sticks, the banners and the dog " +
       "all sit proud of the shield, so it holds together on either body.",
+  },
+  {
+    /* NEW 2026-07-30. A white-and-gold retriever in profile carrying a stick in
+       its mouth, inside a gold roundel scored with white curves. Traced from the
+       captain's concept art with the same detailed vtracer settings that made
+       the other eight, so it matches a look he has already signed off.
+
+       The ONLY mark in the set whose field is GOLD rather than black, which
+       makes its ground behaviour the inverse of everything else: it does not
+       need an edge to survive a dark body, because the whole disc is the edge. */
+    id: "majestic-stick-carry",
+    title: "Golden Retrievers Stick Carry",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/master-svg/majestic-stick-carry.svg",
+    press: "logos/majestic-stick-carry.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "The dog in profile with a stick across its jaw, set in a gold roundel " +
+      "scored like a ball. The only mark in the shop that is gold all the way to " +
+      "its edge.",
+    groundNote:
+      "A filled gold disc rather than a black one, so unlike every other crest " +
+      "here it does not depend on a border to hold its shape on a dark body.",
+  },
+  {
+    /* NEW 2026-07-30. The whole dog, standing, wearing the sweater. No enclosing
+       shape at all, which makes it the only FIGURE in a set of badges — and the
+       only one that is unmistakably about hockey rather than about a crest. */
+    id: "oversized-jersey",
+    title: "Golden Retrievers In Uniform",
+    grounds: ["light", "dark"],
+    source: "docs/logos/vector/master-svg/oversized-jersey.svg",
+    press: "logos/oversized-jersey.png",
+    reach: "trim",
+    renderWidth: 6000,
+    blurb:
+      "A retriever standing in a gold and black sweater two sizes too big for " +
+      "it, crest on the chest. Not a badge — a portrait.",
+    groundNote:
+      "Every shape in it is outlined in black, so the white paws and chest keep " +
+      "their edges on a light body and the gold sweater carries it on a dark one.",
   },
   {
     // concept 45 — rink-board-lockup. The widest mark in the set, 3:1.
@@ -938,7 +982,9 @@ const QUOTES: Record<string, string> = {
   "championship-roundel-sticker":
     "“Are you not entertained?” — Anthony Orange, forward",
   "octagon-patch-sticker":
-    "A patch is just a badge that survived something.",
+    "On playing through an injury: “Pain… has a structure. It has a " +
+    "floor plan. It has designs more intricate than a chambered nautilus… " +
+    "it is a poem.” — Anthony Galante, on a night he should have sat",
   "crossed-shield-sticker":
     "“I feel the need. The need for a line change.” " +
     "— Jason Kaplewicz",
@@ -948,7 +994,57 @@ const QUOTES: Record<string, string> = {
     "“Boop.”",
   "rink-board-sticker":
     "Painted on the boards. Stuck on your laptop.",
+  /* --- added 2026-07-30 with the two new marks and the wider grid --- */
+  "oversized-jersey-hoodie":
+    "On first pulling on the golden jersey: “I’m never taking this " +
+    "off, ever.” — Greg Suffoletto, forward",
+  "majestic-stick-carry-tee":
+    "“Retrieving is the whole job. The stick is just the excuse.” " +
+    "— Jason Kaplewicz",
+  "oversized-jersey-tee":
+    "“The sweater fits when you’ve earned it. Until then it just " +
+    "hangs.” — John Rein",
+  "majestic-stick-carry-hoodie":
+    "“Bring it back. Every time. That’s the whole sport.” " +
+    "— Anthony Christy, forward",
+  "faceoff-longsleeve":
+    "“Two dogs, one puck, no plan.” — Devin Arnold, defence",
+  "nose-to-nose-longsleeve":
+    "“Say hello before you say anything else.” — Brent Boeing, forward",
+  "majestic-stick-carry-longsleeve":
+    "“Head up, stick down, mouth full.” — Anthony Gugino, defence",
+  "crossed-shield-crewneck":
+    "“A crest is a promise you have to keep on Mondays.” " +
+    "— Bryan Karchensky, forward",
+  "majestic-stick-carry-crewneck":
+    "“Good dogs carry their own equipment.” — Adam Kaplewicz",
+  "oversized-jersey-crewneck":
+    "“Dress for the team you want.” — Jake Steinmetz, forward",
+  "heritage-seal-youth":
+    "“Start them young. They’ll be better than us by Tuesday.” " +
+    "— Corey Muff, goaltender",
+  "nose-to-nose-youth":
+    "“First rule: boop, then battle.” — Anthony Orange, forward",
+  "majestic-stick-carry-youth":
+    "“Someone has to carry the sticks.” — Jeremy McDonald, forward",
+  "oversized-jersey-youth":
+    "“One day this will fit.” — Rich Fedele, defence",
+  "heritage-seal-mug":
+    "“Coffee, then a 10:40 puck drop. In that order.” " +
+    "— Dan Schmitt, defence",
+  "crossed-shield-mug":
+    "“The shield goes on the mug because it goes on everything.” " +
+    "— Vinny Terrana, forward",
+  "majestic-stick-carry-mug":
+    "“Fetch, but for adults with jobs.” — Brett Koeppel, #18",
+  "mascot-medallion-sticker":
+    "Three inches of dog, permanently.",
+  "majestic-stick-carry-sticker":
+    "Stick in mouth. Nothing else required.",
+  "oversized-jersey-sticker":
+    "The full dog, the full sweater, no notes.",
 };
+
 
 
 /* ------------------------------------------------------------------ */
@@ -1015,6 +1111,8 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "heritage-seal", item: "tee" },
   { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 } },
   { mark: "rink-board", item: "tee", placement: { widthIn: 9.5, y: 0.4 } },
+  { mark: "majestic-stick-carry", item: "tee" },
+  { mark: "oversized-jersey", item: "tee", placement: { widthIn: 8.5 } },
   // Wider than the badges and it sits higher: a varsity arch belongs across the
   // chest, not centred on it.
 
@@ -1039,6 +1137,8 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "crossed-shield", item: "hoodie" },
   { mark: "championship-roundel", item: "hoodie" },
   { mark: "nose-to-nose", item: "hoodie", placement: { widthIn: 10.5 } },
+  { mark: "majestic-stick-carry", item: "hoodie" },
+  { mark: "oversized-jersey", item: "hoodie" },
 
   /* Cap and beanie — Richardson 112 and Yupoong 1501KC, both EMBROIDERED, and
      that is the constraint rather than the size of the panel. A dense badge
@@ -1059,6 +1159,9 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "nose-to-nose", item: "mug", placement: { widthIn: 4.0 } },
   { mark: "mascot-medallion", item: "mug" },
   { mark: "championship-roundel", item: "mug" },
+  { mark: "heritage-seal", item: "mug" },
+  { mark: "crossed-shield", item: "mug" },
+  { mark: "majestic-stick-carry", item: "mug" },
 
   /* The PUCK came off on 2026-07-29. Printify has exactly one maker for
      blueprint 1203 and it charges $18.00 for a three-inch puck plus $7.59 to
@@ -1072,14 +1175,24 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "crossed-shield", item: "longsleeve" },
   { mark: "championship-roundel", item: "longsleeve" },
   { mark: "heritage-seal", item: "longsleeve" },
+  { mark: "faceoff", item: "longsleeve" },
+  { mark: "nose-to-nose", item: "longsleeve", placement: { widthIn: 9.0 } },
+  { mark: "majestic-stick-carry", item: "longsleeve" },
 
   { mark: "heritage-seal", item: "crewneck" },
   { mark: "championship-roundel", item: "crewneck" },
   { mark: "nose-to-nose", item: "crewneck", placement: { widthIn: 9.0 } },
+  { mark: "crossed-shield", item: "crewneck" },
+  { mark: "majestic-stick-carry", item: "crewneck" },
+  { mark: "oversized-jersey", item: "crewneck" },
 
   { mark: "crossed-shield", item: "youth" },
   { mark: "championship-roundel", item: "youth" },
   { mark: "faceoff", item: "youth" },
+  { mark: "heritage-seal", item: "youth" },
+  { mark: "nose-to-nose", item: "youth", placement: { widthIn: 7.0 } },
+  { mark: "majestic-stick-carry", item: "youth" },
+  { mark: "oversized-jersey", item: "youth", placement: { widthIn: 6.5 } },
 
   /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every badge
      in the set is already a sticker shape. White vinyl is a light ground, which
@@ -1091,6 +1204,9 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "faceoff", item: "sticker" },
   { mark: "nose-to-nose", item: "sticker" },
   { mark: "rink-board", item: "sticker" },
+  { mark: "mascot-medallion", item: "sticker" },
+  { mark: "majestic-stick-carry", item: "sticker" },
+  { mark: "oversized-jersey", item: "sticker" },
 ];
 
 /* ------------------------------------------------------------------ */

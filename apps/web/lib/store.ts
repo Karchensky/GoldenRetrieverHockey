@@ -48,13 +48,23 @@ export const productById = (id: string): Product | undefined =>
  * a basket on the way out, and the sticker is last because it is the only thing
  * here that cannot be bought on its own.
  */
-export const ITEM_ORDER: readonly string[] = ["tee", "hoodie", "cap", "beanie", "mug", "sticker"];
+export const ITEM_ORDER: readonly string[] = [
+  // Clothing, heaviest commitment last within it…
+  "tee", "longsleeve", "crewneck", "hoodie", "youth",
+  // …then things worn on the head…
+  "cap", "beanie",
+  // …then everything that is not worn at all.
+  "mug", "sticker",
+];
 
 export type ItemGroup = { itemId: string; label: string; products: Product[] };
 
 /** Plural, because these head a group rather than name one thing. */
 const ITEM_LABELS: Record<string, string> = {
   tee: "Tees",
+  longsleeve: "Long Sleeve Tees",
+  crewneck: "Crewnecks",
+  youth: "Youth Tees",
   hoodie: "Hoodies",
   cap: "Caps",
   beanie: "Beanies",

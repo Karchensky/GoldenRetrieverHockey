@@ -1,27 +1,14 @@
-# Oversized Hockey Jersey Concepts
+# Approved Oversized Hockey Jersey Logo
 
-Five black, white, and gold mascot-logo concepts featuring a mature golden
-retriever in an intentionally oversized team hockey sweater.
+`04-standing-oversized.png` is the retained concept source.
 
-The common uniform system uses:
+Production versions:
 
-- warm-gold jersey body;
-- black shoulder yoke;
-- white lace-up V-neck;
-- white sleeve bands bordered in black; and
-- a simplified black-and-white retriever roundel on the chest.
-
-Concepts:
-
-1. `01-front-seated-oversized.png` — symmetrical seated mascot
-2. `02-three-quarter-seated.png` — noble three-quarter pose
-3. `03-sphinx-oversized.png` — wide sphinx composition
-4. `04-standing-oversized.png` — full standing silhouette
-5. `05-circular-baggy-badge.png` — compact circular portrait badge
-
-`contact-sheet-oversized-jersey-01-05.png` provides the numbered review sheet.
-Concept 03 uses a 1536 × 1024 canvas; the others are 1254 × 1254 PNG files.
-
-These are concept rasters. A selected direction should receive a final manual
-vector pass for garment geometry, spot colors, embroidery, screen printing,
-and one-color reproduction.
+- detailed SVG:
+  `../../vector/master-svg/51-standing-oversized-jersey.svg`
+- strict black/white/gold SVG:
+  `../../vector/production-3color-svg/51-standing-oversized-jersey-3color.svg`
+- 300-DPI PNG:
+  `../../vector/high-dpi-png/300dpi/51-standing-oversized-jersey-300dpi.png`
+- 600-DPI PNG:
+  `../../vector/high-dpi-png/600dpi/51-standing-oversized-jersey-600dpi.png`
