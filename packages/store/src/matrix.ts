@@ -1079,15 +1079,9 @@ export const QUOTES: Record<string, string> = {
   "crossed-shield-hoodie":
     "“Once more unto the breach, dear friends. Then a line change.” " +
     "— Brent Boeing, forward",
-  "nose-to-nose-hoodie":
-    "“I have lost more of these than I have won and I still lean in.” " +
-    "— Brent Boeing, forward",
   "rink-board-cap":
     "“Now is the winter of our discontent.” — Adam Kaplewicz, " +
     "on a January road game",
-  "nose-to-nose-cap":
-    "“The other one is a golden retriever too. That is the part nobody " +
-    "tells you.” — Anthony Orange, forward",
   "rink-board-beanie":
     "“Every dog has his day. Ours is Monday at 10:40 pm.” " +
     "— Anthony Gugino, defence",
@@ -1095,9 +1089,6 @@ export const QUOTES: Record<string, string> = {
     "“The system is simple. Get the puck, then give it back to me.” — Vinny Terrana, forward",
   "nose-to-nose-mug":
     "“Four legs, two blades, one puck.” — Anthony Galante",
-  "mascot-medallion-mug":
-    "“There is a medal for showing up. We had it drawn.” " +
-    "— Jason Kaplewicz",
   "crossed-shield-longsleeve":
     "“Cry ‘Havoc!’ and let slip the dogs of war.” " +
     "— Corey Muff, goaltender",
@@ -1110,14 +1101,8 @@ export const QUOTES: Record<string, string> = {
     "— Bryan Karchensky, forward",
   "championship-roundel-crewneck":
     "“Sit. Stay. Score.” — Jake Steinmetz, forward",
-  "nose-to-nose-crewneck":
-    "“Fifteen years of these and I still cannot tell you which way the " +
-    "linesman will drop it.” — Anthony Galante",
   "crossed-shield-youth":
     "“This above all: to thine own zone be true.” — John Rein",
-  "championship-roundel-youth":
-    "“We won it before you were born. Ask us about it anyway.” " +
-    "— Jake Steinmetz, forward",
   "faceoff-youth":
     "“Nobody puts the fourth line in a corner.” " +
     "— Jeremy McDonald, forward",
@@ -1133,9 +1118,6 @@ export const QUOTES: Record<string, string> = {
     "“Roll over is a defensive scheme now.” — Jason Kaplewicz",
   "faceoff-sticker":
     "“There is no leash long enough for a Monday night.” — Devin Arnold, defence",
-  "nose-to-nose-sticker":
-    "“Two dogs, and neither of them is going to move.” " +
-    "— Vinny Terrana, forward",
   "rink-board-sticker":
     "“The board never changes. Everything skating past it does.” " +
     "— John Rein",
@@ -1152,9 +1134,6 @@ export const QUOTES: Record<string, string> = {
     "“The fault, dear Brutus, is not in our sticks.” — Rich Fedele, defence",
   "faceoff-longsleeve":
     "“Two dogs, one puck, no plan.” — Devin Arnold, defence",
-  "nose-to-nose-longsleeve":
-    "“A faceoff is two people agreeing to disagree, very briefly.” " +
-    "— Anthony Christy, forward",
   "majestic-stick-carry-longsleeve":
     "“Head up, stick down, mouth full.” — Anthony Gugino, defence",
   "crossed-shield-crewneck":
@@ -1164,12 +1143,6 @@ export const QUOTES: Record<string, string> = {
     "“Do, or do not. There is no drop pass.” — Andrew Murphy, defence",
   "oversized-jersey-crewneck":
     "“Dress for the team you want.” — Jake Steinmetz, forward",
-  "heritage-seal-youth":
-    "“Est. 2011, which to somebody this size is the distant past.” " +
-    "— Adam Kaplewicz",
-  "nose-to-nose-youth":
-    "“Get low, keep your hands soft, and do not blink first.” " +
-    "— Anthony Orange, forward",
   "majestic-stick-carry-youth":
     "“Someone has to carry the sticks.” — Jeremy McDonald, forward",
   "oversized-jersey-youth":
@@ -1182,23 +1155,15 @@ export const QUOTES: Record<string, string> = {
     "— Vinny Terrana, forward",
   "majestic-stick-carry-mug":
     "“We are gonna need more tape.” — Jason Kaplewicz",
-  "mascot-medallion-sticker":
-    "“He has never missed a Monday.” — Andrew Murphy, defence",
   "majestic-stick-carry-sticker":
     "“He carries it better than most of us and he never complains about " +
     "the flex.” — Jeremy McDonald, forward",
-  "oversized-jersey-sticker":
-    "“Smallest thing we sell, biggest sweater we own.” " +
-    "— Anthony Galante",
   "faceoff-crewneck":
     "“Win the draw and the next ten seconds are somebody else’s " +
     "problem.” — Devin Arnold, defence",
   "faceoff-hoodie":
     "“Something is rotten in the state of our breakout.” " +
     "— Dan Schmitt, defence",
-  "oversized-jersey-longsleeve":
-    "“It was two sizes too big in 2011 and it is exactly right now.” " +
-    "— Brett Koeppel, defence",
   "rink-board-longsleeve":
     "“The boards have taken more of my hits than any opponent has.” " +
     "— Dan Schmitt, defence",

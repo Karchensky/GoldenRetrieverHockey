@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { MATRIX, QUOTES, buildLine } from "../src/matrix.ts";
 import {
+  AWAITING_A_QUOTE,
   REJECTED_QUOTES,
   REJECTED_NORMALISED,
   normaliseQuote,
@@ -122,15 +123,35 @@ test("every quote is attributed to a person", () => {
 /* 4. Every product has one                                            */
 /* ------------------------------------------------------------------ */
 
-test("every product in the line has a quote", () => {
+test("every product has a quote, except the ones waiting for one", () => {
+  const waiting = new Set(AWAITING_A_QUOTE);
   const missing = buildLine()
-    .filter((product) => !QUOTES[product.id])
+    .filter((product) => !QUOTES[product.id] && !waiting.has(product.id))
     .map((product) => product.id);
   assert.deepEqual(
     missing,
     [],
-    `These products would ship a description with no quote in it: ${missing.join(", ")}`,
+    `These products would ship a description with no quote and are not on the ` +
+      `waiting list, so nobody is expecting it: ${missing.join(", ")}`,
   );
+});
+
+test("a product waiting for a quote does not already have one", () => {
+  // The other direction: a line chosen for a waiting slot must come off the
+  // list, or the review page keeps asking him to fill a slot that is full.
+  const filled = AWAITING_A_QUOTE.filter((id) => QUOTES[id]);
+  assert.deepEqual(
+    filled,
+    [],
+    `On AWAITING_A_QUOTE but already carrying a line — remove them from the ` +
+      `list: ${filled.join(", ")}`,
+  );
+});
+
+test("the waiting list names real products", () => {
+  const ids = new Set(buildLine().map((product) => product.id));
+  const ghosts = AWAITING_A_QUOTE.filter((id) => !ids.has(id));
+  assert.deepEqual(ghosts, [], `AWAITING_A_QUOTE names products that do not exist: ${ghosts.join(", ")}`);
 });
 
 test("no quote is keyed to a product that does not exist", () => {

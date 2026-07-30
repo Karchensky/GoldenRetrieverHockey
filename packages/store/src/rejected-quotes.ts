@@ -87,6 +87,37 @@ const SECOND_ROUND = [
 ];
 
 /**
+ * Rejected 2026-07-30, from the replacements written for the second round —
+ * twelve of the seventeen, struck the same day they were written.
+ *
+ * These did not fail the way the first two rounds failed. There is no film
+ * catchphrase and no obedience pun in the list; they are plain, dry lines of
+ * the kind he has approved elsewhere. So the lesson is not another banned
+ * register. It is that guessing which line belongs on which product is the part
+ * that keeps missing, and he said so: **"Provide me a specific list of ones
+ * that do not yet have a quote, and a list of quotes to choose from & I will
+ * assign from there."** The slots below are deliberately empty until he does.
+ *
+ * SEVEN OF THE TWELVE ARE THE BOOP. Across three rounds nearly every line
+ * written for that mark has been struck, on six different garments. Worth
+ * saying out loud before writing an eighth.
+ */
+const THIRD_ROUND = [
+  "I have lost more of these than I have won and I still lean in.",
+  "The other one is a golden retriever too. That is the part nobody tells you.",
+  "There is a medal for showing up. We had it drawn.",
+  "It was two sizes too big in 2011 and it is exactly right now.",
+  "A faceoff is two people agreeing to disagree, very briefly.",
+  "Fifteen years of these and I still cannot tell you which way the linesman will drop it.",
+  "We won it before you were born. Ask us about it anyway.",
+  "Est. 2011, which to somebody this size is the distant past.",
+  "Get low, keep your hands soft, and do not blink first.",
+  "Two dogs, and neither of them is going to move.",
+  "He has never missed a Monday.",
+  "Smallest thing we sell, biggest sweater we own.",
+];
+
+/**
  * Rejected earlier, before the review pages existed — struck by name in chat.
  * Kept so the rule is one rule and not "the list, plus whatever I remember".
  */
@@ -98,7 +129,34 @@ const BY_NAME = [
 export const REJECTED_QUOTES: readonly string[] = [
   ...FIRST_ROUND,
   ...SECOND_ROUND,
+  ...THIRD_ROUND,
   ...BY_NAME,
+];
+
+/**
+ * Products deliberately carrying NO quote, waiting for him to choose one.
+ *
+ * This is not the same thing as forgetting. `quotes.test.ts` asserts every
+ * product has a line EXCEPT these, and asserts these have none — so a slot
+ * cannot sit empty by accident, and cannot be quietly filled by a guess either.
+ * Removing an id from this list means a line has been chosen for it.
+ *
+ * A product with no quote still renders: `buildLine()` filters empty paragraphs,
+ * so the listing reads blurb → spec → care → closing with no gap.
+ */
+export const AWAITING_A_QUOTE: readonly string[] = [
+  "nose-to-nose-hoodie",
+  "nose-to-nose-cap",
+  "nose-to-nose-longsleeve",
+  "nose-to-nose-crewneck",
+  "nose-to-nose-youth",
+  "nose-to-nose-sticker",
+  "mascot-medallion-mug",
+  "mascot-medallion-sticker",
+  "oversized-jersey-longsleeve",
+  "oversized-jersey-sticker",
+  "championship-roundel-youth",
+  "heritage-seal-youth",
 ];
 
 /** Normalised, for a fast lookup. Built once. */
