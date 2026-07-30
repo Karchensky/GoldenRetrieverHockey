@@ -50,8 +50,47 @@ const existing = new Set(
 const SOURCES = join(OUT, ".sources.json");
 const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}));
 
+/**
+ * Order a product's mockups DARKEST GARMENT FIRST before they are written.
+ *
+ * Printify returns the white colourway first for almost everything, so a grid of
+ * twenty products was twenty white shirts on a near-black page — the captain:
+ * "don't use the default white for each item in the main store thumbnail".
+ *
+ * The decision lives here rather than in the storefront because the storefront
+ * cannot see a colour: it has a list of URLs and no idea what is in them. Here
+ * the pixels are already in hand. Mean luminance over the middle of the frame is
+ * enough — that region is garment on every mockup in this shop, and the ranking
+ * only has to be right relative to the other views of the SAME product.
+ *
+ * The app stays dumb: `mockups[0]` is the hero, and it is now the black hoodie
+ * rather than the white one.
+ */
+async function darkestFirst(urls) {
+  const scored = [];
+  for (const url of urls) {
+    const res = await fetch(url);
+    if (!res.ok) { scored.push({ url, lum: 1 }); continue; }
+    const buf = Buffer.from(await res.arrayBuffer());
+    // The CENTRE square, not a corner: the corner is the studio backdrop on
+    // every one of these and would rank them all identically.
+    const { channels } = await sharp(buf).extract(await centreBox(buf)).stats();
+    const [r, g, b] = channels;
+    scored.push({ url, lum: (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255 });
+  }
+  scored.sort((a, b) => a.lum - b.lum);
+  return scored.map((s) => s.url);
+}
+
+async function centreBox(buf) {
+  const { width, height } = await sharp(buf).metadata();
+  const w = Math.max(1, Math.round(width * 0.34));
+  const h = Math.max(1, Math.round(height * 0.34));
+  return { left: Math.round((width - w) / 2), top: Math.round((height - h) / 2), width: w, height: h };
+}
+
 for (const product of catalog.products) {
-  const mockups = product.mockups ?? [];
+  const mockups = await darkestFirst(product.mockups ?? []);
   for (const [index, url] of mockups.entries()) {
     const name = `${product.id}-${index}.webp`;
     wanted.add(name);

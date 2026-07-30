@@ -545,7 +545,7 @@
     },
     {
       "id": "nose-to-nose-tee",
-      "title": "Golden Retrievers Nose to Nose — Tee",
+      "title": "Golden Retrievers Boop Tee",
       "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nBella+Canvas 3001 — 4.2 oz of combed and ring-spun cotton in a 32-single knit, so it is light and soft rather than boxy. Side-seamed with taped shoulders. Printed direct-to-garment on the chest.\n\nUnisex sizing, true to size, with a slim-ish cut through the body — size up if you want room. Machine wash cold and tumble dry low; the print lasts longer inside out.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
       "priceCents": 1700,
       "taxCode": "txcd_30011000",
@@ -634,10 +634,10 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18542/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18102/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18078/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b353a63c1a2d97209ce55/18150/92547/golden-retrievers-nose-to-nose-tee.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6b3bcc0d033dbf6e0cd845/18542/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3bcc0d033dbf6e0cd845/18102/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3bcc0d033dbf6e0cd845/18078/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3bcc0d033dbf6e0cd845/18150/92547/golden-retrievers-boop-tee.jpg?camera_label=front"
       ],
       "artHash": "7fa9134d6c2794bb",
       "prices": {
@@ -680,7 +680,7 @@
       },
       "postageCents": 475,
       "printify": {
-        "productId": "6a6b353a63c1a2d97209ce55",
+        "productId": "6a6b3bcc0d033dbf6e0cd845",
         "blueprintId": 12,
         "printProviderId": 29,
         "print": [
@@ -1646,6 +1646,934 @@
             "minDpi": 1497,
             "scale": 0.4388,
             "y": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossed-shield-longsleeve",
+      "title": "Golden Retrievers Crossed Shield — Long Sleeve Tee",
+      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nBella+Canvas 3501 — the long-sleeve cut of the same 4.2 oz combed ring-spun cotton as the tee. Side-seamed, ribbed cuffs, printed on the chest.\n\nUnisex sizing, true to size. Machine wash cold, tumble dry low. The one thing in this shop you could plausibly wear under a jersey.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2550,
+      "taxCode": "txcd_30011000",
+      "markId": "crossed-shield",
+      "itemId": "longsleeve",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25078,
+            25077,
+            25076,
+            25079,
+            25080
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            24993,
+            24992,
+            24991,
+            24994,
+            24995
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            24998,
+            24997,
+            24996,
+            24999,
+            25000
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25048,
+            25047,
+            25046,
+            25049,
+            25050
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/25076/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/24996/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/24991/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a900d033dbf6e0cd69e/25046/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front"
+      ],
+      "artHash": "5a232b7e4a016609",
+      "prices": {
+        "24991": 2550,
+        "24992": 2550,
+        "24993": 2550,
+        "24994": 2550,
+        "24995": 2900,
+        "24996": 2550,
+        "24997": 2550,
+        "24998": 2550,
+        "24999": 2550,
+        "25000": 2900,
+        "25046": 2550,
+        "25047": 2550,
+        "25048": 2550,
+        "25049": 2550,
+        "25050": 2900,
+        "25076": 2550,
+        "25077": 2550,
+        "25078": 2550,
+        "25079": 2550,
+        "25080": 2900
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3a900d033dbf6e0cd69e",
+        "blueprintId": 41,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8.5,
+            "heightIn": 8.65,
+            "dpi": 620,
+            "maxWidthIn": 11.11,
+            "minDpi": 475,
+            "scale": 0.7937,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "championship-roundel-longsleeve",
+      "title": "Golden Retrievers Championship Roundel — Long Sleeve Tee",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nBella+Canvas 3501 — the long-sleeve cut of the same 4.2 oz combed ring-spun cotton as the tee. Side-seamed, ribbed cuffs, printed on the chest.\n\nUnisex sizing, true to size. Machine wash cold, tumble dry low. The one thing in this shop you could plausibly wear under a jersey.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2550,
+      "taxCode": "txcd_30011000",
+      "markId": "championship-roundel",
+      "itemId": "longsleeve",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25078,
+            25077,
+            25076,
+            25079,
+            25080
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            24993,
+            24992,
+            24991,
+            24994,
+            24995
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            24998,
+            24997,
+            24996,
+            24999,
+            25000
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25048,
+            25047,
+            25046,
+            25049,
+            25050
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3a99e0ac3ed18e04b2b0/25076/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a99e0ac3ed18e04b2b0/24996/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a99e0ac3ed18e04b2b0/24991/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a99e0ac3ed18e04b2b0/25046/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front"
+      ],
+      "artHash": "2c0141e4c1d590bc",
+      "prices": {
+        "24991": 2550,
+        "24992": 2550,
+        "24993": 2550,
+        "24994": 2550,
+        "24995": 2900,
+        "24996": 2550,
+        "24997": 2550,
+        "24998": 2550,
+        "24999": 2550,
+        "25000": 2900,
+        "25046": 2550,
+        "25047": 2550,
+        "25048": 2550,
+        "25049": 2550,
+        "25050": 2900,
+        "25076": 2550,
+        "25077": 2550,
+        "25078": 2550,
+        "25079": 2550,
+        "25080": 2900
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3a99e0ac3ed18e04b2b0",
+        "blueprintId": 41,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8.5,
+            "heightIn": 8.5,
+            "dpi": 631,
+            "maxWidthIn": 11.11,
+            "minDpi": 483,
+            "scale": 0.7937,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "heritage-seal-longsleeve",
+      "title": "Golden Retrievers Heritage Seal — Long Sleeve Tee",
+      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nBella+Canvas 3501 — the long-sleeve cut of the same 4.2 oz combed ring-spun cotton as the tee. Side-seamed, ribbed cuffs, printed on the chest.\n\nUnisex sizing, true to size. Machine wash cold, tumble dry low. The one thing in this shop you could plausibly wear under a jersey.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2550,
+      "taxCode": "txcd_30011000",
+      "markId": "heritage-seal",
+      "itemId": "longsleeve",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25078,
+            25077,
+            25076,
+            25079,
+            25080
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            24993,
+            24992,
+            24991,
+            24994,
+            24995
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            24998,
+            24997,
+            24996,
+            24999,
+            25000
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25048,
+            25047,
+            25046,
+            25049,
+            25050
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3a9f63c1a2d97209d333/25076/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a9f63c1a2d97209d333/24996/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a9f63c1a2d97209d333/24991/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3a9f63c1a2d97209d333/25046/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front"
+      ],
+      "artHash": "4dcd1d51ac43da7f",
+      "prices": {
+        "24991": 2550,
+        "24992": 2550,
+        "24993": 2550,
+        "24994": 2550,
+        "24995": 2900,
+        "24996": 2550,
+        "24997": 2550,
+        "24998": 2550,
+        "24999": 2550,
+        "25000": 2900,
+        "25046": 2550,
+        "25047": 2550,
+        "25048": 2550,
+        "25049": 2550,
+        "25050": 2900,
+        "25076": 2550,
+        "25077": 2550,
+        "25078": 2550,
+        "25079": 2550,
+        "25080": 2900
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3a9f63c1a2d97209d333",
+        "blueprintId": 41,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8.5,
+            "heightIn": 8.48,
+            "dpi": 633,
+            "maxWidthIn": 11.11,
+            "minDpi": 484,
+            "scale": 0.7937,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "heritage-seal-crewneck",
+      "title": "Golden Retrievers Heritage Seal — Crewneck",
+      "description": "A double gold ring with GOLDEN arched over the top and RETRIEVERS around the foot, the dog in three-quarter profile over crossed sticks. Drawn as a seal, so it wants to be round and it wants an edge.\n\nGildan 18000 — 8 oz of 50/50 cotton-poly, set-in sleeves, ribbed collar, cuffs and waistband. No hood, no pouch, nothing to catch.\n\nUnisex sizing, runs a touch generous. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2675,
+      "taxCode": "txcd_30011000",
+      "markId": "heritage-seal",
+      "itemId": "crewneck",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25396,
+            25427,
+            25458,
+            25489,
+            25520,
+            25551
+          ]
+        },
+        {
+          "name": "Sport Grey",
+          "hex": "#b6b8b4",
+          "variants": [
+            25395,
+            25426,
+            25457,
+            25488,
+            25519,
+            25550
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            25397,
+            25428,
+            25459,
+            25490,
+            25521,
+            25552
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25388,
+            25419,
+            25450,
+            25481,
+            25512,
+            25543
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3aa6386d41eed50bb302/25458/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3aa6386d41eed50bb302/25459/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3aa6386d41eed50bb302/25457/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3aa6386d41eed50bb302/25450/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front"
+      ],
+      "artHash": "4dcd1d51ac43da7f",
+      "prices": {
+        "25388": 2675,
+        "25395": 2675,
+        "25396": 2675,
+        "25397": 2675,
+        "25419": 2675,
+        "25426": 2675,
+        "25427": 2675,
+        "25428": 2675,
+        "25450": 2675,
+        "25457": 2675,
+        "25458": 2675,
+        "25459": 2675,
+        "25481": 2675,
+        "25488": 2675,
+        "25489": 2675,
+        "25490": 2675,
+        "25512": 3050,
+        "25519": 3050,
+        "25520": 3050,
+        "25521": 3050,
+        "25543": 3225,
+        "25550": 3225,
+        "25551": 3225,
+        "25552": 3225
+      },
+      "postageCents": 849,
+      "printify": {
+        "productId": "6a6b3aa6386d41eed50bb302",
+        "blueprintId": 49,
+        "printProviderId": 39,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8,
+            "heightIn": 7.98,
+            "dpi": 673,
+            "maxWidthIn": 9.71,
+            "minDpi": 554,
+            "scale": 0.6934,
+            "y": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "id": "championship-roundel-crewneck",
+      "title": "Golden Retrievers Championship Roundel — Crewneck",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nGildan 18000 — 8 oz of 50/50 cotton-poly, set-in sleeves, ribbed collar, cuffs and waistband. No hood, no pouch, nothing to catch.\n\nUnisex sizing, runs a touch generous. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2675,
+      "taxCode": "txcd_30011000",
+      "markId": "championship-roundel",
+      "itemId": "crewneck",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25396,
+            25427,
+            25458,
+            25489,
+            25520,
+            25551
+          ]
+        },
+        {
+          "name": "Sport Grey",
+          "hex": "#b6b8b4",
+          "variants": [
+            25395,
+            25426,
+            25457,
+            25488,
+            25519,
+            25550
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            25397,
+            25428,
+            25459,
+            25490,
+            25521,
+            25552
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25388,
+            25419,
+            25450,
+            25481,
+            25512,
+            25543
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3ab395a99540c70495b5/25458/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ab395a99540c70495b5/25459/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ab395a99540c70495b5/25457/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ab395a99540c70495b5/25450/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front"
+      ],
+      "artHash": "2c0141e4c1d590bc",
+      "prices": {
+        "25388": 2675,
+        "25395": 2675,
+        "25396": 2675,
+        "25397": 2675,
+        "25419": 2675,
+        "25426": 2675,
+        "25427": 2675,
+        "25428": 2675,
+        "25450": 2675,
+        "25457": 2675,
+        "25458": 2675,
+        "25459": 2675,
+        "25481": 2675,
+        "25488": 2675,
+        "25489": 2675,
+        "25490": 2675,
+        "25512": 3050,
+        "25519": 3050,
+        "25520": 3050,
+        "25521": 3050,
+        "25543": 3225,
+        "25550": 3225,
+        "25551": 3225,
+        "25552": 3225
+      },
+      "postageCents": 849,
+      "printify": {
+        "productId": "6a6b3ab395a99540c70495b5",
+        "blueprintId": 49,
+        "printProviderId": 39,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 8,
+            "heightIn": 8,
+            "dpi": 670,
+            "maxWidthIn": 9.71,
+            "minDpi": 552,
+            "scale": 0.6934,
+            "y": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "id": "nose-to-nose-crewneck",
+      "title": "Golden Retrievers Nose to Nose — Crewneck",
+      "description": "Two dogs facing each other over a dropped puck inside a gold capsule, GOLDEN RETRIEVERS on the banner beneath them. One in gold, one in white.\n\nGildan 18000 — 8 oz of 50/50 cotton-poly, set-in sleeves, ribbed collar, cuffs and waistband. No hood, no pouch, nothing to catch.\n\nUnisex sizing, runs a touch generous. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 2675,
+      "taxCode": "txcd_30011000",
+      "markId": "nose-to-nose",
+      "itemId": "crewneck",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            25396,
+            25427,
+            25458,
+            25489,
+            25520,
+            25551
+          ]
+        },
+        {
+          "name": "Sport Grey",
+          "hex": "#b6b8b4",
+          "variants": [
+            25395,
+            25426,
+            25457,
+            25488,
+            25519,
+            25550
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            25397,
+            25428,
+            25459,
+            25490,
+            25521,
+            25552
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            25388,
+            25419,
+            25450,
+            25481,
+            25512,
+            25543
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3abc0d033dbf6e0cd709/25458/98502/golden-retrievers-nose-to-nose-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3abc0d033dbf6e0cd709/25459/98502/golden-retrievers-nose-to-nose-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3abc0d033dbf6e0cd709/25457/98502/golden-retrievers-nose-to-nose-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3abc0d033dbf6e0cd709/25450/98502/golden-retrievers-nose-to-nose-crewneck.jpg?camera_label=front"
+      ],
+      "artHash": "7fa9134d6c2794bb",
+      "prices": {
+        "25388": 2675,
+        "25395": 2675,
+        "25396": 2675,
+        "25397": 2675,
+        "25419": 2675,
+        "25426": 2675,
+        "25427": 2675,
+        "25428": 2675,
+        "25450": 2675,
+        "25457": 2675,
+        "25458": 2675,
+        "25459": 2675,
+        "25481": 2675,
+        "25488": 2675,
+        "25489": 2675,
+        "25490": 2675,
+        "25512": 3050,
+        "25519": 3050,
+        "25520": 3050,
+        "25521": 3050,
+        "25543": 3225,
+        "25550": 3225,
+        "25551": 3225,
+        "25552": 3225
+      },
+      "postageCents": 849,
+      "printify": {
+        "productId": "6a6b3abc0d033dbf6e0cd709",
+        "blueprintId": 49,
+        "printProviderId": 39,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 9,
+            "heightIn": 4.38,
+            "dpi": 593,
+            "maxWidthIn": 10.92,
+            "minDpi": 489,
+            "scale": 0.7801,
+            "y": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossed-shield-youth",
+      "title": "Golden Retrievers Crossed Shield — Youth Tee",
+      "description": "A shield with two sticks crossed through it, GOLDEN on the gold banner above, RETRIEVERS on the banner below, a puck at the point.\n\nBella+Canvas 3001Y — the youth cut of the same shirt the grown-ups get. 4.2 oz combed ring-spun cotton, side-seamed.\n\nYouth S, M and L. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 1925,
+      "taxCode": "txcd_30011200",
+      "markId": "crossed-shield",
+      "itemId": "youth",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            61516,
+            61518,
+            61520
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            61561,
+            61562,
+            61563
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            61515,
+            61517,
+            61519
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            61558,
+            61559,
+            61560
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3ac5386d41eed50bb357/61520/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ac5386d41eed50bb357/61519/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ac5386d41eed50bb357/61563/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ac5386d41eed50bb357/61560/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front"
+      ],
+      "artHash": "5a232b7e4a016609",
+      "prices": {
+        "61515": 1925,
+        "61516": 1925,
+        "61517": 1925,
+        "61518": 1925,
+        "61519": 1925,
+        "61520": 1925,
+        "61558": 1925,
+        "61559": 1925,
+        "61560": 1925,
+        "61561": 1925,
+        "61562": 1925,
+        "61563": 1925
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3ac5386d41eed50bb357",
+        "blueprintId": 420,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 6.5,
+            "heightIn": 6.62,
+            "dpi": 811,
+            "maxWidthIn": 7.74,
+            "minDpi": 681,
+            "scale": 0.7863,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "championship-roundel-youth",
+      "title": "Golden Retrievers Championship Roundel — Youth Tee",
+      "description": "A full roundel — GOLDEN arched in gold over the top, RETRIEVERS in white around the foot, the dog centred over crossed sticks and a puck.\n\nBella+Canvas 3001Y — the youth cut of the same shirt the grown-ups get. 4.2 oz combed ring-spun cotton, side-seamed.\n\nYouth S, M and L. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 1925,
+      "taxCode": "txcd_30011200",
+      "markId": "championship-roundel",
+      "itemId": "youth",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            61516,
+            61518,
+            61520
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            61561,
+            61562,
+            61563
+          ]
+        },
+        {
+          "name": "Black",
+          "hex": "#17191b",
+          "variants": [
+            61515,
+            61517,
+            61519
+          ]
+        },
+        {
+          "name": "Navy",
+          "hex": "#1b2a3d",
+          "variants": [
+            61558,
+            61559,
+            61560
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3acd63c1a2d97209d390/61520/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3acd63c1a2d97209d390/61519/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3acd63c1a2d97209d390/61563/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3acd63c1a2d97209d390/61560/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front"
+      ],
+      "artHash": "2c0141e4c1d590bc",
+      "prices": {
+        "61515": 1925,
+        "61516": 1925,
+        "61517": 1925,
+        "61518": 1925,
+        "61519": 1925,
+        "61520": 1925,
+        "61558": 1925,
+        "61559": 1925,
+        "61560": 1925,
+        "61561": 1925,
+        "61562": 1925,
+        "61563": 1925
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3acd63c1a2d97209d390",
+        "blueprintId": 420,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 6.5,
+            "heightIn": 6.5,
+            "dpi": 825,
+            "maxWidthIn": 7.74,
+            "minDpi": 693,
+            "scale": 0.7863,
+            "y": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "faceoff-youth",
+      "title": "Golden Retrievers Faceoff — Youth Tee",
+      "description": "Two dogs and two pucks inside one disc — one dog in gold, one in white, and the gold line between them where the puck drops.\n\nBella+Canvas 3001Y — the youth cut of the same shirt the grown-ups get. 4.2 oz combed ring-spun cotton, side-seamed.\n\nYouth S, M and L. Machine wash cold, tumble dry low.\n\nGolden Retriever Hockey — Buffalo's premier golden retriever themed hockey team since 2011.",
+      "priceCents": 1925,
+      "taxCode": "txcd_30011200",
+      "markId": "faceoff",
+      "itemId": "youth",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#f4f4f2",
+          "variants": [
+            61516,
+            61518,
+            61520
+          ]
+        },
+        {
+          "name": "Athletic Heather",
+          "hex": "#b0b2ad",
+          "variants": [
+            61561,
+            61562,
+            61563
+          ]
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "mockups": [
+        "https://images-api.printify.com/mockup/6a6b3ad395a99540c70495e2/61520/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6b3ad395a99540c70495e2/61563/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front"
+      ],
+      "artHash": "06d73fd908759740",
+      "prices": {
+        "61516": 1925,
+        "61518": 1925,
+        "61520": 1925,
+        "61561": 1925,
+        "61562": 1925,
+        "61563": 1925
+      },
+      "postageCents": 475,
+      "printify": {
+        "productId": "6a6b3ad395a99540c70495e2",
+        "blueprintId": 420,
+        "printProviderId": 29,
+        "print": [
+          {
+            "position": "front",
+            "widthIn": 6.5,
+            "heightIn": 6.56,
+            "dpi": 789,
+            "maxWidthIn": 7.74,
+            "minDpi": 662,
+            "scale": 0.7863,
+            "y": 0.42
           }
         ]
       }

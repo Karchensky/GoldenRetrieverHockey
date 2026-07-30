@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Buy from "../../../components/store/Buy";
+import Gallery from "../../../components/store/Gallery";
 import { fromLabel, groups, mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
@@ -53,26 +54,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       </header>
 
       <div className={s.detail} data-reveal>
-        <div className={s.stage}>
-          {product.mockups.length ? (
-            product.mockups.map((_, index) => (
-              <img
-                key={index}
-                className={s.stageImg}
-                src={mockupPath(product.id, index)}
-                alt={`${product.title}, view ${index + 1}`}
-                width={1200}
-                height={1200}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-              />
-            ))
-          ) : (
-            <p className={s.notLiveB}>
-              No mockups have been mirrored for this product yet.
-            </p>
-          )}
-        </div>
+        <Gallery
+          title={product.title}
+          images={product.mockups.map((_, index) => ({
+            src: mockupPath(product.id, index),
+            alt: `${product.title}, view ${index + 1}`,
+          }))}
+        />
 
         <div>
           <p className={s.detailPrice}>{priceLabel(product)}</p>

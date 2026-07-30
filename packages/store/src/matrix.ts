@@ -237,6 +237,20 @@ export type Item = {
 export type MatrixEntry = {
   mark: string;
   item: string;
+  /**
+   * Overrides the generated `{mark} — {item}` title for this ONE product.
+   *
+   * Titles are derived so a mark cannot be spelled two ways across nine items.
+   * A per-line override is the exception, and it exists because a derived title
+   * is a description and occasionally a product deserves a NAME: the captain
+   * named the nose-to-nose tee the Boop Tee, which no generator was ever going
+   * to arrive at.
+   *
+   * The sync matches existing products by title, so changing this renames the
+   * draft on the shop rather than creating a second one — `needsRebuild` sees
+   * no geometry change and the PUT carries the new title.
+   */
+  title?: string;
   /** Rarely needed — the item's own placement is the default. */
   placement?: Partial<Item["placement"]>;
   /** Rarely needed — the item's own price is the default. */
@@ -701,6 +715,93 @@ export const ITEMS: Item[] = [
     care: "One size. Hand wash cold and lay flat to dry.",
   },
   {
+    /* The closest thing this catalog has to a base layer, and the captain's
+       pick. Same Bella+Canvas cotton as the tee, same maker, so a customer who
+       knows the tee knows this. Monster Digital is the only sensible provider:
+       the others are the ones the tee already passed over. */
+    id: "longsleeve",
+    title: "Long Sleeve Tee",
+    blueprintId: 41,
+    printProviderId: 29,
+    priceCents: 2600,
+    taxCode: "txcd_30011000",
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    positions: ["front", "back"],
+    // A 14 x 16in canvas, the roomiest chest in the shop after the hoodie back.
+    placement: { position: "front", widthIn: 8.5, y: 0.42 },
+    colourways: [
+      { name: "White", hex: "#f4f4f2", ground: "light", variants: [25078, 25077, 25076, 25079, 25080] },
+      { name: "Athletic Heather", hex: "#b0b2ad", ground: "light", variants: [24993, 24992, 24991, 24994, 24995] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [24998, 24997, 24996, 24999, 25000] },
+      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25048, 25047, 25046, 25049, 25050] },
+    ],
+    spec:
+      "Bella+Canvas 3501 — the long-sleeve cut of the same 4.2 oz combed " +
+      "ring-spun cotton as the tee. Side-seamed, ribbed cuffs, printed on the chest.",
+    care:
+      "Unisex sizing, true to size. Machine wash cold, tumble dry low. The one " +
+      "thing in this shop you could plausibly wear under a jersey.",
+  },
+  {
+    /* The hoodie's plainer sibling. Gildan 18000 through SwiftPOD, who already
+       make the IND4000 — one fewer parcel origin, and a maker this shop has
+       already checked. A crewneck is the garment people buy when they want the
+       badge without the hood. */
+    id: "crewneck",
+    title: "Crewneck",
+    blueprintId: 49,
+    printProviderId: 39,
+    priceCents: 2700,
+    taxCode: "txcd_30011000",
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
+    // 11.5 x 13.2in, near enough square, so a badge gets real room without the
+    // pouch stealing the bottom third the way it does on the hoodie.
+    placement: { position: "front", widthIn: 8.0, y: 0.45 },
+    colourways: [
+      { name: "White", hex: "#f4f4f2", ground: "light", variants: [25396, 25427, 25458, 25489, 25520, 25551] },
+      { name: "Sport Grey", hex: "#b6b8b4", ground: "light", variants: [25395, 25426, 25457, 25488, 25519, 25550] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [25397, 25428, 25459, 25490, 25521, 25552] },
+      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25388, 25419, 25450, 25481, 25512, 25543] },
+    ],
+    spec:
+      "Gildan 18000 — 8 oz of 50/50 cotton-poly, set-in sleeves, ribbed " +
+      "collar, cuffs and waistband. No hood, no pouch, nothing to catch.",
+    care: "Unisex sizing, runs a touch generous. Machine wash cold, tumble dry low.",
+  },
+  {
+    /* For teammates' kids, which is most of the reason a beer-league team has a
+       shop at all. Bella+Canvas 3001Y is the youth cut of the ADULT TEE — same
+       blueprint family, same maker, so the badge on a kid's shirt is the same
+       badge as their dad's.
+       It costs MORE than the adult ($13.30 against $11.54), which is Printify's
+       number and reads oddly, but three sizes of a genuinely matching shirt is
+       worth carrying anyway. */
+    id: "youth",
+    title: "Youth Tee",
+    blueprintId: 420,
+    printProviderId: 29,
+    priceCents: 2000,
+    // Children's clothing has its OWN New York treatment and its own Stripe
+    // code. Shipping it as adult apparel would be wrong in several states.
+    taxCode: "txcd_30011200",
+    sizes: ["S", "M", "L"],
+    positions: ["front", "back", "neck"],
+    // Smaller body, so a smaller badge: 6.5in on a youth small is proportionally
+    // what 8in is on an adult small.
+    placement: { position: "front", widthIn: 6.5, y: 0.42 },
+    colourways: [
+      { name: "White", hex: "#f4f4f2", ground: "light", variants: [61516, 61518, 61520] },
+      { name: "Athletic Heather", hex: "#b0b2ad", ground: "light", variants: [61561, 61562, 61563] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [61515, 61517, 61519] },
+      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [61558, 61559, 61560] },
+    ],
+    spec:
+      "Bella+Canvas 3001Y — the youth cut of the same shirt the grown-ups " +
+      "get. 4.2 oz combed ring-spun cotton, side-seamed.",
+    care: "Youth S, M and L. Machine wash cold, tumble dry low.",
+  },
+  {
     id: "mug",
     title: "Mug",
     blueprintId: 479,
@@ -847,7 +948,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "championship-roundel", item: "tee" },
   { mark: "faceoff", item: "tee" },
   { mark: "heritage-seal", item: "tee" },
-  { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 } },
+  { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 }, title: "Golden Retrievers Boop Tee" },
   { mark: "rink-board", item: "tee", placement: { widthIn: 9.5, y: 0.4 } },
   // Wider than the badges and it sits higher: a varsity arch belongs across the
   // chest, not centred on it.
@@ -899,6 +1000,21 @@ export const MATRIX: MatrixEntry[] = [
      post it, which priced at $26 — more than a tee, for a rubber disc. The
      captain: "way too expensive". It is the only genuinely hockey OBJECT in
      their catalog and it is still not worth $26.
+
+  /* Long sleeve, crewneck and youth tee — added 2026-07-30 on the captain's
+     pick. The badges that already carry a tee carry these, because they are the
+     same shape of canvas: a chest. */
+  { mark: "crossed-shield", item: "longsleeve" },
+  { mark: "championship-roundel", item: "longsleeve" },
+  { mark: "heritage-seal", item: "longsleeve" },
+
+  { mark: "heritage-seal", item: "crewneck" },
+  { mark: "championship-roundel", item: "crewneck" },
+  { mark: "nose-to-nose", item: "crewneck", placement: { widthIn: 9.0 } },
+
+  { mark: "crossed-shield", item: "youth" },
+  { mark: "championship-roundel", item: "youth" },
+  { mark: "faceoff", item: "youth" },
 
   /* Sticker — kiss-cut, so the vinyl takes the shape of the mark and every badge
      in the set is already a sticker shape. White vinyl is a light ground, which
@@ -1018,7 +1134,7 @@ export function buildLine(matrix: MatrixEntry[] = MATRIX): LineItem[] {
 
     line.push({
       id,
-      title: `${mark.title} — ${item.title}`,
+      title: entry.title ?? `${mark.title} — ${item.title}`,
       description: [mark.blurb, item.spec, item.care, QUOTES[id], closing]
         .filter((p): p is string => Boolean(p))
         .join("\n\n"),
