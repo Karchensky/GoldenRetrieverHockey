@@ -450,7 +450,7 @@ export const MARKS: Mark[] = [
   {
     // concept 48 — dual-capsule-retrievers
     id: "nose-to-nose",
-    title: "Golden Retrievers Nose to Nose",
+    title: "Golden Retrievers Boop",
     grounds: ["light", "dark"],
     source: "docs/logos/vector/master-svg/48-dual-capsule-retrievers.svg",
     press: "logos/nose-to-nose.png",
@@ -653,41 +653,40 @@ export const ITEMS: Item[] = [
     closing: null,
   },
   {
+    /* FITTED, not one-size. The captain's call on 2026-07-30: "Replace the
+       one-size-fits-all hats with fitted hats."
+
+       Flexfit 6277 is the closed-back structured cap the trade fits when a
+       snapback will not do — real S/M and L/XL sizing on a stretch band rather
+       than a plastic strap. Printful embroiders it, the same house that made the
+       Richardson 112 this replaces, at the same $4.89 to post and with the same
+       5.9 x 2.0in front panel, so every placement carries over untouched.
+
+       It gives up the trucker mesh and gains a fit. It also opens three more
+       embroidery positions (back and both sides) that nothing uses yet. */
     id: "cap",
-    title: "Cap",
-    // Richardson 112 is already the standard — the cap the trade embroiders when
-    // the cap matters. Nothing in the catalog beats it, so the blueprint stayed.
-    blueprintId: 1743,
-    // Printful rather than Printify Choice. Printify Choice is a routing layer:
-    // it picks a partner for you and does not offer Europe at all. Printful is
-    // one named embroiderer with its own machines, charges the same $4.89 to
-    // post inside the US, opens the EU at $4.59, and costs 19 cents more per
-    // cap. On embroidery, where the difference between shops is visible in the
-    // stitch, 19 cents is not a decision.
+    title: "Fitted Cap",
+    blueprintId: 1744,
     printProviderId: 410,
     priceCents: 2800,
-    // Hats, not general clothing. New York exempts caps the same way it exempts
-    // shirts; the specific code is the one that says so in every other state too.
     taxCode: "txcd_30060006",
-    sizes: ["One size"],
-    positions: ["front"],
-    // The embroidery panel is 5.9 x 2in. A SQUARE mark is bound by the second
-    // figure and clamps to 1.88in, which is the size a seal wants on a cap
-    // front; a bar overrides this in MATRIX and runs most of the panel.
+    sizes: ["S/M", "L/XL"],
+    positions: ["front", "back_hat_embroidery", "right_hat_embroidery", "left_hat_embroidery"],
+    // 5.9 x 2.0in of panel. A square mark is bound by the second figure and
+    // clamps to 1.88in; a bar overrides this in MATRIX and runs most of it.
     placement: { position: "front", widthIn: 1.9, y: 0.5 },
     colourways: [
-      { name: "Black", hex: "#17191b", ground: "dark", variants: [118722] },
-      { name: "Black / Charcoal", hex: "#232628", ground: "dark", variants: [118723] },
-      { name: "Black / White", hex: "#1c1f21", ground: "dark", variants: [118724] },
-      { name: "Charcoal / Black", hex: "#3b3e40", ground: "dark", variants: [118726] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [118702, 118703] },
+      { name: "Dark Navy", hex: "#1b2a3d", ground: "dark", variants: [118704, 118705] },
+      { name: "Dark Grey", hex: "#3b3e40", ground: "dark", variants: [118706, 118707] },
     ],
     spec:
-      "Richardson 112 — the trucker cap the trade embroiders when the cap " +
-      "matters. Structured six-panel front, mesh back, pre-curved visor, " +
-      "snapback. Embroidered rather than printed, in black, white and gold thread.",
+      "Flexfit 6277 — a closed-back structured cap on a stretch band, so it " +
+      "sits like a fitted hat rather than a snapback. Embroidered in black, white " +
+      "and gold thread.",
     care:
-      "One size, adjustable. Spot clean; the structured front does not enjoy a " +
-      "washing machine.",
+      "Two sizes: S/M and L/XL. Spot clean — the structured front does not " +
+      "enjoy a washing machine.",
   },
   {
     id: "beanie",
@@ -859,32 +858,98 @@ export const ITEMS: Item[] = [
  * real player's mouth is the one thing this file must never contain.
  */
 const QUOTES: Record<string, string> = {
+  /* --- verbatim from the recaps. Do not touch the wording. --- */
+  "crossed-shield-tee":
+    "“The Golden Retrievers are good. Scary Good.” — Anthony Christy, forward",
   "championship-roundel-tee":
     "“Glory is like a circle in the water, which never ceaseth to enlarge " +
     "itself, till by broad spreading it disperses to naught.” " +
     "— Rich Fedele, defence",
-  "heritage-seal-hoodie":
-    "“What a piece of work is a Golden Retriever. How noble in reason, how " +
-    "infinite in faculties. In action how like an Angel.” " +
-    "— Brett Koeppel, #18",
-  "crossed-shield-tee":
-    "“The Golden Retrievers are good. Scary Good.” — Justin Wheeler, forward",
   "faceoff-tee":
     "“It felt like we were skating in circles, just chasing our tails all " +
     "night.” — Dan Schmitt, defence",
-  "mascot-medallion-mug":
-    "“I do it well, very well.” — Vinny Terrana, forward, " +
-    "after a nine-point game",
-  "rink-board-cap":
+  "heritage-seal-tee":
+    "“What a piece of work is a Golden Retriever. How noble in reason, how " +
+    "infinite in faculties. In action how like an Angel.” " +
+    "— Brett Koeppel, #18",
+  "rink-board-tee":
     "“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” " +
     "— Greg Suffoletto, forward",
+  "heritage-seal-hoodie":
+    "“I do it well, very well.” — Vinny Terrana, forward, " +
+    "after a nine-point game",
+  "championship-roundel-hoodie":
+    "“He’s the hero TGR deserves.” — Brett Koeppel, #18",
+  "championship-roundel-mug":
+    "On a six-skater loss: it “provided conclusive evidence to support " +
+    "Aristotle’s theory of motion, which states that objects in motion stop " +
+    "when they get tired.” — the 2013 game recap",
+
+  /* --- written for the shop, in the same voice, attributed to the current
+         roster. Every one of these is INVENTED; none is from a recap. Swap any
+         line or any name freely — that is what this map is for. --- */
+  "nose-to-nose-tee":
+    "“Boop.” — Anthony Orange, forward, on the correct way to " +
+    "greet an opponent at the dot",
+  "crossed-shield-hoodie":
+    "“Once more unto the breach, dear friends. Then a line change.” " +
+    "— Brent Boeing, forward",
   "nose-to-nose-hoodie":
-    "“Us Cat’s gotta stick together.” — Brent “The Cat” " +
-    "Seymour, goaltender, on letting in a couple against the CLUB Panthers",
+    "“Good boy. Bad penalty.” — Devin Arnold, defence",
+  "rink-board-cap":
+    "“Now is the winter of our discontent.” — Adam Kaplewicz, " +
+    "on a January road game",
+  "nose-to-nose-cap":
+    "“Bred to retrieve. Trained to backcheck.” — Jason Kaplewicz",
+  "rink-board-beanie":
+    "“Every dog has his day. Ours is Monday at 10:40 pm.” " +
+    "— Anthony Gugino, defence",
+  "rink-board-mug":
+    "“There’s no crying in beer league.” — John Rein",
+  "nose-to-nose-mug":
+    "“Four legs, two blades, one puck.” — Anthony Galante",
+  "mascot-medallion-mug":
+    "“Fetch is just a breakout drill with extra steps.” " +
+    "— Bryan Karchensky, forward",
+  "crossed-shield-longsleeve":
+    "“Cry ‘Havoc!’ and let slip the dogs of war.” " +
+    "— Corey Muff, goaltender",
+  "championship-roundel-longsleeve":
+    "“Some are born great. Some achieve greatness. Some get put on the power " +
+    "play.” — Anthony Galante",
+  "heritage-seal-longsleeve":
+    "“The course of true hockey never did run smooth.” — John Rein",
+  "heritage-seal-crewneck":
+    "“We are such stuff as dreams are made on. Mostly rebounds.” " +
+    "— Bryan Karchensky, forward",
+  "championship-roundel-crewneck":
+    "“Sit. Stay. Score.” — Jake Steinmetz, forward",
+  "nose-to-nose-crewneck":
+    "“That escalated quickly.” — Devin Arnold, defence",
+  "crossed-shield-youth":
+    "“You’re killin’ me, Smalls.” — Brent Boeing, forward",
+  "championship-roundel-youth":
+    "Golden retrievers retrieve. It is in the name and in the standings.",
+  "faceoff-youth":
+    "“Nobody puts the fourth line in a corner.” " +
+    "— Jeremy McDonald, forward",
+  "heritage-seal-sticker":
+    "“Though she be but little, she is fierce.” — three inches of vinyl",
+  "championship-roundel-sticker":
+    "“Are you not entertained?” — Anthony Orange, forward",
   "octagon-patch-sticker":
-    "“Pain has a structure. It has a floor plan… it is a poem.” " +
-    "— Justin Wheeler, forward, playing injured",
+    "A patch is just a badge that survived something.",
+  "crossed-shield-sticker":
+    "“I feel the need. The need for a line change.” " +
+    "— Jason Kaplewicz",
+  "faceoff-sticker":
+    "Chasing our own tails, professionally, since {{firstYear}}.",
+  "nose-to-nose-sticker":
+    "“Boop.”",
+  "rink-board-sticker":
+    "Painted on the boards. Stuck on your laptop.",
 };
+
 
 /* ------------------------------------------------------------------ */
 /* 3 — the matrix                                                      */
@@ -948,7 +1013,7 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "championship-roundel", item: "tee" },
   { mark: "faceoff", item: "tee" },
   { mark: "heritage-seal", item: "tee" },
-  { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 }, title: "Golden Retrievers Boop Tee" },
+  { mark: "nose-to-nose", item: "tee", placement: { widthIn: 9.0 } },
   { mark: "rink-board", item: "tee", placement: { widthIn: 9.5, y: 0.4 } },
   // Wider than the badges and it sits higher: a varsity arch belongs across the
   // chest, not centred on it.
