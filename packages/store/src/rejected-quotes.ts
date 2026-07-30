@@ -143,21 +143,13 @@ export const REJECTED_QUOTES: readonly string[] = [
  *
  * A product with no quote still renders: `buildLine()` filters empty paragraphs,
  * so the listing reads blurb → spec → care → closing with no gap.
+ *
+ * EMPTY IS THE NORMAL STATE, and it is where this list should return to. It
+ * held twelve products for part of 2026-07-30, between the third round of
+ * rewrites being struck and the captain choosing lines for them himself. All
+ * 59 carry a quote again.
  */
-export const AWAITING_A_QUOTE: readonly string[] = [
-  "nose-to-nose-hoodie",
-  "nose-to-nose-cap",
-  "nose-to-nose-longsleeve",
-  "nose-to-nose-crewneck",
-  "nose-to-nose-youth",
-  "nose-to-nose-sticker",
-  "mascot-medallion-mug",
-  "mascot-medallion-sticker",
-  "oversized-jersey-longsleeve",
-  "oversized-jersey-sticker",
-  "championship-roundel-youth",
-  "heritage-seal-youth",
-];
+export const AWAITING_A_QUOTE: readonly string[] = [];
 
 /** Normalised, for a fast lookup. Built once. */
 export const REJECTED_NORMALISED: ReadonlySet<string> = new Set(

@@ -1172,6 +1172,41 @@ export const QUOTES: Record<string, string> = {
   "oversized-jersey-mug":
     "“I would like to thank the ice, which was cold, and the puck, which " +
     "was round.” — Rich Fedele, defence",
+
+  /* --- chosen by the captain on 2026-07-30, from the pool, after the three
+         rounds written for these twelve products were all struck. He picked
+         which line goes on which product; that pairing is his, not a guess. --- */
+  "nose-to-nose-hoodie":
+    "“A hit, a very palpable hit.” — Anthony Gugino, defence",
+  "nose-to-nose-cap":
+    "“We are rebuilding. We have been rebuilding since 2011.” — Bryan " +
+    "Karchensky, forward",
+  "nose-to-nose-longsleeve":
+    "“Get thee to a bench.” — Corey Muff, goaltender",
+  "nose-to-nose-crewneck":
+    "“Screw your courage to the sticking place, then take the draw.” — Brett " +
+    "Koeppel, defence",
+  "nose-to-nose-youth":
+    "“Half this roster has kids who could take my spot.” — Jason Kaplewicz",
+  "nose-to-nose-sticker":
+    "“What is past is prologue, and all of it is in the archive.” — Bryan " +
+    "Karchensky, forward",
+  "mascot-medallion-mug":
+    "“I was told there would be a warm-up.” — John Rein",
+  "mascot-medallion-sticker":
+    "“The drawing is of a dog who has never been scored on.” — Corey Muff, " +
+    "goaltender",
+  "oversized-jersey-longsleeve":
+    "“Our power play has a plan. It is a secret, even from us.” — Dan Schmitt, " +
+    "defence",
+  "oversized-jersey-sticker":
+    "“We are a defensive team in the sense that we defend a lot.” — Anthony " +
+    "Gugino, defence",
+  "championship-roundel-youth":
+    "“Somebody has to be the next one. It may as well be you.” — Jason Kaplewicz",
+  "heritage-seal-youth":
+    "“Every golden retriever is a two-way forward at heart.” — Jake Steinmetz, " +
+    "forward",
 };
 
 
