@@ -31,7 +31,7 @@ import s from "../../../components/store/store.module.css";
  * It is deliberately NOT a personal inbox: the captain's own email should not be
  * on a public page, and a shop address outlives whoever is reading it. Cloudflare
  * Email Routing forwards this to any real mailbox for free — same dashboard the
- * site is already deployed from, no mail server involved. See STORE.md §6.
+ * site is already deployed from, no mail server involved. See MANUAL.md §1.
  */
 const CONTACT = "store@goldenretrieverhockey.com";
 

@@ -11,7 +11,7 @@
  * Replaces the scroll-mixed journey bed. Kept from it: the loading, the gesture
  * gate, and the velocity-mapped one-shot.
  *
- * Licences for every file are in docs/AUDIO-SOURCES.md.
+ * Licences for every file are in docs/HANDBOOK.md §10.
  *
  * THREE THINGS HERE ARE LOAD-BEARING.
  *

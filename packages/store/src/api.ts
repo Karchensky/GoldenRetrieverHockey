@@ -18,14 +18,11 @@ import type {
 /**
  * A Printify client for one shop and one shop only.
  *
- * The account this token belongs to has two shops:
- *
- *   28277243  GoldenRetrieverHockey  (custom_integration)  ← this project
- *   13449786  another shop                (etsy)                ← a different business
- *
- * The second one is a live storefront that has nothing to do with a beer
- * league hockey team. Writing to it would push team merchandise into a real
- * shop in front of real customers.
+ * **The token this repository uses can see more than one shop**, and the others
+ * are live storefronts belonging to unrelated businesses. Writing to one would
+ * push team merchandise into a real shop in front of real customers. Which
+ * shops those are is not this file's business and is deliberately not named
+ * here — see `FORBIDDEN_SHOPS`.
  *
  * So no function in this file takes a shop id. There is no argument to get
  * wrong, no config to mistype, no variable to shadow. The id is a constant, and
@@ -45,9 +42,14 @@ const BASE_V2 = "https://api.printify.com/v2";
 export const SHOP_ID = 28277243;
 
 /**
- * Shops on this account that must never be touched, and why. Present so that a
- * failure prints the reason rather than a number, and so the reason lives in
- * code rather than in someone's memory of a conversation.
+ * Shops on this account that must never be touched. Present so that a failure
+ * prints a reason rather than a number, and so the reason lives in code rather
+ * than in someone's memory of a conversation.
+ *
+ * **THIS REPOSITORY IS PUBLIC.** The ids stay — they have to, or the guard
+ * cannot name what it blocked — but the shops are not identified. An id alone
+ * grants nothing without the account's own credentials; the name of somebody's
+ * other business is not the archive's to publish.
  */
 export const FORBIDDEN_SHOPS: ReadonlyMap<number, string> = new Map([
   [13449786, "a live storefront for an unrelated business"],

@@ -24,7 +24,7 @@ import type { Reach } from "./artwork.ts";
  *
  * The economics of every line below — cost, margin, shipping — are not in this
  * file and must not be typed into it. Run `npm run store:report`; it reads them
- * live from Printify. See STORE.md at the repo root (local, gitignored).
+ * live from Printify. See MANUAL.md at the repo root (local, gitignored).
  */
 
 export const ROOT = new URL("../../../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -178,7 +178,7 @@ export type Item = {
    * dropped: the tee went $36 → $29 and the mug $26 → $17 without a cent of
    * margin moving.
    *
-   * One price per item, whatever mark is on it. See STORE.md §5.
+   * One price per item, whatever mark is on it. See MANUAL.md §5.
    */
   priceCents: number;
   /** Buying rules, where the plain "one of these, on its own" does not work. */
@@ -208,7 +208,7 @@ export type Item = {
    * so they should be treated exactly like the tee here — but that conclusion
    * runs through Stripe's mapping of its Hats code rather than through anything
    * this repository can assert. Run a test calculation to a Buffalo ZIP and
-   * confirm a cap comes back at 4.75% and not 8.75%. See STORE.md §5.
+   * confirm a cap comes back at 4.75% and not 8.75%. See MANUAL.md §5.
    */
   taxCode: string;
   sizes: string[];
@@ -592,7 +592,7 @@ export const MARKS: Mark[] = [
  * the best maker of it, judged on the print method, the size of the canvas, the
  * colourways carried, where it posts from and what it charges to post abroad.
  * Cost decided nothing; it only set the retail price afterwards. The measured
- * costs and the reasoning are in STORE.md §1.
+ * costs and the reasoning are in MANUAL.md §4.
  *
  * **Postage does not merge across product types**, which is the fact that shapes
  * this list. See `Sale` above: a tee and a cap from the SAME provider quote two

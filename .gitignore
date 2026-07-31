@@ -102,27 +102,23 @@ scratchpad/
 /assets/3d/retriever-reconstruction-raw.glb
 /docs/logos/vector/.work/
 
-# The local handoff. One file, not published, and the only place the project's
-# open questions live.
-/PROJECT.md
-/HANDOFF.md
-/GO-LIVE.md
 /.local-archive/
-
-# The store's operating manual. It replaced docs/STORE.md, which was written as
-# if somebody else would read it. Nobody else will: it holds the captain's own
-# costs, margins, take-home per sale, and the dashboard steps to open the shop.
-# That is a private commercial document and it is not the public face of an
-# archive about a beer league hockey team.
-/STORE.md
 
 # Rendered from docs/logos/vector/master-svg/ by tools/build_vector_assets.py.
 # 22 MB of derived PNGs that nothing in the build reads — matrix.ts prints from
-# production-3color-svg/, which IS tracked. Regenerate with the tool.
+# master-svg/ directly. Regenerate with the tool.
 docs/logos/vector/high-dpi-png/
 apps/web/public/store/.sources.json
 
-# One page, kept current: where the store and the archive actually stand, what
-# is left, and who has to do it. Private for the same reason STORE.md is — it
-# carries costs, margins and the captain's own dashboard steps.
-/TRACKING.md
+# THIS REPOSITORY IS PUBLIC. Both of these are written for the captain and for
+# whoever works on this next: costs, margins, supplier decisions, shop ids, the
+# dashboard steps to open the store, what is left and whose it is. None of that
+# belongs on GitHub, and a customer can read anything that does.
+#
+# README.md is the only document that ships.
+/MANUAL.md
+/docs/HANDBOOK.md
+
+# Superseded concept rounds, 62 MB of PNGs that nothing reads. The artwork in
+# use is docs/logos/vector/master-svg/.
+/output/

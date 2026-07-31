@@ -897,7 +897,7 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   console.log(` POST      US standard postage over ${pct(HEAVY_SHIPPING)} of the price. Covered, but carrier-driven.`);
   console.log("");
   console.log(` No sales tax in these figures. YOU are the seller of record — it is yours to`);
-  console.log(` collect and to remit, and STORE.md 5 has the seven steps in order. No returns`);
+  console.log(` collect and to remit, and MANUAL.md 5 has the tax split. No returns`);
   console.log(` here either. No subscription: Printify Premium needs 16-17 orders a MONTH to`);
   console.log(` pay for itself and this shop will not clear that.`);
   console.log("");

@@ -25,7 +25,7 @@ import type { CatalogPlaceholder } from "./types.ts";
  * quote costs for the drafts that exist and nothing can quote them for a provider
  * this shop has never used. Printify's own dashboard shows them on the
  * provider-choice screen, and that is where the brand gets picked — see
- * STORE.md at the repo root (local, gitignored).
+ * MANUAL.md at the repo root (local, gitignored).
  *
  * What this does give, for every provider of a garment, is everything cost is
  * usually traded against: where they ship FROM, how many colours and sizes they
@@ -152,7 +152,7 @@ async function showBlueprint(blueprintId: number): Promise<number> {
   console.log(`ITEM COST IS NOT IN THIS TABLE AND CANNOT BE. Printify publishes no cost in the`);
   console.log(`catalog API — a variant's cost first appears on a product that exists. To compare`);
   console.log(`cost by brand, open Printify > Catalog > the garment > choose a print provider:`);
-  console.log(`the per-provider price sits on that screen. STORE.md walks it.`);
+  console.log(`the per-provider price sits on that screen. MANUAL.md walks it.`);
   return 0;
 }
 

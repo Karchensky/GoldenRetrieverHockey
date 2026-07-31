@@ -1,66 +1,78 @@
 {
-  // Cloudflare Workers, serving the static export and the checkout.
-  //
-  // This used to have no `main`: the platform served the directory and never
-  // ran our code, because the site had no server, no database and no runtime
-  // fetch. The store changed that on 2026-07-29 — a shop that takes money needs
-  // somewhere to hold a secret key, and it is not the browser.
-  //
-  // **The archive is untouched by this.** Every one of the 458 pages is still
-  // static HTML written at build time and served straight off disk; the Worker
-  // answers two paths under /api and hands everything else to ASSETS. If the
-  // Worker were deleted tomorrow the archive would still be there.
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "goldenretrieverhockey",
-  "compatibility_date": "2026-07-28",
-  "compatibility_flags": ["nodejs_compat"],
-
-  "main": "./workers/checkout/index.ts",
-
-  "observability": { "enabled": true },
-
-  "assets": {
-    // next build with output:"export" writes here. The build command that
-    // fills it is npm run build:site.
-    "directory": "./apps/web/out",
-
-    // The Worker reaches the export through this. Without a binding the Worker
-    // has no way to serve a page and every non-API path 404s.
-    "binding": "ASSETS",
-
-    // SERVE THE EXPORT'S OWN 404, WITH ITS 404 STATUS.
-    //
-    // The alternative, "single-page-application", would answer every unknown
-    // path with index.html and a 200 — which for a static archive means a
-    // mistyped player URL returns the home page and tells a crawler it is a
-    // real page. This site generates 458 of them and one 404.html; that file is
-    // the right answer and it should arrive with the right status.
-    "not_found_handling": "404-page",
-
-    // A request for /seasons finds /seasons.html without a redirect. The export
-    // is written without trailing slashes, so this matches how the links in the
-    // HTML are already spelled.
-    "html_handling": "auto-trailing-slash"
-  },
-
-  // ONE KEY PER FULFILLED ORDER, and it is the only state this deployment holds.
-  //
-  // Stripe delivers a webhook AT LEAST once and redelivers on any non-2xx
-  // response, so without somewhere durable to record "this session is dealt
-  // with" a slow Printify call gets the parcel printed twice and charges us for
-  // both. Keys expire after 90 days; by then the payment is long settled and a
-  // replay of a three-month-old event is not a thing Stripe does.
-  //
-  // Create it once, then paste the id it prints here:
-  //   npx wrangler kv namespace create ORDERS
-  "kv_namespaces": [
-    { "binding": "ORDERS", "id": "PASTE_THE_ID_FROM_WRANGLER_KV_NAMESPACE_CREATE" }
-  ]
-
-  // The three secrets are NOT here and must never be. Set them once each:
-  //   npx wrangler secret put STRIPE_SECRET_KEY
-  //   npx wrangler secret put STRIPE_WEBHOOK_SECRET
-  //   npx wrangler secret put PRINTIFY_API_TOKEN
-  // They live encrypted on Cloudflare. `wrangler secret list` shows the names
-  // and never the values. See STORE.md.
+	// Cloudflare Workers, serving the static export and the checkout.
+	//
+	// This used to have no `main`: the platform served the directory and never
+	// ran our code, because the site had no server, no database and no runtime
+	// fetch. The store changed that on 2026-07-29 — a shop that takes money needs
+	// somewhere to hold a secret key, and it is not the browser.
+	//
+	// **The archive is untouched by this.** Every one of the 458 pages is still
+	// static HTML written at build time and served straight off disk; the Worker
+	// answers two paths under /api and hands everything else to ASSETS. If the
+	// Worker were deleted tomorrow the archive would still be there.
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "goldenretrieverhockey",
+	"compatibility_date": "2026-07-28",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "./workers/checkout/index.ts",
+	"observability": {
+		"enabled": true
+	},
+	"assets": {
+		// next build with output:"export" writes here. The build command that
+		// fills it is npm run build:site.
+		"directory": "./apps/web/out",
+		// The Worker reaches the export through this. Without a binding the Worker
+		// has no way to serve a page and every non-API path 404s.
+		"binding": "ASSETS",
+		// SERVE THE EXPORT'S OWN 404, WITH ITS 404 STATUS.
+		//
+		// The alternative, "single-page-application", would answer every unknown
+		// path with index.html and a 200 — which for a static archive means a
+		// mistyped player URL returns the home page and tells a crawler it is a
+		// real page. This site generates 458 of them and one 404.html; that file is
+		// the right answer and it should arrive with the right status.
+		"not_found_handling": "404-page",
+		// A request for /seasons finds /seasons.html without a redirect. The export
+		// is written without trailing slashes, so this matches how the links in the
+		// HTML are already spelled.
+		"html_handling": "auto-trailing-slash"
+	},
+	// ONE KEY PER FULFILLED ORDER, and it is the only state this deployment holds.
+	//
+	// Stripe delivers a webhook AT LEAST once and redelivers on any non-2xx
+	// response, so without somewhere durable to record "this session is dealt
+	// with" a slow Printify call gets the parcel printed twice and charges us for
+	// both. Keys expire after 90 days; by then the payment is long settled and a
+	// replay of a three-month-old event is not a thing Stripe does.
+	//
+	// Created 2026-07-31 with `npx wrangler kv namespace create ORDERS`, which
+	// wrote the id below on its own.
+	//
+	// THIS FILE IS TRACKED AND THE REPOSITORY IS PUBLIC, and that is correct.
+	// Cloudflare builds from the pushed repo, so a deploy needs this file to be
+	// in it. A namespace id is an identifier, not a credential — it addresses
+	// storage that only this account's own authentication can open, and it
+	// appears in Cloudflare's own published examples. Nothing here is a secret.
+	//
+	// `"remote": true` answers wrangler's "for local dev, connect to the remote
+	// resource?" — so `wrangler dev` reads and writes the REAL namespace rather
+	// than a local stub. Test-mode Stripe session ids cannot collide with live
+	// ones, so this is safe; it does mean a local test leaves a key in
+	// production storage. Delete the line to test against a local KV instead.
+	"kv_namespaces": [
+		{
+			"binding": "ORDERS",
+			"id": "dfdd7585a2b742bbb42371898a01af48",
+			"remote": true
+		}
+	]
+	// The three secrets are NOT here and must never be. Set them once each:
+	//   npx wrangler secret put STRIPE_SECRET_KEY
+	//   npx wrangler secret put STRIPE_WEBHOOK_SECRET
+	//   npx wrangler secret put PRINTIFY_API_TOKEN
+	// They live encrypted on Cloudflare. `wrangler secret list` shows the names
+	// and never the values. MANUAL.md §1 has the order to set them in.
 }
