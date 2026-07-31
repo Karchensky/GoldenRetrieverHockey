@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-30T15:58:59.798Z",
+  "generatedAt": "2026-07-31T16:08:48.803Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1183,
     "assistEdges": 1316,
     "gameSheets": 284,
-    "captures": 5275,
+    "captures": 5389,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -2039,7 +2039,7 @@
             "pim": 92
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 13,
           "g": 11,
           "a": 2,
@@ -3272,7 +3272,7 @@
             "pim": 188
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 13,
           "g": 7,
           "a": 6,
@@ -4553,7 +4553,7 @@
             "pim": 92
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 8,
           "g": 5,
           "a": 3,
@@ -5369,7 +5369,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -6673,7 +6673,7 @@
             "pim": 188
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -8350,7 +8350,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 7,
           "g": 1,
           "a": 6,
@@ -9592,7 +9592,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -10865,7 +10865,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -13486,7 +13486,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -14096,7 +14096,7 @@
             "pim": 53
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 2,
           "g": 0,
           "a": 2,
@@ -14930,7 +14930,7 @@
             "pim": 92
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 5,
           "g": 2,
           "a": 3,
@@ -15320,7 +15320,7 @@
             "pim": 40
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -16116,7 +16116,7 @@
             "pim": 10
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 5,
           "g": 4,
           "a": 1,
@@ -17007,7 +17007,7 @@
             "pim": 53
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -18427,7 +18427,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -18936,7 +18936,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -22362,7 +22362,7 @@
             "pim": 390
           },
           "divisionField": 100,
-          "leagueField": 858,
+          "leagueField": 859,
           "pts": 2,
           "g": 2,
           "a": 0,
