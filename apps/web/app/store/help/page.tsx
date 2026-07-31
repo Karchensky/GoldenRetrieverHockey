@@ -3,26 +3,34 @@ import Link from "next/link";
 import s from "../../../components/store/store.module.css";
 
 /**
- * Shipping, returns, and how to reach a person.
+ * Shipping, and how to reach a person.
  *
- * **A shop that takes money owes the buyer this page**, and until now the site
- * had nothing of the kind: no stated production time, no returns position, no
- * address to write to when a parcel arrives wrong. Stripe expects it, the card
- * networks expect it, and a customer deciding whether to spend $74 on a hoodie
- * from a hockey team's website is entitled to know what happens if it turns up
- * the wrong size.
+ * **A shop that takes money owes the buyer this page** — what it costs, how
+ * long it takes, and who to write to. Stripe expects it and the card networks
+ * expect it.
  *
  * **Every figure here is measured, not aspirational.** The 2–5 business day
- * production window is Printify's own `handlingTime` for the standard shipping
- * plan, read from the API on 2026-07-29 and identical across all six items. The
- * returns position is the one Printify's own policy leaves available: they
- * reprint their faults, and they charge for a customer's change of mind, so
- * this page says exactly that rather than promising a free-returns programme
- * somebody would have to fund out of a $13 margin.
+ * window is Printify's own `handlingTime` for the standard plan, read from the
+ * API on 2026-07-29 and identical across every item. The postage arithmetic is
+ * the live basket quote.
  *
- * There is no invented policy on this page. If it is not stated here it is
- * because it has not been decided — and an undecided policy is better absent
- * than guessed at, because this is the page a chargeback gets judged against.
+ * **IT STATES NO RETURNS POLICY, DELIBERATELY.** It used to: misprints replaced
+ * free, a 30-day photograph window, cancellation before production. Those are
+ * PRINTIFY's terms, and restating a supplier's terms as our own commits a
+ * one-person shop to honouring them out of a margin that cannot absorb it — on
+ * any order where Printify happens to decide differently, the promise is still
+ * on this page and the bill is his. The captain removed it on 2026-07-31.
+ *
+ * What replaces it is the only commitment that is unconditionally within his
+ * gift: write to him, and he will work it out. That is worth more to a customer
+ * than a policy, and it cannot be held against him at a chargeback the way a
+ * printed guarantee can.
+ *
+ * **Nothing here is written for effect.** An earlier version closed paragraphs
+ * with lines like "Nothing is missing — the rest is still coming" and "This is
+ * the honest bit". The captain: *"The facts have already been delivered, we
+ * don't need these little witty additions. It's not a marvel movie."* State the
+ * fact and stop.
  */
 
 /**
@@ -56,8 +64,7 @@ export default function HelpPage() {
         </h1>
         <p className="hero-p">
           Everything here is printed to order — made after you buy it, not pulled off
-          a shelf. That is what makes a twelve-person team&rsquo;s store possible, and it
-          is the reason for most of what follows.
+          a shelf.
         </p>
       </header>
 
@@ -84,7 +91,7 @@ export default function HelpPage() {
               <td>
                 <b>Orders with more than one kind of thing may arrive separately.</b>{" "}
                 A cap and a mug are made in different places, so they are posted from
-                different places. Nothing is missing — the rest is still coming.
+                different places.
               </td>
             </tr>
           </tbody>
@@ -106,49 +113,40 @@ export default function HelpPage() {
         </p>
         <p className={s.detailCopy}>
           Different kinds of thing do not combine that way — a cap and a mug are made
-          in different places and each carries its own postage. Nothing we can do about
-          that, but you only ever pay the real figure.
+          in different places and each carries its own postage.
         </p>
         <p className={s.detailCopy}>
           We do not ship outside the United States yet.
         </p>
       </section>
 
+      {/* NO STATED RETURNS POLICY, on the captain's instruction.
+          This page carried one: misprints replaced free, a 30-day photograph
+          window, no need to send the faulty item back, cancellation before
+          production. All of it was true of PRINTIFY's policy, and that was the
+          mistake — stating a supplier's terms as ours commits a one-person shop
+          to honouring them out of a margin that cannot absorb it, whatever
+          Printify decides in any individual case. "I don't want to hard-define
+          a policy when we basically have no margins & i am just doing this for
+          friends for the most part."
+          So this says the one thing that is unconditionally true and within his
+          gift: write to him and he will sort it out. */}
       <section data-reveal>
-        <h2 className="head">If something arrives wrong</h2>
+        <h2 className="head">If something goes wrong</h2>
         <p className={s.detailCopy}>
-          <b>Anything misprinted, damaged or defective is replaced free.</b> Send a
-          photograph within 30 days of it arriving and a new one goes out. You do not
-          need to post the faulty one back.
+          Write to <a href={`mailto:${CONTACT}`}>{CONTACT}</a> and tell us what
+          happened. Include your order number and a photograph if there is something
+          to see.
         </p>
         <p className={s.detailCopy}>
-          The same goes for an order that never turns up, or turns up as the wrong
-          item or the wrong size from what you ordered.
-        </p>
-      </section>
-
-      <section data-reveal>
-        <h2 className="head">If you ordered the wrong size</h2>
-        <p className={s.detailCopy}>
-          This is the honest bit. Because each item is made for you specifically,
-          there is no stock to return it to and no one else it fits. So{" "}
-          <b>we cannot take back a correctly-made item that you have changed your mind
-          about</b>, and a size you picked yourself counts as that.
+          This is one person running a store for a hockey team, not a returns
+          department. Nothing here is automated and there is no policy to argue with —
+          if something has gone wrong we will work it out with you.
         </p>
         <p className={s.detailCopy}>
-          Write to us anyway. It is a hockey team, not a corporation, and if something
-          has genuinely gone wrong we would rather sort it out than win an argument
-          about whose fault it was. Check the measurements on the product page before
-          you order and it should not come up.
-        </p>
-      </section>
-
-      <section data-reveal>
-        <h2 className="head">Cancelling</h2>
-        <p className={s.detailCopy}>
-          An order can be cancelled for a full refund any time before it goes into
-          production. That is usually a window of several hours, occasionally less.
-          Write immediately and we will stop it if it has not started.
+          Worth knowing: each item is made for you after you order it, so there is no
+          stock for it to go back to. Check the measurements on the product page
+          before you choose a size.
         </p>
       </section>
 

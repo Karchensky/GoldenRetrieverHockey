@@ -122,3 +122,12 @@ apps/web/public/store/.sources.json
 # Superseded concept rounds, 62 MB of PNGs that nothing reads. The artwork in
 # use is docs/logos/vector/master-svg/.
 /output/
+
+# Secrets for `wrangler dev` ONLY. `wrangler secret put` writes to the DEPLOYED
+# Worker; local dev never reads those, it reads this file. Same keys, same
+# names. Never committed.
+.dev.vars
+!.dev.vars.example
+
+# wrangler build/dev scratch — regenerated every run
+.wrangler/

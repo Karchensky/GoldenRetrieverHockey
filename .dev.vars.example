@@ -1,0 +1,18 @@
+# Secrets for `npx wrangler dev` — LOCAL ONLY.
+#
+# `wrangler secret put` writes to the DEPLOYED Worker. Local dev does not read
+# those; it reads this file. Setting the secret and then running `wrangler dev`
+# gives a 401 from Printify at the postage step, which is what happened on
+# 2026-07-31.
+#
+# Copy to `.dev.vars` (gitignored) and fill in. One line each, no quotes, no
+# trailing spaces.
+
+# Stripe TEST key while developing — sk_test_…
+STRIPE_SECRET_KEY=
+
+# The Printify personal access token. Same value as .secrets/printify_token.txt
+PRINTIFY_API_TOKEN=
+
+# Only needed if you exercise the webhook locally. Checkout works without it.
+STRIPE_WEBHOOK_SECRET=

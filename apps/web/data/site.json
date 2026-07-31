@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-30T15:58:59.798Z",
+  "generatedAt": "2026-07-31T17:20:34.658Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -75683,12 +75683,6 @@
       "isChampion": true
     },
     {
-      "year": "2012/13",
-      "league": "EMHL",
-      "title": "President's Trophy",
-      "isChampion": false
-    },
-    {
       "year": "2014",
       "league": "GB",
       "title": "Tournament Champions",
@@ -75727,13 +75721,7 @@
     {
       "year": "2016",
       "league": "GBHI",
-      "title": "Tier 1 Champions",
-      "isChampion": true
-    },
-    {
-      "year": "2016/17",
-      "league": "Erie Metro",
-      "title": "Adams Division Champions",
+      "title": "Tournament Champions",
       "isChampion": true
     }
   ],

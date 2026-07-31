@@ -52,25 +52,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RinkMount />
           <Nav />
           <main id="main">{children}</main>
-          {/* THERE WAS NO FOOTER ANYWHERE ON THE SITE — measured, zero <footer>
-              elements — and once the archive started taking money that stopped
-              being a stylistic choice. A shop is entitled to say who it is and
-              where to write; before this, the contact address existed on
-              /store/help alone and the only link to that page sat 99.7% of the
-              way down /store. Deliberately quiet: three lines, the site's own
-              rule above it, no columns of links a twelve-person team does not
-              have. */}
-          <footer className="siteFoot">
-            <p>
-              <strong>Golden Retriever Hockey</strong> &middot; Buffalo, New York
-              &middot; est. 2011
-            </p>
-            <p>
-              <a href="/store">Store</a>
-              <a href="/store/help">Shipping &amp; returns</a>
-              <a href="mailto:store@goldenretrieverhockey.com">store@goldenretrieverhockey.com</a>
-            </p>
-          </footer>
+          {/* NO SITE FOOTER. One was added on 2026-07-30 after a review found
+              the contact address reachable only from /store/help, and the
+              captain removed it the next day: "links to the shipping & returns
+              & email being at the bottom of the sales page is already
+              sufficient." It is — /store carries both in its hero and again at
+              the foot of the page, the product page carries one, and so does
+              the basket drawer. A masthead-and-footer chrome on every archive
+              page was answering a shop's problem on 458 pages that are not a
+              shop. */}
         </CartProvider>
       </body>
     </html>

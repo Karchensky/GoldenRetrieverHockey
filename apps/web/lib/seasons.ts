@@ -236,6 +236,35 @@ export function trophiesAt(sort: number): ArchiveHonor[] {
 }
 
 /**
+ * Which part of a season an honour is about.
+ *
+ * **"Adams Division Champions" and "Runner-Up" on the same season read as a
+ * contradiction, and they are not one.** The captain, reading his own archive:
+ * *"I assume Adams division champions is supposed to be the president's trophy
+ * for the division (1st place regular season), then runner up in the finals."*
+ * That is exactly right, and `scheduleHonors` above already says so in a code
+ * comment nobody browsing the site can read — topping the table over a season
+ * and losing the game that ends it is most seasons, not a conflict.
+ *
+ * The page was setting the two side by side with nothing to tell them apart, so
+ * a reader had to work out the reconciliation the way he did. This says it.
+ *
+ * Derived from the title rather than stored, because the trophy case is
+ * recovered text and adding a field would mean deciding a stage for every entry
+ * — including ones where the source does not say. `null` is the honest answer
+ * for a title that names no stage, and it renders nothing.
+ */
+export function honorStage(honor: ArchiveHonor): string | null {
+  const title = honor.title.toLowerCase();
+  if (title.includes("runner-up")) return "lost the final";
+  if (title.includes("president's trophy") || title.includes("division champions")) {
+    return "regular season";
+  }
+  if (title.includes("mid-season")) return "mid-season";
+  return null;
+}
+
+/**
  * The old site restarts its game numbering when Summer 2013 begins.
  *
  * Every row is a RESULT — date, opponent and both scores — whether or not a

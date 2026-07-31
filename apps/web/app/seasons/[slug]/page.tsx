@@ -20,6 +20,7 @@ import {
   seasonPlayers,
   sessionAt,
   sortFromSeasonSlug,
+  honorStage,
   trophiesAt,
 } from "../../../lib/seasons";
 import { ROLLUPS } from "../../../lib/stats";
@@ -169,8 +170,17 @@ export default async function SeasonPage({ params }: { params: Promise<{ slug: s
           </h1>
 
           {honors.length > 0 && (
+            /* The stage goes in the headline, not only in the Honours block
+               further down. "Adams Division Champions · Runner-Up" is what a
+               reader sees first and it looks like a contradiction until you
+               know one is the table and the other is the final. */
             <p className="hero-p" style={{ color: "var(--gold)" }}>
-              {honors.map((honor) => honor.title).join(" · ")}
+              {honors
+                .map((honor) => {
+                  const stage = honorStage(honor);
+                  return stage ? `${honor.title} (${stage})` : honor.title;
+                })
+                .join(" · ")}
             </p>
           )}
 
@@ -253,7 +263,11 @@ export default async function SeasonPage({ params }: { params: Promise<{ slug: s
                   <div className={`${s.honor} ${honor.scheduleEstablished ? s.honorDerived : ""}`} key={`${honor.title}-${index}`}>
                     <strong>{honor.year}</strong>
                     <span>{honor.title}</span>
-                    <small>{honor.league}{honor.scheduleEstablished && " · playoff schedule"}</small>
+                    <small>
+                      {[honorStage(honor), honor.league, honor.scheduleEstablished ? "playoff schedule" : null]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </small>
                   </div>
                 ))}
               </div>

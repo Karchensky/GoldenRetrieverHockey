@@ -2460,10 +2460,38 @@ export async function generate(): Promise<SiteData> {
     archiveOnlySessions: sessions.filter((s) => s.provenance.archiveOnly).length,
   };
 
+  /* ---- the captain's rulings on the trophy case --------------------------
+   *
+   * Everything above derives honours from what a platform published. These are
+   * the three places he has overruled that, on 2026-07-31, and they are applied
+   * last so the derivation stays honest and the override stays visible.
+   *
+   * TWO REMOVED. "President's Trophy" (2012/13) and "Adams Division Champions"
+   * (2016/17) are both regular-season placings rather than things the club won,
+   * and both sat on a season page beside a Runner-Up, which reads as a
+   * contradiction to anybody who does not already know the difference. He asked
+   * for both gone. The parsing that found them is untouched — if the claim ever
+   * matters again it is still being read, just not published.
+   *
+   * ONE RENAMED. The 2016 Greater Buffalo win is published as "Tier 1
+   * Champions" and the 2014 and 2015 wins as "Tournament Champions". The club
+   * played Tier 1 in all three years, so the distinction is an artefact of
+   * which page each was read off, not a difference in what was won. One name
+   * for the three-peat.
+   */
+  const RULED_OUT = ["President's Trophy", "Adams Division Champions"];
+  const ruled = trophies
+    .filter((trophy) => !RULED_OUT.includes(trophy.title))
+    .map((trophy) =>
+      trophy.title === "Tier 1 Champions"
+        ? { ...trophy, title: "Tournament Champions" }
+        : trophy,
+    );
+
   return {
     generatedAt: new Date().toISOString(),
     totals, sessions, players, assists, partnerships, cases, games, gameTotals,
-    trophies, recaps,
+    trophies: ruled, recaps,
   };
 }
 
