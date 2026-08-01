@@ -146,7 +146,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setLines((current) => current.filter((l) => lineKey(l) !== key));
   }, []);
 
-  const clear = useCallback(() => { setLines([]); setDropped(0); }, []);
+  /**
+   * Empty the basket, and the saved copy of it.
+   *
+   * WIPING STORAGE IS THE WHOLE FIX, not tidiness. `ClearBasket` on
+   * /store/thanks is a CHILD of this provider, and React runs child effects
+   * before parent ones — so on 2026-08-01 it cleared the basket, and then the
+   * hydration effect below read localStorage and put the paid-for mug straight
+   * back. The customer saw the thank-you page with the thing they had just
+   * bought still in the drawer.
+   *
+   * Removing the key means that restore finds nothing to restore, whatever
+   * order the effects happen to run in.
+   */
+  const clear = useCallback(() => {
+    setLines([]);
+    setDropped(0);
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Same reasoning as the write below: storage being unavailable is not a
+      // reason to leave the basket in memory.
+    }
+  }, []);
 
   /** Dismiss the "no longer in the shop" line once it has been read. */
   const seenDropped = useCallback(() => { setDropped(0); }, []);

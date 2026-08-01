@@ -318,6 +318,8 @@ type Row = {
   title: string;
   markId: string;
   itemId: string;
+  /** Stripe product tax code, from the matrix. Decides the New York rate. */
+  taxCode: string;
   productId: string | null;
   visible: boolean | null;
   blueprintId: number;
@@ -519,6 +521,7 @@ export async function report(): Promise<number> {
       title: item.title,
       markId: item.markId,
       itemId: item.itemId,
+      taxCode: item.taxCode,
       productId: product?.id ?? null,
       visible: product ? product.visible : null,
       blueprintId: item.blueprintId,
@@ -546,7 +549,82 @@ export async function report(): Promise<number> {
   }
 
   render(rows, live.data);
+  await writeEconomics(rows);
   return rows.some((r) => r.notes.some((n) => n.startsWith("VISIBLE"))) ? 1 : 0;
+}
+
+/**
+ * EVERY COST OF EVERY SIZE GROUP, AS DATA, so a page can be built from the same
+ * numbers the console printed rather than from a copy of them.
+ *
+ * The console table above answers "is the margin right". This answers the
+ * captain's actual question — *what does a customer pay, what is taken out of
+ * it, and what reaches me* — for each size group, at full price and at the
+ * teammate code, in New York and out of it.
+ *
+ * IT MODELS TWO COSTS THE MARGIN NEVER DID, and both only exist on a New York
+ * sale. Stripe's 2.9% is charged on the WHOLE charge including the sales tax
+ * being collected for somebody else, and Stripe Tax bills 0.5% of the same
+ * total. Together they are about sixteen cents on a $23 mug — small, real, and
+ * previously invisible, which is the combination worth writing down.
+ */
+async function writeEconomics(rows: Row[]): Promise<void> {
+  const { writeFile, mkdir } = await import("node:fs/promises");
+  const { dirname } = await import("node:path");
+
+  /** Erie County: 4% state + 4.75% local, and clothing under $110 escapes the state's 4%. */
+  const ERIE_FULL = 0.0875;
+  const ERIE_CLOTHING = 0.0475;
+  const STRIPE_TAX_FEE = 0.005;
+  const CLOTHING_CODES = new Set(["txcd_30011000", "txcd_30011200", "txcd_30060006"]);
+
+  /** One sale, priced end to end. `discount` is a fraction off the goods only. */
+  const sale = (row: Row, tier: CostTier, units: number, discount: number, inNY: boolean) => {
+    const list = tier.price * units;
+    const off = Math.round(tier.price * discount) * units; // Stripe discounts per unit
+    const goods = list - off;
+    const post = tier.post || row.shipping.find((m) => m.method === "standard")?.byRegion.get("US")?.first || 0;
+    const rate = inNY ? (CLOTHING_CODES.has(row.taxCode) ? ERIE_CLOTHING : ERIE_FULL) : 0;
+    // New York taxes the delivery charge at whatever rate the goods carry.
+    const tax = Math.round((goods + post) * rate);
+    const paid = goods + post + tax;
+    // Stripe takes its cut of the WHOLE charge, sales tax included.
+    const stripe = Math.round(paid * STRIPE_PERCENT) + STRIPE_FLAT_CENTS;
+    const taxFee = inNY ? Math.round(paid * STRIPE_TAX_FEE) : 0;
+    const cost = tier.cost * units;
+    return {
+      list, off, goods, post, tax, paid, stripe, taxFee, cost,
+      keep: paid - tax - cost - post - stripe - taxFee,
+    };
+  };
+
+  const out = rows
+    .filter((r) => r.tiers.length && !r.garmentDrift)
+    // One entry per GARMENT: every mark on a tee has identical economics.
+    .filter((r, i, all) => all.findIndex((o) => o.itemId === r.itemId) === i)
+    .map((row) => {
+      const units = Math.max(1, row.sale?.minQuantity ?? 1);
+      return {
+        itemId: row.itemId,
+        title: row.blueprintTitle,
+        provider: row.providerTitle,
+        taxCode: row.taxCode,
+        clothing: CLOTHING_CODES.has(row.taxCode),
+        units,
+        tiers: row.tiers.map((t) => ({
+          sizes: t.sizes,
+          colours: t.colours.length,
+          full: { ny: sale(row, t, units, 0, true), away: sale(row, t, units, 0, false) },
+          teammate: { ny: sale(row, t, units, 0.3, true), away: sale(row, t, units, 0.3, false) },
+        })),
+      };
+    });
+
+  const path = "dist/store-economics.json";
+  await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, JSON.stringify({ generatedAt: null, discount: 0.3, items: out }, null, 2));
+  console.log("");
+  console.log(` Wrote ${path} — every size group, both prices, in and out of New York.`);
 }
 
 /** The print positions one variant actually offers, per the catalog. */

@@ -42,7 +42,8 @@
     "dev:regen": "npm run build:data && next dev apps/web",
     "secrets:status": "node scripts/secrets.mjs status",
     "secrets:local": "node scripts/secrets.mjs local",
-    "secrets:deploy": "node scripts/secrets.mjs deploy"
+    "secrets:deploy": "node scripts/secrets.mjs deploy",
+    "store:summary": "node scripts/build-store-summary.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260729.1",
