@@ -1,6 +1,6 @@
 import { createProduct, deleteProduct, getBlueprint, getProduct, listAllPrintProviders, listPrintProviders, listShippingProfiles, listVariants, uploadImage } from "./api.ts";
 import { loadArt } from "./line.ts";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ITEMS, MARKS, MARGIN_TARGET, PRINT_DIR } from "./matrix.ts";
 import { priceForVariant } from "./pricing.ts";
@@ -389,11 +389,29 @@ export async function sweep(only?: string): Promise<number> {
 
   report(rows);
 
-  // The raw measurements, so a decision can be re-argued without re-probing —
-  // sixty draft creations is not something to repeat to check one number.
+  /*
+   * MERGE, DO NOT OVERWRITE — and this was a real loss, not a hypothetical.
+   *
+   * `sweep crewneck` on 2026-08-01 wrote a file containing only crewnecks and
+   * silently deleted the other eight garments' measurements. The summary page
+   * reads this file, so eight of its nine maker tables vanished and the only
+   * clue was a verdict list that had gone short.
+   *
+   * The raw measurements exist so a decision can be re-argued without
+   * re-probing; sixty draft creations is not something to repeat to check one
+   * number, and it is certainly not something to lose by measuring one garment.
+   */
   const out = join(PRINT_DIR, "provider-sweep.json");
   await mkdir(PRINT_DIR, { recursive: true });
-  await writeFile(out, `${JSON.stringify({ target: MARGIN_TARGET, rows }, null, 2)}\n`);
+  const measured = new Set(items.map((i) => i.id));
+  let kept: SweepRow[] = [];
+  try {
+    const prior = JSON.parse(await readFile(out, "utf8")) as { rows?: SweepRow[] };
+    kept = (prior.rows ?? []).filter((r) => !measured.has(r.itemId));
+  } catch {
+    // First run, or a file we cannot read. Start from what we just measured.
+  }
+  await writeFile(out, `${JSON.stringify({ target: MARGIN_TARGET, rows: [...kept, ...rows] }, null, 2)}\n`);
   console.log(`\nEvery measurement written to ${out}`);
   return 0;
 }

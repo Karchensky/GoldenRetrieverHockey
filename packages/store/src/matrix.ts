@@ -828,7 +828,18 @@ export const ITEMS: Item[] = [
     id: "cap",
     title: "Fitted Cap",
     blueprintId: 1744,
-    printProviderId: 410,
+    /**
+     * PRINTIFY CHOICE (99), from 2026-08-01. Printful and Choice return
+     * byte-identical economics on this blueprint — same cost, same postage,
+     * same colours, same print area, because Choice routes to Printful for it.
+     * `cli.ts sweep` confirms the tie to the cent, and all 22 of Printful's
+     * variant ids exist on Choice, so nothing about the line changes.
+     *
+     * A TIE GOES TO CHOICE. It reroutes when a house is busy instead of
+     * depending on one factory, which is how the long sleeve lost Black/M
+     * mid-sync on 30 July. Same price, strictly more robust.
+     */
+    printProviderId: 99,
     priceCents: 2800,
     taxCode: "txcd_30060006",
     sizes: ["S/M", "L/XL"],
@@ -864,7 +875,18 @@ export const ITEMS: Item[] = [
     // 2026-07-28, Printful and Printify Choice both charge $14.96 for this
     // beanie and the same $4.89 to post it. Printful adds Europe at $4.59,
     // which Printify Choice does not offer at any price.
-    printProviderId: 410,
+    /**
+     * PRINTIFY CHOICE (99), from 2026-08-01. Printful and Choice return
+     * byte-identical economics on this blueprint — same cost, same postage,
+     * same colours, same print area, because Choice routes to Printful for it.
+     * `cli.ts sweep` confirms the tie to the cent, and all 12 of Printful's
+     * variant ids exist on Choice, so nothing about the line changes.
+     *
+     * A TIE GOES TO CHOICE. It reroutes when a house is busy instead of
+     * depending on one factory, which is how the long sleeve lost Black/M
+     * mid-sync on 30 July. Same price, strictly more robust.
+     */
+    printProviderId: 99,
     priceCents: 2100,
     taxCode: "txcd_30060006",
     sizes: ["One size"],
@@ -959,65 +981,93 @@ export const ITEMS: Item[] = [
       "dries fast and has no use for the heat.",
   },
   {
-    /* The hoodie's plainer sibling. Gildan 18000 through SwiftPOD, who already
-       make the IND4000 — one fewer parcel origin, and a maker this shop has
-       already checked. A crewneck is the garment people buy when they want the
-       badge without the hood. */
+    /* A crewneck is the garment people buy when they want the badge without the
+       hood. */
     id: "crewneck",
     title: "Crewneck",
-    blueprintId: 49,
     /**
-     * PRINTIFY CHOICE (99), from 2026-07-30, on measurement rather than
-     * preference. `cli.ts sweep` probed every maker of this blueprint and this
-     * one is the cheapest by a distance; the captain's rule is highest quality
-     * first, then cheapest of that quality, and the four things that decide
-     * "same quality" here all check out:
+     * LANE SEVEN LS14004, from 2026-08-01, replacing Gildan 18000.
      *
-     *   the garment   fixed by the blueprint — the same shirt either way
-     *   colourways    every one we sell is carried
-     *   sizes         the full run, verified id by id before the switch
-     *   print area    bigger than our placement needs; dpi goes UP, not down
-     *   handling      10 days, identical to every other maker on the platform
+     * MEASURED, not argued. `cli.ts garments` probed every crewneck blueprint
+     * in the catalogue and `cli.ts garment-specs` read the fabric off each one.
+     * Applying the captain's rule in its actual order — best material first,
+     * then the cheapest of that material — the ranking is:
      *
-     * VARIANT IDS ARE PER BLUEPRINT, NOT PER PROVIDER — checked, all of the
-     * old maker's ids exist here and resolve to the same colour and size. So
-     * this is a one-line change and the colourways below are untouched.
+     *   Lane Seven LS14004   8.25 oz   100% cotton        $32.52   <- this
+     *   Gildan 12000         9    oz   50/50 cotton-poly  $31.02
+     *   Gildan 18000         8    oz   50/50 cotton-poly  $25.26   <- was this
+     *   Hanes P160           7.8  oz   50/50              $26.27
+     *   B&C WUI23            7.96 oz   50/50              $54.28   ships from DE
      *
-     * The one real trade: Printify Choice routes to whichever house is free
-     * rather than naming a factory, so two orders of the same shirt can be
-     * printed in two places. Printify's own quality guarantee covers it and
-     * nothing measurable separates them. If a print ever comes back visibly
-     * different from another, that is the thing to suspect first.
+     * The Gildan 18000 was the CHEAPEST that priced, which is the second clause
+     * applied without the first. Lane Seven is the only all-cotton crewneck
+     * measured, and cotton against a 50/50 is a different garment rather than a
+     * better version of the same one.
+     *
+     * Nothing is lost in the move. The colourways and the size run are the same
+     * ones the Gildan sold, White included, and every variant id below was read
+     * from the live catalogue on 2026-08-01 — four complete runs of six, no
+     * gaps. That matters more here than anywhere: the code reads variants
+     * POSITIONALLY, so a hole in one colour would sell the wrong garment.
      */
-    printProviderId: 99,
+    blueprintId: 446,
+    /**
+     * SWIFTPOD (39), AND THIS IS WHY IT IS NOT PRINTIFY CHOICE.
+     *
+     * `cli.ts sweep crewneck` probed all seven makers of this blueprint. Choice
+     * is not the cheapest here and it is not the most complete:
+     *
+     *   SwiftPOD          $31.28 landed   7 colours   XS–3XL   <- this
+     *   Printify Choice   $32.52 landed   6 colours   S–2XL
+     *   Monster Digital   $33.60 landed   9 colours   S–2XL
+     *   Marco Fine Arts   $35.02 landed   4 colours   S–3XL
+     *   Print Geek (CA)   $53.58 landed            $26.99 postage
+     *   Duplium (CA)      $57.34 landed            $26.39 postage
+     *   T Shirt and Sons  $72.85 landed            $44.99 postage, from GB
+     *
+     * A tie goes to Choice — it reroutes when a house is busy instead of
+     * depending on one factory, which is how the long sleeve lost Black/M
+     * mid-sync on 30 July. This is not a tie. SwiftPOD is $1.24 cheaper AND
+     * carries White and 3XL, which Choice does not: on Choice this garment
+     * would have stopped at 2XL with no white at all.
+     *
+     * SwiftPOD already prints the hoodie, so this is one fewer parcel origin
+     * and a maker this shop has already checked.
+     */
+    printProviderId: 39,
     priceCents: 2700,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
-    // 11.5 x 13.2in, near enough square, so a badge gets real room without the
-    // pouch stealing the bottom third the way it does on the hoodie.
+    // 3283 x 3749 px of front canvas — 10.9 x 12.5in at 300dpi, near enough
+    // square, so a badge gets real room without the pouch stealing the bottom
+    // third the way it does on the hoodie.
     placement: { position: "front", widthIn: 8.0, y: 0.45 },
+    /* The same four the Gildan sold. Heather Grey stands in for Sport Grey,
+       which is the same colour under another maker's name. Oatmeal Heather, a
+       natural cream, is carried too and was the plan while White looked
+       unavailable — it is one line away if it is ever wanted. */
     colourways: [
-      { name: "White", hex: "#f4f4f2", ground: "light", variants: [25396, 25427, 25458, 25489, 25520, 25551] },
-      { name: "Sport Grey", hex: "#b6b8b4", ground: "light", variants: [25395, 25426, 25457, 25488, 25519, 25550] },
-      { name: "Black", hex: "#17191b", ground: "dark", variants: [25397, 25428, 25459, 25490, 25521, 25552] },
-      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [25388, 25419, 25450, 25481, 25512, 25543] },
+      { name: "White", hex: "#f4f4f2", ground: "light", variants: [68014, 68015, 68016, 68017, 68018, 68025] },
+      { name: "Heather Grey", hex: "#b6b8b4", ground: "light", variants: [62617, 62623, 62629, 62635, 62641, 68021] },
+      { name: "Black", hex: "#17191b", ground: "dark", variants: [62615, 62621, 62627, 62633, 62639, 68019] },
+      { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [62618, 62624, 62630, 62636, 62642, 68022] },
     ],
     spec:
-      "Gildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 " +
-      "cotton-polyester blend. Ribbed knit collar, reinforced cuffs, " +
-      "double-needle stitching at the shoulders, armholes, neck, waistband and " +
-      "cuffs, a seamless body, a tear-away label. This is the badge without the " +
-      "hood, which is the entire reason to own one. Front chest print and " +
-      "nothing anywhere else. One note on the white: the cloth can read " +
-      "slightly off-white rather than bright white, and that is the fabric " +
-      "talking, not the print.",
+      "Lane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% " +
+      "cotton — the only all-cotton crewneck of the eight measured, and the " +
+      "reason this one is here. Ribbed collar, cuffs and waistband, " +
+      "double-needle stitching, a soft brushed inside. This is the badge " +
+      "without the hood, which is the entire reason to own one. Front chest " +
+      "print and nothing anywhere else. The heathers are flecked rather than " +
+      "flat, so the mark sits on a texture instead of a solid — that is the " +
+      "cloth, not the print.",
     care:
       "A classic cut, unisex, S to 3XL — roomier through the body than the tee " +
       "and easier on the shoulders than the hoodie. Take your usual size; there " +
       "is no reason to go up unless you like a sweatshirt oversized.\n\n" +
-      "Cold wash, inside out, low heat to dry. Half of it is polyester, so it " +
-      "leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.",
+      "Cold wash, inside out, low heat to dry. All cotton, so give it longer " +
+      "than a blend and expect a little shrinkage on the first wash.",
   },
   {
     /* For teammates' kids, which is most of the reason a beer-league team has a

@@ -1853,10 +1853,10 @@
         "L/XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b40d94d428b3e9c09f64a/118707/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40d94d428b3e9c09f64a/118705/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40d94d428b3e9c09f64a/118703/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40d94d428b3e9c09f64a/118707/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart"
+        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart"
       ],
       "artHash": "9b674da1240ca7f9",
       "prices": {
@@ -1869,9 +1869,9 @@
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6b40d94d428b3e9c09f64a",
+        "productId": "6a6e4530c778b3f7ec0bd237",
         "blueprintId": 1744,
-        "printProviderId": 410,
+        "printProviderId": 99,
         "print": [
           {
             "position": "front",
@@ -1925,10 +1925,10 @@
         "L/XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b40e0705c7eb7120fae2b/118707/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40e0705c7eb7120fae2b/118705/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40e0705c7eb7120fae2b/118703/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40e0705c7eb7120fae2b/118707/110922/golden-retrievers-boop-fitted-cap.jpg?camera_label=size-chart"
+        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118705/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118703/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/110922/golden-retrievers-boop-fitted-cap.jpg?camera_label=size-chart"
       ],
       "artHash": "7fa9134d6c2794bb",
       "prices": {
@@ -1941,9 +1941,9 @@
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6b40e0705c7eb7120fae2b",
+        "productId": "6a6e4538c778b3f7ec0bd23e",
         "blueprintId": 1744,
-        "printProviderId": 410,
+        "printProviderId": 99,
         "print": [
           {
             "position": "front",
@@ -1986,8 +1986,8 @@
         "One size"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5e12ba30d7dda405ccee/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5e12ba30d7dda405ccee/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front"
       ],
       "artHash": "9b674da1240ca7f9",
       "prices": {
@@ -1996,9 +1996,9 @@
       },
       "postageCents": 489,
       "printify": {
-        "productId": "6a6b5e12ba30d7dda405ccee",
+        "productId": "6a6e454197654de4e60df9c6",
         "blueprintId": 1691,
-        "printProviderId": 410,
+        "printProviderId": 99,
         "print": [
           {
             "position": "front",
@@ -3254,8 +3254,8 @@
     {
       "id": "heritage-seal-crewneck",
       "title": "Golden Retrievers Heritage Seal — Crewneck",
-      "description": "Two gold rings enclose the dog in three-quarter profile above a pair of crossed sticks. GOLDEN arches over the top, RETRIEVERS runs round the foot, and the whole thing behaves the way a club crest is meant to — formal, symmetrical, and a good deal older-looking than the club is.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“We are such stuff as dreams are made on. Mostly rebounds.” — Bryan Karchensky, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "Two gold rings enclose the dog in three-quarter profile above a pair of crossed sticks. GOLDEN arches over the top, RETRIEVERS runs round the foot, and the whole thing behaves the way a club crest is meant to — formal, symmetrical, and a good deal older-looking than the club is.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“We are such stuff as dreams are made on. Mostly rebounds.” — Bryan Karchensky, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "heritage-seal",
       "itemId": "crewneck",
@@ -3264,48 +3264,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3318,52 +3318,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba60d7554c1ada10287de/25458/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60d7554c1ada10287de/25459/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60d7554c1ada10287de/25457/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60d7554c1ada10287de/25450/98502/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front"
       ],
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba60d7554c1ada10287de",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f44c778b3f7ec0bcc2a",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 7.98,
             "dpi": 673,
-            "maxWidthIn": 9.67,
-            "minDpi": 557,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 554,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
@@ -3372,8 +3372,8 @@
     {
       "id": "championship-roundel-crewneck",
       "title": "Golden Retrievers Championship Roundel — Crewneck",
-      "description": "A full roundel, gold on the arch and white round the foot: GOLDEN over the top, RETRIEVERS underneath, the dog centred on a pair of crossed sticks and a puck. It is the busiest thing we draw and it wants room, which is why we print it large and never stitch it small.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“Sit. Stay. Score.” — Jake Steinmetz, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "A full roundel, gold on the arch and white round the foot: GOLDEN over the top, RETRIEVERS underneath, the dog centred on a pair of crossed sticks and a puck. It is the busiest thing we draw and it wants room, which is why we print it large and never stitch it small.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“Sit. Stay. Score.” — Jake Steinmetz, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "championship-roundel",
       "itemId": "crewneck",
@@ -3382,48 +3382,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3436,52 +3436,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba61b0493f026370cdc79/25458/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba61b0493f026370cdc79/25459/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba61b0493f026370cdc79/25457/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba61b0493f026370cdc79/25450/98502/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front"
       ],
       "artHash": "2c0141e4c1d590bc",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba61b0493f026370cdc79",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f4f3a736912d60f5648",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 8,
             "dpi": 670,
-            "maxWidthIn": 9.67,
-            "minDpi": 554,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 552,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
@@ -3490,8 +3490,8 @@
     {
       "id": "nose-to-nose-crewneck",
       "title": "Golden Retrievers Boop — Crewneck",
-      "description": "Two retrievers meet nose to nose over a dropped puck inside a gold capsule, one gold and one white, GOLDEN RETRIEVERS on the banner underneath. It is called the Boop, it has been called the Boop since the day it was drawn, and it is far too late to call it anything else.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“Screw your courage to the sticking place, then take the draw.” — Brett Koeppel, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "Two retrievers meet nose to nose over a dropped puck inside a gold capsule, one gold and one white, GOLDEN RETRIEVERS on the banner underneath. It is called the Boop, it has been called the Boop since the day it was drawn, and it is far too late to call it anything else.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“Screw your courage to the sticking place, then take the draw.” — Brett Koeppel, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "nose-to-nose",
       "itemId": "crewneck",
@@ -3500,48 +3500,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3554,52 +3554,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba62612ae18ff7302dcc7/25458/98502/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba62612ae18ff7302dcc7/25459/98502/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba62612ae18ff7302dcc7/25457/98502/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba62612ae18ff7302dcc7/25450/98502/golden-retrievers-boop-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front"
       ],
       "artHash": "7fa9134d6c2794bb",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba62612ae18ff7302dcc7",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f56f6324944d2087d4f",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 9,
             "heightIn": 4.38,
             "dpi": 593,
-            "maxWidthIn": 10.88,
-            "minDpi": 490,
-            "scale": 0.8477,
+            "maxWidthIn": 10.92,
+            "minDpi": 489,
+            "scale": 0.7801,
             "y": 0.45
           }
         ]
@@ -3608,8 +3608,8 @@
     {
       "id": "crossed-shield-crewneck",
       "title": "Golden Retrievers Crossed Shield — Crewneck",
-      "description": "Two sticks cross behind a shield with the dog at its centre, GOLDEN on the gold banner above it, RETRIEVERS on the banner below, and a puck at the point. Every piece of it stands slightly proud of the piece behind it, which keeps the drawing open — it never closes up into a solid block the way a tighter crest does.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“A crest is a promise you have to keep on Mondays.” — Bryan Karchensky, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "Two sticks cross behind a shield with the dog at its centre, GOLDEN on the gold banner above it, RETRIEVERS on the banner below, and a puck at the point. Every piece of it stands slightly proud of the piece behind it, which keeps the drawing open — it never closes up into a solid block the way a tighter crest does.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“A crest is a promise you have to keep on Mondays.” — Bryan Karchensky, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "crossed-shield",
       "itemId": "crewneck",
@@ -3618,48 +3618,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3672,52 +3672,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba63012ae18ff7302dcd4/25458/98502/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63012ae18ff7302dcd4/25459/98502/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63012ae18ff7302dcd4/25457/98502/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63012ae18ff7302dcd4/25450/98502/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front"
       ],
       "artHash": "5a232b7e4a016609",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba63012ae18ff7302dcd4",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f5ec778b3f7ec0bcc3a",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 8.14,
             "dpi": 659,
-            "maxWidthIn": 9.67,
-            "minDpi": 545,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 543,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
@@ -3726,8 +3726,8 @@
     {
       "id": "majestic-stick-carry-crewneck",
       "title": "Golden Retrievers Stick Carry — Crewneck",
-      "description": "A white retriever in profile with a stick clamped across its jaw, set on a gold roundel scored with white curves — and both the stick and the dog break out past the rim of it. It is the only mark we print whose field is gold instead of black, which is why it arrives warmer than anything hanging next to it.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“Do, or do not. There is no drop pass.” — Andrew Murphy, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "A white retriever in profile with a stick clamped across its jaw, set on a gold roundel scored with white curves — and both the stick and the dog break out past the rim of it. It is the only mark we print whose field is gold instead of black, which is why it arrives warmer than anything hanging next to it.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“Do, or do not. There is no drop pass.” — Andrew Murphy, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "majestic-stick-carry",
       "itemId": "crewneck",
@@ -3736,48 +3736,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3790,52 +3790,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba63cfe22b1d4640b6e4c/25458/98502/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63cfe22b1d4640b6e4c/25459/98502/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63cfe22b1d4640b6e4c/25457/98502/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba63cfe22b1d4640b6e4c/25450/98502/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front"
       ],
       "artHash": "7991aa786df9eb39",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba63cfe22b1d4640b6e4c",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f6697654de4e60df454",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 7.98,
             "dpi": 667,
-            "maxWidthIn": 9.67,
-            "minDpi": 552,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 550,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
@@ -3844,8 +3844,8 @@
     {
       "id": "oversized-jersey-crewneck",
       "title": "Golden Retrievers In Uniform — Crewneck",
-      "description": "A retriever stands there in a gold and black sweater cut for a much bigger dog — sleeves bunched over both front paws, the crest on the chest, tail out the back. Every other mark in this shop is a badge. This one is just the dog.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“Dress for the team you want.” — Jake Steinmetz, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "A retriever stands there in a gold and black sweater cut for a much bigger dog — sleeves bunched over both front paws, the crest on the chest, tail out the back. Every other mark in this shop is a badge. This one is just the dog.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“Dress for the team you want.” — Jake Steinmetz, forward\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "oversized-jersey",
       "itemId": "crewneck",
@@ -3854,48 +3854,48 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         },
         {
           "name": "Black",
           "hex": "#17191b",
           "variants": [
-            25397,
-            25428,
-            25459,
-            25490,
-            25521,
-            25552
+            62615,
+            62621,
+            62627,
+            62633,
+            62639,
+            68019
           ]
         },
         {
           "name": "Navy",
           "hex": "#1b2a3d",
           "variants": [
-            25388,
-            25419,
-            25450,
-            25481,
-            25512,
-            25543
+            62618,
+            62624,
+            62630,
+            62636,
+            62642,
+            68022
           ]
         }
       ],
@@ -3908,52 +3908,52 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba6497554c1ada1028848/25458/98502/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6497554c1ada1028848/25459/98502/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6497554c1ada1028848/25457/98502/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6497554c1ada1028848/25450/98502/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front"
       ],
       "artHash": "e13ad3fc154dcee3",
       "prices": {
-        "25388": 3125,
-        "25395": 3125,
-        "25396": 3125,
-        "25397": 3125,
-        "25419": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25428": 3125,
-        "25450": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25459": 3125,
-        "25481": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25490": 3125,
-        "25512": 3550,
-        "25519": 3550,
-        "25520": 3550,
-        "25521": 3550,
-        "25543": 3750,
-        "25550": 3750,
-        "25551": 3750,
-        "25552": 3750
+        "62615": 4000,
+        "62617": 4000,
+        "62618": 4000,
+        "62621": 4000,
+        "62623": 4000,
+        "62624": 4000,
+        "62627": 4000,
+        "62629": 4000,
+        "62630": 4000,
+        "62633": 4000,
+        "62635": 4000,
+        "62636": 4000,
+        "62639": 4225,
+        "62641": 4225,
+        "62642": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68019": 4350,
+        "68021": 4350,
+        "68022": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba6497554c1ada1028848",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f6e5dae1248260eccd6",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 8.81,
             "dpi": 597,
-            "maxWidthIn": 9.67,
-            "minDpi": 494,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 492,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
@@ -3962,8 +3962,8 @@
     {
       "id": "faceoff-crewneck",
       "title": "Golden Retrievers Faceoff — Crewneck",
-      "description": "Two retrievers sit nose to tail inside one black disc, the upper dog in gold and the lower in white, a puck loose in each open corner and the centre line ticked in gold at either edge. Nobody has won the draw yet.\n\nGildan 18000, a Heavy Blend crewneck at 8 oz/yd² (271 g/m²) in a 50/50 cotton-polyester blend. Ribbed knit collar, reinforced cuffs, double-needle stitching at the shoulders, armholes, neck, waistband and cuffs, a seamless body, a tear-away label. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. One note on the white: the cloth can read slightly off-white rather than bright white, and that is the fabric talking, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. Half of it is polyester, so it leaves the dryer sooner than an all-cotton sweatshirt. Take it out early.\n\n“Win the draw and the next ten seconds are somebody else’s problem.” — Devin Arnold, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
-      "priceCents": 3125,
+      "description": "Two retrievers sit nose to tail inside one black disc, the upper dog in gold and the lower in white, a puck loose in each open corner and the centre line ticked in gold at either edge. Nobody has won the draw yet.\n\nLane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% cotton — the only all-cotton crewneck of the eight measured, and the reason this one is here. Ribbed collar, cuffs and waistband, double-needle stitching, a soft brushed inside. This is the badge without the hood, which is the entire reason to own one. Front chest print and nothing anywhere else. The heathers are flecked rather than flat, so the mark sits on a texture instead of a solid — that is the cloth, not the print.\n\nA classic cut, unisex, S to 3XL — roomier through the body than the tee and easier on the shoulders than the hoodie. Take your usual size; there is no reason to go up unless you like a sweatshirt oversized.\n\nCold wash, inside out, low heat to dry. All cotton, so give it longer than a blend and expect a little shrinkage on the first wash.\n\n“Win the draw and the next ten seconds are somebody else’s problem.” — Devin Arnold, defence\n\nGolden Retriever Hockey — Buffalo's premier golden-retriever-themed hockey team since 2011.",
+      "priceCents": 4000,
       "taxCode": "txcd_30011000",
       "markId": "faceoff",
       "itemId": "crewneck",
@@ -3972,24 +3972,24 @@
           "name": "White",
           "hex": "#f4f4f2",
           "variants": [
-            25396,
-            25427,
-            25458,
-            25489,
-            25520,
-            25551
+            68014,
+            68015,
+            68016,
+            68017,
+            68018,
+            68025
           ]
         },
         {
-          "name": "Sport Grey",
+          "name": "Heather Grey",
           "hex": "#b6b8b4",
           "variants": [
-            25395,
-            25426,
-            25457,
-            25488,
-            25519,
-            25550
+            62617,
+            62623,
+            62629,
+            62635,
+            62641,
+            68021
           ]
         }
       ],
@@ -4002,38 +4002,38 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba6544a5fb2802301a8db/25458/98502/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6544a5fb2802301a8db/25457/98502/golden-retrievers-faceoff-crewneck.jpg?camera_label=front"
+        "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
+        "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front"
       ],
       "artHash": "06d73fd908759740",
       "prices": {
-        "25395": 3125,
-        "25396": 3125,
-        "25426": 3125,
-        "25427": 3125,
-        "25457": 3125,
-        "25458": 3125,
-        "25488": 3125,
-        "25489": 3125,
-        "25519": 3550,
-        "25520": 3550,
-        "25550": 3750,
-        "25551": 3750
+        "62617": 4000,
+        "62623": 4000,
+        "62629": 4000,
+        "62635": 4000,
+        "62641": 4225,
+        "68014": 4000,
+        "68015": 4000,
+        "68016": 4000,
+        "68017": 4000,
+        "68018": 4225,
+        "68021": 4350,
+        "68025": 4350
       },
       "postageCents": 849,
       "printify": {
-        "productId": "6a6ba6544a5fb2802301a8db",
-        "blueprintId": 49,
-        "printProviderId": 99,
+        "productId": "6a6e3f753b890dfbf50874c4",
+        "blueprintId": 446,
+        "printProviderId": 39,
         "print": [
           {
             "position": "front",
             "widthIn": 8,
             "heightIn": 8.08,
             "dpi": 641,
-            "maxWidthIn": 9.67,
-            "minDpi": 530,
-            "scale": 0.7535,
+            "maxWidthIn": 9.71,
+            "minDpi": 528,
+            "scale": 0.6934,
             "y": 0.45
           }
         ]
