@@ -201,11 +201,19 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
     /* PROMOTION CODES, so the captain can hand teammates a code that takes the
        club's margin off and sells them the thing at cost.
        Stripe owns the codes; nothing about them is in this repository. Create a
-       coupon in the dashboard, give it a code, share the code. A 20% coupon is
-       almost exactly cost, because 20% is what every variant is priced to earn —
-       see MARGIN_TARGET. STORE.md has the arithmetic and the exact figures.
-       Stripe validates the code, so an expired or unknown one is refused at the
-       till rather than trusted from the browser. */
+       coupon in the dashboard, give it a code, share the code. Stripe validates
+       it, so an expired or unknown one is refused at the till rather than
+       trusted from the browser.
+       USE 30%. Measured against the live shop on 2026-08-01 by
+       `npm run store:report`, which prints the whole table: 30% leaves every
+       garment between $1.72 and $3.16, and 35% is exact break-even on the
+       hoodie. Above that a sale costs money to make.
+       The obvious guess is wrong and this comment used to make it. The margin
+       is MARGIN_TARGET of the WHOLE CHARGE, goods plus postage; a coupon comes
+       off the shelf price alone, so there is more headroom than the margin
+       looks like it allows. A supplier moving its prices moves that figure and
+       nothing warns you — re-run the report after any sync that changed a
+       cost. */
     allow_promotion_codes: true,
 
     billing_address_collection: "required",
