@@ -365,6 +365,66 @@ const explain = `
   </table>
 </section>`;
 
+/* ------------------------------------------------------------------ */
+/* Tab 0 — the shop as it stands: every product, every size            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * THE GRID THE CAPTAIN ASKED FOR: mark down the side, garment across, and
+ * inside each cell the cost and the profit of every size plus the quote that
+ * product carries.
+ *
+ * Every other tab answers a decision — which maker, which garment, what a code
+ * costs. This one answers "what am I actually selling", which is the question
+ * you have before any of those.
+ */
+const overview = (() => {
+  const products = data.products ?? [];
+  if (!products.length) {
+    return `<p class="worst bad">No per-product data. Run <code>npm run store:refresh</code>.</p>`;
+  }
+  const marks = [...new Set(products.map((p) => p.markId))];
+  const items = ORDER.filter((id) => products.some((p) => p.itemId === id));
+
+  const head = `<tr><th>Mark</th>${items.map((i) => `<th class="num">${NAMES[i] ?? i}</th>`).join("")}</tr>`;
+  const grid = marks.map((mark) => {
+    const cells = items.map((item) => {
+      const p = products.find((x) => x.markId === mark && x.itemId === item);
+      if (!p) return `<td class="num dim">—</td>`;
+      const keeps = p.sizes.map((s) => s.full.keep);
+      const lo = Math.min(...keeps), hi = Math.max(...keeps);
+      return `<td class="num"><a href="#p-${p.id}">${lo === hi ? usd(lo) : `${usd(lo)}–${usd(hi)}`}</a></td>`;
+    }).join("");
+    return `<tr><td class="lbl">${esc(mark)}</td>${cells}</tr>`;
+  }).join("");
+
+  const detail = products.map((p) => {
+    const rows = p.sizes.map((s) => `<tr>
+      <td class="lbl">${esc(s.size)}</td>
+      <td class="num">${usd(s.full.list)}</td>
+      <td class="num out">${usd(s.full.cost)}</td>
+      <td class="num out">${usd(s.full.post)}</td>
+      <td class="num out">${usd(s.full.stripe + s.full.taxFee)}</td>
+      <td class="num keep">${usd(s.full.keep)}</td>
+      <td class="num dim">${pct(s.full.keep, s.full.paid)}</td>
+      <td class="num promo-cell">${usd(s.teammate.keep)}</td>
+    </tr>`).join("");
+    return `<section id="p-${p.id}">
+      <h2>${esc(p.title)}<span class="meta">${esc(p.provider)} &middot; ${p.units > 1 ? `sold in ${p.units}s &middot; ` : ""}${p.clothing ? "clothing, 4.75% in Buffalo" : "general goods, 8.75%"}</span></h2>
+      ${p.quote ? `<p class="quote">${esc(p.quote)}</p>` : `<p class="quote dim">No quote on this product.</p>`}
+      <div class="scroll"><table>
+        <thead><tr><th>Size</th><th class="num">Price</th><th class="num out">Garment</th><th class="num out">Post</th>
+        <th class="num out">Fees</th><th class="num keep">You keep</th><th class="num">Net</th><th class="num promo-cell">At ${esc(CODE)}</th></tr></thead>
+        <tbody>${rows}</tbody></table></div>
+    </section>`;
+  }).join("");
+
+  return `<div class="scroll"><table class="gridtable">
+      <thead>${head}</thead><tbody>${grid}</tbody></table></div>
+    <p class="worst">Profit per unit at full price, Buffalo. Click a figure for the size-by-size breakdown.</p>
+    ${detail}`;
+})();
+
 const worstOverall = Math.min(...data.items.flatMap((i) => i.tiers.map((t) => t.teammate.ny.keep)));
 
 const html = `<!doctype html>
@@ -431,6 +491,11 @@ const html = `<!doctype html>
   .flow{margin:.5rem 0 0;padding-left:1.3rem} .flow li{margin:.45rem 0}
   .recorded{font-size:.82rem;color:var(--muted);margin:.7rem 0 0;padding-left:.8rem;border-left:2px solid var(--line)}
   .warnt{color:var(--warn)}
+  .quote{font-size:.86rem;color:var(--muted);font-style:italic;margin:.3rem 0 .7rem;padding-left:.8rem;border-left:2px solid var(--gold)}
+  .gridtable td.lbl{font-weight:600}
+  .gridtable a{color:var(--good);text-decoration:none}
+  .gridtable a:hover{text-decoration:underline}
+  th.promo-cell,td.promo-cell{color:var(--gold);border-left:1px solid var(--line)}
   th.qual,td.qual{color:var(--gold)}
   th.qual{border-left:1px solid var(--line)}
   td.qual:first-of-type{border-left:1px solid var(--line)}
@@ -441,13 +506,22 @@ const html = `<!doctype html>
 <div class="sub">Golden Retrievers &middot; measured from the live Printify shop &middot; nothing on this page is hand-typed</div>
 
 <div class="tabs" role="tablist">
-  <button role="tab" aria-selected="true" data-tab="econ">What you keep</button>
+  <button role="tab" aria-selected="true" data-tab="over">The shop</button>
+  <button role="tab" aria-selected="false" data-tab="econ">What you keep</button>
   <button role="tab" aria-selected="false" data-tab="sup">Makers &amp; costs</button>
   <button role="tab" aria-selected="false" data-tab="gar">Garment choice</button>
   <button role="tab" aria-selected="false" data-tab="how">How it works</button>
 </div>
 
-<div id="econ">
+<div id="over">
+  <div class="legend">
+    <b>Every product in the shop</b>, mark down the side and garment across. The figure in each cell is what one unit leaves you at full price in Buffalo &mdash; a range where sizes differ.<br>
+    Below the grid, each product broken out by size with its garment cost, postage, fees, profit, and the quote it carries.
+  </div>
+  ${overview}
+</div>
+
+<div id="econ" hidden>
   <div class="legend">
     <b>They pay</b> = list, less the code, plus postage, plus New York's tax.<br>
     <b>Out</b> = Printify (garment + postage) &middot; Stripe (2.9% + 30&cent;) &middot; Stripe Tax (0.5%, NY only) &middot; the tax itself, which you forward to New York.<br>

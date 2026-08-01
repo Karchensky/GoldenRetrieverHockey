@@ -121,8 +121,12 @@ apps/web/public/store/.sources.json
 # dashboard steps to open the store, what is left and whose it is. None of that
 # belongs on GitHub, and a customer can read anything that does.
 #
-# README.md is the only document that ships.
+# README.md is the only document that ships. MANUAL.md is the one master file —
+# the handbook was folded into it on 2026-08-01, because two documents about the
+# same repository drift apart and the reader cannot tell which one is stale.
+# TODO.md is the parking list.
 /MANUAL.md
+/TODO.md
 /docs/HANDBOOK.md
 
 # Superseded concept rounds, 62 MB of PNGs that nothing reads. The artwork in

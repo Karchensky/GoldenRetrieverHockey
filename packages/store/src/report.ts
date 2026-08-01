@@ -7,7 +7,7 @@ import {
   listShippingRates,
 } from "./api.ts";
 import { loadArt, place, productLine } from "./line.ts";
-import { ITEMS, MARGIN_TARGET, MARKS } from "./matrix.ts";
+import { ITEMS, MARGIN_TARGET, MARKS, QUOTES } from "./matrix.ts";
 import type { LineItem } from "./matrix.ts";
 import { canvasesFor } from "./sync.ts";
 import type { PrintifyProduct } from "./types.ts";
@@ -635,9 +635,43 @@ async function writeEconomics(rows: Row[]): Promise<void> {
       };
     });
 
+  /*
+   * EVERY PRODUCT, not one per garment — the shop as it actually stands.
+   *
+   * `items` above collapses to one row per garment, because nine sets of
+   * identical economics is the useful view when you are deciding a price. It is
+   * the wrong view when you want to look at the shop: fifty-nine products exist,
+   * each is a mark on a garment, each carries its own quote, and the captain
+   * asked to see that grid with the cost and the profit of every size in it.
+   */
+  const products = rows
+    .filter((r) => r.tiers.length && !r.garmentDrift)
+    .map((row) => {
+      const units = Math.max(1, row.sale?.minQuantity ?? 1);
+      return {
+        id: row.id,
+        title: row.title,
+        markId: row.markId,
+        itemId: row.itemId,
+        provider: row.providerTitle,
+        clothing: CLOTHING_CODES.has(row.taxCode),
+        units,
+        quote: QUOTES[row.id] ?? null,
+        sizes: row.tiers.flatMap((t) =>
+          [...t.sizes]
+            .sort((a, b) => row.sizeOrder.indexOf(a) - row.sizeOrder.indexOf(b))
+            .map((size) => ({
+              size,
+              full: sale(row, t, units, 0, true),
+              teammate: sale(row, t, units, 0.3, true),
+            })),
+        ),
+      };
+    });
+
   const path = "dist/store-economics.json";
   await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, JSON.stringify({ generatedAt: null, discount: 0.3, items: out }, null, 2));
+  await writeFile(path, JSON.stringify({ generatedAt: null, discount: 0.3, items: out, products }, null, 2));
   console.log("");
   console.log(` Wrote ${path} — every size group, both prices, in and out of New York.`);
 }

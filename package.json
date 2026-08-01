@@ -43,7 +43,9 @@
     "secrets:status": "node scripts/secrets.mjs status",
     "secrets:local": "node scripts/secrets.mjs local",
     "secrets:deploy": "node scripts/secrets.mjs deploy",
-    "store:summary": "node scripts/build-store-summary.mjs"
+    "store:summary": "node scripts/build-store-summary.mjs",
+    "store:refresh": "npm run store:report && node packages/store/src/cli.ts sweep && node packages/store/src/cli.ts garments && node packages/store/src/cli.ts garment-specs && npm run store:summary",
+    "store:prices": "npm run store:report && npm run store:summary"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260729.1",
