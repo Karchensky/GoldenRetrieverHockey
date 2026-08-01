@@ -239,6 +239,16 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
        cost. */
     allow_promotion_codes: true,
 
+    /* CARDS ONLY, WHICH IS A DELIBERATE NARROWING.
+       Left unset, Stripe uses automatic payment methods and Link comes with
+       them. Link recognised the captain's own email at his own checkout on
+       2026-08-01, started texting his phone to verify him, and got in the way
+       of testing a card — and what it is for, a saved card for a returning
+       buyer, is worth nothing to a shop whose customers each buy once.
+       Apple Pay and Google Pay ride the card rail and survive this. Adding a
+       method back is one string. */
+    payment_method_types: ["card"],
+
     billing_address_collection: "required",
     success_url: `${site}/store/thanks?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${site}/store`,
