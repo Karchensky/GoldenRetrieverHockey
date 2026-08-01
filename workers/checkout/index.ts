@@ -342,14 +342,25 @@ async function fulfil(sessionId: string, env: Env): Promise<void> {
     }
     if (!lineItems.length) throw new Error(`${sessionId}: no line items came back`);
 
-    const address = session.shipping_details?.address;
+    /* BOTH PLACES STRIPE PUTS THE ADDRESS, newest first.
+       It moved to `collected_information` at 2025-09-30.clover, the version
+       this Worker pins. Reading only the old location cost a real order on
+       2026-08-01: paid, webhook 200, nothing printed. See stripe.ts. */
+    const shipping = session.collected_information?.shipping_details ?? session.shipping_details;
+    const address = shipping?.address;
     const email = session.customer_details?.email;
     const phone = session.customer_details?.phone;
     if (!address?.line1 || !address.city || !address.postal_code || !address.country || !email) {
-      throw new Error(`${sessionId}: the session has no usable shipping address`);
+      throw new Error(
+        `${sessionId}: no usable shipping address. ` +
+          `collected_information.shipping_details=${session.collected_information?.shipping_details ? "present" : "absent"}, ` +
+          `shipping_details=${session.shipping_details ? "present" : "absent"}, ` +
+          `email=${email ? "present" : "absent"}. ` +
+          `If both are absent Stripe has moved the field again — check the session in the dashboard.`,
+      );
     }
 
-    const { first, last } = splitName(session.shipping_details?.name ?? session.customer_details?.name);
+    const { first, last } = splitName(shipping?.name ?? session.customer_details?.name);
 
     const order = await submitOrder(env.PRINTIFY_API_TOKEN, {
       external_id: sessionId,

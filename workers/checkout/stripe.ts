@@ -84,19 +84,43 @@ export type CheckoutSession = {
     phone?: string | null;
     name?: string | null;
   } | null;
-  shipping_details?: {
-    name?: string | null;
-    address?: {
-      line1?: string | null;
-      line2?: string | null;
-      city?: string | null;
-      state?: string | null;
-      postal_code?: string | null;
-      country?: string | null;
-    } | null;
+  /**
+   * WHERE THE PARCEL GOES, AND STRIPE HAS MOVED IT.
+   *
+   * `shipping_details` used to sit at the top of the session. From
+   * `2025-09-30.clover` — the version this file pins — it is gone, and the
+   * address lives under `collected_information.shipping_details` instead.
+   *
+   * That cost a real order. On 2026-08-01 the first live purchase paid, the
+   * webhook verified and answered 200, and no parcel was ever created: `fulfil`
+   * read `session.shipping_details?.address`, got `undefined`, and threw "the
+   * session has no usable shipping address" into a background task nobody was
+   * watching. The 200 is returned before fulfilment runs, so Stripe showed
+   * Delivered and everything looked healthy.
+   *
+   * Both shapes are declared and both are read. A shop that silently fails to
+   * post what somebody paid for is the worst failure this code has, so it does
+   * not get to depend on which API version answers.
+   */
+  collected_information?: {
+    shipping_details?: ShippingDetails | null;
   } | null;
+  /** The pre-2025-09-30 location. Kept so either version works. */
+  shipping_details?: ShippingDetails | null;
   /** Present only when the caller expanded it. */
   line_items?: { data: SessionLineItem[] };
+};
+
+export type ShippingDetails = {
+  name?: string | null;
+  address?: {
+    line1?: string | null;
+    line2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postal_code?: string | null;
+    country?: string | null;
+  } | null;
 };
 
 export type SessionLineItem = {
