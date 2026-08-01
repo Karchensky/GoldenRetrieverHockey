@@ -9,7 +9,7 @@ import { prepareLogo } from "./artwork.ts";
 import { catalogue } from "./catalogue.ts";
 import { cost } from "./cost.ts";
 import { sweep } from "./sweep.ts";
-import { garments } from "./garments.ts";
+import { garments, garmentSpecs } from "./garments.ts";
 import { reconcile } from "./reconcile.ts";
 import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
 import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
@@ -38,6 +38,7 @@ const USAGE = `
                              Creates one draft, reads its cost, DELETES it.
     sweep [itemId]           That same probe against EVERY maker of every garment
     garments [itemId]        WHICH GARMENT: probes rival blueprints across the catalogue
+    garment-specs            Fabric weight and blend for every blueprint in that grid
                              this line sells, ranked on landed cost. LIVE, slow.
     marks                    Every logo on disk, and which are wired into the line.
     line                     The matrix, as products, without calling anything.
@@ -159,6 +160,9 @@ async function main(argv: string[]): Promise<number> {
 
     case "cost":
       return cost(argv[1], argv[2]);
+
+    case "garment-specs":
+      return garmentSpecs();
 
     case "garments":
       return garments(argv[1]);

@@ -172,6 +172,66 @@ export async function garments(only?: string): Promise<number> {
   return 0;
 }
 
+/**
+ * THE HALF THE GRID WAS MISSING.
+ *
+ * `garments` measured cost. The captain's rule is **quality first, then the
+ * cheapest of that quality** — and a table of prices cannot express the first
+ * clause at all. Asked why Gildan 18000 and not Gildan 12000, the grid could
+ * only say which was cheaper, which is the second question.
+ *
+ * Printify's blueprint description carries the spec: fabric weight, blend,
+ * construction. This reads it for every blueprint already in the grid and
+ * merges it in. **It creates nothing and probes nothing** — pure catalogue
+ * reads — so it is cheap to re-run and safe to run any time.
+ *
+ *   node packages/store/src/cli.ts garment-specs
+ */
+export async function garmentSpecs(): Promise<number> {
+  const out = join(PRINT_DIR, "garment-grid.json");
+  let grid: { rows: GarmentRow[] };
+  try {
+    grid = JSON.parse(await readFile(out, "utf8")) as { rows: GarmentRow[] };
+  } catch {
+    console.error("No garment-grid.json. Run `cli.ts garments` first.");
+    return 2;
+  }
+
+  const seen = new Map<number, { spec: string; weightOz: number | null; blend: string | null }>();
+  for (const row of grid.rows) {
+    if (seen.has(row.blueprintId)) continue;
+    const b = await probeRetry(() => getBlueprint(row.blueprintId));
+    const text = String(b.description ?? "").replace(/<[^>]*>/g, " ").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+
+    // Weight. Printify quotes oz/yd² or g/m², inconsistently and sometimes both.
+    let weightOz: number | null = null;
+    const oz = /(\d+(?:\.\d+)?)\s*(?:oz|ounce)/i.exec(text);
+    const gsm = /(\d+(?:\.\d+)?)\s*g\s*\/\s*m/i.exec(text);
+    if (oz) weightOz = Number(oz[1]);
+    else if (gsm) weightOz = Math.round(Number(gsm[1]) * 0.0295 * 10) / 10;
+
+    // Blend, in whichever of the three shapes the copy happens to use.
+    let blend: string | null = null;
+    const pair = /(\d+)\s*%\s*(?:combed\s*)?(?:and\s*)?(?:ring[- ]?spun\s*)?cotton[^.]{0,20}?(\d+)\s*%\s*poly/i.exec(text);
+    const slash = /(\d{2})\s*\/\s*(\d{2})\s*cotton[- ]?poly/i.exec(text);
+    if (pair) blend = `${pair[1]}/${pair[2]} cotton-poly`;
+    else if (slash) blend = `${slash[1]}/${slash[2]} cotton-poly`;
+    else if (/100\s*%\s*(?:combed\s*)?(?:ring[- ]?spun\s*)?cotton/i.test(text)) blend = "100% cotton";
+
+    seen.set(row.blueprintId, { spec: text.slice(0, 320), weightOz, blend });
+    console.log(
+      `  ${String(row.blueprintId).padStart(5)}  ${`${b.brand ?? ""} ${b.model ?? ""}`.trim().slice(0, 30).padEnd(32)}` +
+        `${weightOz ? `${weightOz} oz` : "weight n/a"}`.padEnd(14) + (blend ?? "blend n/a"),
+    );
+    await probePause(350);
+  }
+
+  const enriched = grid.rows.map((r) => ({ ...r, ...seen.get(r.blueprintId) }));
+  await writeFile(out, `${JSON.stringify({ rows: enriched }, null, 2)}\n`);
+  console.log(`\n${seen.size} blueprints described. Rebuild with: npm run store:summary`);
+  return 0;
+}
+
 /** Same patience as the sweep: Printify 429s hard on a tight loop. */
 async function probeRetry<T>(fn: () => Promise<T>, tries = 5): Promise<T> {
   let wait = 4000;

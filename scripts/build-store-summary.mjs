@@ -29,6 +29,8 @@ const NAMES = {
   youth: "Youth Tee", cap: "Fitted Cap", beanie: "Beanie", mug: "Mug", sticker: "Sticker",
 };
 const ORDER = ["tee", "longsleeve", "crewneck", "hoodie", "youth", "cap", "beanie", "mug", "sticker"];
+/** Weight and blend mean something here. A mug's "11 oz" is capacity. */
+const APPAREL = new Set(["tee", "longsleeve", "crewneck", "hoodie", "youth"]);
 
 const data = JSON.parse(await readFile("dist/store-economics.json", "utf8"));
 const sweep = JSON.parse(await readFile("dist/print/provider-sweep.json", "utf8"));
@@ -260,6 +262,7 @@ const garments = ORDER.map((id) => {
   });
   const cheaper = ours ? usable.filter((r) => !r.current && landedOf(r) < landedOf(ours)) : [];
 
+  const qual = APPAREL.has(id);
   const body = sorted.map((r) => {
     const flags = [];
     if (!r.minCost) flags.push(`<span class="flag bad">would not price</span>`);
@@ -271,6 +274,8 @@ const garments = ORDER.map((id) => {
       <td class="num">${r.blueprintId}</td>
       <td class="num">${r.providerCount}</td>
       <td class="num">${esc(r.provider)}</td>
+      <td class="num ${qual && r.weightOz ? "qual" : "dim"}">${qual && r.weightOz ? `${r.weightOz} oz` : "—"}</td>
+      <td class="lbl ${qual && r.blend ? "qual" : "dim"}">${qual && r.blend ? esc(r.blend) : "—"}</td>
       <td class="num">${r.minCost ? usd(r.minCost) : "—"}</td>
       <td class="num">${r.maxCost ? usd(r.maxCost) : "—"}</td>
       <td class="num">${r.postCents == null ? "—" : usd(r.postCents)}</td>
@@ -290,6 +295,7 @@ const garments = ORDER.map((id) => {
     ${verdict}
     <div class="scroll"><table>
       <thead><tr><th>Garment</th><th class="num">BP</th><th class="num">Makers</th><th class="num">Probed via</th>
+      <th class="num qual">Weight</th><th class="qual">Blend</th>
       <th class="num">Cheapest</th><th class="num">Dearest</th><th class="num">Post</th><th class="num pay">Landed</th><th>Notes</th></tr></thead>
       <tbody>${body}</tbody></table></div>
     ${w.why ? `<p class="recorded"><b>What the code records as the reason</b> (matrix.ts, not evidence &mdash; the grid above is): ${w.why}${w.cost ? ` ${w.cost}` : ""}</p>` : ""}
@@ -402,6 +408,9 @@ const html = `<!doctype html>
   .flow{margin:.5rem 0 0;padding-left:1.3rem} .flow li{margin:.45rem 0}
   .recorded{font-size:.82rem;color:var(--muted);margin:.7rem 0 0;padding-left:.8rem;border-left:2px solid var(--line)}
   .warnt{color:var(--warn)}
+  th.qual,td.qual{color:var(--gold)}
+  th.qual{border-left:1px solid var(--line)}
+  td.qual:first-of-type{border-left:1px solid var(--line)}
   [hidden]{display:none}
 </style></head><body><div class="wrap">
 
@@ -439,7 +448,8 @@ const html = `<!doctype html>
     <b>Measured, not remembered.</b> <code>cli.ts garments</code> probes rival blueprints across Printify's 1,914 the same way the maker sweep probes rival makers &mdash; create a draft, read the cost back, delete it.<br>
     <b>Landed</b> = cheapest unit + postage. <b>Probed via</b> is the maker used for the measurement: Printify Choice wherever it exists, otherwise the first US house.<br>
     <b>Cross-blueprint costs are marked "sampled colourways"</b> and are indicative. Variant ids are per blueprint, so our own six colours cannot be named on a garment we have never sold. Right for choosing between garments; wrong to quote as our cost.<br>
-    <b>A cheaper row is not automatically a mistake.</b> A heavier blank, a bigger print area or a complete size run can all be worth paying for &mdash; but the number should be visible while you decide.
+    <b>The rule is quality first, then the cheapest of that quality.</b> Weight and blend are the quality columns &mdash; heavier is a better blank, and more cotton is a better hand than more polyester. Cost only breaks a tie on quality.<br>
+    <b>A cheaper row is not automatically a mistake, and a dearer one is not automatically justified.</b> Both numbers are here so the trade is visible.
   </div>
   ${garments}
 </div>
