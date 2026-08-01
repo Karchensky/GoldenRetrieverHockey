@@ -39,7 +39,9 @@
     "deploy": "npm run build:site && wrangler deploy",
     "bake:retriever": "blender assets/3d/retriever-original.blend --background --python scripts/blender/bake-retriever.py",
     "bake:compress": "node scripts/compress-bakes.mjs",
-    "dev:regen": "npm run build:data && next dev apps/web"
+    "dev:regen": "npm run build:data && next dev apps/web",
+    "secrets:local": "node scripts/secrets.mjs local",
+    "secrets:deploy": "node scripts/secrets.mjs deploy"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260729.1",
