@@ -45,6 +45,12 @@ apps/web/out/
 /*.webp
 /*.avif
 
+# TAX FORMS. DTF-17, ST-120 and anything like them carry the captain's SSN, his
+# EIN, his date of birth and his Certificate of Authority number. They arrived
+# in the repository root untracked on 2026-08-01 and would have been swept into
+# the next `git add -A` — this repository is public.
+/*.pdf
+
 # aerial tournament render output (regenerable via scripts/aerial-shoot.mjs)
 docs/aerial-tournament/shots/
 
