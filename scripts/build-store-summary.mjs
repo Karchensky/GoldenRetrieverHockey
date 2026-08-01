@@ -556,7 +556,8 @@ const html = `<!doctype html>
 </div>
 
 <footer>
-  Rebuild: <code>npm run store:report</code> then <code>npm run store:summary</code>.<br>
+  <b>Rebuild this page.</b> <code>npm run store:prices</code> &mdash; about 2 minutes, re-reads the live shop's prices and costs. Use it after a price change.<br>
+  <code>npm run store:refresh</code> &mdash; about 15 minutes, and the only one that re-checks <i>everything</i>: it re-probes every maker and every rival blueprint too, so the Makers and Garment-choice tabs are only as current as the last time you ran it. Nothing is cached; costs are measured by creating a draft on the live shop and deleting it.<br>
   Tax modelled at Buffalo 14201 — 8.75% general, 4.75% clothing under $110.<br><br>
   Private working document. Costs, margins and supplier prices — not for the public repository.
 </footer>
