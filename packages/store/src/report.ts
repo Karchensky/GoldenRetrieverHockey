@@ -320,6 +320,16 @@ type Row = {
   itemId: string;
   /** Stripe product tax code, from the matrix. Decides the New York rate. */
   taxCode: string;
+  /**
+   * The sizes this line sells, IN ORDER, from the matrix.
+   *
+   * A cost tier collects its sizes into a Set, so they come out in whatever
+   * order the variants happened to be walked — `["S","XL","L","M"]` for the
+   * crewneck. Labelling that tier by its first and last member produced
+   * "S–M" and hid L and XL from the summary page entirely. Nothing was missing
+   * from the data; the label was lying about it.
+   */
+  sizeOrder: string[];
   productId: string | null;
   visible: boolean | null;
   blueprintId: number;
@@ -522,6 +532,7 @@ export async function report(): Promise<number> {
       markId: item.markId,
       itemId: item.itemId,
       taxCode: item.taxCode,
+      sizeOrder: item.sizes,
       productId: product?.id ?? null,
       visible: product ? product.visible : null,
       blueprintId: item.blueprintId,
@@ -612,7 +623,11 @@ async function writeEconomics(rows: Row[]): Promise<void> {
         clothing: CLOTHING_CODES.has(row.taxCode),
         units,
         tiers: row.tiers.map((t) => ({
-          sizes: t.sizes,
+          // Sorted into the matrix's own order. A Set gave them back shuffled,
+          // and a first-to-last label on a shuffled list is a wrong label.
+          sizes: [...t.sizes].sort(
+            (a, b) => row.sizeOrder.indexOf(a) - row.sizeOrder.indexOf(b),
+          ),
           colours: t.colours.length,
           full: { ny: sale(row, t, units, 0, true), away: sale(row, t, units, 0, false) },
           teammate: { ny: sale(row, t, units, 0.3, true), away: sale(row, t, units, 0.3, false) },

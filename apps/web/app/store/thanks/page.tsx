@@ -47,9 +47,9 @@ export default function ThanksPage() {
       <ClearBasket />
       <header className="hero seq">
         <h1 className="hero-h">
-          That&rsquo;s
+          Order
           <br />
-          <i>ordered.</i>
+          <i>complete.</i>
         </h1>
         <p className="hero-p">
           We&rsquo;ve emailed your receipt. Ships in 2&ndash;5 business days.
