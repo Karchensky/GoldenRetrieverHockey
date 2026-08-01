@@ -17,6 +17,11 @@ Check generated output before showing it to the user.
 
 Look up third-party dashboard paths — Printify and Stripe move menus.
 
+**The store is LIVE and takes real money** (since 1 August 2026). Orders are
+held on Printify for manual approval, which is the only safety net between a
+bug and a customer. Test against `npx wrangler dev` with the test key, never by
+trying something on the live site.
+
 ## Things that break silently
 
 **`matrix.ts` → `npm run store:sync` → Printify + `products.json` →
@@ -26,7 +31,9 @@ drafts.
 
 **Never run `build:site` while `next dev` or `wrangler dev` is running.** Dev
 serves 500s that look like a code error; wrangler holds `apps/web/out` open and
-the build fails `EBUSY`. Dev port is **3002**.
+the build fails `EBUSY`. `npm run dev` sets no port, so Next takes the first
+free one from 3000 — another project on this machine holds 3000–3001, so it
+usually lands on **3002**.
 
 **`git push` IS the deploy** — Cloudflare rebuilds in ~90s. A local
 `npm run deploy` without a push is reverted by the next daily Action.
