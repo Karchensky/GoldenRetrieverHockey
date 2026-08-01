@@ -141,6 +141,14 @@ function pickVariants(all: ProbeVariant[], want: string[]): ProbeVariant[] {
   return out;
 }
 
+/**
+ * Exported for `garments.ts`, which asks the same question one level up: not
+ * "which maker of the garment we chose" but "which garment". The measurement
+ * is identical — create a draft, read the costs back, delete it — so it must
+ * be the same code rather than a second implementation that rounds differently.
+ */
+export { probe as probeCost, pause as probePause };
+
 async function probe(
   itemId: string,
   blueprintId: number,

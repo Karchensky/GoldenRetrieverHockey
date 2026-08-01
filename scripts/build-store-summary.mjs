@@ -161,6 +161,20 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
   const better = cheapestUsable && landed(cheapestUsable) < chosenLanded ? cheapestUsable : null;
   const tied = chosen && cheapestUsable && !better && cheapestUsable.providerId !== chosen.providerId;
 
+  /*
+   * A TIE GOES TO PRINTIFY CHOICE. The captain's rule, 2026-08-01.
+   *
+   * Choice is a routing layer rather than a named factory: when a house is
+   * busy it sends the job to another one that carries the same blueprint. On
+   * an identical price that is strictly more robust than naming a single
+   * factory that can go down or drop a colourway, which is exactly how the
+   * long sleeve lost Black/M mid-sync on 30 July. The cost of it is that two
+   * orders of the same shirt can be printed in two places.
+   */
+  const tieBreak = tied && cheapestUsable.provider === "Printify Choice"
+    ? `<p class="worst bad">Tied on price with <b>Printify Choice</b>, which wins a tie &mdash; it reroutes when a house is busy instead of depending on one factory. Worth switching.</p>`
+    : "";
+
   const verdict = !chosen
     ? `<p class="worst bad">Nothing marked as chosen.</p>`
     : better
@@ -168,8 +182,8 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
       : `<p class="worst">✓ <b>${esc(chosen.provider)}</b> at ${usd(chosenLanded)} landed is the cheapest maker with a complete size run and sane US postage.${tied ? ` <span class="dim">${esc(cheapestUsable.provider)} matches it to the cent.</span>` : ""}</p>`;
 
   return `<section>
-    <h2>${NAMES[id] ?? id}<span class="meta">blueprint ${bp} &middot; ${rows.length} maker${rows.length === 1 ? "" : "s"} priced</span></h2>
-    ${verdict}
+    <h2>${NAMES[id] ?? id}<span class="meta">blueprint ${bp} &middot; ${rows.length} maker${rows.length === 1 ? "" : "s"} priced${rows.some((r) => r.provider === "Printify Choice") ? "" : " &middot; no Printify Choice on this blueprint"}</span></h2>
+    ${verdict}${tieBreak}
     <div class="scroll"><table>
       <thead><tr><th>Maker</th><th class="num">From</th><th class="num">Colours</th><th class="num">Cheapest</th>
       <th class="num">Dearest</th><th class="num">US post</th><th class="num pay">Landed</th><th>Notes</th></tr></thead>
@@ -178,6 +192,149 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
 }).join("");
 
 /* ------------------------------------------------------------------ */
+/* Tab 3 — garments: why this blueprint and not another                */
+/* ------------------------------------------------------------------ */
+
+/**
+ * MEASURED, NOT REMEMBERED.
+ *
+ * This tab used to transcribe the rationale out of matrix.ts block comments.
+ * That was the wrong answer to the question: those comments record what a past
+ * session decided, and a decision recorded in prose is one nobody can check.
+ * `cli.ts garments` now probes rival blueprints across Printify's catalogue of
+ * 1,914 the same way the maker sweep probes rival makers, and this renders what
+ * came back.
+ *
+ * `WHY` survives only as the note beside a row, clearly marked as the recorded
+ * reasoning rather than as evidence. Where it disagrees with the grid, the grid
+ * is right.
+ */
+const WHY = {
+  tee: { garment: "Bella+Canvas 3001", alt: "Gildan 5000 and the other budget jerseys",
+    why: "Light 4.2 oz/yd² Airlume combed cotton — the retail-quality unisex jersey rather than the heavy budget default. <b>Printify Choice was picked after <code>cli.ts sweep</code> probed all twenty makers of this blueprint</b>: $6.08–$10.93 against Monster Digital's $11.54–$16.44 on our own six colourways and six sizes, and $3.99 postage against $4.29.",
+    cost: "Print area is 9.2in against Monster Digital's 11.1in. Our placement is 8in so it fits, and the same art over a smaller area prints at a <i>higher</i> dpi — but the mark prints somewhat smaller at the top of the size run." },
+  longsleeve: { garment: "Bella+Canvas 3501", alt: "—",
+    why: "The tee's long-sleeved sibling. Same light 4.2 oz/yd² Airlume cotton, same maker, so a customer who owns the tee gets the same shirt with sleeves.", cost: "" },
+  crewneck: { garment: "Gildan 18000", alt: "—",
+    why: "The hoodie's plainer sibling, through SwiftPOD who already print the hoodie. Heavy Blend at 8 oz/yd² in a 50/50.", cost: "" },
+  hoodie: { garment: "Independent Trading Co. IND4000", alt: "Gildan 18500, the budget default",
+    why: "The Gildan is 8 oz of 50/50 with a one-ply body. The IND4000 is <b>10 oz, fleece-lined hood, tear-away label, double-needle stitching</b> — the tier the merchandise trade treats as quality. It also carries a <b>15 × 10in front canvas against the Gildan's 12.4 × 8.2</b>, which is what lets a square mark print seven inches across on a small instead of under six.",
+    cost: "<b>This is why the hoodie has no Printify Choice.</b> Only two makers carry blueprint 2002 at all, and Choice is not one of them. SwiftPOD over Monster Digital on stock rather than money: Monster Digital's IND4000 has no black and stops at 2XL. The budget Gildan would almost certainly offer Choice — that is the price of the better garment." },
+  youth: { garment: "Bella+Canvas 3001Y", alt: "—",
+    why: "The youth cut of the adult tee — the same shirt the grown-ups get, so a family order matches.", cost: "" },
+  cap: { garment: "blueprint 1744", alt: "—", why: "Fitted cap. Printful and Printify Choice return identical economics on it.", cost: "" },
+  beanie: { garment: "blueprint 1691", alt: "—", why: "Printful and Printify Choice return identical economics on it.", cost: "" },
+  mug: { garment: "blueprint 479", alt: "—", why: "11 oz and 15 oz on one blueprint, so a customer picks a size rather than a product.", cost: "" },
+  sticker: { garment: "blueprint 400", alt: "—", why: "Kiss-cut vinyl in two sizes. Sold in threes because a single sticker cannot carry its own postage.", cost: "" },
+};
+
+let grid = { rows: [] };
+try {
+  grid = JSON.parse(await readFile("dist/print/garment-grid.json", "utf8"));
+} catch {
+  // Never probed. The tab says so rather than pretending the question is settled.
+}
+
+const gridByItem = new Map();
+for (const r of grid.rows) {
+  if (!gridByItem.has(r.itemId)) gridByItem.set(r.itemId, []);
+  gridByItem.get(r.itemId).push(r);
+}
+
+const garments = ORDER.map((id) => {
+  const cand = gridByItem.get(id) ?? [];
+  const w = WHY[id] ?? { garment: "—", alt: "—", why: "", cost: "" };
+  if (!cand.length) {
+    return `<section><h2>${NAMES[id] ?? id}</h2>
+      <p class="worst bad">Never probed. Run <code>node packages/store/src/cli.ts garments ${id}</code>.</p></section>`;
+  }
+
+  const ours = cand.find((r) => r.current);
+  const landedOf = (r) => (r.minCost || 0) + (r.postCents ?? 99999);
+  const priced = cand.filter((r) => r.minCost > 0 && r.postCents != null);
+  const usable = priced.filter((r) => r.postCents < 1500);
+  const sorted = [...cand].sort((a, b) => {
+    const ap = a.minCost > 0 && a.postCents != null, bp = b.minCost > 0 && b.postCents != null;
+    if (ap !== bp) return ap ? -1 : 1;                       // unpriced last
+    return landedOf(a) - landedOf(b);
+  });
+  const cheaper = ours ? usable.filter((r) => !r.current && landedOf(r) < landedOf(ours)) : [];
+
+  const body = sorted.map((r) => {
+    const flags = [];
+    if (!r.minCost) flags.push(`<span class="flag bad">would not price</span>`);
+    if ((r.postCents ?? 0) > 1500) flags.push(`<span class="flag warn">${usd(r.postCents)} postage</span>`);
+    if (!r.hasChoice) flags.push(`<span class="flag warn">no Printify Choice</span>`);
+    if (r.indicative && r.minCost) flags.push(`<span class="flag">sampled colourways</span>`);
+    return `<tr class="${r.current ? "chosen" : ""}">
+      <td class="lbl">${r.current ? '<span class="tick">✓</span> ' : ""}${esc(`${r.brand} ${r.model}`.trim() || r.blueprintTitle)}</td>
+      <td class="num">${r.blueprintId}</td>
+      <td class="num">${r.providerCount}</td>
+      <td class="num">${esc(r.provider)}</td>
+      <td class="num">${r.minCost ? usd(r.minCost) : "—"}</td>
+      <td class="num">${r.maxCost ? usd(r.maxCost) : "—"}</td>
+      <td class="num">${r.postCents == null ? "—" : usd(r.postCents)}</td>
+      <td class="num pay">${r.minCost && r.postCents != null ? usd(landedOf(r)) : "—"}</td>
+      <td class="notes">${flags.join(" ") || '<span class="dim">—</span>'}</td>
+    </tr>`;
+  }).join("");
+
+  const verdict = !ours
+    ? `<p class="worst bad">The blueprint we sell was not measured in this run.</p>`
+    : cheaper.length === 0
+      ? `<p class="worst">✓ <b>${esc(`${ours.brand} ${ours.model}`.trim())}</b> at ${usd(landedOf(ours))} landed is the cheapest of ${priced.length} priced candidates.</p>`
+      : `<p class="worst bad">${cheaper.length} cheaper candidate${cheaper.length === 1 ? "" : "s"}. Cheapest is <b>${esc(`${cheaper[0].brand} ${cheaper[0].model}`.trim())}</b> at ${usd(landedOf(cheaper[0]))} against our ${usd(landedOf(ours))} &mdash; <b>${usd(landedOf(ours) - landedOf(cheaper[0]))} a unit</b>${cheaper[0].hasChoice ? ", and it has Printify Choice" : ""}. A quality decision, not an oversight &mdash; see the note.</p>`;
+
+  return `<section>
+    <h2>${NAMES[id] ?? id}<span class="meta">${cand.length} rival blueprints probed &middot; we sell ${ours ? `${esc(`${ours.brand} ${ours.model}`.trim())}, blueprint ${ours.blueprintId}` : "—"}</span></h2>
+    ${verdict}
+    <div class="scroll"><table>
+      <thead><tr><th>Garment</th><th class="num">BP</th><th class="num">Makers</th><th class="num">Probed via</th>
+      <th class="num">Cheapest</th><th class="num">Dearest</th><th class="num">Post</th><th class="num pay">Landed</th><th>Notes</th></tr></thead>
+      <tbody>${body}</tbody></table></div>
+    ${w.why ? `<p class="recorded"><b>What the code records as the reason</b> (matrix.ts, not evidence &mdash; the grid above is): ${w.why}${w.cost ? ` ${w.cost}` : ""}</p>` : ""}
+  </section>`;
+}).join("");
+
+/* ------------------------------------------------------------------ */
+/* Tab 4 — how the money and the tax actually move                     */
+/* ------------------------------------------------------------------ */
+
+const explain = `
+<section>
+  <h2>One order, start to finish</h2>
+  <ol class="flow">
+    <li><b>They buy.</b> Card details go straight to Stripe — the shop never sees them. Stripe adds New York's sales tax if they are in New York, and nothing if they are not.</li>
+    <li><b>Stripe takes its cut immediately.</b> 2.9% + 30¢, plus 0.5% Stripe Tax on a New York order. Deducted before the money reaches you. No invoice, ever.</li>
+    <li><b>Stripe emails them the receipt.</b> Automatic, because "Successful payments" is on.</li>
+    <li><b>The rest lands in your Stripe balance</b>, and pays out to your bank on Stripe's rolling schedule. <b class="warnt">The sales tax is sitting in that number and it is not yours.</b></li>
+    <li><b>The webhook creates the order on Printify and holds it.</b> Nothing is printed. <b>You are charged nothing yet.</b></li>
+    <li><b>You look at it and press Submit order.</b> Only now does Printify charge <b>your own card</b> for the garment and the postage.</li>
+    <li><b>Printify prints and ships it.</b> 2–5 business days to dispatch, 4–10 in the post.</li>
+    <li><b>Once a year, you pay New York.</b> Form ST-101, due 20 March, from the figure Stripe → Tax → Registrations shows you.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Money in, money out</h2>
+  <table class="kv">
+    <tr><th>Who charges you</th><td><b>Stripe</b>, per sale, automatically — 2.9% + 30¢ and 0.5% Tax on NY orders.<br><b>Printify</b>, per order, when you press Submit — the garment and the postage, on your own card.<br>Nobody else. No monthly fee anywhere.</td></tr>
+    <tr><th>Does Stripe pay Printify?</th><td><b>No.</b> They are unconnected. Two separate money movements that happen to concern the same parcel.</td></tr>
+    <tr><th>How do you get paid?</th><td>Automatically. Stripe pays your Stripe balance out to your bank on its own schedule — you do not transfer anything by hand.</td></tr>
+    <tr><th>Do you reserve the tax yourself?</th><td><b>Yes, and this is the one that catches people.</b> Stripe <i>collects</i> the tax and hands it to you with everything else. It does not remit it. Move it out of the account the week it lands, or you will spend it and still owe it.</td></tr>
+    <tr><th>What is actually yours?</th><td>What is left after Printify, Stripe and New York. On a $27 tee to Buffalo that is about $9.66. With TEAMMATE30, about $1.57.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Tax, in four lines</h2>
+  <table class="kv">
+    <tr><th>Who owes it</th><td>The customer pays it; you collect and forward it. It is never revenue and never profit.</td></tr>
+    <tr><th>Who it applies to</th><td>New York buyers only. You have no obligation in any other state.</td></tr>
+    <tr><th>The rates</th><td>Buffalo: <b>8.75%</b> on general goods, <b>4.75%</b> on clothing under $110 — New York exempts clothing from the state's 4%, Erie County does not waive its own. <b>It applies to the postage too</b>, at whatever rate the goods carry.</td></tr>
+    <tr><th>When you pay it</th><td>Once a year. Form ST-101, period 1 March – 28/29 February, due <b>20 March</b>. Likely $20–30. <b>File even in a year with no sales</b> — a missed return is a $50 minimum penalty.</td></tr>
+  </table>
+</section>`;
 
 const worstOverall = Math.min(...data.items.flatMap((i) => i.tiers.map((t) => t.teammate.ny.keep)));
 
@@ -238,6 +395,13 @@ const html = `<!doctype html>
   .cut{color:var(--gold)} .dim{color:var(--muted);opacity:.6}
   footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
   code{font-family:var(--mono);font-size:.87em;background:var(--soft);padding:.1rem .3rem;border-radius:.25rem}
+  .kv{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--panel);border:1px solid var(--line);border-radius:.5rem}
+  .kv th{text-align:left;vertical-align:top;width:11rem;color:var(--muted);font-weight:600;font-size:.8rem;padding:.55rem .7rem;border-bottom:1px solid var(--line)}
+  .kv td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line);white-space:normal}
+  .kv tr:last-child th,.kv tr:last-child td{border-bottom:0}
+  .flow{margin:.5rem 0 0;padding-left:1.3rem} .flow li{margin:.45rem 0}
+  .recorded{font-size:.82rem;color:var(--muted);margin:.7rem 0 0;padding-left:.8rem;border-left:2px solid var(--line)}
+  .warnt{color:var(--warn)}
   [hidden]{display:none}
 </style></head><body><div class="wrap">
 
@@ -247,6 +411,8 @@ const html = `<!doctype html>
 <div class="tabs" role="tablist">
   <button role="tab" aria-selected="true" data-tab="econ">What you keep</button>
   <button role="tab" aria-selected="false" data-tab="sup">Makers &amp; costs</button>
+  <button role="tab" aria-selected="false" data-tab="gar">Garment choice</button>
+  <button role="tab" aria-selected="false" data-tab="how">How it works</button>
 </div>
 
 <div id="econ">
@@ -266,6 +432,20 @@ const html = `<!doctype html>
     <b>This tab does NOT compare different garments.</b> It compares makers of the blueprint already chosen — Bella+Canvas 3001 for the tee, and so on. Answering "is this the best <i>shirt</i>" needs a sweep across alternative blueprints, which has never been run.
   </div>
   ${suppliers}
+</div>
+
+<div id="gar" hidden>
+  <div class="legend">
+    <b>Measured, not remembered.</b> <code>cli.ts garments</code> probes rival blueprints across Printify's 1,914 the same way the maker sweep probes rival makers &mdash; create a draft, read the cost back, delete it.<br>
+    <b>Landed</b> = cheapest unit + postage. <b>Probed via</b> is the maker used for the measurement: Printify Choice wherever it exists, otherwise the first US house.<br>
+    <b>Cross-blueprint costs are marked "sampled colourways"</b> and are indicative. Variant ids are per blueprint, so our own six colours cannot be named on a garment we have never sold. Right for choosing between garments; wrong to quote as our cost.<br>
+    <b>A cheaper row is not automatically a mistake.</b> A heavier blank, a bigger print area or a complete size run can all be worth paying for &mdash; but the number should be visible while you decide.
+  </div>
+  ${garments}
+</div>
+
+<div id="how" hidden>
+  ${explain}
 </div>
 
 <footer>
