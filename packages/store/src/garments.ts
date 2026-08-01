@@ -210,13 +210,33 @@ export async function garmentSpecs(): Promise<number> {
     if (oz) weightOz = Number(oz[1]);
     else if (gsm) weightOz = Math.round(Number(gsm[1]) * 0.0295 * 10) / 10;
 
-    // Blend, in whichever of the three shapes the copy happens to use.
+    /*
+     * BLEND, AND WHY THIS IS MORE CAREFUL THAN IT LOOKS.
+     *
+     * The first version pulled the first "N% cotton ... M% polyester" pair out
+     * of the prose and printed it as the garment's blend. On Gildan 64000 that
+     * produced "35/65 cotton-poly" from a sentence that actually reads *"Solid
+     * colors are 100% cotton, while heathers and sport grey use polyester
+     * blends"* — so it reported a mostly-polyester shirt that is, in the
+     * colours we sell, entirely cotton. It did the same to Bella+Canvas 3001
+     * ("99/1"). Two of the tee comparisons were wrong in the direction that
+     * flatters whichever garment happened to be described second.
+     *
+     * Almost every blank varies: solids one blend, heathers another. So where
+     * the copy says so, this refuses to name a single number and says it
+     * varies. A hedge that is true beats a figure that is not.
+     */
     let blend: string | null = null;
+    const varies = /heather|sport grey|sport gray|solid colou?rs? are|depending on (?:the )?colou?r/i.test(text);
     const pair = /(\d+)\s*%\s*(?:combed\s*)?(?:and\s*)?(?:ring[- ]?spun\s*)?cotton[^.]{0,20}?(\d+)\s*%\s*poly/i.exec(text);
     const slash = /(\d{2})\s*\/\s*(\d{2})\s*cotton[- ]?poly/i.exec(text);
-    if (pair) blend = `${pair[1]}/${pair[2]} cotton-poly`;
+    const allCotton = /100\s*%\s*(?:combed\s*)?(?:ring[- ]?spun\s*)?cotton/i.test(text);
+
+    if (varies) {
+      blend = allCotton ? "100% cotton solids, blends in heathers" : "varies by colour";
+    } else if (pair) blend = `${pair[1]}/${pair[2]} cotton-poly`;
     else if (slash) blend = `${slash[1]}/${slash[2]} cotton-poly`;
-    else if (/100\s*%\s*(?:combed\s*)?(?:ring[- ]?spun\s*)?cotton/i.test(text)) blend = "100% cotton";
+    else if (allCotton) blend = "100% cotton";
 
     seen.set(row.blueprintId, { spec: text.slice(0, 320), weightOz, blend });
     console.log(
