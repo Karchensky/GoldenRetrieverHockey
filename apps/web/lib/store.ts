@@ -1,6 +1,7 @@
 import catalog from "../data/products.json";
 import { money, priceRange } from "../../../packages/store/src/basket";
 import type { CatalogProduct } from "../../../packages/store/src/basket";
+import { photographsOf } from "../../../packages/store/src/gallery";
 
 /**
  * The store's data contract.
@@ -20,6 +21,15 @@ import type { CatalogProduct } from "../../../packages/store/src/basket";
  *
  * The old taxonomy also named marks — `crest-logo`, `monogram-logo` — that were
  * retired with `logo_one`. Reviving it would have meant reviving those.
+ *
+ * **What changed on 2026-08-01: a mockup knows its own colour.** The one thing
+ * the drawings could do and the photographs could not was recolour with the
+ * swatch, and the note above conceded it. That gap is closed — `mockups` is now
+ * a list of `{ src, color, camera }` rather than a list of URLs, so the product
+ * page shows the provider's photographs OF THE COLOURWAY THE SHOPPER PICKED,
+ * from several angles. The colour was in Printify's response all along, in
+ * `variant_ids`; nothing was ever inferred from pixels. See
+ * `packages/store/src/gallery.ts`.
  *
  * **The one rule that carries over is not negotiable: the site does not
  * pretend.** It used to state that plainly by refusing to imply it could take
@@ -126,9 +136,69 @@ export const mockupSrcSet = (productId: string, index: number): string =>
   [400, 800].map((w) => `/store/${productId}-${index}-${w}.webp ${w}w`).join(", ") +
   `, /store/${productId}-${index}.webp 1200w`;
 
-/** The first mockup, which is the provider's default view. */
+/**
+ * The photograph a `/store` card leads with — `heroIndex`, not `mockups[0]`.
+ *
+ * **The grid keeps its variety on purpose.** The card does not follow a colour
+ * selection, because there is nothing selected on a grid and twenty white shirts
+ * is what this avoids. `heroIndex` is chosen at sync time by ranking the
+ * colourways by lightness and rotating by the product's position in its
+ * category, so neighbouring cards differ by construction. See `heroIndexFor` in
+ * packages/store/src/gallery.ts.
+ *
+ * It used to be index 0, achieved by REORDERING the array in the mirroring
+ * script. That cannot survive a gallery grouped by colourway: the file on disk
+ * is named by its index.
+ */
+export const heroIndex = (product: Product): number => {
+  const at = product.heroIndex ?? 0;
+  return at >= 0 && at < product.mockups.length ? at : 0;
+};
+
 export const heroMockup = (product: Product): string | null =>
-  product.mockups.length ? mockupPath(product.id, 0) : null;
+  product.mockups.length ? mockupPath(product.id, heroIndex(product)) : null;
+
+/**
+ * The photographs of one colourway, as indices into `product.mockups`.
+ *
+ * **The index IS the filename** — `mirror-mockups.mjs` writes
+ * `<id>-<index>.webp` — so the gallery addresses photographs by position in the
+ * catalog array and never by URL. Filtering here rather than reordering anywhere
+ * is what keeps the two in step.
+ *
+ * Returns every photograph, ungrouped, when the colour is unknown; a product
+ * page that cannot resolve its own swatch should show the shopper something
+ * rather than an empty column.
+ */
+export const mockupsFor = (
+  product: Product,
+  colorName: string,
+): { index: number; alt: string }[] => {
+  const indices = photographsOf(product.mockups, colorName);
+  return indices.map((index, n) => ({
+    index,
+    // The colour is IN the alt text. A screen reader on a page whose pictures
+    // change with a swatch has no other way to know that they did.
+    alt: `${product.title} in ${product.mockups[index]!.color}, view ${n + 1} of ${indices.length}`,
+  }));
+};
+
+/**
+ * The colourways this product can actually be shown in.
+ *
+ * A swatch with no photograph behind it would put the shopper on a colour the
+ * page cannot illustrate. Printify rendered all 175 colourways in this
+ * catalogue when it was measured on 2026-08-01, so this should be every colour;
+ * it is a guard, and the sync records a problem naming any colour it drops.
+ *
+ * **Falls back to every colour rather than to none.** A product whose mockups
+ * have not been mirrored yet must still be buyable in every colour it comes in.
+ */
+export const colorsWithPhotos = (product: Product): Product["colors"] => {
+  const shown = new Set(product.mockups.map((m) => m.color));
+  const withPhotos = product.colors.filter((c) => shown.has(c.name));
+  return withPhotos.length ? withPhotos : product.colors;
+};
 
 /**
  * The description is built in matrix.ts as paragraphs joined by blank lines —

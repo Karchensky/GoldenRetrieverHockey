@@ -92,11 +92,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "18076": 1975,
@@ -246,11 +363,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18542/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18102/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18078/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18150/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18542/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18542/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18542/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18542/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18078/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18078/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18078/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18078/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18102/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18102/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18102/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18102/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18398/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18398/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18398/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18398/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18270/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18270/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18270/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18270/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18150/92547/golden-retrievers-championship-roundel-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18150/92720/golden-retrievers-championship-roundel-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18150/102048/golden-retrievers-championship-roundel-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4d3441469980305ad68/18150/102046/golden-retrievers-championship-roundel-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "18076": 1975,
@@ -352,9 +586,48 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18542/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18078/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18542/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18542/92720/golden-retrievers-faceoff-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18542/102048/golden-retrievers-faceoff-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18542/102046/golden-retrievers-faceoff-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18078/92547/golden-retrievers-faceoff-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18078/92720/golden-retrievers-faceoff-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18078/102048/golden-retrievers-faceoff-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4e9fe22b1d4640b6cd1/18078/102046/golden-retrievers-faceoff-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "06d73fd908759740",
       "prices": {
         "18076": 1975,
@@ -480,11 +753,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18542/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18102/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18078/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18150/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18542/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18542/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18542/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18542/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18078/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18078/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18078/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18078/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18102/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18102/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18102/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18102/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18398/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18398/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18398/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18398/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18270/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18270/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18270/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18270/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18150/92547/golden-retrievers-heritage-seal-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18150/92720/golden-retrievers-heritage-seal-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18150/102048/golden-retrievers-heritage-seal-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba4fefe22b1d4640b6cf2/18150/102046/golden-retrievers-heritage-seal-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 20,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "18076": 1975,
@@ -634,11 +1024,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18542/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18102/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18078/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18150/92547/golden-retrievers-boop-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18542/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18542/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18542/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18542/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18078/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18078/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18078/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18078/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18102/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18102/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18102/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18102/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18398/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18398/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18398/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18398/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18270/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18270/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18270/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18270/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18150/92547/golden-retrievers-boop-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18150/92720/golden-retrievers-boop-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18150/102048/golden-retrievers-boop-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba515f610945dae00e304/18150/102046/golden-retrievers-boop-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "18076": 1975,
@@ -788,11 +1295,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18542/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18102/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18078/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18150/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18542/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18542/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18542/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18542/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18078/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18078/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18078/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18078/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18102/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18102/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18102/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18102/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18398/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18398/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18398/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18398/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18270/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18270/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18270/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18270/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18150/92547/golden-retrievers-rink-board-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18150/92720/golden-retrievers-rink-board-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18150/102048/golden-retrievers-rink-board-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba52df610945dae00e318/18150/102046/golden-retrievers-rink-board-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "18076": 1975,
@@ -942,11 +1566,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18542/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18102/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18078/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18150/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18542/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18542/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18542/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18542/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18078/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18078/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18078/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18078/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18102/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18102/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18102/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18102/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18398/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18398/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18398/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18398/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18270/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18270/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18270/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18270/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18150/92547/golden-retrievers-stick-carry-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18150/92720/golden-retrievers-stick-carry-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18150/102048/golden-retrievers-stick-carry-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5414a5fb2802301a782/18150/102046/golden-retrievers-stick-carry-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "18076": 1975,
@@ -1096,11 +1837,128 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18542/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18102/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18078/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18150/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18542/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18542/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18542/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "White",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18542/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18078/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18078/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18078/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "Athletic Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18078/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18102/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18102/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18102/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "Black",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18102/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18398/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18398/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18398/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18398/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18270/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "Heather Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18270/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "Heather Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18270/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "Heather Navy",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18270/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "Heather Navy",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18150/92547/golden-retrievers-in-uniform-tee.jpg?camera_label=front",
+          "color": "Dark Grey Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18150/92720/golden-retrievers-in-uniform-tee.jpg?camera_label=back",
+          "color": "Dark Grey Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18150/102048/golden-retrievers-in-uniform-tee.jpg?camera_label=hanging-1",
+          "color": "Dark Grey Heather",
+          "camera": "hanging-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba556fe22b1d4640b6d72/18150/102046/golden-retrievers-in-uniform-tee.jpg?camera_label=folded",
+          "color": "Dark Grey Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "18076": 1975,
@@ -1214,10 +2072,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123966/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/147878/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123843/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123966/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123966/111673/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123966/111674/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123843/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123843/111673/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/123843/111674/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/147878/111658/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/147878/111673/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b81d3e833423f0ac9bc/147878/111674/golden-retrievers-heritage-seal-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 3,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "123811": 5575,
@@ -1313,10 +2214,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123966/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/147878/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123843/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123966/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123966/111673/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123966/111674/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123843/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123843/111673/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/123843/111674/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/147878/111658/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/147878/111673/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b8a6e04fb9c470dd22d/147878/111674/golden-retrievers-crossed-shield-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 6,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "123811": 5575,
@@ -1412,10 +2356,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "123811": 5575,
@@ -1511,10 +2498,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123966/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/147878/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123843/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123966/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123966/111673/golden-retrievers-boop-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123966/111674/golden-retrievers-boop-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123843/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123843/111673/golden-retrievers-boop-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/123843/111674/golden-retrievers-boop-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/147878/111658/golden-retrievers-boop-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/147878/111673/golden-retrievers-boop-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b7499ff297cecbe054130/147878/111674/golden-retrievers-boop-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 3,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "123811": 5575,
@@ -1586,8 +2616,23 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6e5a67752e590208598c/123966/111658/golden-retrievers-faceoff-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e5a67752e590208598c/123966/111658/golden-retrievers-faceoff-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e5a67752e590208598c/123966/111673/golden-retrievers-faceoff-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e5a67752e590208598c/123966/111674/golden-retrievers-faceoff-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "06d73fd908759740",
       "prices": {
         "123936": 5800,
@@ -1671,10 +2716,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123966/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/147878/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123843/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123966/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123966/111673/golden-retrievers-stick-carry-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123966/111674/golden-retrievers-stick-carry-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123843/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123843/111673/golden-retrievers-stick-carry-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/123843/111674/golden-retrievers-stick-carry-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/147878/111658/golden-retrievers-stick-carry-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/147878/111673/golden-retrievers-stick-carry-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5df6e0bd3b834e0c1694/147878/111674/golden-retrievers-stick-carry-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "123811": 5575,
@@ -1770,10 +2858,53 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123966/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/147878/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123843/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123966/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123966/111673/golden-retrievers-in-uniform-hoodie.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123966/111674/golden-retrievers-in-uniform-hoodie.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123843/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123843/111673/golden-retrievers-in-uniform-hoodie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/123843/111674/golden-retrievers-in-uniform-hoodie.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/147878/111658/golden-retrievers-in-uniform-hoodie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/147878/111673/golden-retrievers-in-uniform-hoodie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5dffe0bd3b834e0c169d/147878/111674/golden-retrievers-in-uniform-hoodie.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 3,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "123811": 5575,
@@ -1853,11 +2984,38 @@
         "L/XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+          "color": "Dark Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+          "color": "Dark Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+          "color": "Dark Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+          "color": "Dark Grey",
+          "camera": "back"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "118702": 3025,
@@ -1925,11 +3083,38 @@
         "L/XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118705/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118703/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/110922/golden-retrievers-boop-fitted-cap.jpg?camera_label=size-chart"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118703/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118703/109531/golden-retrievers-boop-fitted-cap.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118705/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+          "color": "Dark Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118705/109531/golden-retrievers-boop-fitted-cap.jpg?camera_label=back",
+          "color": "Dark Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/109496/golden-retrievers-boop-fitted-cap.jpg?camera_label=front",
+          "color": "Dark Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e4538c778b3f7ec0bd23e/118707/109531/golden-retrievers-boop-fitted-cap.jpg?camera_label=back",
+          "color": "Dark Grey",
+          "camera": "back"
+        }
       ],
+      "heroIndex": 2,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "118702": 3025,
@@ -1986,9 +3171,28 @@
         "One size"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116417/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116417/109401/golden-retrievers-rink-board-beanie.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116425/109382/golden-retrievers-rink-board-beanie.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e454197654de4e60df9c6/116425/109401/golden-retrievers-rink-board-beanie.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "116417": 2525,
@@ -2036,9 +3240,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5e19ba30d7dda405ccf2/65217/6405/golden-retrievers-rink-board-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5e19ba30d7dda405ccf2/104470/101581/golden-retrievers-rink-board-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e19ba30d7dda405ccf2/65217/6405/golden-retrievers-rink-board-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e19ba30d7dda405ccf2/65217/101586/golden-retrievers-rink-board-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e19ba30d7dda405ccf2/104470/101588/golden-retrievers-rink-board-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "65217": 1475,
@@ -2086,9 +3304,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b40f1d1441227060cbc2e/65217/6405/golden-retrievers-boop-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b40f1d1441227060cbc2e/104470/101581/golden-retrievers-boop-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b40f1d1441227060cbc2e/65217/6405/golden-retrievers-boop-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b40f1d1441227060cbc2e/65217/101586/golden-retrievers-boop-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b40f1d1441227060cbc2e/104470/101588/golden-retrievers-boop-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "65217": 1475,
@@ -2136,9 +3368,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5e256e04fb9c470dd468/65217/6405/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5e256e04fb9c470dd468/104470/101581/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e256e04fb9c470dd468/65217/6405/golden-retrievers-mascot-medallion-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e256e04fb9c470dd468/65217/101586/golden-retrievers-mascot-medallion-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e256e04fb9c470dd468/104470/101588/golden-retrievers-mascot-medallion-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "62d5a6c8cbff3b30",
       "prices": {
         "65217": 1475,
@@ -2186,9 +3432,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5e2aba30d7dda405cd01/65217/6405/golden-retrievers-championship-roundel-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5e2aba30d7dda405cd01/104470/101581/golden-retrievers-championship-roundel-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e2aba30d7dda405cd01/65217/6405/golden-retrievers-championship-roundel-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e2aba30d7dda405cd01/65217/101586/golden-retrievers-championship-roundel-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e2aba30d7dda405cd01/104470/101588/golden-retrievers-championship-roundel-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "65217": 1475,
@@ -2236,9 +3496,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b508d4d428b3e9c0a0372/65217/6405/golden-retrievers-heritage-seal-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b508d4d428b3e9c0a0372/104470/101581/golden-retrievers-heritage-seal-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b508d4d428b3e9c0a0372/65217/6405/golden-retrievers-heritage-seal-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b508d4d428b3e9c0a0372/65217/101586/golden-retrievers-heritage-seal-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b508d4d428b3e9c0a0372/104470/101588/golden-retrievers-heritage-seal-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "65217": 1475,
@@ -2286,9 +3560,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b509211dea886bb0cf803/65217/6405/golden-retrievers-crossed-shield-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b509211dea886bb0cf803/104470/101581/golden-retrievers-crossed-shield-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b509211dea886bb0cf803/65217/6405/golden-retrievers-crossed-shield-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b509211dea886bb0cf803/65217/101586/golden-retrievers-crossed-shield-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b509211dea886bb0cf803/104470/101588/golden-retrievers-crossed-shield-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "65217": 1475,
@@ -2336,9 +3624,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5e3be0bd3b834e0c16d2/65217/6405/golden-retrievers-stick-carry-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5e3be0bd3b834e0c16d2/104470/101581/golden-retrievers-stick-carry-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e3be0bd3b834e0c16d2/65217/6405/golden-retrievers-stick-carry-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e3be0bd3b834e0c16d2/65217/101586/golden-retrievers-stick-carry-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5e3be0bd3b834e0c16d2/104470/101588/golden-retrievers-stick-carry-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "65217": 1475,
@@ -2386,9 +3688,23 @@
         "15 oz"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/65217/6405/golden-retrievers-in-uniform-mug.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/104470/101581/golden-retrievers-in-uniform-mug.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/65217/6405/golden-retrievers-in-uniform-mug.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/65217/101586/golden-retrievers-in-uniform-mug.jpg?camera_label=angled-1",
+          "color": "Black",
+          "camera": "angled-1"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6e9fd02f1758830a53b0/104470/101588/golden-retrievers-in-uniform-mug.jpg?camera_label=angled-2",
+          "color": "Black",
+          "camera": "angled-2"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "65217": 1475,
@@ -2475,11 +3791,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25076/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24996/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24991/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25046/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25076/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25076/103305/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25076/137438/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25076/137439/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24991/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24991/103305/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24991/137438/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24991/137439/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24996/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24996/103305/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24996/137438/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/24996/137439/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25046/103304/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25046/103305/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25046/137438/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5c9c19d40918803545d/25046/137439/golden-retrievers-crossed-shield-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "24991": 2975,
@@ -2584,11 +3977,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25076/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24996/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24991/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25046/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25076/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25076/103305/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25076/137438/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25076/137439/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24991/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24991/103305/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24991/137438/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24991/137439/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24996/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24996/103305/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24996/137438/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/24996/137439/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25046/103304/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25046/103305/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25046/137438/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5d4c19d409188035465/25046/137439/golden-retrievers-championship-roundel-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "24991": 2975,
@@ -2693,11 +4163,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25076/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24996/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24991/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25046/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25076/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25076/103305/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25076/137438/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25076/137439/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24991/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24991/103305/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24991/137438/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24991/137439/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24996/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24996/103305/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24996/137438/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/24996/137439/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25046/103304/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25046/103305/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25046/137438/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5dcf610945dae00e3d7/25046/137439/golden-retrievers-heritage-seal-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "24991": 2975,
@@ -2780,9 +4327,48 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/25076/103304/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/24991/103304/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/25076/103304/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/25076/103305/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/25076/137438/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/25076/137439/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/24991/103304/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/24991/103305/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/24991/137438/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5e4441469980305ae64/24991/137439/golden-retrievers-faceoff-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "06d73fd908759740",
       "prices": {
         "24991": 2975,
@@ -2877,11 +4463,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25076/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24996/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24991/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25046/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25076/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25076/103305/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25076/137438/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25076/137439/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24991/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24991/103305/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24991/137438/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24991/137439/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24996/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24996/103305/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24996/137438/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/24996/137439/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25046/103304/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25046/103305/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25046/137438/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5ecf610945dae00e3f4/25046/137439/golden-retrievers-in-uniform-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "24991": 2975,
@@ -2986,11 +4649,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25076/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24996/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24991/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25046/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25076/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25076/103305/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25076/137438/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25076/137439/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24991/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24991/103305/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24991/137438/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24991/137439/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24996/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24996/103305/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24996/137438/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/24996/137439/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25046/103304/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25046/103305/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25046/137438/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5f4c19d40918803549c/25046/137439/golden-retrievers-rink-board-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "24991": 2975,
@@ -3095,11 +4835,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25076/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24996/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24991/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25046/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25076/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25076/103305/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25076/137438/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25076/137439/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24991/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24991/103305/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24991/137438/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24991/137439/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24996/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24996/103305/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24996/137438/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/24996/137439/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25046/103304/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25046/103305/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25046/137438/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba5fc17c67b526e0d6fc9/25046/137439/golden-retrievers-boop-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "24991": 2975,
@@ -3204,11 +5021,88 @@
         "2XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25076/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24996/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24991/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25046/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25076/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25076/103305/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25076/137438/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "White",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25076/137439/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "White",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24991/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24991/103305/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24991/137438/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Athletic Heather",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24991/137439/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Athletic Heather",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24996/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24996/103305/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24996/137438/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Black",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/24996/137439/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Black",
+          "camera": "right-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25046/103304/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25046/103305/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25046/137438/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=left-sleeve",
+          "color": "Navy",
+          "camera": "left-sleeve"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba60512ae18ff7302dcb6/25046/137439/golden-retrievers-stick-carry-long-sleeve-tee.jpg?camera_label=right-sleeve",
+          "color": "Navy",
+          "camera": "right-sleeve"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "24991": 2975,
@@ -3318,11 +5212,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99287/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99289/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/68016/99288/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99287/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99289/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62629/99288/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99287/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99289/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62627/99288/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99286/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99287/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99289/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f44c778b3f7ec0bcc2a/62630/99288/golden-retrievers-heritage-seal-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "62615": 4000,
@@ -3436,11 +5407,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99287/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99289/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/68016/99288/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99287/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99289/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62629/99288/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99287/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99289/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62627/99288/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99286/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99287/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99289/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f4f3a736912d60f5648/62630/99288/golden-retrievers-championship-roundel-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "62615": 4000,
@@ -3554,11 +5602,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99287/golden-retrievers-boop-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99289/golden-retrievers-boop-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/68016/99288/golden-retrievers-boop-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99287/golden-retrievers-boop-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99289/golden-retrievers-boop-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62629/99288/golden-retrievers-boop-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99287/golden-retrievers-boop-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99289/golden-retrievers-boop-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62627/99288/golden-retrievers-boop-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99286/golden-retrievers-boop-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99287/golden-retrievers-boop-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99289/golden-retrievers-boop-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f56f6324944d2087d4f/62630/99288/golden-retrievers-boop-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "62615": 4000,
@@ -3672,11 +5797,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99287/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99289/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/68016/99288/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99287/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99289/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62629/99288/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99287/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99289/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62627/99288/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99286/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99287/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99289/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f5ec778b3f7ec0bcc3a/62630/99288/golden-retrievers-crossed-shield-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "62615": 4000,
@@ -3790,11 +5992,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99287/golden-retrievers-stick-carry-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99289/golden-retrievers-stick-carry-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/68016/99288/golden-retrievers-stick-carry-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99287/golden-retrievers-stick-carry-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99289/golden-retrievers-stick-carry-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62629/99288/golden-retrievers-stick-carry-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99287/golden-retrievers-stick-carry-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99289/golden-retrievers-stick-carry-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62627/99288/golden-retrievers-stick-carry-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99286/golden-retrievers-stick-carry-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99287/golden-retrievers-stick-carry-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99289/golden-retrievers-stick-carry-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6697654de4e60df454/62630/99288/golden-retrievers-stick-carry-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 8,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "62615": 4000,
@@ -3908,11 +6187,88 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99287/golden-retrievers-in-uniform-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99289/golden-retrievers-in-uniform-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/68016/99288/golden-retrievers-in-uniform-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99287/golden-retrievers-in-uniform-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99289/golden-retrievers-in-uniform-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62629/99288/golden-retrievers-in-uniform-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99287/golden-retrievers-in-uniform-crewneck.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99289/golden-retrievers-in-uniform-crewneck.jpg?camera_label=hanging",
+          "color": "Black",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62627/99288/golden-retrievers-in-uniform-crewneck.jpg?camera_label=flat-lay",
+          "color": "Black",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99286/golden-retrievers-in-uniform-crewneck.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99287/golden-retrievers-in-uniform-crewneck.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99289/golden-retrievers-in-uniform-crewneck.jpg?camera_label=hanging",
+          "color": "Navy",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f6e5dae1248260eccd6/62630/99288/golden-retrievers-in-uniform-crewneck.jpg?camera_label=flat-lay",
+          "color": "Navy",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 12,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "62615": 4000,
@@ -4002,9 +6358,48 @@
         "3XL"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99287/golden-retrievers-faceoff-crewneck.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99289/golden-retrievers-faceoff-crewneck.jpg?camera_label=hanging",
+          "color": "White",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/68016/99288/golden-retrievers-faceoff-crewneck.jpg?camera_label=flat-lay",
+          "color": "White",
+          "camera": "flat-lay"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99286/golden-retrievers-faceoff-crewneck.jpg?camera_label=front",
+          "color": "Heather Grey",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99287/golden-retrievers-faceoff-crewneck.jpg?camera_label=back",
+          "color": "Heather Grey",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99289/golden-retrievers-faceoff-crewneck.jpg?camera_label=hanging",
+          "color": "Heather Grey",
+          "camera": "hanging"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6e3f753b890dfbf50874c4/62629/99288/golden-retrievers-faceoff-crewneck.jpg?camera_label=flat-lay",
+          "color": "Heather Grey",
+          "camera": "flat-lay"
+        }
       ],
+      "heroIndex": 4,
       "artHash": "06d73fd908759740",
       "prices": {
         "62617": 4000,
@@ -4091,11 +6486,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61520/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61519/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61563/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61560/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61520/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61520/94624/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61520/108733/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61563/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61563/94624/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61563/108733/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61519/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61519/94624/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61519/108733/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61560/94623/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61560/94624/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba660f610945dae00e4c4/61560/108733/golden-retrievers-crossed-shield-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 6,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "61515": 2000,
@@ -4182,11 +6634,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61520/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61519/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61563/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61560/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61520/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61520/94624/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61520/108733/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61563/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61563/94624/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61563/108733/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61519/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61519/94624/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61519/108733/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61560/94623/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61560/94624/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba667f610945dae00e4d4/61560/108733/golden-retrievers-championship-roundel-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 9,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "61515": 2000,
@@ -4255,9 +6764,38 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61520/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61563/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61520/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61520/94624/golden-retrievers-faceoff-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61520/108733/golden-retrievers-faceoff-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61563/94623/golden-retrievers-faceoff-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61563/94624/golden-retrievers-faceoff-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba66df610945dae00e4dd/61563/108733/golden-retrievers-faceoff-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 3,
       "artHash": "06d73fd908759740",
       "prices": {
         "61516": 2000,
@@ -4338,11 +6876,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61520/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61519/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61563/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61560/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61520/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61520/94624/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61520/108733/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61563/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61563/94624/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61563/108733/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61519/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61519/94624/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61519/108733/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61560/94623/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61560/94624/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba672c19d409188035569/61560/108733/golden-retrievers-heritage-seal-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "61515": 2000,
@@ -4429,11 +7024,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61520/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61519/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61563/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61560/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61520/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61520/94624/golden-retrievers-boop-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61520/108733/golden-retrievers-boop-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61563/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61563/94624/golden-retrievers-boop-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61563/108733/golden-retrievers-boop-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61519/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61519/94624/golden-retrievers-boop-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61519/108733/golden-retrievers-boop-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61560/94623/golden-retrievers-boop-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61560/94624/golden-retrievers-boop-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba678fe22b1d4640b6eff/61560/108733/golden-retrievers-boop-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 6,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "61515": 2000,
@@ -4520,11 +7172,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61520/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61519/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61563/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61560/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61520/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61520/94624/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61520/108733/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61563/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61563/94624/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61563/108733/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61519/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61519/94624/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61519/108733/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61560/94623/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61560/94624/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba67d17c67b526e0d70b6/61560/108733/golden-retrievers-stick-carry-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 9,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "61515": 2000,
@@ -4611,11 +7320,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61520/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61519/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61563/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61560/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61520/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61520/94624/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61520/108733/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61563/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61563/94624/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61563/108733/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61519/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61519/94624/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61519/108733/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61560/94623/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61560/94624/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6834a5fb2802301a937/61560/108733/golden-retrievers-in-uniform-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 3,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "61515": 2000,
@@ -4702,11 +7468,68 @@
         "L"
       ],
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61520/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61519/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61563/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61560/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61520/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+          "color": "White",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61520/94624/golden-retrievers-rink-board-youth-tee.jpg?camera_label=back",
+          "color": "White",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61520/108733/golden-retrievers-rink-board-youth-tee.jpg?camera_label=folded",
+          "color": "White",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61563/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+          "color": "Athletic Heather",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61563/94624/golden-retrievers-rink-board-youth-tee.jpg?camera_label=back",
+          "color": "Athletic Heather",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61563/108733/golden-retrievers-rink-board-youth-tee.jpg?camera_label=folded",
+          "color": "Athletic Heather",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61519/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+          "color": "Black",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61519/94624/golden-retrievers-rink-board-youth-tee.jpg?camera_label=back",
+          "color": "Black",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61519/108733/golden-retrievers-rink-board-youth-tee.jpg?camera_label=folded",
+          "color": "Black",
+          "camera": "folded"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61560/94623/golden-retrievers-rink-board-youth-tee.jpg?camera_label=front",
+          "color": "Navy",
+          "camera": "front"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61560/94624/golden-retrievers-rink-board-youth-tee.jpg?camera_label=back",
+          "color": "Navy",
+          "camera": "back"
+        },
+        {
+          "src": "https://images-api.printify.com/mockup/6a6ba6884a5fb2802301a93e/61560/108733/golden-retrievers-rink-board-youth-tee.jpg?camera_label=folded",
+          "color": "Navy",
+          "camera": "folded"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "61515": 2000,
@@ -4768,9 +7591,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5ec9f806ff97160ff88d/45750/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5ec9f806ff97160ff88d/45752/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5ec9f806ff97160ff88d/45750/16655/golden-retrievers-heritage-seal-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "4dcd1d51ac43da7f",
       "prices": {
         "45750": 350,
@@ -4822,9 +7649,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5ecfd3e833423f0accd1/45750/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5ecfd3e833423f0accd1/45752/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5ecfd3e833423f0accd1/45750/16655/golden-retrievers-championship-roundel-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "2c0141e4c1d590bc",
       "prices": {
         "45750": 350,
@@ -4876,9 +7707,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6f356e04fb9c470de450/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b6f356e04fb9c470de450/45752/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6f356e04fb9c470de450/45750/16655/golden-retrievers-octagon-patch-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "e0b6a8bfc1dcc790",
       "prices": {
         "45750": 350,
@@ -4930,9 +7765,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "5a232b7e4a016609",
       "prices": {
         "45750": 350,
@@ -4984,9 +7823,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6f40ff297cecbe053ca2/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b6f40ff297cecbe053ca2/45752/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6f40ff297cecbe053ca2/45750/16655/golden-retrievers-faceoff-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "06d73fd908759740",
       "prices": {
         "45750": 350,
@@ -5038,9 +7881,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b414e4d428b3e9c09f6a2/45750/16655/golden-retrievers-boop-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b414e4d428b3e9c09f6a2/45752/16655/golden-retrievers-boop-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b414e4d428b3e9c09f6a2/45750/16655/golden-retrievers-boop-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7fa9134d6c2794bb",
       "prices": {
         "45750": 350,
@@ -5092,9 +7939,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b6f4a6e04fb9c470de45d/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b6f4a6e04fb9c470de45d/45752/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b6f4a6e04fb9c470de45d/45750/16655/golden-retrievers-rink-board-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "9b674da1240ca7f9",
       "prices": {
         "45750": 350,
@@ -5146,9 +7997,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b513ce924f1ca6a0a36f7/45750/16655/golden-retrievers-mascot-medallion-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b513ce924f1ca6a0a36f7/45752/16655/golden-retrievers-mascot-medallion-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b513ce924f1ca6a0a36f7/45750/16655/golden-retrievers-mascot-medallion-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "62d5a6c8cbff3b30",
       "prices": {
         "45750": 350,
@@ -5200,9 +8055,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5ef44e65f3b75b0cb463/45750/16655/golden-retrievers-stick-carry-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5ef44e65f3b75b0cb463/45752/16655/golden-retrievers-stick-carry-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5ef44e65f3b75b0cb463/45750/16655/golden-retrievers-stick-carry-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "7991aa786df9eb39",
       "prices": {
         "45750": 350,
@@ -5254,9 +8113,13 @@
         "why": "One sticker costs more to post ($4.59) than to make ($2.00), and free shipping on one would need an $11 price tag. Three post for $4.77. The three are three STICKERS and not three of one design: every sticker here is the same blueprint through the same maker, so postage merges across the designs as readily as across copies of one."
       },
       "mockups": [
-        "https://images-api.printify.com/mockup/6a6b5efc6e04fb9c470dd52f/45750/16655/golden-retrievers-in-uniform-sticker.jpg?camera_label=front",
-        "https://images-api.printify.com/mockup/6a6b5efc6e04fb9c470dd52f/45752/16655/golden-retrievers-in-uniform-sticker.jpg?camera_label=front"
+        {
+          "src": "https://images-api.printify.com/mockup/6a6b5efc6e04fb9c470dd52f/45750/16655/golden-retrievers-in-uniform-sticker.jpg?camera_label=front",
+          "color": "White vinyl",
+          "camera": "front"
+        }
       ],
+      "heroIndex": 0,
       "artHash": "e13ad3fc154dcee3",
       "prices": {
         "45750": 350,

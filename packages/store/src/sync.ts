@@ -22,7 +22,10 @@ import {
   productLine,
 } from "./line.ts";
 import type { Art } from "./line.ts";
+import { chooseGallery, heroIndexFor } from "./gallery.ts";
+import type { Mockup } from "./gallery.ts";
 import { MARGIN_TARGET } from "./matrix.ts";
+import type { LineItem } from "./matrix.ts";
 import { keepFor, priceForVariant } from "./pricing.ts";
 import type { CatalogPlaceholder, CreateProductBody, PrintArea, PrintifyProduct } from "./types.ts";
 
@@ -158,7 +161,14 @@ export type SyncResult = {
     /** Where the image's centre sits in the print area. 0.5 is the middle; smaller is higher. */
     y: number;
   }[];
-  mockups: string[];
+  /**
+   * The provider's photographs, each tagged with the colourway it depicts.
+   *
+   * A bare `string[]` until 2026-08-01, which is why the product page could not
+   * make the picture follow the swatch — the storefront had a list of URLs and
+   * no idea what was in them. The colour was always in the response.
+   */
+  mockups: Mockup[];
   /**
    * SHA-256 of the art bytes actually uploaded, first 16 hex.
    *
@@ -476,7 +486,7 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       );
     }
 
-    const result = verify(item.id, wanted, postageOf, postageCents, target, units, body, read, placements, artHash);
+    const result = verify(item, wanted, postageOf, postageCents, target, units, body, read, placements, artHash);
     results.push(result);
     console.log(
       `${how} ${item.id.padEnd(28)} ${read.id}  ` +
@@ -530,8 +540,23 @@ type CatalogEntry = {
   sizes: string[];
   /** Buying rules the cart and the Worker both enforce. See `Sale` in matrix.ts. */
   sale?: { minQuantity?: number; addOnOnly?: boolean; why: string };
-  /** Provider-rendered previews, on Printify's CDN. Mirrored locally at build. */
-  mockups: string[];
+  /**
+   * Provider-rendered previews, on Printify's CDN. Mirrored locally at build.
+   *
+   * Grouped by colourway and tagged with it, which is what lets the product page
+   * swap every photograph when the swatch changes. The index into this array is
+   * the filename `scripts/mirror-mockups.mjs` writes — `<id>-<index>.webp` —
+   * so **nothing may reorder it after this point.**
+   */
+  mockups: Mockup[];
+  /**
+   * Which index the `/store` card leads with. Not 0.
+   *
+   * The grid must not be twenty white shirts, and the matrix lists White first.
+   * See `heroIndexFor`. This used to be achieved by REORDERING the array in the
+   * mirroring script, which cannot coexist with an index-named file.
+   */
+  heroIndex: number;
   /** Hash of the art the shop holds. The next sync compares against it. */
   artHash: string;
   /**
@@ -589,6 +614,12 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
   const path = join(ROOT, "apps/web/data/products.json");
   const line = new Map(productLine().map((item) => [item.id, item]));
 
+  /* THE HERO IS ROTATED PER CATEGORY, and the rank is counted here because here
+     is where the whole line is in hand and in order. It is the products sitting
+     next to each other in a row that must differ; that is the only place
+     sameness is visible. */
+  const rankInCategory = new Map<string, number>();
+
   const products: CatalogEntry[] = results.map((r) => {
     const item = line.get(r.id);
     if (!item) {
@@ -597,6 +628,9 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
           `joining the read-back to MATRIX and there is nothing to join this to.`,
       );
     }
+    const rank = rankInCategory.get(item.itemId) ?? 0;
+    rankInCategory.set(item.itemId, rank + 1);
+
     return {
       id: r.id,
       title: item.title,
@@ -609,6 +643,7 @@ async function writeCatalog(results: SyncResult[]): Promise<void> {
       sizes: item.sizes,
       ...(item.sale ? { sale: item.sale } : {}),
       mockups: r.mockups,
+      heroIndex: heroIndexFor(r.mockups, item.colors, rank),
       artHash: r.artHash,
       prices: Object.fromEntries(Object.entries(r.prices).map(([k, v]) => [String(k), v])),
       postageCents: r.postageCents,
@@ -685,71 +720,37 @@ function needsRebuild(
 }
 
 /**
- * Is this render a photograph of a MODEL rather than of the product?
+ * Pick the photographs a shopper is shown, and tag each with its colourway.
  *
- * **Printify says so itself**, in a query parameter on the mockup URL:
- * `?camera_label=person-1-front`. Product shots carry `front`, `back` or
- * `other`; anything with `person` in the label is a human being wearing the
- * thing. Nothing else in the response distinguishes them — `position` is
- * `front` for both.
+ * The choosing itself is `chooseGallery` in gallery.ts — pure, and tested
+ * against captured API bytes. This is the seam: it hands over the read-back's
+ * images and the matrix's colourways, and reports what came back.
  *
- * This replaces a skin-tone pixel heuristic, which was a bad idea for a reason
- * that should have been obvious before it was written: **this shop's artwork is
- * a golden retriever.** Tan fur reads as skin under any such rule, so the filter
- * threw away clean product shots of the stickers — the ones with no person in
- * them at all — and left eleven broken image links behind.
- *
- * It also lives HERE now rather than in the mirroring script, and that is the
- * structural half of the fix. The catalog is what the storefront renders from;
- * if filtering happens after the catalog is written, the catalog promises
- * images that were never saved.
- */
-const isPersonShot = (src: string): boolean => /camera_label=[^&]*person/i.test(src);
-
-/**
- * Pick the mockups a shopper should be shown, which is NOT the first four
- * Printify offers.
- *
- * **This shipped wrong and the captain caught it.** The old rule was "every
- * image flagged `is_default`, first four". `is_default` marks the default photo
- * for a VARIANT — one per colourway, in whatever camera angle Printify chose —
- * and it says nothing about whether the print is facing the camera. Four of the
- * twenty-three products in this line print on the BACK, so their default images
- * are front shots: `championship-roundel-hoodie` and `arched-varsity-hoodie`
- * listed with photographs of a **blank hoodie**.
- *
- * A store that illustrates a $74 garment with a picture of the garment WITHOUT
- * the thing you are buying on it is not a near-miss; it is the wrong product.
- *
- * So the rule is: show the side that was printed. An image whose `position`
- * matches a placement wins. Only if the provider rendered no such view does it
- * fall back — and it records a problem when it does, because a product with no
- * picture of its own artwork needs a person to look at it.
- *
- * Deduplicated by `src`: the same render is returned once per variant it covers,
- * and a gallery of the same photograph four times is not a gallery.
+ * **The rule it replaces cut the list to four PER PRODUCT.** On a six-colour tee
+ * that meant Navy and Heather Navy had no photograph at all — fourteen
+ * colourways across seven products, every one of them buyable and unillustrated.
+ * The cap is per colour now, so it cannot starve a colourway of its only view.
  */
 function chooseMockups(
   got: PrintifyProduct,
+  item: LineItem,
   placements: SyncResult["placements"],
   problems: string[],
-): string[] {
-  const images = (got.images ?? []).filter((i) => !isPersonShot(i.src));
-  if (!images.length) return [];
-
+): Mockup[] {
   const printed = new Set(placements.map((p) => p.position));
-  const facing = images.filter((i) => printed.has(i.position));
+  const chosen = chooseGallery(got.images ?? [], item, printed, problems);
 
-  if (!facing.length) {
-    /* NOT EVERY PRODUCT HAS A SIDE TO GET WRONG.
-       Printify labels a mockup's camera angle, and for a cap, a mug or a
-       sticker every render comes back as "other" — there is one view of the
-       object and the art is in it. Flagging those was this check's first
-       version and it cried wolf eleven times out of twenty-three.
-       What is worth flagging is a product whose renders show a NAMED side that
-       is not the side we printed. That is the hoodie failure: a back print
-       illustrated by a photograph of a blank front. */
-    const named = [...new Set(images.map((i) => i.position))].filter((p) => p !== "other");
+  /* A PRODUCT WHOSE RENDERS DO NOT FACE ITS PRINT still needs saying out loud.
+     **All 59 products print on the front as of 2026-08-01** — checked against
+     the matrix, because this comment used to say four of them printed on the
+     back and that stopped being true without the sentence changing. The check
+     stays for the day one does: Printify's default view is the front, which is
+     how a back-printed hoodie once came to be listed with a photograph of a
+     blank white one. `chooseGallery` puts the printed face first where such a
+     view exists; this notices when none does. */
+  const faces = (got.images ?? []).some((i) => printed.has(i.position));
+  if (!faces) {
+    const named = [...new Set((got.images ?? []).map((i) => i.position))].filter((p) => p !== "other");
     if (named.length) {
       problems.push(
         `no mockup faces the ${[...printed].join(" or ")} — Printify rendered ` +
@@ -757,18 +758,13 @@ function chooseMockups(
           `${named.length === 1 ? "it" : "them"}`,
       );
     }
-    return [...new Set(images.filter((i) => i.is_default).map((i) => i.src))].slice(0, 4);
   }
-
-  // Defaults first — one per colourway, so the gallery opens on a range of
-  // bodies rather than four angles of the same shirt.
-  const ordered = [...facing].sort((a, b) => Number(b.is_default) - Number(a.is_default));
-  return [...new Set(ordered.map((i) => i.src))].slice(0, 4);
+  return chosen;
 }
 
 /** Compare what came back against what was asked for. Silence here is the point. */
 function verify(
-  id: string,
+  item: LineItem,
   wanted: Map<number, number>,
   postageOf: Map<number, number>,
   postageCents: number,
@@ -833,7 +829,7 @@ function verify(
   if (!got.images?.length) problems.push("no provider mockups were generated");
 
   return {
-    id,
+    id: item.id,
     productId: got.id,
     title: got.title,
     description: got.description,
@@ -847,7 +843,7 @@ function verify(
     costCents,
     marginCents: costCents ? priceCents - costCents : 0,
     placements,
-    mockups: chooseMockups(got, placements, problems),
+    mockups: chooseMockups(got, item, placements, problems),
     artHash,
     problems,
   };

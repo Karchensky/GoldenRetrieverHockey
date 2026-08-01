@@ -13,6 +13,7 @@ import { garments, garmentSpecs } from "./garments.ts";
 import { reconcile } from "./reconcile.ts";
 import { CLAIMS, fillTokens, loadSite, productLine } from "./line.ts";
 import { ITEMS, LOGO_DIR, MARKS, MATRIX, marksOnDisk } from "./matrix.ts";
+import { mockupProbe } from "./mockups.ts";
 import { report } from "./report.ts";
 import { auditShop, sync } from "./sync.ts";
 
@@ -53,6 +54,8 @@ const USAGE = `
     reconcile [--delete]     Products on the shop that the storefront does not
                              name — superseded copies, renamed-away drafts, leaked
                              probes. Reports; only deletes with the flag.
+    mockups                  Every render the provider made, by colourway and
+                             camera, BEFORE sync.ts filters it. Reads only.
 
   Writes, to shop 28277243 only
     logos                    Render every mark in MARKS and take its ground off.
@@ -172,6 +175,9 @@ async function main(argv: string[]): Promise<number> {
 
     case "reconcile":
       return reconcile(argv[1]);
+
+    case "mockups":
+      return mockupProbe();
 
     case "marks": {
       const onDisk = await marksOnDisk();

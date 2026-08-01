@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Buy from "../../../components/store/Buy";
-import Gallery from "../../../components/store/Gallery";
 import ProductCard from "../../../components/store/ProductCard";
-import { markTitle, mockupPath, paragraphs, priceLabel, productById, products } from "../../../lib/store";
+import ProductView from "../../../components/store/ProductView";
+import { markTitle, paragraphs, productById, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -12,12 +11,16 @@ import s from "../../../components/store/store.module.css";
  * This route was DELETED while the store was a placeholder, and the reason is
  * worth keeping: Next refuses an empty `generateStaticParams` under
  * `output: "export"`, and an orphaned detail page is still a page a crawler can
- * find. It is back because there are twenty-three products to generate it from.
+ * find. It is back because there are fifty-nine products to generate it from.
  *
  * The pictures are the provider's own mockups — the maker's render of the actual
  * garment with the actual placement — mirrored into the export by
  * `npm run store:mockups` rather than hotlinked. A product whose mockups have
  * not been mirrored yet renders without them rather than with a broken image.
+ *
+ * **The page below is a layout and nothing else.** Every interactive part sits
+ * in `ProductView`, because the photographs follow the colour and one component
+ * has to own that.
  */
 
 export function generateStaticParams() {
@@ -49,7 +52,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
      willing to upload the art at all — and it belongs in `cli.ts sync
      --dry-run` and store:report, where it is read by whoever is deciding.
      The data stays in products.json. Nothing on the shelf prints it. */
-  const copy = paragraphs(product);
   /* The same crest on the other garments. Ordered as MATRIX orders them, so it
      is stable between builds and does not need a rule of its own. */
   const alsoWearing = products.filter((p) => p.markId === product.markId && p.id !== product.id);
@@ -62,30 +64,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <h1 className="hero-h">{product.title}</h1>
       </header>
 
+      {/* THE PHOTOGRAPHS FOLLOW THE SWATCH, which needs one owner for the
+          colour. `ProductView` is that owner and renders both columns; it
+          returns a fragment so these stay direct children of the grid. */}
       <div className={s.detail} data-reveal>
-        <Gallery
-          title={product.title}
-          images={product.mockups.map((_, index) => ({
-            src: mockupPath(product.id, index),
-            alt: `${product.title}, view ${index + 1}`,
-          }))}
-        />
-
-        <div>
-          {/* PRICE, THEN THE THING THAT SPENDS IT, THEN THE PROSE.
-              The picker used to sit under six paragraphs of fabric copy: the
-              Add button measured 602px below the fold at 1280x900 and 2,836px
-              down — 3.8 screens — at 360. Nothing purchasable was on screen at
-              any width. The copy has not moved anywhere a reader will miss it;
-              it is simply no longer in front of the shop. */}
-          <p className={s.detailPrice}>{priceLabel(product)}</p>
-
-          <Buy product={product} />
-
-          {copy.map((para) => (
-            <p key={para} className={s.detailCopy}>{para}</p>
-          ))}
-        </div>
+        <ProductView product={product} />
       </div>
 
       {/* THE MARK AXIS, which has never been answerable.

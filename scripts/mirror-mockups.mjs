@@ -64,77 +64,34 @@ const SOURCES = join(OUT, ".sources.json");
 const sources = await readFile(SOURCES, "utf8").then(JSON.parse).catch(() => ({}));
 
 /**
- * Order a product's mockups DARKEST GARMENT FIRST before they are written.
+ * THIS SCRIPT NO LONGER CHOOSES OR ORDERS ANYTHING. It mirrors.
  *
- * Printify returns the white colourway first for almost everything, so a grid of
- * twenty products was twenty white shirts on a near-black page — the captain:
- * "don't use the default white for each item in the main store thumbnail".
+ * It used to do both, and both moved out on 2026-08-01:
  *
- * The decision lives here rather than in the storefront because the storefront
- * cannot see a colour: it has a list of URLs and no idea what is in them. Here
- * the pixels are already in hand. Mean luminance over the middle of the frame is
- * enough — that region is garment on every mockup in this shop, and the ranking
- * only has to be right relative to the other views of the SAME product.
+ * **Choosing** — which renders are shown, and which are people — is
+ * `chooseGallery` in packages/store/src/gallery.ts, because the catalog is what
+ * the storefront renders from and a filter applied after the catalog is written
+ * leaves the catalog promising files that were never saved. That already
+ * happened once: a skin-tone pixel heuristic lived here, dropped clean sticker
+ * shots because a golden retriever's fur reads as skin, and left eleven broken
+ * image links behind.
  *
- * The app stays dumb: `mockups[0]` is the hero, and it is now the black hoodie
- * rather than the white one.
+ * **Ordering** — which colourway a `/store` card leads with, so the grid is not
+ * twenty white shirts — is `heroIndexFor`, and the answer is now a `heroIndex`
+ * field rather than a rotation of the array. The old version sorted this list by
+ * measured pixel luminance and rotated it per category, which was the right idea
+ * in the wrong place: the file on disk is named `<id>-<index>.webp`, so
+ * reordering the array silently renames every photograph. It also downloaded
+ * every mockup purely to find out how dark it was, when `colors[].hex` has been
+ * in the matrix the whole time. The justification given here — "the storefront
+ * cannot see a colour: it has a list of URLs and no idea what is in them" — was
+ * true, and is the exact thing that got fixed.
+ *
+ * So: fetch what the catalog names, in the order it names it, and write it.
  */
-/**
- * Choose and order a product's mockups: no people, and a different body colour
- * from the product next to it.
- *
- * TWO THINGS GO WRONG IF THIS IS LEFT TO PRINTIFY.
- *
- * **Models are no longer this file's problem.** They are filtered in sync.ts,
- * off Printify's own `camera_label=person-…` marker, so the catalog never lists
- * one and this script never sees one. The skin-tone heuristic that used to live
- * here was wrong twice over: it dropped clean sticker shots because a golden
- * retriever's fur reads as skin, and it filtered AFTER the catalog was written,
- * so the storefront was left pointing at eleven files that were never saved.
- *
- * **Sameness.** The first version of this sorted DARKEST FIRST, which fixed
- * "everything is white" by creating "everything is black": every hoodie navy,
- * every tee black, an entire category in one colour. Sorting is the wrong tool —
- * any total order over a set of near-identical products produces a uniform row.
- *
- * So the list is sorted by luminance and then ROTATED by the product's position
- * in its own category. Neighbouring products therefore lead with different
- * colourways by construction, it is deterministic (the same catalog always
- * produces the same grid), and no product ever leads with a colour it does not
- * come in.
- */
-async function chooseAndOrder(urls, rotation) {
-  const kept = [];
-  for (const url of urls) {
-    const res = await fetch(url);
-    if (!res.ok) continue;
-    const buf = Buffer.from(await res.arrayBuffer());
-    const { channels } = await sharp(buf).extract(await centreBox(buf)).stats();
-    const [r, g, b] = channels;
-    kept.push({ url, lum: (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255 });
-  }
-  kept.sort((a, b) => a.lum - b.lum);
-  if (!kept.length) return [];
-  const at = ((rotation % kept.length) + kept.length) % kept.length;
-  return [...kept.slice(at), ...kept.slice(0, at)].map((k) => k.url);
-}
-
-async function centreBox(buf) {
-  const { width, height } = await sharp(buf).metadata();
-  const w = Math.max(1, Math.round(width * 0.34));
-  const h = Math.max(1, Math.round(height * 0.34));
-  return { left: Math.round((width - w) / 2), top: Math.round((height - h) / 2), width: w, height: h };
-}
-
-// Rotation counted PER CATEGORY, so it is the products sitting next to each
-// other in a row that differ, which is the only place sameness is visible.
-const seenInCategory = new Map();
 
 for (const product of catalog.products) {
-  const category = product.itemId ?? "other";
-  const rank = seenInCategory.get(category) ?? 0;
-  seenInCategory.set(category, rank + 1);
-  const mockups = await chooseAndOrder(product.mockups ?? [], rank);
+  const mockups = (product.mockups ?? []).map((m) => (typeof m === "string" ? m : m.src));
   for (const [index, url] of mockups.entries()) {
     const name = `${product.id}-${index}.webp`;
     wanted.add(name);

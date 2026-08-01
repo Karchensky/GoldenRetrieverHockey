@@ -50,7 +50,20 @@ export type CatalogProduct = {
   colors: CatalogColor[];
   sizes: string[];
   sale?: { minQuantity?: number; addOnOnly?: boolean; why: string };
-  mockups: string[];
+  /**
+   * The provider's photographs, each tagged with the colourway it shows.
+   *
+   * A bare `string[]` until 2026-08-01. The product page could not make the
+   * picture follow the swatch because the storefront had a list of URLs and no
+   * idea what colour was in them — the colour was in Printify's response the
+   * whole time, in `variant_ids`. See `chooseGallery` in gallery.ts.
+   *
+   * **The index is the filename.** `mirror-mockups.mjs` writes
+   * `<id>-<index>.webp`, so this array's order is load-bearing.
+   */
+  mockups: { src: string; color: string; camera: string }[];
+  /** Which index the /store card leads with, so the grid is not all white. */
+  heroIndex?: number;
   printify?: {
     productId?: string;
     blueprintId?: number;

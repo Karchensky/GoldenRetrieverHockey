@@ -1,18 +1,23 @@
 import Link from "next/link";
-import { blurb, fromLabel, heroMockup, mockupSrcSet } from "../../lib/store";
+import { blurb, fromLabel, heroIndex, heroMockup, mockupSrcSet } from "../../lib/store";
 import type { Product } from "../../lib/store";
 import s from "./store.module.css";
 
 /**
  * One product in the grid.
  *
- * **The swatches do not swap the picture, and that is deliberate.** A product
- * carries up to four provider mockups and nothing in Printify's response says
- * which colourway each one shows — `is_default` marks a view, not a colour. A
- * swatch that changed the image would be guessing, and a store that guesses
- * about what colour arrives is the one thing this one must not do. So they are
- * what they look like: the colours it comes in. Choosing happens on the detail
- * page, against the real list.
+ * **The swatches do not swap the picture, and the reason has changed.** It used
+ * to be that they could not: nothing in Printify's response was thought to name
+ * the colourway a mockup showed, so a swatch that changed the image would have
+ * been guessing. That was wrong — every image carries `variant_ids`, the detail
+ * page now follows the swatch exactly, and this card could too.
+ *
+ * It does not, because a grid is not a picker. There is nothing selected here,
+ * and the one thing the grid must avoid is twenty white shirts down the page.
+ * `heroIndex` deliberately leads each card with a different colourway from its
+ * neighbours — see `heroIndexFor` in packages/store/src/gallery.ts. The swatches
+ * are what they look like: the colours it comes in. Choosing happens on the
+ * detail page, against the real list.
  *
  * No tilt handler either. The card's `--rx`/`--ry` are declared in the stylesheet
  * and default to flat, so this renders as a static card with no script; the
@@ -20,6 +25,7 @@ import s from "./store.module.css";
  */
 export default function ProductCard({ product }: { product: Product }) {
   const hero = heroMockup(product);
+  const at = heroIndex(product);
 
   return (
     <article className={s.card}>
@@ -28,7 +34,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <img
             className={s.cardImg}
             src={hero}
-            srcSet={mockupSrcSet(product.id, 0)}
+            srcSet={mockupSrcSet(product.id, at)}
             /* Three across on a desktop row, two on a tablet, one and a bit on
                a phone — matching `.grid`'s own breakpoints, so the browser is
                told the truth rather than the default 100vw. */

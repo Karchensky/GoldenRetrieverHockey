@@ -19,11 +19,28 @@ import s from "./store.module.css";
  * of this page that shipped to a Pop-Up store, with a comment explaining that
  * there was nothing on this side to choose into because the size went in on
  * Printify's checkout. There is something to choose into now.
+ *
+ * **The selection is not owned here any more.** `ProductView` holds it, because
+ * the photographs have to move with it — see the note there. This component
+ * renders what it is given and reports what was pressed.
  */
-export default function Buy({ product }: { product: Product }) {
+export default function Buy({
+  product,
+  colors,
+  color,
+  size,
+  onColor,
+  onSize,
+}: {
+  product: Product;
+  /** The colourways that can be shown. See `colorsWithPhotos`. */
+  colors: Product["colors"];
+  color: string;
+  size: string;
+  onColor: (name: string) => void;
+  onSize: (size: string) => void;
+}) {
   const { add } = useCart();
-  const [color, setColor] = useState(product.colors[0]?.name ?? "");
-  const [size, setSize] = useState(product.sizes[0] ?? "");
   const [added, setAdded] = useState(false);
 
   const minimum = product.sale?.minQuantity ?? 1;
@@ -45,14 +62,14 @@ export default function Buy({ product }: { product: Product }) {
 
   return (
     <div className={s.opts}>
-      {product.colors.length > 1 && (
+      {colors.length > 1 && (
         <div className={s.optRow}>
           <div className={s.optLabel}>
             <span className={s.optName}>Colour</span>
             <span className={s.optValue}>{color}</span>
           </div>
           <div className={s.swatches}>
-            {product.colors.map((c) => (
+            {colors.map((c) => (
               <button
                 key={c.name}
                 type="button"
@@ -61,32 +78,21 @@ export default function Buy({ product }: { product: Product }) {
                 title={c.name}
                 aria-label={c.name}
                 aria-pressed={c.name === color}
-                onClick={() => { setColor(c.name); }}
+                onClick={() => { onColor(c.name); }}
               />
             ))}
           </div>
-          {/**
-           * WHAT THE PHOTOGRAPH SHOWS IS NOT WHAT THE SWATCH SAYS, and we
-           * cannot make it be.
-           *
-           * Printify's response does not name the colourway a mockup depicts,
-           * so the catalogue genuinely does not know. `mirror-mockups.mjs` then
-           * sorts the views darkest-first and rotates them per category, on
-           * purpose, so a grid of twenty tees is not twenty white tees — which
-           * means the hero is *deliberately* usually not `colors[0]`. Measured:
-           * the picture disagrees with the default swatch on most multi-colour
-           * products.
-           *
-           * A wrong colour expectation is the biggest driver of apparel
-           * returns, and /store/help declines returns for a correctly-made item
-           * somebody changed their mind about. So the page says the one true
-           * thing available to it rather than letting the picture imply
-           * something the policy will not honour.
-           */}
-          <p className={s.shownIn}>
-            The photographs show a few of the colourways. The swatch above is
-            the one that will be made.
-          </p>
+          {/* THE PARAGRAPH THAT USED TO STAND HERE IS GONE, and its absence is
+              the whole point of the change.
+              It read: "The photographs show a few of the colourways. The swatch
+              above is the one that will be made." That was the honest thing to
+              say while the catalogue held a bare list of URLs and could not tell
+              which colour was in them — a wrong colour expectation is the
+              biggest driver of apparel returns, and /store/help declines returns
+              for a correctly-made item somebody changed their mind about.
+              The catalogue knows now. Every photograph above is the colourway
+              named beside this swatch, so the page no longer has to warn the
+              shopper about its own pictures. */}
         </div>
       )}
 
@@ -103,7 +109,7 @@ export default function Buy({ product }: { product: Product }) {
                 type="button"
                 className={`${s.sizeBtn} ${sz === size ? s.sizeOn : ""}`}
                 aria-pressed={sz === size}
-                onClick={() => { setSize(sz); }}
+                onClick={() => { onSize(sz); }}
               >
                 {sz}
               </button>

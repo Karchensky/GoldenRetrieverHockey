@@ -1,0 +1,3712 @@
+{
+  "capturedAt": "2026-08-01T22:42:36.198Z",
+  "note": "The `images` arrays exactly as the Printify API returned them, captured by `cli.ts mockups`. Nothing else off the response is kept: it carries per-variant COST, and this repository is public. Do not hand-edit — recapture instead.",
+  "products": [
+    {
+      "ourId": "rink-board-cap",
+      "product": {
+        "images": [
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_109496_front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_109531_back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "back_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_110061_person-1-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110061/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-front",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_110152_person-1-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110152/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-back",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "right_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_110058_person-2-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110058/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-front",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_110059_person-2-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110059/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-back",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "left_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118707_110922_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118707/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart",
+            "variant_ids": [
+              118706,
+              118707
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_109496_front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_109531_back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "back_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_110061_person-1-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/110061/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-front",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_110152_person-1-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/110152/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-back",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "right_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_110058_person-2-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/110058/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-front",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_110059_person-2-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/110059/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-back",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "left_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118705_110922_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118705/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart",
+            "variant_ids": [
+              118704,
+              118705
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_109496_front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109496/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=front",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_109531_back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/109531/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=back",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "back_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_110061_person-1-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/110061/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-front",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_110152_person-1-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/110152/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-1-back",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "right_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_110058_person-2-front",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/110058/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-front",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_110059_person-2-back",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/110059/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=person-2-back",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "left_hat_embroidery",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6e4530c778b3f7ec0bd237_118703_110922_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6e4530c778b3f7ec0bd237/118703/110922/golden-retrievers-rink-board-fitted-cap.jpg?camera_label=size-chart",
+            "variant_ids": [
+              118702,
+              118703
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          }
+        ]
+      }
+    },
+    {
+      "ourId": "crossed-shield-tee",
+      "product": {
+        "images": [
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18542_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18542/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18544,
+              18545,
+              18541,
+              18542,
+              18540,
+              18543
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18102_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18102/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18104,
+              18105,
+              18100,
+              18103,
+              18101,
+              18102
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18078_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18078/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18080,
+              18081,
+              18078,
+              18076,
+              18079,
+              18077
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18150_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18150/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18152,
+              18153,
+              18151,
+              18148,
+              18149,
+              18150
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18270_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18270/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18273,
+              18270,
+              18268,
+              18269,
+              18271,
+              18272
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102044_front-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102044/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-2",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102045_back-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102045/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-2",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102046_folded",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102046/golden-retrievers-crossed-shield-tee.jpg?camera_label=folded",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102048_hanging-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102048/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-1",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102047_hanging-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102047/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-2",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102049_hanging-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102049/golden-retrievers-crossed-shield-tee.jpg?camera_label=hanging-3",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92735_front-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92735/golden-retrievers-crossed-shield-tee.jpg?camera_label=front-collar-closeup",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "neck",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92736_back-collar-closeup",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92736/golden-retrievers-crossed-shield-tee.jpg?camera_label=back-collar-closeup",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92578_person-1",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92578/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-1",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92579_person-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92579/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-2",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92580_person-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92580/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-3",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92581_person-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92581/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-4",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92582_person-5",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92582/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-5",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92583_person-6",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92583/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102054_person-6-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102054/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-6-back",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102057_person-7-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102057/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-front",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102058_person-7-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102058/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-7-back",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102059_person-8-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102059/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-front",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102060_person-8-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102060/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-8-back",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102061_person-9-front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102061/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-front",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102062_person-9-back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102062/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-9-back",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92584_lifestyle",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92584/golden-retrievers-crossed-shield-tee.jpg?camera_label=lifestyle",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92585_duo",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92585/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102051_duo-2",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102051/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-2",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102052_duo-3",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102052/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-3",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102053_duo-4",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102053/golden-retrievers-crossed-shield-tee.jpg?camera_label=duo-4",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_111785_person-10-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/111785/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-left-sleeve",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_111786_person-10-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/111786/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-10-right-sleeve",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_111787_person-11-left-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/111787/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-left-sleeve",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "left_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_111788_person-11-right-sleeve",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/111788/golden-retrievers-crossed-shield-tee.jpg?camera_label=person-11-right-sleeve",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "right_sleeve",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92547_front",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92547/golden-retrievers-crossed-shield-tee.jpg?camera_label=front",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "front",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_92720_back",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/92720/golden-retrievers-crossed-shield-tee.jpg?camera_label=back",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6ba4b7c19d40918803534d_18398_102050_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6ba4b7c19d40918803534d/18398/102050/golden-retrievers-crossed-shield-tee.jpg?camera_label=size-chart",
+            "variant_ids": [
+              18400,
+              18401,
+              18397,
+              18396,
+              18399,
+              18398
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          }
+        ]
+      }
+    },
+    {
+      "ourId": "crossed-shield-sticker",
+      "product": {
+        "images": [
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45750_16655_front",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
+            "variant_ids": [
+              45750
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45750_2176_context-1",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/2176/golden-retrievers-crossed-shield-sticker.jpg?camera_label=context-1",
+            "variant_ids": [
+              45750
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45750_20546_context-2",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45750/20546/golden-retrievers-crossed-shield-sticker.jpg?camera_label=context-2",
+            "variant_ids": [
+              45750
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45752_16655_front",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45752/16655/golden-retrievers-crossed-shield-sticker.jpg?camera_label=front",
+            "variant_ids": [
+              45752
+            ],
+            "position": "other",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45752_2177_context-1",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45752/2177/golden-retrievers-crossed-shield-sticker.jpg?camera_label=context-1",
+            "variant_ids": [
+              45752
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b6f3ac004ce6c410efab6_45752_20547_context-2",
+            "src": "https://images-api.printify.com/mockup/6a6b6f3ac004ce6c410efab6/45752/20547/golden-retrievers-crossed-shield-sticker.jpg?camera_label=context-2",
+            "variant_ids": [
+              45752
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          }
+        ]
+      }
+    },
+    {
+      "ourId": "championship-roundel-hoodie",
+      "product": {
+        "images": [
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123966_111658_front",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+            "variant_ids": [
+              123936,
+              123951,
+              123966,
+              123981,
+              123996,
+              124011
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123966_111673_back",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+            "variant_ids": [
+              123936,
+              123951,
+              123966,
+              123981,
+              123996,
+              124011
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123966_111674_folded",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+            "variant_ids": [
+              123936,
+              123951,
+              123966,
+              123981,
+              123996,
+              124011
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123966_111678_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123966/111678/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=size-chart",
+            "variant_ids": [
+              123936,
+              123951,
+              123966,
+              123981,
+              123996,
+              124011
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_147878_111658_front",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+            "variant_ids": [
+              147876,
+              147877,
+              147878,
+              147879,
+              147880,
+              147881
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_147878_111673_back",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+            "variant_ids": [
+              147876,
+              147877,
+              147878,
+              147879,
+              147880,
+              147881
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_147878_111674_folded",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+            "variant_ids": [
+              147876,
+              147877,
+              147878,
+              147879,
+              147880,
+              147881
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_147878_111678_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/147878/111678/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=size-chart",
+            "variant_ids": [
+              147876,
+              147877,
+              147878,
+              147879,
+              147880,
+              147881
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123843_111658_front",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111658/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=front",
+            "variant_ids": [
+              123811,
+              123827,
+              123843,
+              123859,
+              123875,
+              123891
+            ],
+            "position": "front",
+            "is_default": true,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123843_111673_back",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111673/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=back",
+            "variant_ids": [
+              123811,
+              123827,
+              123843,
+              123859,
+              123875,
+              123891
+            ],
+            "position": "back",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123843_111674_folded",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111674/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=folded",
+            "variant_ids": [
+              123811,
+              123827,
+              123843,
+              123859,
+              123875,
+              123891
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          },
+          {
+            "mockup_id": "6a6b5b913e785ae5f40e7ce3_123843_111678_size-chart",
+            "src": "https://images-api.printify.com/mockup/6a6b5b913e785ae5f40e7ce3/123843/111678/golden-retrievers-championship-roundel-hoodie.jpg?camera_label=size-chart",
+            "variant_ids": [
+              123811,
+              123827,
+              123843,
+              123859,
+              123875,
+              123891
+            ],
+            "position": "other",
+            "is_default": false,
+            "is_selected_for_publishing": true,
+            "order": null
+          }
+        ]
+      }
+    }
+  ]
+}

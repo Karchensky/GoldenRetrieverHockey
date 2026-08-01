@@ -5,6 +5,20 @@ import { createPortal } from "react-dom";
 import s from "./store.module.css";
 
 /**
+ * The 400 and 800 derivatives beside a mirrored mockup.
+ *
+ * Derived from the path rather than passed in, because the caller addresses
+ * photographs by catalog index and `mirror-mockups.mjs` names the derivatives
+ * off the same index — `<id>-<n>.webp` gets `<id>-<n>-400.webp`. Change one,
+ * change both; `mockupSrcSet` in lib/store.ts builds the same three names for
+ * the grid.
+ */
+const srcSetFor = (src: string): string => {
+  const base = src.replace(/\.webp$/, "");
+  return `${base}-400.webp 400w, ${base}-800.webp 800w, ${src} 1200w`;
+};
+
+/**
  * The product photographs, and a way to look at one properly.
  *
  * A mockup is 1200px of garment rendered down to a column a third of the page
@@ -42,6 +56,20 @@ export default function Gallery({
   title: string;
 }) {
   const [open, setOpen] = useState<number | null>(null);
+  /**
+   * The images change when the shopper changes colour, and `open` is an index
+   * into them. A shorter list would leave it pointing at nothing.
+   *
+   * In practice the focus trap and the scroll lock below make it impossible to
+   * reach a swatch while the overlay is up, so this should never fire. It costs
+   * one comparison per render and removes a whole class of "the lightbox showed
+   * the wrong shirt" from ever being possible.
+   */
+  const shownFor = useRef(images);
+  if (shownFor.current !== images) {
+    shownFor.current = images;
+    if (open !== null) setOpen(null);
+  }
   /** Portals need a DOM; this stays false through the server render. */
   const [mounted, setMounted] = useState(false);
   /** What had focus before the overlay opened, so Escape can give it back. */
@@ -107,9 +135,17 @@ export default function Gallery({
             onClick={(e) => { opener.current = e.currentTarget; setOpen(index); }}
             aria-label={`Enlarge ${image.alt}`}
           >
+            {/* THE COLUMN IS A THIRD OF THE PAGE, so it must not be sent the
+                1200. This shipped without a `srcset` while the grid had one,
+                which was survivable at up to four photographs and is not now
+                that every colourway carries a full set of angles. The 1200 is
+                still what the lightbox loads, which is the one place it was
+                ever the right file. */}
             <img
               className={s.stageImg}
               src={image.src}
+              srcSet={srcSetFor(image.src)}
+              sizes="(max-width: 900px) 92vw, 34vw"
               alt={image.alt}
               width={1200}
               height={1200}
