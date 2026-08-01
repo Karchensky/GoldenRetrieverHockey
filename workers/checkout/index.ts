@@ -46,6 +46,28 @@ const catalog = (catalogJson as { products: unknown[] }).products as CatalogProd
 const SITE = "https://goldenretrieverhockey.com";
 
 /**
+ * Where Stripe sends the buyer once they have paid.
+ *
+ * PRODUCTION IS HARDCODED AND NOT TAKEN FROM THE REQUEST. `success_url` is a
+ * URL we hand Stripe and Stripe sends a paying customer to it; deriving it from
+ * the incoming Host would let anyone who can reach this Worker with a forged
+ * header point that redirect at a page of their choosing, which is a phishing
+ * primitive attached to a real payment. The canonical domain is a constant for
+ * that reason.
+ *
+ * `wrangler dev` is the one exception, and it has to be. It serves on
+ * 127.0.0.1, so a local test paid a real test-mode payment and was then sent to
+ * `https://goldenretrieverhockey.com/store/thanks` — a page that is not
+ * deployed yet, which answered with the export's own 404, "Not on file". The
+ * payment had already succeeded; only the trip home was wrong. Localhost is
+ * matched exactly, so nothing that is not a loopback address can select it.
+ */
+function siteFor(request: Request): string {
+  const origin = new URL(request.url).origin;
+  return /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(origin) ? origin : SITE;
+}
+
+/**
  * Where this shop will post to.
  *
  * Still the United States only, but no longer for the reason it used to be.
@@ -86,6 +108,7 @@ export default {
 /* ------------------------------------------------------------------ */
 
 async function handleCheckout(request: Request, env: Env): Promise<Response> {
+  const site = siteFor(request);
   let lines: BasketLine[];
   try {
     const body = (await request.json()) as { lines?: unknown };
@@ -217,19 +240,24 @@ async function handleCheckout(request: Request, env: Env): Promise<Response> {
     allow_promotion_codes: true,
 
     billing_address_collection: "required",
-    success_url: `${SITE}/store/thanks?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${SITE}/store`,
+    success_url: `${site}/store/thanks?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${site}/store`,
   };
 
   try {
-    // Derived from the basket, so a double-clicked button replays one session
-    // instead of opening two.
-    // Postage is in the key: if Printify's rate moves between two clicks the
-    // second click must open a NEW session rather than replay the old total.
-    const key = await basketFingerprint([
-      `post:${postageCents}`,
-      ...resolved.lines.map((l) => `${l.product.id}:${l.variantId}:${l.line.quantity}`),
-    ]);
+    /* FINGERPRINT THE WHOLE REQUEST, NOT A HAND-PICKED SUBSET.
+       The point is unchanged: a double-clicked button replays one session
+       instead of opening two, and if Printify's postage moves between two
+       clicks the second opens a NEW session rather than replaying the old
+       total.
+       It used to hash the basket lines and the postage only. That is every
+       input somebody remembered to list, which is a different thing from every
+       input — and Stripe rejects a key reused with ANY changed parameter:
+       `idempotency_error`, a 400, and a customer told the checkout would not
+       open. It bit twice on 2026-08-01, both times because success_url had
+       changed while a basket stayed the same. Hashing `params` means the key
+       cannot fall behind the request again, whatever anybody adds to it. */
+    const key = await basketFingerprint([JSON.stringify(params)]);
     const session = await createSession(env.STRIPE_SECRET_KEY, params, key);
     return json({ url: session.url });
   } catch (error) {
