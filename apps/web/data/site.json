@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T02:58:38.631Z",
+  "generatedAt": "2026-08-01T19:28:14.782Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1183,
     "assistEdges": 1316,
     "gameSheets": 284,
-    "captures": 5389,
+    "captures": 5503,
     "archiveOnlySessions": 6
   },
   "sessions": [
