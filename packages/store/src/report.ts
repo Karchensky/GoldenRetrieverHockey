@@ -568,6 +568,97 @@ async function positionsOf(blueprintId: number, printProviderId: number, variant
 /* Rendering                                                           */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* Discount codes                                                      */
+/* ------------------------------------------------------------------ */
+
+/** The columns the table prints. Percent off the GOODS, never off the postage. */
+const DISCOUNT_STEPS = [0, 10, 15, 20, 25, 30];
+
+/**
+ * What one sale keeps when a code takes `percent` off the shelf price.
+ *
+ * The discount comes off the goods only. Postage is passed through at cost and
+ * a code that discounted it would be paying the carrier out of our own pocket —
+ * Printify charges its rate whatever the customer was charged. Stripe's cut is
+ * still taken on the whole reduced charge INCLUDING that postage, which is the
+ * reason break-even sits well below the 30% margin instead of exactly at it.
+ */
+function keepAtDiscount(row: Row, tier: CostTier, percent: number): number {
+  const price = Math.round(tier.price * (1 - percent / 100));
+  return unitOf(row, tier.cost, price, tier.post || undefined).keep;
+}
+
+/**
+ * The largest WHOLE percent that still leaves every one of these tiers at or
+ * above zero. Whole percents because that is what a Stripe coupon takes.
+ */
+function breakEven(row: Row, tiers: CostTier[]): number {
+  for (let d = 0; d <= 100; d++) {
+    if (tiers.some((t) => keepAtDiscount(row, t, d) < 0)) return d - 1;
+  }
+  return 100;
+}
+
+/**
+ * THE TABLE THE CAPTAIN ASKED FOR: profit per item at a given code.
+ *
+ * One line per GARMENT, not per product — every mark on a tee has the same
+ * blueprint, maker, cost and price, so fifty-nine lines would be nine facts
+ * repeated. The worst tier of each garment is the one quoted, because the
+ * dearest size is what goes underwater first and a code is set once for all of
+ * them.
+ */
+function discounts(rows: Row[]): void {
+  const byItem = new Map<string, { row: Row; tiers: CostTier[] }>();
+  for (const row of rows) {
+    if (!row.tiers.length || row.garmentDrift) continue;
+    const seen = byItem.get(row.itemId);
+    if (seen) seen.tiers.push(...row.tiers);
+    else byItem.set(row.itemId, { row, tiers: [...row.tiers] });
+  }
+  if (!byItem.size) return;
+
+  console.log("");
+  console.log(RULE);
+  console.log(` A DISCOUNT CODE — what you keep per item, at each percent off`);
+  console.log(RULE);
+  console.log("");
+  console.log(` Percent comes off the GOODS. Postage is passed through at cost and is never`);
+  console.log(` discounted — Printify charges its rate whatever the customer paid. Stripe still`);
+  console.log(` takes ${pct(STRIPE_PERCENT)} + ${usd(STRIPE_FLAT_CENTS)} of the reduced charge, which is why break-even lands`);
+  console.log(` below the ${pct(MARGIN_TARGET)} margin rather than exactly on it.`);
+  console.log("");
+  console.log(` Each row is the DEAREST size of that garment — the first one to go underwater.`);
+  console.log(` A sticker is a pack of three, priced and posted as one sale.`);
+  console.log("");
+
+  const head = DISCOUNT_STEPS.map((d) => `${d}%`.padStart(9)).join("");
+  console.log(` ${"garment".padEnd(12)}${"sale".padStart(9)}${head}${"break-even".padStart(12)}`);
+  console.log(` ${THIN.slice(0, 12 + 9 + head.length + 12)}`);
+
+  let tightest = { item: "", at: 100 };
+  for (const [itemId, { row, tiers }] of byItem) {
+    // The dearest tier is the binding one; quote it, and test every tier.
+    const worstTier = tiers.reduce((a, b) => (b.cost > a.cost ? b : a));
+    const cells = DISCOUNT_STEPS.map((d) => usd(keepAtDiscount(row, worstTier, d)).padStart(9)).join("");
+    const be = breakEven(row, tiers);
+    if (be < tightest.at) tightest = { item: itemId, at: be };
+    // `sale` is the whole basket, not the unit — a sticker's $4.00 beside a
+    // three-pack's profit is two different sales on one line.
+    const units = Math.max(1, row.sale?.minQuantity ?? 1);
+    const sale = usd(worstTier.price * units) + (units > 1 ? `×${units}` : "");
+    console.log(` ${itemId.padEnd(12)}${sale.padStart(9)}${cells}${`${be}%`.padStart(12)}`);
+  }
+
+  console.log("");
+  console.log(
+    ` SAFE ON EVERYTHING: ${tightest.at}% — the ${tightest.item} breaks even there and loses money above it.`,
+  );
+  console.log(` Set a team code a point or two under that. At ${tightest.at}% you are working for nothing;`);
+  console.log(` the point of the code is to sell near cost, not to pay for the privilege.`);
+}
+
 const RULE = "=".repeat(96);
 const THIN = "-".repeat(96);
 
@@ -809,6 +900,10 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
         `See the GARMENT lines below.`,
     );
   }
+
+  /* --- discount codes --------------------------------------------- */
+
+  discounts(rows);
 
   /* --- flags ------------------------------------------------------ */
 
