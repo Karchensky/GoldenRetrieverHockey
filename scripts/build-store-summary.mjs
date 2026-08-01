@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 
 /**
  * The store's economics and its supplier choices, as one page.
@@ -11,7 +12,7 @@ import { readFile, writeFile } from "node:fs/promises";
  *
  * TAB 1 — ECONOMICS. For every size group of every garment: what a customer
  * hands over, every deduction, and what is left. At full price and at
- * TEAMMATE30, in New York and outside it.
+ * the team code, in New York and outside it.
  *
  * TAB 2 — SUPPLIERS. Every maker Printify offers for the garment we chose,
  * with the chosen one marked. It answers "did we pick the best maker of this
@@ -31,6 +32,28 @@ const NAMES = {
 const ORDER = ["tee", "longsleeve", "crewneck", "hoodie", "youth", "cap", "beanie", "mug", "sticker"];
 /** Weight and blend mean something here. A mug's "11 oz" is capacity. */
 const APPAREL = new Set(["tee", "longsleeve", "crewneck", "hoodie", "youth"]);
+
+/**
+ * THE DISCOUNT CODE IS NOT WRITTEN DOWN HERE, and it used to be.
+ *
+ * The live code was hardcoded in six places in this file. This file is tracked,
+ * the repository is public, and the code was live — so a working 30% discount
+ * was sitting in GitHub for anyone who opened it. Found 2026-08-01; the code
+ * was rotated because removing it from HEAD does not remove it from history.
+ *
+ * The page is a private local artefact, so it may show the real code, but the
+ * source that builds it must not contain it. It comes from `.secrets/`, which
+ * is gitignored, and falls back to a generic label when absent.
+ */
+const CODE = (() => {
+  try {
+    const raw = readFileSync(".secrets/discount_code.txt", "utf8").trim();
+    if (raw) return raw;
+  } catch {
+    // No file: label the column generically rather than name a code.
+  }
+  return "TEAM CODE";
+})();
 
 const data = JSON.parse(await readFile("dist/store-economics.json", "utf8"));
 const sweep = JSON.parse(await readFile("dist/print/provider-sweep.json", "utf8"));
@@ -71,8 +94,8 @@ const economics = [...data.items]
       return `<tr class="grp"><td colspan="12">${label}<span class="dim"> &middot; ${t.colours} colour${t.colours === 1 ? "" : "s"} &middot; costs ${usd(t.full.ny.cost)}</span></td></tr>`
         + money("Full price &middot; Buffalo", t.full.ny, "")
         + money("Full price &middot; elsewhere", t.full.away, "alt")
-        + money("<b>TEAMMATE30</b> &middot; Buffalo", t.teammate.ny, "promo")
-        + money("<b>TEAMMATE30</b> &middot; elsewhere", t.teammate.away, "promo alt");
+        + money(`<b>${CODE}</b> &middot; Buffalo`, t.teammate.ny, "promo")
+        + money(`<b>${CODE}</b> &middot; elsewhere`, t.teammate.away, "promo alt");
     }).join("");
     const worst = Math.min(...item.tiers.map((t) => t.teammate.ny.keep));
     return `<section>
@@ -328,7 +351,7 @@ const explain = `
     <tr><th>Does Stripe pay Printify?</th><td><b>No.</b> They are unconnected. Two separate money movements that happen to concern the same parcel.</td></tr>
     <tr><th>How do you get paid?</th><td>Automatically. Stripe pays your Stripe balance out to your bank on its own schedule — you do not transfer anything by hand.</td></tr>
     <tr><th>Do you reserve the tax yourself?</th><td><b>Yes, and this is the one that catches people.</b> Stripe <i>collects</i> the tax and hands it to you with everything else. It does not remit it. Move it out of the account the week it lands, or you will spend it and still owe it.</td></tr>
-    <tr><th>What is actually yours?</th><td>What is left after Printify, Stripe and New York. On a $27 tee to Buffalo that is about $9.66. With TEAMMATE30, about $1.57.</td></tr>
+    <tr><th>What is actually yours?</th><td>What is left after Printify, Stripe and New York. On a $27 tee to Buffalo that is about $9.66. With the team code, about $1.57.</td></tr>
   </table>
 </section>
 
@@ -429,7 +452,7 @@ const html = `<!doctype html>
     <b>They pay</b> = list, less the code, plus postage, plus New York's tax.<br>
     <b>Out</b> = Printify (garment + postage) &middot; Stripe (2.9% + 30&cent;) &middot; Stripe Tax (0.5%, NY only) &middot; the tax itself, which you forward to New York.<br>
     <b>You keep</b> is what is left. <b>Postage cancels</b> — the customer pays it, Printify takes it.<br>
-    <b>Worst case anywhere with TEAMMATE30: ${usd(worstOverall)}.</b> Nothing in the line loses money at 30% off.
+    <b>Worst case anywhere with ${CODE}: ${usd(worstOverall)}.</b> Nothing in the line loses money at 30% off.
   </div>
   ${economics}
 </div>
@@ -475,7 +498,7 @@ const html = `<!doctype html>
 
 await writeFile("dist/store-summary.html", html);
 console.log("Wrote dist/store-summary.html");
-console.log(`  worst keep with TEAMMATE30, anywhere: ${usd(worstOverall)}`);
+console.log(`  worst keep with ${CODE}, anywhere: ${usd(worstOverall)}`);
 for (const id of ORDER) {
   const rows = byItem.get(id);
   if (!rows) continue;
