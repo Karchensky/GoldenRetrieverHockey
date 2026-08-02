@@ -266,6 +266,15 @@
   line-height: 1.6;
 }
 
+/* The help link, standing off the shipping note above it rather than trailing
+   its last sentence. Same size and colour — it is the line space that separates
+   them, so the link reads as its own thing without shouting. */
+.noteLink {
+  margin: 11px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
 .failure {
   margin: 14px 0 0;
   padding: 10px 0 10px 15px;

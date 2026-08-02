@@ -1199,108 +1199,122 @@ export const ITEMS: Item[] = [
  * real player's mouth is the one thing this file must never contain.
  */
 export const QUOTES: Record<string, string> = {
-  /* --- verbatim from the recaps. Do not touch the wording. --- */
+  /* One line per product, attributed to a teammate.
+
+     THE ATTRIBUTION IS THE JOKE. Most of these are famous lines bent
+     toward a dog, a golden or a rink — Shakespeare, Melville, Vonnegut,
+     McCarthy, Stoppard, Borges, Saunders, Dickens, Frost — and every one
+     is signed by somebody on the roster who did not say it. Nobody is
+     meant to believe Corey Muff wrote Julius Caesar.
+
+     Form is "Name, position", and the position is the one the archive
+     records for that player, confirmed by the captain on 2026-08-02. Two
+     carry a flourish instead of stopping at the position, and both are
+     deliberate: Terrana after a nine-point game, Galante on playing
+     through injury.
+
+     A struck line must never come back. rejected-quotes.ts is the record
+     and quotes.test.ts is the enforcement. */
   "crossed-shield-tee":
-    "“The Golden Retrievers are good. Scary Good.” — Anthony Christy, forward",
+    "“The Golden Retrievers are good. Scary Good.” — Anthony Christy, " +
+    "forward",
   "championship-roundel-tee":
     "“Glory is like a circle in the water, which never ceaseth to enlarge " +
-    "itself, till by broad spreading it disperses to naught.” " +
-    "— Rich Fedele, defence",
+    "itself, till by broad spreading it disperses to naught.” — Rich " +
+    "Fedele, defence",
   "faceoff-tee":
     "“It felt like we were skating in circles, just chasing our tails all " +
     "night.” — Dan Schmitt, defence",
   "heritage-seal-tee":
     "“What a piece of work is a Golden Retriever. How noble in reason, how " +
-    "infinite in faculties. In action how like an Angel.” " +
-    "— Brett Koeppel, #18",
+    "infinite in faculties. In action how like an Angel.” — Brett Koeppel, " +
+    "defence",
   "rink-board-tee":
-    "“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” " +
-    "— Greg Suffoletto, forward",
+    "“Crabcakes and Retriever Hockey, that’s what Suffoletto’s do.” — Greg " +
+    "Suffoletto, forward",
   "heritage-seal-hoodie":
-    "“I do it well, very well.” — Vinny Terrana, forward, " +
-    "after a nine-point game",
+    "“I do it well, very well.” — Vinny Terrana, forward, after a " +
+    "nine-point game",
   "championship-roundel-hoodie":
-    "“All the rink is a stage, and all the skaters merely forwards.” — Brett Koeppel, defence",
-  /* The recap it comes from carries no byline — the club's recaps never did.
-     The captain asked for a player's name on it rather than "the 2013 game
-     recap", so it carries the name of the man who kept the records and was on
-     the roster for that game: 12 January, six skaters, 8-4 to Top Shop. If the
-     recap was somebody else's, change the name — the sentence is the artefact,
-     the attribution is a best reading. */
+    "“All the rink is a stage, and all the skaters merely forwards.” — " +
+    "Brett Koeppel, defence",
   "championship-roundel-mug":
-    "On a six-skater loss: it “provided conclusive evidence to support " +
-    "Aristotle’s theory of motion, which states that objects in motion stop " +
-    "when they get tired.” — Bryan Karchensky, forward",
-
-  /* --- written for the shop, in the same voice, attributed to the current
-         roster. Every one of these is INVENTED; none is from a recap. Swap any
-         line or any name freely — that is what this map is for. --- */
+    "“It is not down in any map; true rinks never are.” — Adam Kaplewicz, " +
+    "forward",
   "nose-to-nose-tee":
-    "“Nothing has gone wrong yet. That is the whole appeal of a " +
-    "faceoff.” — Anthony Christy, forward",
+    "“Nothing has gone wrong yet. That is the whole appeal of a faceoff.” — " +
+    "Anthony Christy, forward",
   "crossed-shield-hoodie":
-    "“Once more unto the breach, dear friends. Then a line change.” " +
-    "— Brent Boeing, forward",
+    "“Once more unto the breach, dear friends. Then a line change.” — Brent " +
+    "Boeing, forward",
   "rink-board-cap":
-    "“Now is the winter of our discontent.” — Adam Kaplewicz, " +
-    "on a January road game",
+    "“It is a far, far better thing that I do now than I have ever done, " +
+    "and it is blocking this shot.” — Adam Kaplewicz, forward",
   "rink-board-beanie":
-    "“Every dog has his day. Ours is Monday at 10:40 pm.” " +
-    "— Anthony Gugino, defence",
+    "“Every dog has his day. Ours is Monday at 10:40 pm.” — Anthony Gugino, " +
+    "defence",
   "rink-board-mug":
-    "“The system is simple. Get the puck, then give it back to me.” — Vinny Terrana, forward",
+    "“The system is simple. Get the puck, then give it back to me.” — Vinny " +
+    "Terrana, forward",
   "nose-to-nose-mug":
-    "“Four legs, two blades, one puck.” — Anthony Galante",
+    "“Four legs, two blades, one puck.” — Anthony Galante, defence",
   "crossed-shield-longsleeve":
-    "“Cry ‘Havoc!’ and let slip the dogs of war.” " +
-    "— Corey Muff, goaltender",
+    "“Cry ‘Havoc!’ and let slip the dogs of war.” — Greg Suffoletto, " +
+    "forward",
   "championship-roundel-longsleeve":
     "“Brevity is the soul of a good shift.” — Andrew Murphy, defence",
   "heritage-seal-longsleeve":
-    "“The course of true hockey never did run smooth.” — John Rein",
+    "“Now is the winter of our discontent made glorious summer by this " +
+    "sheet of ice.” — John Rein, defence",
   "heritage-seal-crewneck":
-    "“We are such stuff as dreams are made on. Mostly rebounds.” " +
-    "— Bryan Karchensky, forward",
+    "“The ice is lovely, dark and deep, but I have shifts to take before I " +
+    "sleep.” — Bryan Karchensky, forward",
   "championship-roundel-crewneck":
-    "“Sit. Stay. Score.” — Jake Steinmetz, forward",
+    "“It was the best of periods, it was the worst of periods.” — Jake " +
+    "Steinmetz, forward",
   "crossed-shield-youth":
-    "“This above all: to thine own zone be true.” — John Rein",
+    "“This above all: to thine own zone be true.” — John Rein, defence",
   "faceoff-youth":
-    "“Nobody puts the fourth line in a corner.” " +
-    "— Jeremy McDonald, forward",
+    "“Sing to me of the dog, Muse, the dog of twists and turns, driven time " +
+    "and again off course once he had the puck.” — Jeremy McDonald, forward",
   "heritage-seal-sticker":
-    "“To sleep, perchance to dream, but not on the backcheck.” — Anthony Gugino, defence",
+    "“To sleep, perchance to dream, but not on the backcheck.” — Greg " +
+    "Suffoletto, forward",
   "championship-roundel-sticker":
     "“I am gonna need a bigger net.” — Corey Muff, goaltender",
   "octagon-patch-sticker":
-    "On playing through an injury: “Pain… has a structure. It has a " +
-    "floor plan. It has designs more intricate than a chambered nautilus… " +
-    "it is a poem.” — Anthony Galante, on a night he should have sat",
+    "“Pain… has a structure. It has a floor plan. It has designs more " +
+    "intricate than a chambered nautilus… it is a poem.” — Anthony Galante, " +
+    "defence, on playing through injury",
   "crossed-shield-sticker":
-    "“Roll over is a defensive scheme now.” — Jason Kaplewicz",
+    "“Roll over is a defensive scheme now.” — Jason Kaplewicz, forward",
   "faceoff-sticker":
-    "“There is no leash long enough for a Monday night.” — Devin Arnold, defence",
+    "“To strive, to seek, to fetch, and not to yield.” — Anthony Christy, " +
+    "forward",
   "rink-board-sticker":
-    "“The board never changes. Everything skating past it does.” " +
-    "— John Rein",
+    "“Whatever happens on this ice without my knowledge happens without my " +
+    "consent.” — John Rein, defence",
   "oversized-jersey-hoodie":
-    "On first pulling on the golden jersey: “I’m never taking this " +
-    "off, ever.” — Greg Suffoletto, forward",
+    "“Hope is the thing with fur, that perches in the crease.” — Corey " +
+    "Muff, goaltender",
   "majestic-stick-carry-tee":
-    "“Retrieving is the whole job. The stick is just the excuse.” " +
-    "— Jason Kaplewicz",
+    "“It is a truth universally acknowledged, that a single golden in " +
+    "possession of a good stick must be in want of a linemate.” — Brent " +
+    "Boeing, forward",
   "oversized-jersey-tee":
-    "“The sweater fits when you’ve earned it. Until then it just " +
-    "hangs.” — John Rein",
+    "“The sweater fits when you’ve earned it. Until then it just hangs.” — " +
+    "John Rein, defence",
   "majestic-stick-carry-hoodie":
     "“The fault, dear Brutus, is not in our sticks.” — Rich Fedele, defence",
   "faceoff-longsleeve":
-    "“Two dogs, one puck, no plan.” — Devin Arnold, defence",
+    "“So we skate on, boats against the current, borne back ceaselessly " +
+    "into our own zone.” — Devin Arnold, defence",
   "majestic-stick-carry-longsleeve":
-    "“Head up, stick down, mouth full.” — Anthony Gugino, defence",
+    "“All we have to decide is what to do with the ice time that is given " +
+    "us.” — Anthony Gugino, defence",
   "crossed-shield-crewneck":
-    "“A crest is a promise you have to keep on Mondays.” " +
-    "— Bryan Karchensky, forward",
+    "“A garden of forking passing lanes. He chose all of them and completed " +
+    "none.” — Bryan Karchensky, forward",
   "majestic-stick-carry-crewneck":
     "“Do, or do not. There is no drop pass.” — Andrew Murphy, defence",
   "oversized-jersey-crewneck":
@@ -1308,67 +1322,64 @@ export const QUOTES: Record<string, string> = {
   "majestic-stick-carry-youth":
     "“Someone has to carry the sticks.” — Jeremy McDonald, forward",
   "oversized-jersey-youth":
-    "“One day this will fit.” — Rich Fedele, defence",
+    "“Two lanes diverged in the neutral zone, and I took the one with less " +
+    "backcheck.” — Anthony Christy, forward",
   "heritage-seal-mug":
-    "“Coffee, then a 10:40 puck drop. In that order.” " +
-    "— Dan Schmitt, defence",
+    "“Coffee, then a 10:40 puck drop. In that order.” — Andrew Murphy, " +
+    "defence",
   "crossed-shield-mug":
-    "“The shield goes on the mug because it goes on everything.” " +
-    "— Vinny Terrana, forward",
+    "“The shield goes on the mug because it goes on everything.” — Vinny " +
+    "Terrana, forward",
   "majestic-stick-carry-mug":
-    "“We are gonna need more tape.” — Jason Kaplewicz",
+    "“We are gonna need more tape.” — Jason Kaplewicz, forward",
   "majestic-stick-carry-sticker":
-    "“He carries it better than most of us and he never complains about " +
-    "the flex.” — Jeremy McDonald, forward",
+    "“Listen: he has come unstuck in the neutral zone.” — Vinny Terrana, " +
+    "forward",
   "faceoff-crewneck":
-    "“Win the draw and the next ten seconds are somebody else’s " +
-    "problem.” — Devin Arnold, defence",
+    "“What's the most you ever lost on a faceoff?” — Devin Arnold, defence",
   "faceoff-hoodie":
-    "“Something is rotten in the state of our breakout.” " +
-    "— Dan Schmitt, defence",
+    "“Something is rotten in the state of our breakout.” — Dan Schmitt, " +
+    "defence",
   "rink-board-longsleeve":
-    "“The boards have taken more of my hits than any opponent has.” " +
-    "— Dan Schmitt, defence",
+    "“Call me Ishmael. Then call me off, I have been out here ninety " +
+    "seconds.” — Dan Schmitt, defence",
   "rink-board-youth":
     "“Just keep skating.” — Jeremy McDonald, forward",
   "oversized-jersey-mug":
     "“I would like to thank the ice, which was cold, and the puck, which " +
     "was round.” — Rich Fedele, defence",
-
-  /* --- chosen by the captain on 2026-07-30, from the pool, after the three
-         rounds written for these twelve products were all struck. He picked
-         which line goes on which product; that pairing is his, not a guess. --- */
   "nose-to-nose-hoodie":
     "“A hit, a very palpable hit.” — Anthony Gugino, defence",
   "nose-to-nose-cap":
-    "“We are rebuilding. We have been rebuilding since 2011.” — Bryan " +
-    "Karchensky, forward",
+    "“Backcheck? I would prefer not to.” — Bryan Karchensky, forward",
   "nose-to-nose-longsleeve":
     "“Get thee to a bench.” — Corey Muff, goaltender",
   "nose-to-nose-crewneck":
-    "“Screw your courage to the sticking place, then take the draw.” — Brett " +
-    "Koeppel, defence",
+    "“Screw your courage to the sticking place, then take the draw.” — " +
+    "Brett Koeppel, defence",
   "nose-to-nose-youth":
-    "“Half this roster has kids who could take my spot.” — Jason Kaplewicz",
+    "“Carry the fire. Also carry the pucks, the pylons and the water.” — " +
+    "Jason Kaplewicz, forward",
   "nose-to-nose-sticker":
     "“What is past is prologue, and all of it is in the archive.” — Bryan " +
     "Karchensky, forward",
   "mascot-medallion-mug":
-    "“I was told there would be a warm-up.” — John Rein",
+    "“I was told there would be a warm-up.” — Adam Kaplewicz, forward",
   "mascot-medallion-sticker":
     "“The drawing is of a dog who has never been scored on.” — Corey Muff, " +
     "goaltender",
   "oversized-jersey-longsleeve":
-    "“Our power play has a plan. It is a secret, even from us.” — Dan Schmitt, " +
-    "defence",
+    "“Our power play has a plan. It is a secret, even from us.” — Dan " +
+    "Schmitt, defence",
   "oversized-jersey-sticker":
     "“We are a defensive team in the sense that we defend a lot.” — Anthony " +
     "Gugino, defence",
   "championship-roundel-youth":
-    "“Somebody has to be the next one. It may as well be you.” — Jason Kaplewicz",
+    "“Somebody has to be the next one. It may as well be you.” — Jason " +
+    "Kaplewicz, forward",
   "heritage-seal-youth":
-    "“Every golden retriever is a two-way forward at heart.” — Jake Steinmetz, " +
-    "forward",
+    "“Every golden retriever is a two-way forward at heart.” — Jake " +
+    "Steinmetz, forward",
 };
 
 

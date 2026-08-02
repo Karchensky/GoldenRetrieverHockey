@@ -413,7 +413,12 @@ function CartDrawer() {
                 Stripe; they are simply not announced here. */}
             <p className={s.note}>
               Shipping and tax are calculated at checkout. Typically ships
-              within 2&ndash;5 business days from order.{" "}
+              within 2&ndash;5 business days from order.
+            </p>
+            {/* The link is its own paragraph, not the tail of the sentence
+                above. Run together, it read as a fourth clause of the shipping
+                explanation and was the easiest thing on the panel to miss. */}
+            <p className={s.noteLink}>
               <a href="/store/help">Shipping &amp; returns</a>
             </p>
 
