@@ -402,26 +402,49 @@ export async function sync(options: { dryRun: boolean }): Promise<SyncResult[]> 
       created = await createProduct(body);
       how = "redr";
     } else {
-      // Title, copy AND prices. `variants` carries `price`, and unlike
-      // `print_areas` it references no uploaded image, so the 8253 that blocks
-      // geometry does not apply — a repricing goes through PUT cleanly. Leaving
-      // it out was why the first run of the 2026-07-29 repricing reported
-      // twenty-three products "sent" and left every one of them at the old
-      // figure, with verify() catching it as "N variants priced at something
-      // other than 2900c".
+      /* TITLE AND COPY ONLY. THE PRICE IS NOT SENT FROM HERE, and that is a
+         correction of 2026-08-01.
+
+         This used to carry `body.variants` too, with a note explaining that
+         omitting it was why the 2026-07-29 repricing reported twenty-three
+         products "sent" and left every one at the old figure. That was true
+         when it was written and stopped being true in the same week: back then
+         the flat `item.priceCents` WAS the price, and this PUT was the only
+         thing that set it. The per-variant reprice below — every size costed
+         and posted separately — arrived afterwards and is now the single
+         writer of prices.
+
+         So sending `body.variants` here wrote a price this function already
+         knows is wrong. `item.priceCents` is an ANCHOR: one flat figure for a
+         product whose sizes cost different amounts. Every run therefore put
+         the anchor on all 36 variants of a tee, quoted postage over several
+         API calls, read the product back, and corrected them — leaving the
+         shop holding a wrong price for as long as that took, and leaving it
+         there permanently if the run died in between.
+
+         Nothing customer-facing reads it (the storefront renders
+         products.json, the Worker charges from its own compiled copy, and
+         these are drafts with no sales channel), which is why it was survivable
+         rather than urgent. It is still a write of a known-wrong number for no
+         gain.
+
+         Omitting `variants` is safe: `needsRebuild` above has already taken the
+         rebuild path if the enabled set disagrees with the matrix, so there is
+         nothing here to enable. */
       created = await updateProduct(already.id, {
         title: body.title,
         description: body.description,
-        variants: body.variants,
       });
       how = "sent";
     }
     /* EVERY SIZE PRICED OFF ITS OWN COST.
-       The body above went up carrying `item.priceCents` on every variant, which
-       is an anchor and not a price: a product's real costs are only knowable
-       AFTER the shop reports them, and they differ by size and sometimes by
-       colour — the hoodie is $32.92 in black and $34.58 in navy at the same
-       size. So the create is followed by a reprice.
+       A NEW product goes up carrying `item.priceCents` on every variant, which
+       is an anchor and not a price — Printify will not create a product with no
+       price at all, and a product's real costs are only knowable AFTER the shop
+       reports them. They differ by size and sometimes by colour: the hoodie is
+       $32.92 in black and $34.58 in navy at the same size. So a create is always
+       followed by a reprice. An UPDATE no longer sends the anchor at all; see
+       the note on the PUT above.
        Before this, one flat price meant a small tee earned 37.3% and a 3XL
        19.7%: the person taking a medium was subsidising the person taking a 3XL
        by about four dollars. The captain's instruction was 20% on all sizes,
