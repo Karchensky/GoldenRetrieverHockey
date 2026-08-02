@@ -696,15 +696,6 @@
 }
 
 /* Shipping and lead time, in the hero rather than 6,500 pixels down. */
-.terms {
-  margin: 22px 0 0;
-  max-width: 62ch;
-  font-size: 12.5px;
-  line-height: 1.65;
-  color: var(--dim);
-}
-.terms a { color: var(--ink) }
-
 /* ---- the gallery on a phone ----
    `.stage` is a vertical stack, which is right on a desktop where it sits in
    its own column beside the picker. Below 860 the grid collapses to one column

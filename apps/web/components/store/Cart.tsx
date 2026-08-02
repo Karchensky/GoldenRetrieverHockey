@@ -402,9 +402,18 @@ function CartDrawer() {
               <span>Subtotal</span>
               <span>{money(subtotal)}</span>
             </div>
+            {/* TWO FACTS AND NOTHING ELSE.
+                This carried two more. "Made to order in 2–5 business days"
+                described HOW the thing is made rather than when it arrives, and
+                invites the reader to work out that it is print on demand. And
+                "Got a code from the team? Enter it at checkout" advertised the
+                discount codes to every shopper, including the ones who do not
+                have one — a prompt to go looking for a code, on the screen
+                where they were about to pay full price. Codes still work at
+                Stripe; they are simply not announced here. */}
             <p className={s.note}>
-              Shipping and tax are calculated at checkout. Made to order in 2&ndash;5
-              business days. Got a code from the team? Enter it at checkout.{" "}
+              Shipping and tax are calculated at checkout. Typically ships
+              within 2&ndash;5 business days from order.{" "}
               <a href="/store/help">Shipping &amp; returns</a>
             </p>
 

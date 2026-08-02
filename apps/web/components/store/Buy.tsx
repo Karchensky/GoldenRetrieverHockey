@@ -129,8 +129,13 @@ export default function Buy({
 
         {product.sale && <p className={s.saleNote}>{product.sale.why}</p>}
 
+        {/* Same rule as the basket and the grid: say when it arrives, not how
+            it is made. "Made to order — 2–5 business days, then shipping at
+            cost" led with the manufacturing. The link stays, because this sits
+            beside the button that spends the money and is the one place a
+            shopper is actually asking the question. */}
         <p className={s.notLiveB}>
-          Made to order &mdash; 2&ndash;5 business days, then shipping at cost.{" "}
+          Typically ships within 2&ndash;5 business days from order.{" "}
           <a href="/store/help">Shipping &amp; returns</a>
         </p>
       </div>

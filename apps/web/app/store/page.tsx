@@ -47,17 +47,13 @@ export default function StorePage() {
           <br />
           <i>store.</i>
         </h1>
-        {/* THE TERMS, WHERE THE SHOPPER DECIDES WHETHER THIS SHOP IS REAL.
-            This paragraph used to exist only at the very bottom — measured at
-            y=6572 of a 6617px page, with the single link to /store/help at
-            y=6597, which is 99.7% of the way down. The product page and the
-            basket both carry it, so a doubt raised at the picker or the till
-            had a route out; the grid, where the doubt starts, did not. */}
-        <p className={s.terms}>
-          Made to order, 2&ndash;5 business days. Shipping charged at cost &mdash;
-          whatever the post office charges us, nothing on top.{" "}
-          <Link href="/store/help">Shipping &amp; returns</Link>
-        </p>
+        {/* NO TERMS UNDER THE HEADING. A paragraph here used to open the shop
+            with "Made to order, 2–5 business days. Shipping charged at cost",
+            on the reasoning that the grid is where a shopper decides whether
+            the place is real and the only route out was 99.7% of the way down
+            the page. The route out stays — it is the link in the footer below —
+            but leading with fulfilment terms tells the reader how the thing is
+            made before it tells them what it is. */}
         <nav className={s.categoryNav} aria-label="Sections">
           {groups.map((group) => (
             <a key={group.itemId} href={`#${group.itemId}`}>{group.label}</a>
@@ -89,10 +85,13 @@ export default function StorePage() {
         </p>
       )}
 
+      {/* THE LINK, AND ONLY THE LINK. The prose that used to wrap it —
+          "everything is made to order, so allow 2–5 business days… shipping is
+          charged at cost" — said on the shelf what the help page says properly,
+          and "made to order" invites the reader to work out that this is print
+          on demand. The terms have one home now and this points at it. */}
       <p className={s.detailCopy}>
-        Everything is made to order, so allow 2&ndash;5 business days before it ships.
-        Shipping is charged at cost &mdash; whatever the post office charges us, and
-        nothing on top. <Link href="/store/help">Shipping &amp; returns</Link>
+        <Link href="/store/help">Shipping &amp; returns</Link>
       </p>
     </div>
   );
