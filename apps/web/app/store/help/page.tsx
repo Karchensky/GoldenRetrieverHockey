@@ -90,7 +90,7 @@ export default function HelpPage() {
               <td />
               <td>
                 <b>Orders with more than one kind of thing may arrive separately.</b>{" "}
-                A cap and a mug are made in different places, so they are posted from
+                A hoodie and a mug are made in different places, so they are posted from
                 different places.
               </td>
             </tr>
@@ -112,8 +112,8 @@ export default function HelpPage() {
           sold in threes and why the three can be three different designs.
         </p>
         <p className={s.detailCopy}>
-          Different kinds of thing do not combine that way — a cap and a mug are made
-          in different places and each carries its own postage.
+          Different kinds of thing do not combine that way — a hoodie and a mug are
+          made in different places and each carries its own postage.
         </p>
         <p className={s.detailCopy}>
           We do not ship outside the United States yet.

@@ -30,12 +30,25 @@ import s from "../../components/store/store.module.css";
  * it does not exist to be bought.
  */
 
+/**
+ * THIS SENTENCE LISTED THREE THINGS THE SHOP DOES NOT SELL, for weeks, and it
+ * is the first thing a search engine and a link preview quote.
+ *
+ * It read "Tees, hoodies, caps, beanies, mugs, stickers and pucks, carrying
+ * nine crests". The puck came off on 2026-07-29 (one maker, $18 for a rubber
+ * disc), the cap and the beanie on 2026-08-03 (our linework is 0.24mm against a
+ * 1mm stitch floor), and there are ten marks, not nine.
+ *
+ * Nothing checks this file against the line, because metadata is prose and the
+ * line is data. Keep it to what cannot go stale: the categories change, the
+ * club does not.
+ */
 export const metadata: Metadata = {
   title: "Store",
   description:
-    "Tees, hoodies, caps, beanies, mugs, stickers and pucks, carrying nine crests " +
-    "drawn for the Golden Retrievers — Buffalo's premier golden retriever " +
-    "themed hockey team since 2011.",
+    "Tees, long sleeves, crewnecks, hoodies, youth tees, mugs and stickers, " +
+    "carrying the crests of the Golden Retrievers — Buffalo's premier golden " +
+    "retriever themed hockey team since 2011.",
 };
 
 export default function StorePage() {
