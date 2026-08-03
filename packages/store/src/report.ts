@@ -578,6 +578,10 @@ export async function report(): Promise<number> {
  * being collected for somebody else, and Stripe Tax bills 0.5% of the same
  * total. Together they are about sixteen cents on a $23 mug — small, real, and
  * previously invisible, which is the combination worth writing down.
+ *
+ * AND A THIRD, added 2026-08-03: **what Printify charges us in sales tax.**
+ * See `PRINTIFY_CHARGES_US_SALES_TAX` below. It was missing entirely, and it is
+ * the largest single thing this page was wrong about.
  */
 async function writeEconomics(rows: Row[]): Promise<void> {
   const { writeFile, mkdir } = await import("node:fs/promises");
@@ -588,6 +592,34 @@ async function writeEconomics(rows: Row[]): Promise<void> {
   const ERIE_CLOTHING = 0.0475;
   const STRIPE_TAX_FEE = 0.005;
   const CLOTHING_CODES = new Set(["txcd_30011000", "txcd_30011200", "txcd_30060006"]);
+
+  /**
+   * **PRINTIFY CHARGES US NEW YORK SALES TAX ON THE BASE COST, and this page
+   * did not say so until 2026-08-03.**
+   *
+   * It is not a model. It is on both real invoices this shop has, read back off
+   * the API on 2026-08-03:
+   *
+   *   tee    White/L   cost $11.29 + post $4.75 -> tax $0.76   = 4.738%
+   *   hoodie Black/L   cost $32.92 + post $8.49 -> tax $1.97   = 4.757%
+   *
+   * Buffalo's clothing rate, charged on the goods AND the postage, exactly as
+   * the customer-facing side of the same tax works. It exists because the ST-120
+   * resale certificate has not been accepted yet — a reseller does not pay tax
+   * on stock it is reselling, and once Printify accepts the form this drops to
+   * zero on every line.
+   *
+   * **SET THIS TO `false` THE DAY THE CERTIFICATE IS ACCEPTED**, re-run
+   * `store:prices`, and every figure on the page moves back up by about a point
+   * of margin. Leaving it `true` after that understates what the shop earns;
+   * leaving it `false` before that is how "worst case with the code is $1.56"
+   * came to be printed when the real worst case was $0.46.
+   *
+   * The two clothing rows are measured. The general-goods rate on the mug and
+   * the sticker is the same jurisdiction's 8.75% and is INFERRED — no mug or
+   * sticker has been bought, so nothing has proven it.
+   */
+  const PRINTIFY_CHARGES_US_SALES_TAX = true;
 
   /** One sale, priced end to end. `discount` is a fraction off the goods only. */
   const sale = (row: Row, tier: CostTier, units: number, discount: number, inNY: boolean) => {
@@ -603,9 +635,26 @@ async function writeEconomics(rows: Row[]): Promise<void> {
     const stripe = Math.round(paid * STRIPE_PERCENT) + STRIPE_FLAT_CENTS;
     const taxFee = inNY ? Math.round(paid * STRIPE_TAX_FEE) : 0;
     const cost = tier.cost * units;
+    /* What PRINTIFY bills us in sales tax, on cost plus the postage we hand
+       straight back to them.
+
+       APPLIED TO EVERY ROW, AND ONLY THE BUFFALO CASE IS MEASURED. Both real
+       invoices were samples shipped to Buffalo, so both are NY-destination and
+       both came back at Erie County's clothing rate. What Printify charges on a
+       parcel delivered to another state is NOT KNOWN — drop-ship tax normally
+       follows the destination, so it could be that state's rate, or nothing at
+       all where Printify has no nexus.
+
+       It is applied everywhere anyway, deliberately: this figure exists to stop
+       the page overstating what the shop keeps, and the conservative assumption
+       is the one that cannot do that. The banner on the page says which half is
+       measured. Buy one thing to an out-of-state address and this comment can
+       be replaced with a number. */
+    const supplierRate = CLOTHING_CODES.has(row.taxCode) ? ERIE_CLOTHING : ERIE_FULL;
+    const supplierTax = PRINTIFY_CHARGES_US_SALES_TAX ? Math.round((cost + post) * supplierRate) : 0;
     return {
-      list, off, goods, post, tax, paid, stripe, taxFee, cost,
-      keep: paid - tax - cost - post - stripe - taxFee,
+      list, off, goods, post, tax, paid, stripe, taxFee, cost, supplierTax,
+      keep: paid - tax - cost - post - stripe - taxFee - supplierTax,
     };
   };
 
@@ -1118,9 +1167,14 @@ function render(rows: Row[], live: PrintifyProduct[]): void {
   console.log(` THIN      under ${pct(THIN_NET_MARGIN)} kept on the dearest variant, after postage and Stripe.`);
   console.log(` POST      US standard postage over ${pct(HEAVY_SHIPPING)} of the price. Covered, but carrier-driven.`);
   console.log("");
-  console.log(` No sales tax in these figures. YOU are the seller of record — it is yours to`);
-  console.log(` collect and to remit, and MANUAL.md 5 has the tax split. No returns`);
-  console.log(` here either. No subscription: Printify Premium needs 16-17 orders a MONTH to`);
-  console.log(` pay for itself and this shop will not clear that.`);
+  console.log(` No sales tax in these figures, in EITHER direction. YOU are the seller of record —`);
+  console.log(` the customer's tax is yours to collect and remit, and MANUAL.md 5 has the split.`);
+  console.log(` AND Printify charges YOU sales tax on the base cost while the ST-120 resale`);
+  console.log(` certificate is outstanding — about 4.75% of cost plus postage, measured on two`);
+  console.log(` real invoices. The margins above are before it; store-summary.html deducts it`);
+  console.log(` in its own column. Neither number is wrong, they answer different questions:`);
+  console.log(` "is the price right" here, "what reaches me" there.`);
+  console.log(` No returns here either. No subscription: Printify Premium needs 16-17 orders a`);
+  console.log(` MONTH to pay for itself and this shop will not clear that.`);
   console.log("");
 }

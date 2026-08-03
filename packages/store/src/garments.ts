@@ -201,42 +201,7 @@ export async function garmentSpecs(): Promise<number> {
   for (const row of grid.rows) {
     if (seen.has(row.blueprintId)) continue;
     const b = await probeRetry(() => getBlueprint(row.blueprintId));
-    const text = String(b.description ?? "").replace(/<[^>]*>/g, " ").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
-
-    // Weight. Printify quotes oz/yd² or g/m², inconsistently and sometimes both.
-    let weightOz: number | null = null;
-    const oz = /(\d+(?:\.\d+)?)\s*(?:oz|ounce)/i.exec(text);
-    const gsm = /(\d+(?:\.\d+)?)\s*g\s*\/\s*m/i.exec(text);
-    if (oz) weightOz = Number(oz[1]);
-    else if (gsm) weightOz = Math.round(Number(gsm[1]) * 0.0295 * 10) / 10;
-
-    /*
-     * BLEND, AND WHY THIS IS MORE CAREFUL THAN IT LOOKS.
-     *
-     * The first version pulled the first "N% cotton ... M% polyester" pair out
-     * of the prose and printed it as the garment's blend. On Gildan 64000 that
-     * produced "35/65 cotton-poly" from a sentence that actually reads *"Solid
-     * colors are 100% cotton, while heathers and sport grey use polyester
-     * blends"* — so it reported a mostly-polyester shirt that is, in the
-     * colours we sell, entirely cotton. It did the same to Bella+Canvas 3001
-     * ("99/1"). Two of the tee comparisons were wrong in the direction that
-     * flatters whichever garment happened to be described second.
-     *
-     * Almost every blank varies: solids one blend, heathers another. So where
-     * the copy says so, this refuses to name a single number and says it
-     * varies. A hedge that is true beats a figure that is not.
-     */
-    let blend: string | null = null;
-    const varies = /heather|sport grey|sport gray|solid colou?rs? are|depending on (?:the )?colou?r/i.test(text);
-    const pair = /(\d+)\s*%\s*(?:combed\s*)?(?:and\s*)?(?:ring[- ]?spun\s*)?cotton[^.]{0,20}?(\d+)\s*%\s*poly/i.exec(text);
-    const slash = /(\d{2})\s*\/\s*(\d{2})\s*cotton[- ]?poly/i.exec(text);
-    const allCotton = /100\s*%\s*(?:combed\s*)?(?:ring[- ]?spun\s*)?cotton/i.test(text);
-
-    if (varies) {
-      blend = allCotton ? "100% cotton solids, blends in heathers" : "varies by colour";
-    } else if (pair) blend = `${pair[1]}/${pair[2]} cotton-poly`;
-    else if (slash) blend = `${slash[1]}/${slash[2]} cotton-poly`;
-    else if (allCotton) blend = "100% cotton";
+    const { text, weightOz, blend } = readGarmentSpec(b.description);
 
     seen.set(row.blueprintId, { spec: text.slice(0, 320), weightOz, blend });
     console.log(
@@ -250,6 +215,131 @@ export async function garmentSpecs(): Promise<number> {
   await writeFile(out, `${JSON.stringify({ rows: enriched }, null, 2)}\n`);
   console.log(`\n${seen.size} blueprints described. Rebuild with: npm run store:summary`);
   return 0;
+}
+
+/**
+ * Read fabric weight and blend out of a Printify blueprint description.
+ *
+ * Exported and pure so it can be tested against REAL captured descriptions.
+ * It was inline and untested, and it spent a fortnight reporting Lane Seven
+ * LS14004 as 100% cotton — a claim that reached seven live product listings.
+ * See the note inside for what it read and why. The fixtures in
+ * test/garment-specs.test.ts are verbatim Printify responses, never invented:
+ * an invented fixture is how a parser passes its tests and lies in production.
+ */
+export function readGarmentSpec(description: unknown): { text: string; weightOz: number | null; blend: string | null } {
+  const text = String(description ?? "").replace(/<[^>]*>/g, " ").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+
+  // Weight. Printify quotes oz/yd² or g/m², inconsistently and sometimes both.
+  let weightOz: number | null = null;
+  const oz = /(\d+(?:\.\d+)?)\s*(?:oz|ounce)/i.exec(text);
+  const gsm = /(\d+(?:\.\d+)?)\s*g\s*\/\s*m/i.exec(text);
+  if (oz) weightOz = Number(oz[1]);
+  else if (gsm) weightOz = Math.round(Number(gsm[1]) * 0.0295 * 10) / 10;
+
+  /*
+   * BLEND, AND WHY THIS IS MORE CAREFUL THAN IT LOOKS.
+   *
+   * The first version pulled the first "N% cotton ... M% polyester" pair out
+   * of the prose and printed it as the garment's blend. On Gildan 64000 that
+   * produced "35/65 cotton-poly" from a sentence that actually reads *"Solid
+   * colors are 100% cotton, while heathers and sport grey use polyester
+   * blends"* — so it reported a mostly-polyester shirt that is, in the
+   * colours we sell, entirely cotton. It did the same to Bella+Canvas 3001
+   * ("99/1"). Two of the tee comparisons were wrong in the direction that
+   * flatters whichever garment happened to be described second.
+   *
+   * Almost every blank varies: solids one blend, heathers another. So where
+   * the copy says so, this refuses to name a single number and says it
+   * varies. A hedge that is true beats a figure that is not.
+   *
+   * **IT WENT WRONG AGAIN ON 2026-08-01 AND THE COST WAS A FALSE CLAIM ON A
+   * LIVE PRODUCT.** Lane Seven LS14004 (bp446) is described by Printify as:
+   *
+   *     .:80% cotton, 20% recycled polyester (varies per color)
+   *     ...
+   *     .:100% cotton face
+   *
+   * `allCotton` matched the *face* and reported **100% cotton**. That figure
+   * chose the crewneck over the Gildan, was written into matrix.ts as "the
+   * only all-cotton crewneck measured", and printed on seven live listings.
+   * Two separate holes let it through:
+   *
+   *   - `pair` needs `N% poly` and the text says `20% RECYCLED polyester`, so
+   *     the real fibre line never matched.
+   *   - `allCotton` matched a phrase that is not a fibre content at all. A
+   *     cotton FACE over a poly back is exactly what it is not.
+   *
+   * The same run was silent on the shirt we do sell: Bella+Canvas 3501 reads
+   * "100% **Airlume** combed and ring-spun cotton" and `allCotton` had no word
+   * for Airlume, so the one genuinely all-cotton garment in the shop came back
+   * `null`. Wrong about ours, wrong about theirs, in opposite directions.
+   *
+   * So: the fibre bullet is found FIRST and read whole, and the loose
+   * whole-text patterns only run when there is no fibre bullet to read.
+   */
+  let blend: string | null = null;
+
+  /* A FACE, A BACK, A SWEATBAND AND A LINING ARE CONSTRUCTIONS, NOT CONTENTS.
+     `100% cotton face` describes the surface a print lands on; a garment with
+     one can be any blend underneath, and Lane Seven LS14004 is 80/20. These
+     phrases come out before any percentage is read — not the bullet they sit
+     in, because ITC SS3000 states its real content and its face in the SAME
+     bullet: "80% cotton, 20% polyester fleece with 100% cotton face". */
+  const stripConstruction = (s: string): string =>
+    s.replace(/\d+\s*%\s*[a-z\- ]*?(?:face|back|sweatband|lining|twill tape)\b/gi, " ");
+
+  const bullets = text.split(".:").slice(1).map((s) => s.trim());
+  /* A bullet is a fibre content if, once the constructions are gone, it still
+     OPENS with a percentage and still names a fibre. */
+  const isFibre = (s: string): boolean =>
+    /^\s*(?:material\s*:\s*)?\d+\s*%/i.test(stripConstruction(s).trim()) &&
+    /cotton|poly/i.test(stripConstruction(s));
+  /* Prefer the bullet that names BOTH fibres — a blend can state its face on
+     one line and its content on another, and only one of them is the answer. */
+  const fibreBullet = bullets.find((s) => isFibre(s) && /poly/i.test(stripConstruction(s))) ?? bullets.find(isFibre);
+
+  const heathers = /heather|sport grey|sport gray/i.test(text);
+  /* A parenthetical inside the fibre bullet is always an exception for one
+     colourway — "(Green Camo is 65% polyester, 35% cotton)" — never the
+     garment's own content. It is stripped before the numbers are read and
+     counted as a reason to hedge. */
+  const aside = fibreBullet ? /\([^)]*\d\s*%[^)]*\)/.test(fibreBullet) : false;
+  const varies =
+    heathers || aside ||
+    /solid colou?rs? are|depending on (?:the )?colou?r|varies? (?:per|for different|by) colou?r|fiber content (?:may )?var/i
+      .test(text);
+
+  const fibreText = fibreBullet ? stripConstruction(fibreBullet).replace(/\([^)]*\)/g, " ") : undefined;
+  /* "80% cotton, 20% recycled polyester" — anything may sit between the number
+     and the fibre word, which is what "recycled" broke. But it may NOT contain
+     another percent sign: on "80% Cotton 20% Polyester", which has no comma to
+     stop at, a gap that could cross one read the poly share as 80. */
+  const cottonPct = fibreText ? /(\d+)\s*%\s*[^,;.%]*?cotton/i.exec(fibreText) : null;
+  const polyPct = fibreText ? /(\d+)\s*%\s*[^,;.%]*?poly/i.exec(fibreText) : null;
+
+  if (fibreText && cottonPct && polyPct) {
+    blend = `${cottonPct[1]}/${polyPct[1]} cotton-poly`;
+    if (varies) blend += ", varies by colour";
+  } else if (fibreText && cottonPct && Number(cottonPct[1]) === 100) {
+    blend = heathers ? "100% cotton solids, blends in heathers" : varies ? "100% cotton, varies by colour" : "100% cotton";
+  } else {
+    // No fibre bullet to read. Fall back to the old whole-text patterns, which
+    // are looser and therefore only trusted when there is nothing better.
+    const pair = /(\d+)\s*%\s*(?:combed\s*)?(?:and\s*)?(?:ring[- ]?spun\s*)?cotton[^.]{0,20}?(\d+)\s*%\s*poly/i.exec(text);
+    const slash = /(\d{2})\s*\/\s*(\d{2})\s*cotton[- ]?poly/i.exec(text);
+    // "face", "sweatband", "lining" are constructions, not fibre contents.
+    const allCotton =
+      /100\s*%\s*(?:combed\s*|airlume\s*|organic\s*|ring[- ]?spun\s*|pre[- ]?shrunk\s*)*cotton(?!\s*(?:face|sweatband|lining|twill tape))/i
+        .test(text);
+
+    if (varies) blend = allCotton ? "100% cotton solids, blends in heathers" : "varies by colour";
+    else if (pair) blend = `${pair[1]}/${pair[2]} cotton-poly`;
+    else if (slash) blend = `${slash[1]}/${slash[2]} cotton-poly`;
+    else if (allCotton) blend = "100% cotton";
+  }
+
+  return { text, weightOz, blend };
 }
 
 /** Same patience as the sweep: Printify 429s hard on a tight loop. */

@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, getBlueprint, getProduct, listAllPrintProviders, listPrintProviders, listShippingProfiles, listVariants, uploadImage } from "./api.ts";
+import { createProduct, deleteProduct, getBlueprint, getProduct, listAllPrintProviders, listPrintProviders, listShippingProfiles, listVariants, quoteOrderShipping, uploadImage } from "./api.ts";
 import { loadArt } from "./line.ts";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -69,8 +69,17 @@ export type SweepRow = {
   /** Cheapest and dearest across EVERY variant, sellable or not. Context only. */
   rawMin: number;
   rawMax: number;
-  /** First-item US postage, cheapest method this provider offers. */
+  /**
+   * First-item US postage for one unit — **the standard rate Printify will
+   * actually sell**, quoted per basket against the probe product.
+   *
+   * Falls back to the catalog's cheapest listed US rate when the quote fails,
+   * which is a different and lower number because the cheapest listed method is
+   * `economy` and Printify refuses to fulfil it. `postageQuoted` says which.
+   */
   postCents: number | null;
+  /** True when `postCents` came from the live basket quote rather than the catalog. */
+  postageQuoted?: boolean;
   /** Retail needed on the DEAREST variant to hold the target margin. */
   retailAtTarget: number | null;
   printAreaIn: string;
@@ -243,20 +252,36 @@ async function probe(
 
   base.colours = new Set(all.map((v) => v.options.color).filter(Boolean)).size;
   base.sizes = [...new Set(all.map((v) => v.options.size).filter((x): x is string => Boolean(x)))];
-  base.printAreaIn = (first.placeholders ?? [])
-    .slice(0, 1)
-    .map((p) => `${(p.width / 300).toFixed(1)}x${(p.height / 300).toFixed(1)}in`)
-    .join("");
 
-  // Postage, from the catalog — it IS published, unlike cost. Cheapest US
-  // first-item rate across the methods this provider offers, which is the same
-  // figure `catalogue` prints and the one `pricing.ts` is fed.
+  /* MEASURE THE CANVAS WE ACTUALLY PRINT ON, for the same reason the cost is
+     measured there — see the note above. This was `placeholders[0]` long after
+     the cost calculation stopped being, so every tee and youth row reported
+     `2.5x2.5in`: Printify Choice's first placeholder on a Bella+Canvas 3001 is
+     the NECK LABEL.
+
+     The figure is for `chosen[0]`, which is the first variant of the first
+     colourway this line sells — so it is the SMALLEST SIZE WE OFFER, and that
+     is the honest one to compare on. The canvas grows with the shirt: Choice's
+     front runs 10.8 x 13.1in on a small and 13.2 x 16.0in on a 3XL. Do not
+     quote it against another maker's figure for a different size, which is how
+     "9.2in against Monster Digital's 11.1in" got written down — 9.2in is the
+     XS, a size this shop has never sold. */
+  const canvas = (first.placeholders ?? []).find((p) => p.position === position);
+  base.printAreaIn = canvas ? `${(canvas.width / 300).toFixed(1)}x${(canvas.height / 300).toFixed(1)}in` : "";
+
+  /* POSTAGE — the catalog's cheapest US rate, as a FALLBACK ONLY.
+     The real figure is quoted against the probe product below. This is kept
+     because a provider that rejects product creation never gets that far, and a
+     row with no postage at all cannot be ranked. */
   try {
     const shipping = await patient("shipping", () => listShippingProfiles(blueprintId, providerId));
     const rates = (shipping.profiles ?? [])
       .filter((p) => p.countries.includes("US"))
       .map((p) => p.first_item.cost);
-    if (rates.length) base.postCents = Math.min(...rates);
+    if (rates.length) {
+      base.postCents = Math.min(...rates);
+      base.postageQuoted = false;
+    }
   } catch {
     // A provider that will not quote US postage cannot serve this shop anyway;
     // the row still reports cost so the omission is visible rather than silent.
@@ -323,6 +348,40 @@ async function probe(
     } else {
       base.minCost = Math.min(...sellable);
       base.maxCost = Math.max(...sellable);
+    }
+
+    /**
+     * THE POSTAGE PRINTIFY WILL ACTUALLY SELL, quoted against this probe.
+     *
+     * The catalog rate above is the CHEAPEST of every method a provider lists,
+     * and on every garment in this line that is `economy` — which Printify
+     * refuses to fulfil. Proven on 2026-08-01 by creating real orders: "Order
+     * contains products that are not eligible for Economy Shipping", on the tee
+     * and the hoodie alike. So the ranking was built on a rate that cannot be
+     * bought, and it overstated the incumbent's advantage every time: measured
+     * on 2026-08-03, Printify Choice, SwiftPOD and Monster Digital all charge
+     * the SAME $4.75 standard on a Bella+Canvas 3001, while the catalog reports
+     * $3.99 against $4.29 and hands Choice a 30c edge that does not exist.
+     *
+     * `POST /orders/shipping.json` is the endpoint the live checkout uses, so
+     * this is true by construction rather than by inference. It works against a
+     * draft — every product in this shop is one — and it creates no order.
+     * Verified against the two real invoices: tee $4.75, hoodie $8.49, both to
+     * the cent.
+     */
+    const quoteVariant = priced[0]?.id;
+    try {
+      if (quoteVariant === undefined) throw new Error("nothing priced to quote");
+      const quote = await patient("quote", () => quoteOrderShipping([
+        { product_id: created.id, variant_id: quoteVariant, quantity: 1 },
+      ]));
+      if (typeof quote.standard === "number" && quote.standard > 0) {
+        base.postCents = quote.standard;
+        base.postageQuoted = true;
+      }
+    } catch {
+      // Falls back to the catalog rate set above, with postageQuoted false so a
+      // reader can tell which rows are quoted and which are inferred.
     }
 
     if (base.postCents !== null) {

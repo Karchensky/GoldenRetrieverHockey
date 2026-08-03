@@ -630,10 +630,29 @@ export const ITEMS: Item[] = [
     /**
      * PRINTIFY CHOICE (99) FROM 2026-07-30, and it supersedes the note above.
      *
-     * `cli.ts sweep` probed all twenty makers of blueprint 12. Printify Choice
-     * costs $6.08–$10.93 against Monster Digital's $11.54–$16.44 on our own six
-     * colourways and six sizes — near enough half — and posts for $3.99 against
-     * $4.29. At the 30% target that is $18.75 on a 3XL instead of $27.25.
+     * **THE NUMBERS THIS NOTE USED TO CARRY WERE THE NECK LABEL.** Corrected
+     * 2026-08-03. It said Choice cost *"$6.08–$10.93 … near enough half"* and
+     * promised *"$18.75 on a 3XL instead of $27.25"*. The shop sells that 3XL
+     * for $27.00, which is the tell.
+     *
+     * The cause is written up in `sweep.ts`: the probe priced whichever print
+     * area came back first, and Choice's first placeholder on a Bella+Canvas
+     * 3001 is `neck`, a 2.5 x 2.5in inside label, while Monster Digital's is
+     * `front`. So a neck tag was compared against a chest print. The probe now
+     * prints where the line prints.
+     *
+     * Measured properly, twice — 2026-08-01 and again 2026-08-03, identical to
+     * the cent, and matching a real fulfilled invoice ($11.29 on a White L):
+     *
+     *   Printify Choice   $11.29–$16.12   standard post $4.75
+     *   SwiftPOD          $11.52–$16.43   standard post $4.75
+     *   Monster Digital   $11.54–$16.44   standard post $4.75
+     *
+     * **Choice is still the cheapest usable maker of this blueprint — by 23
+     * cents on the goods, not by half.** The postage is identical: the $3.99
+     * this note used to claim is the ECONOMY rate, which Printify refuses to
+     * fulfil on these products (see TODO item 4), and the sweep now quotes the
+     * orderable rate per basket instead of taking the cheapest listed.
      *
      * The captain's rule is highest quality first, then cheapest of that
      * quality. The four things that decide "same quality" all check out:
@@ -643,10 +662,24 @@ export const ITEMS: Item[] = [
      *   sizes         S–3XL, all present
      *   handling      10 days, identical to every maker on the platform
      *
-     * The print area is 9.2in against Monster Digital's 11.1in. Our placement
-     * is 8in, so it fits, and the same artwork over a smaller area prints at a
-     * HIGHER dpi. What it does mean is the mark prints somewhat smaller at the
-     * top of the size run.
+     * The print area, measured 2026-08-03 at the sizes this shop actually
+     * sells — the canvas grows with the shirt, so one figure means nothing
+     * without its size:
+     *
+     *              small            3XL
+     *   Choice     10.8 x 13.1in    13.2 x 16.0in
+     *   Monster    11.1 x 12.5in    15.0 x 17.0in
+     *
+     * Choice is a third of an inch narrower and half an inch taller on a small,
+     * and meaningfully smaller at the top of the run. Our placement is 8in, so
+     * it fits either way, and the same artwork over a smaller area prints at a
+     * HIGHER dpi. What it does mean is the mark prints somewhat smaller on a
+     * 3XL than Monster Digital would have printed it.
+     *
+     * This note used to read "9.2in against Monster Digital's 11.1in", which
+     * compared Choice's XS — a size this shop has never sold — against Monster
+     * Digital's small. Both numbers came off whichever variant the catalogue
+     * happened to return first.
      *
      * The EU argument above is now the only thing on the other side, and it is
      * moot while checkout is US-only. **Re-read it the day international opens.**
@@ -661,14 +694,16 @@ export const ITEMS: Item[] = [
     priceCents: 2300,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    // Three, not the ten Printful offered: Monster Digital prints and does not
-    // embroider. store:report compares this against the live catalog and flags
-    // a difference in either direction.
-    positions: ["front", "back", "neck"],
+    // Five. This said three, and named Monster Digital's reasons, until
+    // 2026-08-03 — the list was never revisited when the maker changed. Printify
+    // Choice offers both sleeves as well; nothing uses them. Read off the live
+    // catalogue, which is also what `store:report` compares it against.
+    positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
     // 8in on the smallest body this shirt is sold in, y 0.42 to lift it off the
-    // hem. A placement is a PROPORTION, so this is ~11in on a 3XL; asking for
-    // ten on a small would put fifteen on a 3XL and cover the shirt. Checked by
-    // `sync --dry-run`, which prints both ends of the range and the dpi at each.
+    // hem. A placement is a PROPORTION, so this reaches 9.78in on a 3XL —
+    // measured at sync, not guessed; asking for ten on a small would put
+    // twelve-plus on a 3XL and cover the shirt. Checked by `sync --dry-run`,
+    // which prints both ends of the range and the dpi at each.
     placement: { position: "front", widthIn: 8.0, y: 0.42 },
     colourways: [
       { name: "White", hex: "#f4f4f2", ground: "light", variants: [18540, 18541, 18542, 18543, 18544, 18545] },
@@ -988,27 +1023,41 @@ export const ITEMS: Item[] = [
     /**
      * LANE SEVEN LS14004, from 2026-08-01, replacing Gildan 18000.
      *
-     * MEASURED, not argued. `cli.ts garments` probed every crewneck blueprint
-     * in the catalogue and `cli.ts garment-specs` read the fabric off each one.
-     * Applying the captain's rule in its actual order — best material first,
-     * then the cheapest of that material — the ranking is:
+     * **THE ORIGINAL REASONING WAS FALSE AND THE CONCLUSION SURVIVED IT.**
+     * Corrected 2026-08-03; the sentence it replaces read *"Lane Seven is the
+     * only all-cotton crewneck measured, and cotton against a 50/50 is a
+     * different garment rather than a better version of the same one."*
      *
-     *   Lane Seven LS14004   8.25 oz   100% cotton        $32.52   <- this
-     *   Gildan 12000         9    oz   50/50 cotton-poly  $31.02
-     *   Gildan 18000         8    oz   50/50 cotton-poly  $25.26   <- was this
-     *   Hanes P160           7.8  oz   50/50              $26.27
-     *   B&C WUI23            7.96 oz   50/50              $54.28   ships from DE
+     * This blank is **80% cotton to 20% recycled polyester**. Printify says so
+     * in its own blueprint description, on the line above the one that says
+     * `100% cotton face` — and the face is what `garments.ts` read. A cotton
+     * face over a poly-blend back is a construction, not a fibre content. The
+     * parser is fixed and is now tested against the real captured description
+     * in `test/garment-specs.test.ts`; the false claim had reached seven live
+     * product listings before anyone re-measured it.
      *
-     * The Gildan 18000 was the CHEAPEST that priced, which is the second clause
-     * applied without the first. Lane Seven is the only all-cotton crewneck
-     * measured, and cotton against a 50/50 is a different garment rather than a
-     * better version of the same one.
+     * Re-ranked on the true blend, on GOODS cost — the landed figures in the
+     * old note came from a sweep that priced the unbuyable economy postage:
+     *
+     *   Comfort Colors 1545  9.2  oz  80/20  never priced — the maker refuses creation
+     *   ITC SS3000           8.5  oz  80/20  $25.44
+     *   Lane Seven LS14004   8.25 oz  80/20  $23.59  <- this, via SwiftPOD
+     *   Gildan 12000         9    oz  50/50  $23.63
+     *   JERZEES 562MR        8    oz  50/50  $21.83
+     *   Gildan 18000         8    oz  50/50  $17.87  <- was this
+     *   Hanes P160           7.8  oz  50/50  $18.58
+     *
+     * Lane Seven is still the right answer: it is the cheapest of the
+     * cotton-rich tier that will actually price with a complete size run, and
+     * cotton-rich against a 50/50 is still a different garment. The rule holds,
+     * the arithmetic holds, only the fibre figure was wrong.
      *
      * Nothing is lost in the move. The colourways and the size run are the same
      * ones the Gildan sold, White included, and every variant id below was read
-     * from the live catalogue on 2026-08-01 — four complete runs of six, no
-     * gaps. That matters more here than anywhere: the code reads variants
-     * POSITIONALLY, so a hole in one colour would sell the wrong garment.
+     * from the live catalogue on 2026-08-01 and re-verified on 2026-08-03 —
+     * four complete runs of six, no gaps. That matters more here than anywhere:
+     * the code reads variants POSITIONALLY, so a hole in one colour would sell
+     * the wrong garment.
      */
     blueprintId: 446,
     /**
@@ -1038,8 +1087,13 @@ export const ITEMS: Item[] = [
     priceCents: 2700,
     taxCode: "txcd_30011000",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-    positions: ["front", "back", "left_sleeve", "right_sleeve", "neck"],
-    // 3283 x 3749 px of front canvas — 10.9 x 12.5in at 300dpi, near enough
+    // TWO, not five. The five were the Gildan 18000's and were left behind when
+    // the blueprint changed on 2026-08-01; SwiftPOD's LS14004 offers front and
+    // back and nothing else. `store:report` had been printing the drift on
+    // every run since — see `positionDrift` there — into a scroll nobody reads
+    // to the end of. Measured against the live catalogue on 2026-08-03.
+    positions: ["front", "back"],
+    // 3456 x 3960 px of front canvas — 11.5 x 13.2in at 300dpi, near enough
     // square, so a badge gets real room without the pouch stealing the bottom
     // third the way it does on the hoodie.
     placement: { position: "front", widthIn: 8.0, y: 0.45 },
@@ -1053,21 +1107,45 @@ export const ITEMS: Item[] = [
       { name: "Black", hex: "#17191b", ground: "dark", variants: [62615, 62621, 62627, 62633, 62639, 68019] },
       { name: "Navy", hex: "#1b2a3d", ground: "dark", variants: [62618, 62624, 62630, 62636, 62642, 68022] },
     ],
+    /* EVERY CLAIM BELOW IS IN PRINTIFY'S OWN DESCRIPTION OF BLUEPRINT 446, and
+       that is not a stylistic note — this paragraph said "100% cotton" from
+       2026-08-01 to 2026-08-03 and it was false. See the block comment on
+       `blueprintId` above for how the figure got here. What the blueprint
+       actually states, verbatim:
+
+         .:80% cotton, 20% recycled polyester (varies per color)
+         .:Medium-heavy fabric (8.25 oz /yd² (280 g/m²))
+         .:Regular fit  .:Tear away label  .:Runs true to size
+         .:100% cotton face  .:Soft 3-end fleece
+         .:Double-needle topstitch on all seams
+       plus, in the prose: "under 5% shrinkage".
+
+       The cotton FACE is real and worth selling — it is the surface the print
+       lands on — but it is a construction, not a fibre content, and the two are
+       now kept apart here and in `garments.ts`.
+
+       GONE, because the blueprint does not say it: "ribbed collar, cuffs and
+       waistband". Almost certainly true of the real garment and not on the page
+       Printify will hold us to, which is the same test that took a drawcord and
+       a pouch pocket off the hoodie. Re-add it the day the blueprint says it. */
     spec:
-      "Lane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) in 100% " +
-      "cotton — the only all-cotton crewneck of the eight measured, and the " +
-      "reason this one is here. Ribbed collar, cuffs and waistband, " +
-      "double-needle stitching, a soft brushed inside. This is the badge " +
-      "without the hood, which is the entire reason to own one. Front chest " +
-      "print and nothing anywhere else. The heathers are flecked rather than " +
-      "flat, so the mark sits on a texture instead of a solid — that is the " +
-      "cloth, not the print.",
+      "Lane Seven LS14004, a unisex crewneck at 8.25 oz/yd² (280 g/m²) — 80% " +
+      "cotton to 20% recycled polyester, though the exact blend varies by " +
+      "colour, over a soft 3-end fleece with a 100% cotton face. That face is " +
+      "the surface the mark is printed on, and it is why the design comes out " +
+      "crisp on a sweatshirt this heavy. Double-needle topstitching on every " +
+      "seam and a tear-away label. This is the badge without the hood, which is " +
+      "the entire reason to own one. Front chest print and nothing anywhere " +
+      "else. The heather is flecked rather than flat, so the mark sits on a " +
+      "texture instead of a solid — that is the cloth, not the print.",
     care:
-      "A classic cut, unisex, S to 3XL — roomier through the body than the tee " +
-      "and easier on the shoulders than the hoodie. Take your usual size; there " +
-      "is no reason to go up unless you like a sweatshirt oversized.\n\n" +
-      "Cold wash, inside out, low heat to dry. All cotton, so give it longer " +
-      "than a blend and expect a little shrinkage on the first wash.",
+      "A classic regular fit, unisex, S to 3XL — roomier through the body than " +
+      "the tee and easier on the shoulders than the hoodie. It runs true to " +
+      "size, so take your usual; there is no reason to go up unless you like a " +
+      "sweatshirt oversized.\n\n" +
+      "Cold wash, inside out, low heat to dry. The cotton face is what the " +
+      "print is sitting on, so keep the heat off it. Lane Seven rate this " +
+      "blank at under 5% shrinkage.",
   },
   {
     /* For teammates' kids, which is most of the reason a beer-league team has a

@@ -71,6 +71,7 @@ function money(label, s, tone) {
     <td class="num ${s.tax ? "" : "dim"}">${s.tax ? usd(s.tax) : "—"}</td>
     <td class="num pay">${usd(s.paid)}</td>
     <td class="num out">${usd(s.cost + s.post)}</td>
+    <td class="num out ${s.supplierTax ? "" : "dim"}">${s.supplierTax ? usd(s.supplierTax) : "—"}</td>
     <td class="num out">${usd(s.stripe)}</td>
     <td class="num out ${s.taxFee ? "" : "dim"}">${s.taxFee ? usd(s.taxFee) : "—"}</td>
     <td class="num out ${s.tax ? "" : "dim"}">${s.tax ? usd(s.tax) : "—"}</td>
@@ -78,6 +79,32 @@ function money(label, s, tone) {
     <td class="num dim">${pct(s.keep, s.paid)}</td>
   </tr>`;
 }
+
+/**
+ * The banner that says the Printify tax column is temporary.
+ *
+ * It is only true while the ST-120 resale certificate is outstanding, and the
+ * whole point of showing the column is that the page was silently wrong without
+ * it. So the page has to say WHY the money is leaving, or the next reader
+ * re-derives it as a permanent cost and prices against it.
+ */
+const supplierTaxOn = data.items.some((i) => i.tiers.some((t) => t.full.ny.supplierTax > 0));
+
+/**
+ * The worked example on the "How it works" tab, COMPUTED.
+ *
+ * It was three hand-typed figures — "On a $27 tee to Buffalo that is about
+ * $9.66. With the team code, about $1.57." Two of the three were already stale
+ * before the Printify tax column existed, and all three would have gone stale
+ * the moment it did. The dearest tee is whatever the live report says it is.
+ */
+const dearestTeeLine = (() => {
+  const tee = data.items.find((i) => i.itemId === "tee");
+  if (!tee?.tiers.length) return "";
+  const t = tee.tiers[tee.tiers.length - 1];
+  return `On a ${usd(t.full.ny.list)} tee to Buffalo that is <b>${usd(t.full.ny.keep)}</b>. ` +
+    `With the team code, <b>${usd(t.teammate.ny.keep)}</b>.`;
+})();
 
 const economics = [...data.items]
   .sort((a, b) => ORDER.indexOf(a.itemId) - ORDER.indexOf(b.itemId))
@@ -91,7 +118,7 @@ const economics = [...data.items]
       const label = t.sizes.length > 2
         ? `${t.sizes[0]}&ndash;${t.sizes[t.sizes.length - 1]} <span class="dim">(${t.sizes.join(", ")})</span>`
         : t.sizes.join(", ");
-      return `<tr class="grp"><td colspan="12">${label}<span class="dim"> &middot; ${t.colours} colour${t.colours === 1 ? "" : "s"} &middot; costs ${usd(t.full.ny.cost)}</span></td></tr>`
+      return `<tr class="grp"><td colspan="13">${label}<span class="dim"> &middot; ${t.colours} colour${t.colours === 1 ? "" : "s"} &middot; costs ${usd(t.full.ny.cost)}</span></td></tr>`
         + money("Full price &middot; Buffalo", t.full.ny, "")
         + money("Full price &middot; elsewhere", t.full.away, "alt")
         + money(`<b>${CODE}</b> &middot; Buffalo`, t.teammate.ny, "promo")
@@ -103,7 +130,7 @@ const economics = [...data.items]
       <p class="worst ${worst < 0 ? "bad" : ""}">Worst case with the code: <b>${usd(worst)}</b> kept.</p>
       <div class="scroll"><table>
         <thead><tr><th></th><th class="num">List</th><th class="num">Code</th><th class="num">Post</th><th class="num">Tax</th>
-        <th class="num pay">They pay</th><th class="num out">Printify</th><th class="num out">Stripe</th>
+        <th class="num pay">They pay</th><th class="num out">Printify</th><th class="num out" title="Sales tax Printify charges you on the base cost, because the ST-120 resale certificate is not accepted yet">Pfy tax</th><th class="num out">Stripe</th>
         <th class="num out">Tax fee</th><th class="num out">To NY</th><th class="num keep">You keep</th><th class="num">of total</th></tr></thead>
         <tbody>${rows}</tbody></table></div>
     </section>`;
@@ -154,6 +181,14 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
     if ((r.postCents ?? 0) > 1500) flags.push(`<span class="flag warn">${usd(r.postCents)} US postage</span>`);
     if (r.country !== "US") flags.push(`<span class="flag warn">ships from ${r.country}</span>`);
     if (r.indicative) flags.push(`<span class="flag">cost sampled, not our colourways &mdash; a hint, not a basis for switching</span>`);
+    /* Until 2026-08-03 EVERY row's postage was the catalogue's cheapest listed
+       method, which is `economy` — a service Printify refuses to fulfil on
+       these products. The rate is now quoted per basket against the probe, the
+       way checkout quotes it. A row that fell back says so, because the two
+       numbers are not comparable and the fallback is always the lower. */
+    if (r.postCents != null && r.postageQuoted === false) {
+      flags.push(`<span class="flag warn">postage not quoted &mdash; catalogue's cheapest listed method, which may be one Printify will not sell</span>`);
+    }
     // Notes carry raw API errors. Keep the useful head of one, not 400 characters.
     if (r.note) {
       const code = /code"?:\s*"?(\d+)/.exec(r.note);
@@ -211,7 +246,7 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
     ${verdict}${tieBreak}
     <div class="scroll"><table>
       <thead><tr><th>Maker</th><th class="num">From</th><th class="num">Colours</th><th class="num">Cheapest</th>
-      <th class="num">Dearest</th><th class="num">US post</th><th class="num pay">Landed</th><th>Notes</th></tr></thead>
+      <th class="num">Dearest</th><th class="num" title="Standard first-item US postage, quoted per basket against a real probe product — the only rate Printify will actually sell">US post</th><th class="num pay">Landed</th><th>Notes</th></tr></thead>
       <tbody>${body}</tbody></table></div>
   </section>`;
 }).join("");
@@ -233,15 +268,28 @@ const suppliers = ORDER.filter((id) => byItem.has(id)).map((id) => {
  * `WHY` survives only as the note beside a row, clearly marked as the recorded
  * reasoning rather than as evidence. Where it disagrees with the grid, the grid
  * is right.
+ *
+ * **NO FIGURES IN HERE. NONE.** The disclaimer above is not enough, and this is
+ * the second time it has not been: on 2026-08-03 the tee's note still read
+ * *"$6.08–$10.93 … near enough half"* — the cost of a NECK LABEL, produced by a
+ * bug in `sweep` that was fixed weeks earlier — rendering directly beneath a
+ * grid that said $11.29. The crewneck's still described the Gildan 18000 it had
+ * replaced. A reader skimming for the reason does not read the disclaimer.
+ *
+ * So a note here may say WHY a garment was chosen and may not say WHAT IT COST.
+ * The grid beside it carries every number and is regenerated from a live probe.
+ * If you find yourself typing a dollar sign into this object, the answer belongs
+ * in the table.
  */
 const WHY = {
   tee: { garment: "Bella+Canvas 3001", alt: "Gildan 5000 and the other budget jerseys",
-    why: "Light 4.2 oz/yd² Airlume combed cotton — the retail-quality unisex jersey rather than the heavy budget default. <b>Printify Choice was picked after <code>cli.ts sweep</code> probed all twenty makers of this blueprint</b>: $6.08–$10.93 against Monster Digital's $11.54–$16.44 on our own six colourways and six sizes, and $3.99 postage against $4.29.",
-    cost: "Print area is 9.2in against Monster Digital's 11.1in. Our placement is 8in so it fits, and the same art over a smaller area prints at a <i>higher</i> dpi — but the mark prints somewhat smaller at the top of the size run." },
+    why: "Light Airlume combed cotton — the retail-quality unisex jersey rather than the heavy budget default. <b>Printify Choice was picked after <code>cli.ts sweep</code> probed all twenty makers of this blueprint</b>, and it is the cheapest that carries every colourway and size we sell. The figures are in the table above; do not re-type them here.",
+    cost: "The front canvas is a little narrower than Monster Digital's on a small and noticeably smaller on a 3XL — it grows with the shirt, so compare sizes and not single numbers. Our placement is 8in so it fits, and the same art over a smaller area prints at a <i>higher</i> dpi; what it means is the mark prints somewhat smaller at the top of the size run." },
   longsleeve: { garment: "Bella+Canvas 3501", alt: "—",
-    why: "The tee's long-sleeved sibling. Same light 4.2 oz/yd² Airlume cotton, same maker, so a customer who owns the tee gets the same shirt with sleeves.", cost: "" },
-  crewneck: { garment: "Gildan 18000", alt: "—",
-    why: "The hoodie's plainer sibling, through SwiftPOD who already print the hoodie. Heavy Blend at 8 oz/yd² in a 50/50.", cost: "" },
+    why: "The tee's long-sleeved sibling. Same Airlume cotton, same maker, so a customer who owns the tee gets the same shirt with sleeves.", cost: "" },
+  crewneck: { garment: "Lane Seven LS14004", alt: "Gildan 18000, the budget default",
+    why: "Cotton-rich rather than a 50/50, through SwiftPOD who already print the hoodie — and SwiftPOD rather than Printify Choice because Choice does not carry White or 3XL on this blueprint. A <b>100% cotton face</b> over the blend is what the print lands on. <b>It is not an all-cotton garment</b>: that claim stood here and on seven live listings from 1 to 3 August 2026, off a parser that read the cotton face as the fibre content. See <code>garments.ts</code>.",
+    cost: "" },
   hoodie: { garment: "Independent Trading Co. IND4000", alt: "Gildan 18500, the budget default",
     why: "The Gildan is 8 oz of 50/50 with a one-ply body. The IND4000 is <b>10 oz, fleece-lined hood, tear-away label, double-needle stitching</b> — the tier the merchandise trade treats as quality. It also carries a <b>15 × 10in front canvas against the Gildan's 12.4 × 8.2</b>, which is what lets a square mark print seven inches across on a small instead of under six.",
     cost: "<b>This is why the hoodie has no Printify Choice.</b> Only two makers carry blueprint 2002 at all, and Choice is not one of them. SwiftPOD over Monster Digital on stock rather than money: Monster Digital's IND4000 has no black and stops at 2XL. The budget Gildan would almost certainly offer Choice — that is the price of the better garment." },
@@ -347,11 +395,11 @@ const explain = `
 <section>
   <h2>Money in, money out</h2>
   <table class="kv">
-    <tr><th>Who charges you</th><td><b>Stripe</b>, per sale, automatically — 2.9% + 30¢ and 0.5% Tax on NY orders.<br><b>Printify</b>, per order, when you press Submit — the garment and the postage, on your own card.<br>Nobody else. No monthly fee anywhere.</td></tr>
+    <tr><th>Who charges you</th><td><b>Stripe</b>, per sale, automatically — 2.9% + 30¢ and 0.5% Tax on NY orders.<br><b>Printify</b>, per order, when you press Submit — the garment, the postage${supplierTaxOn ? ", <b>and sales tax on both</b> until the ST-120 is accepted" : ""}, on your own card.<br>Nobody else. No monthly fee anywhere.</td></tr>
     <tr><th>Does Stripe pay Printify?</th><td><b>No.</b> They are unconnected. Two separate money movements that happen to concern the same parcel.</td></tr>
     <tr><th>How do you get paid?</th><td>Automatically. Stripe pays your Stripe balance out to your bank on its own schedule — you do not transfer anything by hand.</td></tr>
     <tr><th>Do you reserve the tax yourself?</th><td><b>Yes, and this is the one that catches people.</b> Stripe <i>collects</i> the tax and hands it to you with everything else. It does not remit it. Move it out of the account the week it lands, or you will spend it and still owe it.</td></tr>
-    <tr><th>What is actually yours?</th><td>What is left after Printify, Stripe and New York. On a $27 tee to Buffalo that is about $9.66. With the team code, about $1.57.</td></tr>
+    <tr><th>What is actually yours?</th><td>What is left after Printify, Stripe and New York. ${dearestTeeLine}</td></tr>
   </table>
 </section>
 
@@ -452,6 +500,16 @@ const html = `<!doctype html>
   .legend{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
     border-radius:.4rem;padding:.9rem 1.1rem;margin:1.5rem 0 2rem;font-size:.9rem}
   .legend b{color:var(--gold)}
+  /* A deduction that is real today and should not be here next month is neither
+     ordinary text nor an error. The --warn token collapses onto --gold in the
+     dark theme, so the tint carries the distinction rather than the border
+     colour. The whole box disappears with the column it explains.
+     NO BACKTICKS IN THIS STYLESHEET: it is inside a template literal, and one
+     around a token name here closed the string and made --warn parse as a
+     decrement. Node's error pointed at the top of the literal, 30 lines up. */
+  .legend.warnbox{background:var(--soft);border-left-color:var(--warn);margin-top:-1rem}
+  .legend.warnbox b{color:var(--warn)}
+  .legend.warnbox code{background:var(--bg);padding:.05rem .3rem;border-radius:.2rem;font-size:.85em}
   section{margin:2.2rem 0}
   h2{font-size:1.1rem;margin:0 0 .2rem;padding-top:1.2rem;border-top:1px solid var(--line);letter-spacing:-.01em}
   h2 .meta{display:block;font-size:.78rem;font-weight:400;color:var(--muted);margin-top:.15rem}
@@ -524,10 +582,32 @@ const html = `<!doctype html>
 <div id="econ" hidden>
   <div class="legend">
     <b>They pay</b> = list, less the code, plus postage, plus New York's tax.<br>
-    <b>Out</b> = Printify (garment + postage) &middot; Stripe (2.9% + 30&cent;) &middot; Stripe Tax (0.5%, NY only) &middot; the tax itself, which you forward to New York.<br>
+    <b>Out</b> = Printify (garment + postage) &middot; ${supplierTaxOn ? "<b>Pfy tax</b> (see below) &middot; " : ""}Stripe (2.9% + 30&cent;) &middot; Stripe Tax (0.5%, NY only) &middot; the tax itself, which you forward to New York.<br>
     <b>You keep</b> is what is left. <b>Postage cancels</b> — the customer pays it, Printify takes it.<br>
     <b>Worst case anywhere with ${CODE}: ${usd(worstOverall)}.</b> Nothing in the line loses money at 30% off.
   </div>
+  ${supplierTaxOn ? `<div class="legend warnbox">
+    <b>Pfy tax is temporary, and it is real money today.</b> Printify charges you
+    New York sales tax on the base cost and the postage, because your <b>ST-120
+    resale certificate has not been accepted yet</b>. Measured on both real
+    invoices this shop has: <b>$0.76</b> on a tee (cost $11.29 + post $4.75) and
+    <b>$1.97</b> on a hoodie (cost $32.92 + post $8.49) &mdash; 4.75% of
+    cost-plus-postage, Erie County's clothing rate.<br>
+    <b>What is measured and what is not.</b> Both invoices were samples posted to
+    Buffalo, so the <i>clothing rate on a New York delivery</i> is measured and
+    nothing else is. The 8.75% used for the mug and the sticker is the same
+    county's general rate, <i>inferred</i> &mdash; neither has been bought. And the
+    charge is applied to out-of-state rows too, which is an <i>assumption</i>:
+    drop-ship tax normally follows the destination, so a parcel to California may
+    carry California's rate or none at all. It is assumed the expensive way on
+    purpose, so this page cannot overstate what you keep.<br>
+    <b>The day Printify accepts the certificate</b>, set
+    <code>PRINTIFY_CHARGES_US_SALES_TAX = false</code> in
+    <code>packages/store/src/report.ts</code>, re-run <code>npm run store:prices</code>,
+    and this column disappears. Every figure here goes up by about a point of margin.<br>
+    This page had no such column until 2026-08-03, which is why it said the worst
+    case with the code was $1.56 when it was really $0.46.
+  </div>` : ""}
   ${economics}
 </div>
 
