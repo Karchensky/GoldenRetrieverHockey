@@ -47,13 +47,13 @@ export const metadata: Metadata = {
   title: "Store",
   description:
     "Tees, long sleeves, crewnecks, hoodies, youth tees, mugs and stickers, " +
-    "carrying the crests of the Golden Retrievers — Buffalo's premier golden " +
-    "retriever themed hockey team since 2011.",
+    "carrying the crests of the Golden Retrievers — Buffalo's premier " +
+    "golden-retriever-themed hockey team since 2011.",
 };
 
 export default function StorePage() {
   return (
-    <div className="wrap page">
+    <div className="wrap wrap-shelf page">
       <header className="hero seq">
         <h1 className="hero-h">
           The team

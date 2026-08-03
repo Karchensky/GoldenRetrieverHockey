@@ -4,6 +4,7 @@ import Reveal from "../../../components/games/Reveal";
 import { games, gameById, grSide } from "../../../components/games/games";
 import s from "../../../components/games/games.module.css";
 import { longDate } from "../../../lib/dates";
+import { plural } from "../../../lib/format";
 
 export function generateStaticParams() {
   return games.map((g) => ({ id: g.id }));
@@ -19,9 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: g.result === null
       ? `${g.away} at ${g.home} — ${g.status}`
       : `${g.away} ${g.awayScore} at ${g.home} ${g.homeScore}`,
+    // COUNT THE NOUN. This read "1 penalties" on 22 of the 328 game pages, and
+    // a meta description is the sentence a search result shows. `plural` is the
+    // same helper GameList already uses; "penalty" is the one word here whose
+    // plural a default `${word}s` cannot guess.
     description:
       `${g.dateRecorded}. ${g.status}.` +
-      (g.hasDetail ? ` ${g.goals.length} goals, ${g.penalties.length} penalties.` : ""),
+      (g.hasDetail
+        ? ` ${plural(g.goals.length, "goal")}, ${plural(g.penalties.length, "penalty", "penalties")}.`
+        : ""),
   };
 }
 

@@ -109,6 +109,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--paint-b); outli
  * same two edges, because there is only one rule computing them. */
 .wrap { max-width: var(--col, 1140px); margin: 0 auto; padding: 0 var(--gutter, clamp(20px, 5vw, 40px)); }
 .wrap-wide { --col: 1440px; --gutter: clamp(20px, 5vw, 76px); }
+/* THE SHOP'S OWN COLUMN, and it is wider than the archive's on purpose.
+   `.wrap` caps at 1140px, which left the product rows a 1060px track — measured
+   identical at 1280, 1440 and 1920, three cards on every one of them, so a
+   larger monitor bought nothing but margin. The archive's 1440 is a reading
+   measure and should stay one. A shelf is not being read: every extra 300px
+   here is another garment somebody can see without a sideways swipe. */
+.wrap-shelf { --col: 1720px; --gutter: clamp(20px, 5vw, 76px); }
 
 /* ==================================================================
    TYPE AT SCALE
@@ -188,6 +195,31 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--paint-b); outli
 .hero-wide { max-width: none; }
 .hero-wide .hero-h { font-size: clamp(2.9rem, 13.4vw, 12rem); }
 .hero-tall { min-height: min(94vh, 860px); }
+
+/* A SHELF IS NOT A FRAME.
+   The full-viewport hero above is right where the page is an argument — the
+   store's front door, the archive, the 404. It is wrong on one product,
+   because there the first screen has a job: show the thing and its price.
+   Measured on the shipped page at 390x844, the title began at 650px and the
+   first photograph, the price and the buy button were all below the fold; at
+   1440x900 the image column started around 800px. So a shopper had to scroll
+   before the shop showed them anything to buy.
+   Same frame, half the height, and the headline sized for a product name
+   rather than for a manifesto — `Golden Retrievers Rink Board — Tee` set three
+   lines at 9.4rem. */
+.hero-shelf { min-height: min(42vh, 380px); }
+.hero-shelf .hero-h { font-size: clamp(1.9rem, 5.2vw, 3.8rem); line-height: 0.94; }
+/* AND ON A PHONE IT RESERVES NOTHING AT ALL.
+   860px is where the product page's two columns stack (store.module.css), and
+   below it the frame is a narrow strip with no vista to hold — so the reserved
+   height is simply a gap. Measured on a 390x844 phone: 354px held to display
+   111px of crumb and title, which put the buy button at 979px, 135px under the
+   fold. Collapsed to its own content the button lands around 780px and the
+   whole buy block — price, colour, size, button — is in the first screen with
+   the garment above it. */
+@media (max-width: 860px) {
+  .hero-shelf { min-height: 0; }
+}
 @media (min-width: 1500px) {
   /* Past this the viewport is wider than the words want to be; hold them. */
   .hero-wide { max-width: 1500px; margin: 0 auto; }
@@ -514,15 +546,33 @@ footer.site {
  * masthead dissolves into the rink instead of sitting on it. The mask is on
  * ::before only — put it on .nav and it takes the links with it.
  */
+/*
+ * AND IT WAS TUNED AGAINST THE ICE, WHICH IS THE DARKEST THING ON THE SITE.
+ *
+ * The mask used to reach zero from 44%, and the wash was down to 69% by 68%.
+ * Over the rink that is invisible and exactly right. Over the STORE it is not:
+ * the product photographs are Printify's own white-background renders, the
+ * brightest thing here by a distance, and they scroll up through the bottom
+ * half of the bar. Measured at the foot of the masthead the scrim was ~54%
+ * opaque — over dark ice, nothing; over white, a lit grey band with the
+ * wordmark sitting on it.
+ *
+ * So the wash now holds through the bar's own height and dissolves across the
+ * 38px tail below it instead of starting to fade a third of the way up. The
+ * dissolve the comment above argues for is intact — it is the same gradient
+ * over a shorter run — and the hard horizontal line that started all this is
+ * still impossible, because the blur is still masked rather than sitting on a
+ * rect.
+ */
 .nav::before {
   content: "";
   position: absolute;
   inset: 0 0 -38px 0;
-  background: linear-gradient(#0a0a0cf2 0%, #0a0a0ce8 42%, #0a0a0cb0 68%, #0a0a0c00 100%);
+  background: linear-gradient(#0a0a0cff 0%, #0a0a0cfb 56%, #0a0a0ccc 70%, #0a0a0c00 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  -webkit-mask-image: linear-gradient(#000 0%, #000 44%, #0000 100%);
-  mask-image: linear-gradient(#000 0%, #000 44%, #0000 100%);
+  -webkit-mask-image: linear-gradient(#000 0%, #000 64%, #0000 100%);
+  mask-image: linear-gradient(#000 0%, #000 64%, #0000 100%);
   pointer-events: none;
 }
 .nav-in {
@@ -571,9 +621,13 @@ footer.site {
   line-height: 1.05;
   display: grid;
 }
+/* 8.5px was small enough that the line read as a rendering fault — as though
+   the descenders had been clipped — rather than as a subtitle. Hidden under
+   620px anyway (see the media query below), so the extra 1.5px costs no layout
+   anywhere it is shown. */
 .brand-s {
   font-family: var(--mono);
-  font-size: 8.5px;
+  font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--dim);
@@ -599,7 +653,13 @@ footer.site {
   padding-inline: clamp(20px, 4.5vw, 72px);
 }
 .fetch-live .brand-t { letter-spacing: .12em; }
-.fetch-live .brand-s { color: #505966; }
+/* NO SUBTITLE OVERRIDE HERE ANY MORE. It read `color: #505966`, on the
+   reasonable-sounding ground that the line should recede when there is a world
+   behind the masthead. `fetch-live` is on every route except the home page, so
+   what it actually did was set 2.79:1 against 4.5:1 on all 505 pages — the
+   site's only site-wide contrast failure, and the one thing on it that looked
+   broken rather than quiet. `--dim` is what every other secondary line uses and
+   it measures 5.31:1 here. Recede by size, not by disappearing. */
 
 .sound-gate {
   position: fixed;

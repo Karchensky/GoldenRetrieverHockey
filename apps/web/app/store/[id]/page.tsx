@@ -57,7 +57,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const alsoWearing = products.filter((p) => p.markId === product.markId && p.id !== product.id);
   return (
     <div className="wrap page">
-      <header className="hero seq">
+      <header className="hero hero-shelf seq">
         <p className="crumb">
           <Link href="/store">Store</Link>
         </p>

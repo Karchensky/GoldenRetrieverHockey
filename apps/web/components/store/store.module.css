@@ -110,6 +110,24 @@
 }
 .grid::-webkit-scrollbar-thumb:hover { background: rgba(182,186,197,.38); }
 
+/* AND MORE OF THEM WHEN THERE IS ROOM, on the shelf column only.
+   The `/3.25` above is the affordance rule and it is not in question — it is
+   what makes a fourth card peek so the row says "swipe". This is the other
+   half of the same problem: knowing to swipe still leaves 35 of 56 products
+   behind a gesture, seven separate times. Stepping the divisor with the width
+   keeps the peek exactly as it is and puts a fourth and fifth garment on the
+   screen instead of a wider margin.
+
+   Scoped to `.wrap-shelf` so the product page's own row — six items at most,
+   inside the 1140px column — keeps three and does not go cramped. Divisors
+   follow the formula already established: n full cards means (n-1) gaps. */
+@media (min-width: 1280px) {
+  :global(.wrap-shelf) .grid { grid-auto-columns: calc((100% - 42px) / 4.25); }
+}
+@media (min-width: 1700px) {
+  :global(.wrap-shelf) .grid { grid-auto-columns: calc((100% - 56px) / 5.25); }
+}
+
 /* Two on a tablet, one and a bit on a phone — the partial card is deliberate,
    it is the only thing that says "swipe". */
 @media (max-width: 900px) {
@@ -706,10 +724,18 @@
    Same horizontal snap-scroll as the category rows, so it is one photograph
    tall and the others are a swipe away. Three image-heights come out of the
    scroll and the pattern is one the shopper has already met on /store. */
+/* AND A CAP, BECAUSE THESE PHOTOGRAPHS ARE SQUARE.
+   The column is a share of the container and the mockup is 1:1, so its HEIGHT
+   is set by the container's WIDTH — which on an iPad in portrait made a 608px
+   tall photograph and pushed the buy button to 1,077px on a 1,024px screen,
+   worse than any phone. `min()` lets the width rule stand where it is already
+   the smaller of the two and clamps it to the viewport's height where it is
+   not. Phones are unaffected: at 390 the 88% share is 308px against a 46vh
+   ceiling of 388. */
 @media (max-width: 860px) {
   .stage {
     grid-auto-flow: column;
-    grid-auto-columns: 88%;
+    grid-auto-columns: min(88%, 46vh);
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;

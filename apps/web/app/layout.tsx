@@ -27,15 +27,23 @@ export const metadata: Metadata = {
     icon: [{ url: "/brand/golden-retrievers-crest.png", type: "image/png" }],
     apple: [{ url: "/brand/golden-retrievers-crest.png", type: "image/png" }],
   },
+  // THE CARD IS 1200x630 AND THE FAVICON IS NOT.
+  //
+  // This pointed `og:image` at the 256x256 crest while Next's default
+  // `summary_large_image` Twitter card asks for 1200x630 at 1.91:1. Every link
+  // ever shared out of here — and one player sending another a link is the only
+  // distribution this shop has — previewed as a thumbnail in a corner or as
+  // nothing at all. `golden-retrievers-card.png` is built from the vector master
+  // by `npm run build:brand-assets`.
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
     images: [{
-      url: "/brand/golden-retrievers-crest.png",
-      width: 256,
-      height: 256,
-      alt: "Golden Retrievers hockey crest",
+      url: "/brand/golden-retrievers-card.png",
+      width: 1200,
+      height: 630,
+      alt: "The Golden Retrievers rink-board lockup — the dog in a gold roundel beside the club name",
     }],
   },
 };
