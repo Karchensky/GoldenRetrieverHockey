@@ -219,6 +219,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--paint-b); outli
    the garment above it. */
 @media (max-width: 860px) {
   .hero-shelf { min-height: 0; }
+
+  /* AND THE SOUND CHIP GIVES UP THE CORNER TO THE TILL.
+     `.sound-gate` is fixed at the bottom-left with z-index 6, and the buy
+     button is the full width of its column — so once the hero above stopped
+     reserving 200px, the two met. Measured on iPhone 14 and 15:
+     `elementFromPoint` over the left third of "Add — $19.75" returned
+     `button.sound-gate`, so the tap toggled the ambient bed and put nothing in
+     the basket.
+     Stacking order cannot settle it: `.page` is `position: relative; z-index:
+     1`, which is a stacking context, so any z-index on the button is trapped
+     inside it and the root-level chip wins whatever it is set to. There is no
+     free lane either — the button spans the column edge to edge.
+     So on a phone, on the one route with a full-width primary action, the chip
+     stands down. It is present on every other page and at every other width,
+     which is where somebody turns the rink on in the first place. */
+  .shop-detail ~ .sound-gate,
+  body:has(.shop-detail) .sound-gate { display: none; }
 }
 @media (min-width: 1500px) {
   /* Past this the viewport is wider than the words want to be; hold them. */
