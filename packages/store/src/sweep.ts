@@ -2,7 +2,7 @@ import { createProduct, deleteProduct, getBlueprint, getProduct, listAllPrintPro
 import { loadArt } from "./line.ts";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { ITEMS, MARKS, MARGIN_TARGET, PRINT_DIR } from "./matrix.ts";
+import { ITEMS, MARKS, MARGIN_TARGET, MATRIX, PRINT_DIR } from "./matrix.ts";
 import { priceForVariant } from "./pricing.ts";
 import type { CatalogPlaceholder } from "./types.ts";
 
@@ -405,10 +405,27 @@ async function probe(
 }
 
 export async function sweep(only?: string): Promise<number> {
-  const items = only ? ITEMS.filter((i) => i.id === only) : ITEMS;
+  /**
+   * ONLY GARMENTS THE LINE ACTUALLY SELLS.
+   *
+   * An `Item` with no MATRIX line is a researched blueprint that nothing is
+   * printed on — the cap and the beanie have been exactly that since
+   * 2026-08-03, kept for their variant ids. Probing them costs a draft per
+   * maker and, worse, puts a supplier comparison on the summary page for
+   * something the shop does not offer. Naming one explicitly still works, which
+   * is what you want the day somebody asks "what would the cap cost now".
+   */
+  const sold = new Set(MATRIX.map((entry) => entry.item));
+  const items = only
+    ? ITEMS.filter((i) => i.id === only)
+    : ITEMS.filter((i) => sold.has(i.id));
   if (!items.length) {
     console.error(`No item "${only}". One of: ${ITEMS.map((i) => i.id).join(", ")}`);
     return 2;
+  }
+  const parked = ITEMS.filter((i) => !sold.has(i.id)).map((i) => i.id);
+  if (!only && parked.length) {
+    console.log(`Skipping ${parked.join(", ")} — no product in the line uses ${parked.length === 1 ? "it" : "them"}.\n`);
   }
 
   const mark = MARKS[0];

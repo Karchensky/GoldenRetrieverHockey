@@ -860,6 +860,12 @@ export const ITEMS: Item[] = [
 
        It gives up the trucker mesh and gains a fit. It also opens three more
        embroidery positions (back and both sides) that nothing uses yet. */
+    /* CARRIES NOTHING SINCE 2026-08-03. Kept because the blueprint, the maker,
+       the eleven colourways and their variant ids are researched and correct,
+       and none of that should have to be found again. See the block in MATRIX
+       for why the products were withdrawn — the short version is that our
+       artwork's linework is 0.24mm at this size against a 1mm stitch floor.
+       `buildLine()` produces no cap products while no MATRIX line names it. */
     id: "cap",
     title: "Fitted Cap",
     blueprintId: 1744,
@@ -903,6 +909,11 @@ export const ITEMS: Item[] = [
       "of it for good.",
   },
   {
+    /* CARRIES NOTHING SINCE 2026-08-03, and is the harder of the two to bring
+       back: a 5.0 x 1.75in cuff clamps a square mark to 1.6in, at which size
+       even `mascot-medallion` — the one mark whose subject survives on a cap —
+       is a smudge. This one needs artwork drawn for thread, not a placement
+       change. Kept for its variant ids; see the block in MATRIX. */
     id: "beanie",
     title: "Beanie",
     blueprintId: 1691,
@@ -1325,12 +1336,20 @@ export const QUOTES: Record<string, string> = {
   "crossed-shield-hoodie":
     "“Once more unto the breach, dear friends. Then a line change.” — Brent " +
     "Boeing, forward",
-  "rink-board-cap":
-    "“It is a far, far better thing that I do now than I have ever done, " +
-    "and it is blocking this shot.” — Adam Kaplewicz, forward",
-  "rink-board-beanie":
-    "“Every dog has his day. Ours is Monday at 10:40 pm.” — Anthony Gugino, " +
-    "defence",
+  /* THREE LINES CAME OFF WITH THE CAP AND THE BEANIE on 2026-08-03, and they
+     are NOT rejected — the products were withdrawn, the writing was fine. They
+     are parked here so they are not lost and not silently reused:
+
+       "It is a far, far better thing that I do now than I have ever done,
+        and it is blocking this shot."           — Adam Kaplewicz, forward
+       "Every dog has his day. Ours is Monday at 10:40 pm."
+                                                 — Anthony Gugino, defence
+       "Backcheck? I would prefer not to."       — Bryan Karchensky, forward
+
+     They must not go into `rejected-quotes.ts`: that file means "the captain
+     struck this line", and these were never struck. If the cap ever comes back
+     they go straight on it. If they are wanted somewhere else in the meantime,
+     the only rule is one line per product — `quotes.test.ts` enforces it. */
   "rink-board-mug":
     "“The system is simple. Get the puck, then give it back to me.” — Vinny " +
     "Terrana, forward",
@@ -1428,8 +1447,6 @@ export const QUOTES: Record<string, string> = {
     "was round.” — Rich Fedele, defence",
   "nose-to-nose-hoodie":
     "“A hit, a very palpable hit.” — Anthony Gugino, defence",
-  "nose-to-nose-cap":
-    "“Backcheck? I would prefer not to.” — Bryan Karchensky, forward",
   "nose-to-nose-longsleeve":
     "“Get thee to a bench.” — Corey Muff, goaltender",
   "nose-to-nose-crewneck":
@@ -1557,16 +1574,51 @@ export const MATRIX: MatrixEntry[] = [
   { mark: "majestic-stick-carry", item: "hoodie" },
   { mark: "oversized-jersey", item: "hoodie" },
 
-  /* Cap and beanie — Richardson 112 and Yupoong 1501KC, both EMBROIDERED, and
-     that is the constraint rather than the size of the panel. A dense badge
-     stitched at under two inches turns its type to mush; `nose-to-nose` proved
-     it twice, reading cleanly at 3.6in on a cap and coming back illegible at
-     3.2in on a cuff. So the cap takes the three wide marks and the beanie takes
-     the widest one only. */
-  { mark: "rink-board", item: "cap", placement: { widthIn: 4.75 } },
-  { mark: "nose-to-nose", item: "cap", placement: { widthIn: 3.6 } },
+  /* NOTHING IS EMBROIDERED ANY MORE. The cap and the beanie came off on
+     2026-08-03 — three products, `rink-board` on both and `nose-to-nose` on the
+     cap. The captain: "We don't sell junk/subpar quality."
 
-  { mark: "rink-board", item: "beanie", placement: { widthIn: 4.4 } },
+     THE MEASUREMENT THAT DECIDED IT. A satin stitch cannot be laid under about
+     1mm; below that a digitiser drops the line or fattens it to the minimum.
+     The linework inside our dog, at the size these garments print:
+
+       rink-board on the beanie, 4.4in    median stroke 0.22mm
+       rink-board on the cap,    4.75in   median stroke 0.24mm
+
+     Four to five times under the floor. For that drawing to stitch, the mark
+     would have to print 19.8in wide — against a 5in cuff and a 5.9in panel.
+     There is no size on either garment where it works, and no maker who could
+     do it better.
+
+     WHAT IT LOOKED LIKE. Rendered at the detail a needle can hold, the wordmark
+     and the frame survive on `rink-board` and the dog becomes a formless gold
+     mass. `nose-to-nose` is worse: at 3.6in its banner lettering — the club's
+     own name — is an unreadable smear, which is the same failure that already
+     kept the heritage seal and the championship roundel off these two items.
+     The note this replaces claimed `nose-to-nose` "read cleanly at 3.6in on a
+     cap". Measured, it does not.
+
+     AND THE PHOTOGRAPHS WERE PROMISING WHAT THREAD CANNOT DELIVER. Printify's
+     mockup composites the full-resolution print file with a stitch texture; it
+     does not simulate the digitiser throwing detail away. So the cap and beanie
+     listings showed fur strokes and an eye that could not physically exist on
+     the parcel. Every other photograph in this shop is honest — the print is
+     DTG or UV and the render is what arrives — which is exactly why these three
+     were the ones to remove.
+
+     WHAT WOULD BRING THEM BACK. `mascot-medallion` is the only mark whose
+     subject survives: the dog fills the frame instead of sitting in a roundel
+     inside a bar, and it carries no lettering to lose. On a cap at 1.85in it is
+     marginal-but-arguable; on a beanie cuff at 1.6in it is a smudge. Bringing
+     the cap back means ordering one sample and looking at it. Bringing the
+     beanie back means new artwork drawn for thread — bold shapes, nothing under
+     1mm — which is real design work and not a placement change.
+
+     `scratchpad/stitch/` and `scratchpad/final/` hold the renders, and
+     `docs/research/store-audit-2026-08-03/` the write-up. The ITEMS entries for
+     both are deliberately left in place below: the blueprints, makers and
+     variant ids are researched and correct, and none of that has to be found
+     again. They simply carry no marks. */
 
   /* Mug — landscape, and the widths are smaller than the canvas allows. The
      print area is 7.76in wide but a mug is a CYLINDER: seen head-on only the

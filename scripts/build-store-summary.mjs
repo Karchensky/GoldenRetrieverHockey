@@ -140,8 +140,24 @@ const economics = [...data.items]
 /* Tab 2 — suppliers                                                   */
 /* ------------------------------------------------------------------ */
 
+/**
+ * ONLY GARMENTS THE SHOP ACTUALLY SELLS.
+ *
+ * `store-economics.json` is written from the live product line, so it names
+ * exactly what is for sale. The sweep and the garment grid are measurement
+ * files that persist between runs, and after the cap and the beanie were
+ * withdrawn on 2026-08-03 they still carried a full supplier comparison for
+ * both — a page confidently answering "did we pick the best maker of this"
+ * about something nobody can buy.
+ *
+ * Filtering here rather than waiting for the next 20-minute sweep means the
+ * page is right the moment a product comes off, which is when it matters.
+ */
+const SOLD = new Set(data.items.map((i) => i.itemId));
+
 const byItem = new Map();
 for (const r of sweep.rows) {
+  if (!SOLD.has(r.itemId)) continue;
   if (!byItem.has(r.itemId)) byItem.set(r.itemId, []);
   byItem.get(r.itemId).push(r);
 }
@@ -310,6 +326,7 @@ try {
 
 const gridByItem = new Map();
 for (const r of grid.rows) {
+  if (!SOLD.has(r.itemId)) continue;   // withdrawn garments — see SOLD above
   if (!gridByItem.has(r.itemId)) gridByItem.set(r.itemId, []);
   gridByItem.get(r.itemId).push(r);
 }

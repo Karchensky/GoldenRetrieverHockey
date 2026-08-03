@@ -45,7 +45,25 @@ const fixture: Fixture = JSON.parse(
   readFileSync(join(ROOT, "packages/store/test/fixtures/printify-images.json"), "utf8"),
 );
 
-const LINE = new Map(buildLine().map((i) => [i.id, i]));
+/**
+ * PRODUCTS THE FIXTURE HOLDS THAT THE LINE NO LONGER SELLS.
+ *
+ * The cap and the beanie were withdrawn on 2026-08-03 — our artwork's linework
+ * is 0.24mm at those sizes against a 1mm stitch floor, so nothing embroidered
+ * survived. The captured images did not stop being real Printify bytes, and
+ * `rink-board-cap` is the ONLY product in the fixture that ever returned a
+ * `size-chart` render. Drop it and the assertion that no size chart reaches a
+ * gallery still passes, while testing nothing.
+ *
+ * So the pairing is rebuilt through the real `buildLine`, from the same MATRIX
+ * row that used to exist, rather than hand-assembling a LineItem here. The
+ * fixture stays untouched, which is the rule this file opens with.
+ */
+const WITHDRAWN = [{ mark: "rink-board", item: "cap", placement: { widthIn: 4.75 } }];
+
+const LINE = new Map(
+  [...buildLine(), ...buildLine(WITHDRAWN)].map((i) => [i.id, i]),
+);
 
 /** The captured products, joined to the matrix rows that describe them. */
 const CASES = fixture.products.map((entry) => {
@@ -224,7 +242,7 @@ test("the first photograph of a colourway shows the side that was printed", () =
 });
 
 test("a back print leads with the back, not with a blank front", () => {
-  /* ALL 59 PRODUCTS PRINT ON THE FRONT TODAY — checked against the matrix, not
+  /* EVERY PRODUCT PRINTS ON THE FRONT TODAY — checked against the matrix, not
      remembered from the comment in sync.ts that still describes the hoodies as
      back prints. So the printed face is the parameter here: real renders of a
      real hoodie, told the artwork is on the back. That is the failure this rule

@@ -107,9 +107,18 @@ test("the photographs of one colourway are contiguous", { skip }, () => {
 test("pressing any swatch, on any product, shows only that colour", { skip }, () => {
   /* THIS IS THE FEATURE, asserted the way the page does it. `photographsOf` is
      what `mockupsFor` calls when a swatch is pressed, so this walks every
-     colourway of every product — 175 selections — and checks the result.
-     It is not a browser click; the React state and the DOM swap are not
-     exercised here. What is exercised is the mapping the click depends on. */
+     colourway of every product and checks the result. It is not a browser
+     click; the React state and the DOM swap are not exercised here. What is
+     exercised is the mapping the click depends on.
+
+     THE TOTAL IS HARDCODED ON PURPOSE. A derived count would be tautological —
+     it would pass while the shop quietly lost half its colourways. So the
+     number is a census, and changing it is a deliberate act with a reason:
+
+       175  the shop as it stood on 2026-08-01
+       167  from 2026-08-03, when the cap and the beanie were withdrawn —
+            two cap products at three colours and one beanie at two, so eight
+            selections went with them. Nothing else moved. */
   let selections = 0;
   for (const p of products) {
     for (const c of p.colors) {
@@ -127,7 +136,7 @@ test("pressing any swatch, on any product, shows only that colour", { skip }, ()
       assert.equal(new Set(angles).size, angles.length, `${p.id}/${c.name}: the same angle twice`);
     }
   }
-  assert.equal(selections, 175, `expected 175 colourways on the shop, walked ${selections}`);
+  assert.equal(selections, 167, `expected 167 colourways on the shop, walked ${selections}`);
 });
 
 test("an unknown colour falls back to every photograph, never to none", { skip }, () => {
