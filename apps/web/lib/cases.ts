@@ -26,6 +26,13 @@ export const CASES: readonly SessionCase[] = data.cases.flatMap((item) => {
   return session ? [{ ...item, session }] : [];
 });
 
-/** The rulings that settle who somebody is, on his own page. */
-export const casesFor = (name: string): readonly Case[] =>
-  data.cases.filter((item) => item.title.endsWith(`— ${name}`));
+/* THE THREE ALIAS MATTERS ARE NO LONGER READ BY ANYTHING.
+   `casesFor(name)` returned the rulings that settle who somebody is and the
+   player page printed them under `On the record`. They came off on 2026-08-04:
+   a ruling on how a man's name is spelled across four sources is an account of
+   reconciling the corpus, not something his own page should adjudicate in
+   front of him. The lookup goes with the section rather than sitting here
+   exported and uncalled.
+   They are still IN `site.json` — the record of how these pages were arrived
+   at does not shrink because the site stopped printing part of it. `CASES`
+   above still reaches the two that turn on figures. */

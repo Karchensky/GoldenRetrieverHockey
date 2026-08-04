@@ -6,7 +6,6 @@ import ScoringHonours, { AWARD, ordinal, placing, tone } from "../../../componen
 import AssistNetwork from "../../../components/stats/AssistNetwork";
 import StatsStyles from "../../../components/stats/styles";
 import s from "../../../components/seasons/seasons.module.css";
-import { casesFor } from "../../../lib/cases";
 import { players, bySlug, goaltending, linemates, recorded, savePctOf, savesOf, sessions } from "../../../lib/data";
 import { shortDate } from "../../../lib/dates";
 import { num, plural, record } from "../../../lib/format";
@@ -108,7 +107,6 @@ export default async function PlayerPage({ params }: { params: Promise<{ slug: s
   const careerPts = recorded(p, "pts");
   const careerGp = recorded(p, "gp");
   const perGame = careerPts !== null && careerGp !== null && careerGp > 0 ? careerPts / careerGp : null;
-  const rulings = casesFor(p.name);
 
   // The full network holds every directed pair the archive knows about.
   // A player's page shows only HIS slice — the people he set up and the
@@ -686,23 +684,20 @@ export default async function PlayerPage({ params }: { params: Promise<{ slug: s
         </section>
       )}
 
-      {/* The archive holds five formal rulings and nothing on the site read
-          any of them. Three settle a name against itself — this man's page is
-          the only place they belong. */}
-      {rulings.length > 0 && (
-        <section className="section" data-reveal>
-          <div className="card">
-            <div className="head"><h2>On the record</h2></div>
-            {rulings.map((item) => (
-              <div className={s.ruling} key={item.id}>
-                <h3>{item.title.replace(/\s+—\s+.*$/, "")}</h3>
-                {item.body.map((line, index) => <p key={index}>{line}</p>)}
-                <strong>{item.ruling}</strong>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* NO `On the record` HERE ANY MORE.
+          Three of the archive's five rulings settle a name against itself, and
+          this page carried them: "Recorded across the archive as Vincent
+          Terrana, Vinny Terana, Vinny Terrana, Vinny Terrara… Resolved. One
+          player." It is a true account of how the corpus was reconciled and it
+          is a conversation between the archivist and the sources — a man's own
+          page is not where his spelling gets adjudicated in public. Taken off
+          on 2026-08-04.
+          The rulings stay in `site.json`, which is the record of how the
+          figures on this page were arrived at. What went is the printing of
+          them. The two SUBSTANTIVE matters — the 2013 - Summer and 2014 -
+          Winter tables, where the workbook and the archived page disagree
+          about figures rather than about a name — still render on those
+          seasons' own pages, where they explain numbers a reader can see. */}
 
       <footer className="site">
         <Link href="/seasons#players">← Team archive</Link>
