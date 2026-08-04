@@ -1,4 +1,5 @@
 import { data, ourSide, players } from "./data";
+import { byArrival, currentFirst } from "./order";
 import { ROLLUPS, SPINE } from "./stats";
 
 /**
@@ -454,9 +455,11 @@ const CURRENT_LABEL: string = ROLLUPS.find((roll) => roll.sort === CURRENT_FROM)
  * It is the order the rows are drawn in below the men still playing, and it is
  * also the order the longest-absence tie is named in — so that figure does not
  * change its wording because the chart above it was re-sorted.
+ *
+ * Stated in `lib/order.ts` since 2026-08-04, because the career timelines draw
+ * their rows in this same order and the two were about to say so twice.
  */
-const BY_ARRIVAL = (a: SpanRow, b: SpanRow): number =>
-  a.first - b.first || b.last - a.last || b.sessions - a.sessions || a.name.localeCompare(b.name);
+const BY_ARRIVAL = byArrival;
 
 /**
  * WHO IS STILL PLAYING, FIRST, LONGEST TENURE DOWN.
@@ -494,12 +497,7 @@ export const SPANS: readonly SpanRow[] = players
      A second pass rather than one compound comparator, because `sort` is
      stable: everybody who is not current compares equal here and keeps the
      order the pass above put them in. */
-  .sort((a, b) =>
-    Number(b.current) - Number(a.current) ||
-    (a.current && b.current
-      ? b.sessions - a.sessions || a.first - b.first || a.name.localeCompare(b.name)
-      : 0),
-  );
+  .sort(currentFirst<SpanRow>((row) => row.current));
 
 export const SPAN_SUMMARY = (() => {
   const firstOnFile = SPANS.length > 0 ? Math.min(...SPANS.map((s) => s.first)) : Number.NaN;

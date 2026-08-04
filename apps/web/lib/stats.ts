@@ -1,5 +1,6 @@
 import { data, players, sessions } from "./data";
 import type { PlayerSession, Session } from "../../../packages/build/src/types";
+import { byArrival, currentFirst } from "./order";
 
 /**
  * Derived metrics for /stats. Everything here is computed at BUILD time from
@@ -786,6 +787,17 @@ export type Trace = {
   /** One cell per spine slot, in spine order. null = nothing on file. */
   cells: (TraceCell | null)[];
   /**
+   * Spine index of his first and last slot — arrival and departure.
+   *
+   * Off the cells, which is the same thing `recent` is read off and for the
+   * same reason: a cell exists exactly where a season line does. They are
+   * indices, not session sorts, which is all an ORDER needs — the two run the
+   * same way. `SPANS` in hubs.ts carries the sorts themselves because it also
+   * prints them.
+   */
+  first: number;
+  last: number;
+  /**
    * The career figure for each metric, arrived at honestly.
    *
    * Counting stats are null-aware sums. Points per game is career points over
@@ -928,6 +940,11 @@ export function traceOf(p: (typeof players)[number]): Trace {
     // season line does, and the spine is the only thing that knows which slot
     // is which.
     recent: SPINE.some((slot, i) => slot.sort >= RECENT_FROM && cells[i] !== null),
+    first: cells.findIndex((c) => c !== null),
+    // Not `findLastIndex`: it is outside the lib target this app compiles
+    // against, and `next build` refuses it where the root `tsc --noEmit` does
+    // not. A reduce keeps the last index seen and needs no newer library.
+    last: cells.reduce((seen, c, i) => (c !== null ? i : seen), -1),
     totals: {
       pts: nsum(cells.map((c) => c?.pts)),
       g: nsum(cells.map((c) => c?.g)),
@@ -979,25 +996,29 @@ export const drawableSessions = (p: (typeof players)[number]): number =>
   ).size;
 
 /**
- * BY TENURE, NOT BY SCORING.
+ * THE SAME ORDER THE SESSION HISTORY DRAWS, AND DELIBERATELY SO.
  *
  * This sorted on career points, which put the same man at the head of the grid
- * every time and made a chart of twenty careers read as a ranking of one. The
- * timelines are a picture of who kept turning up; sessions is the axis they are
- * already drawn against, so it is the honest thing to order them by.
+ * every time and made a chart of thirty-four careers read as a ranking of one.
+ * The two charts sit within a screen of each other, on one spine, answering
+ * presence and magnitude — so a reader who has just read down one of them
+ * should not have to re-find everybody in the other.
  *
- * Sessions tie constantly — thirty of them at the top — so the tiebreak does
- * real work. Games played, then name: both continue the tenure reading, and
- * neither reintroduces scoring through the back door. The name is last so the
- * order is total and stable between builds.
+ * THE SAME COMPARATORS `SPANS` USES, out of `lib/order.ts` — the men still
+ * playing lead, deepest tenure first, and everybody else keeps the arrival
+ * order behind them. Two passes rather than one compound comparator, because
+ * `sort` is stable and the second leaves the non-current group exactly as the
+ * first left it. `order.ts` explains why it is a file of its own.
  *
- * The active/retired split is untouched. It is `recent`, applied by
- * RECENT_TRACES below, and it partitions this order rather than replacing it.
+ * The timelines draw a SUBSET — the men with two readings on file, against the
+ * history's everybody-on-a-roster — so this is the same order over fewer rows,
+ * not the same list.
  */
 export const TRACES: readonly Trace[] = players
   .filter((p) => drawableSessions(p) >= TRACE_MIN_SESSIONS)
   .map(traceOf)
-  .sort((a, b) => b.sessions - a.sessions || b.gp - a.gp || a.name.localeCompare(b.name));
+  .sort(byArrival)
+  .sort(currentFirst<Trace>((t) => t.recent));
 
 /**
  * The careers still being played, which is what the timelines open on.
