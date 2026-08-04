@@ -637,7 +637,28 @@ summary:focus-visible .chronicleSummary { color: #eef5f8; transform: translateX(
 .chronicleTable { min-width: 520px; }
 .chronicleTable a { border-bottom: 1px solid transparent; }
 .chronicleTable a:hover { color: var(--ball); border-bottom-color: var(--ball); }
+/* 430px is the STACKED height. Side by side it was the bug.
+   `.currentBody` and `.chronicleBody` are two-column grids and their items
+   stretch, so both blocks take the height of the taller — the lineup, 796px on
+   the current season. The game log was pinned to 430px inside that 796px box:
+   98px of fixtures behind a scrollbar with ~270px of the box below them empty.
+   Below 900px the columns stack and there is no sibling to match, so the cap
+   stays there and is what keeps a 30-fixture season off a phone screen. */
 .compactGames { max-height: 430px; overflow-y: auto; }
+
+/* Pairs with the `max-width: 900px` query near the foot of this file — above
+   it the two columns exist, below it they do not.
+   `flex-basis: 0` is the load-bearing part. With `auto` the list would report
+   its content height, and a 30-fixture season (1,440px, measured on
+   2016 - Winter) would drive the row and open the same void under a shorter
+   lineup instead — the bug, mirrored. At 0 the block's natural height is its
+   heading, so the LINEUP always sets the row and the log grows into whatever
+   that leaves. It still scrolls when a season genuinely has more fixtures than
+   the roster has rows, but only after using every pixel it has been given. */
+@media (min-width: 901px) {
+  .chronicleBlock { display: flex; flex-direction: column; }
+  .compactGames { flex: 1 1 0; min-height: 0; max-height: none; }
+}
 .compactGame {
   min-height: 48px;
   padding: 8px 14px;
