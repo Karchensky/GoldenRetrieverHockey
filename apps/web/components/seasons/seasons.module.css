@@ -738,18 +738,20 @@ summary:focus-visible .chronicleSummary { color: #eef5f8; transform: translateX(
 
 /* The calendar subscription, on the head of the log it subscribes you to.
    The head has been a flex row with space-between and a 58px floor since it
-   held one heading; this is the thing that row was shaped for. Two lines: the
-   action, and the domain it leaves for. */
+   held one heading; this is the thing that row was shaped for.
+   ONE LINE. It was a two-row grid — the action over `karchensky.github.io` —
+   and the domain came off on 2026-08-04. A single row is what is left, so the
+   grid, its `justify-items`, its gap and the small's whole rule set go with
+   it: an inline-flex that sits on the head's own baseline. */
 .calendarLink {
-  display: grid;
-  justify-items: end;
-  gap: 4px;
-  text-align: right;
+  display: inline-flex;
+  align-items: center;
   color: var(--ball);
   font-size: 9px;
   letter-spacing: .15em;
   line-height: 1.5;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .calendarLink > span {
   padding-bottom: 5px;
@@ -757,16 +759,7 @@ summary:focus-visible .chronicleSummary { color: #eef5f8; transform: translateX(
   transition: border-color .2s ease;
 }
 .calendarLink i { font-style: normal; }
-.calendarLink small {
-  color: var(--dim);
-  font-family: var(--mono);
-  font-size: 8.5px;
-  letter-spacing: .05em;
-  text-transform: none;
-  transition: color .2s ease;
-}
 .calendarLink:hover > span { border-bottom-color: var(--ball-pure); }
-.calendarLink:hover small { color: var(--ink); }
 
 .currentHonor {
   margin: 0 0 16px;

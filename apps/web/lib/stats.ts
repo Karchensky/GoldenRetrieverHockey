@@ -978,10 +978,26 @@ export const drawableSessions = (p: (typeof players)[number]): number =>
       .map((s) => s.session),
   ).size;
 
+/**
+ * BY TENURE, NOT BY SCORING.
+ *
+ * This sorted on career points, which put the same man at the head of the grid
+ * every time and made a chart of twenty careers read as a ranking of one. The
+ * timelines are a picture of who kept turning up; sessions is the axis they are
+ * already drawn against, so it is the honest thing to order them by.
+ *
+ * Sessions tie constantly — thirty of them at the top — so the tiebreak does
+ * real work. Games played, then name: both continue the tenure reading, and
+ * neither reintroduces scoring through the back door. The name is last so the
+ * order is total and stable between builds.
+ *
+ * The active/retired split is untouched. It is `recent`, applied by
+ * RECENT_TRACES below, and it partitions this order rather than replacing it.
+ */
 export const TRACES: readonly Trace[] = players
   .filter((p) => drawableSessions(p) >= TRACE_MIN_SESSIONS)
   .map(traceOf)
-  .sort((a, b) => b.pts - a.pts);
+  .sort((a, b) => b.sessions - a.sessions || b.gp - a.gp || a.name.localeCompare(b.name));
 
 /**
  * The careers still being played, which is what the timelines open on.

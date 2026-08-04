@@ -49,8 +49,6 @@ const nsum = (values: (number | null)[]): number | null =>
  * The index has listed every session so far and will list the next one.
  */
 const CALENDAR = "https://karchensky.github.io/hockey_events/";
-/** Derived, so the mark on the link cannot drift from where the link goes. */
-const CALENDAR_HOST = new URL(CALENDAR).host;
 
 /**
  * A status that says the game will NOT be played as scheduled.
@@ -247,14 +245,16 @@ export default function CurrentSeason() {
             <section className={s.chronicleBlock} aria-labelledby="current-games">
               <div className={`${s.chronicleBlockHead} ${s.headAction}`}>
                 <h3 id="current-games">Game log</h3>
-                {/* The host is the mark. This site puts ↗ on its own deep
-                    links too, so the arrow alone does not say "another site";
-                    a domain does, and it does it without a sentence. */}
+                {/* ONE LINE, NO DOMAIN. This carried `karchensky.github.io`
+                    under the action on the reasoning that the arrow alone does
+                    not say "another site" — this site puts ↗ on its own deep
+                    links too — so a domain said it without a sentence. The
+                    captain took it off on 2026-08-04: it reads as a stray
+                    fragment on the head of a log, and the arrow carries it. */}
                 <a className={s.calendarLink} href={CALENDAR} target="_blank" rel="noreferrer">
                   <span>
                     Subscribe to the schedule <i aria-hidden="true">↗</i>
                   </span>
-                  <small>{CALENDAR_HOST}</small>
                 </a>
               </div>
               {/* THE BANNER'S FIXTURE IS MARKED HERE, NOT PRINTED TWICE.
