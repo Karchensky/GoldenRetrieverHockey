@@ -572,15 +572,15 @@ export type GameTotals = {
   scheduledGames: number;
 };
 
-/** An open or closed matter. Generated from real reconciliation, never written. */
-export type Case = {
-  id: string;
-  title: string;
-  body: string[];
-  /** One of the archive's rulings. Deadpan. Never explains itself. */
-  ruling: string;
-  status: "open" | "closed";
-};
+/* `Case` is gone — 2026-08-04.
+   It held the archive's reconciliation matters: which spelling of a name won,
+   and which of two sources stated a table. The site rendered them under
+   `On the record`; the captain took that off, and the type goes with the field
+   because `site.json` is imported whole into the client bundle and the five
+   cases shipped inside it whether or not anything drew them.
+   The reconciliation itself is unchanged. It decides which figures the archive
+   publishes and it still does — see "THE FULLER RECORD WINS" in generate.ts.
+   Only the written-up account of it is gone. */
 
 export type Trophy = {
   year: string;
@@ -618,7 +618,6 @@ export type SiteData = {
   assists: AssistEdge[];
   /** Both directions combined — "established lines". */
   partnerships: { a: string; b: string; n: number }[];
-  cases: Case[];
   /** Every game the archive can place in time, oldest first. */
   games: Game[];
   gameTotals: GameTotals;

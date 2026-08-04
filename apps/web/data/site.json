@@ -27204,60 +27204,6 @@
       "n": 1
     }
   ],
-  "cases": [
-    {
-      "id": "alias-jason-kaplewicz",
-      "title": "Matter of the name — Jason Kaplewicz",
-      "body": [
-        "Recorded across the archive as Jason Kaplewicz, Jay Kaplewicz. Numbers worn: 47, 28.",
-        "Where the sources disagree the site publishes the fullest form recorded, and where two are the same length, the spelling the record uses most often. Every other form is kept as it was written."
-      ],
-      "ruling": "Sources disagree.",
-      "status": "closed"
-    },
-    {
-      "id": "alias-vincent-terrana",
-      "title": "Matter of the name — Vincent Terrana",
-      "body": [
-        "Recorded across the archive as Vincent Terrana, Vinny Terana, Vinny Terrana, Vinny Terrara. All wore number 89.",
-        "Where the sources disagree the site publishes the fullest form recorded, and where two are the same length, the spelling the record uses most often. Every other form is kept as it was written."
-      ],
-      "ruling": "Resolved. One player.",
-      "status": "closed"
-    },
-    {
-      "id": "alias-richard-fedele",
-      "title": "Matter of the name — Richard Fedele",
-      "body": [
-        "Recorded across the archive as Richard Fedele, Rich Fedele. All wore number 16.",
-        "Where the sources disagree the site publishes the fullest form recorded, and where two are the same length, the spelling the record uses most often. Every other form is kept as it was written."
-      ],
-      "ruling": "Resolved. One player.",
-      "status": "closed"
-    },
-    {
-      "id": "book-2013-summer-regular-season",
-      "title": "Matter of the unfinished table — 2013 - Summer, regular season",
-      "body": [
-        "The captain's statistics workbook and the archived page state 14 of these lines differently, across 9 figures. The widest is Brent Seymour: SV 118 on the page, 233 in the workbook.",
-        "Every one of the 57 disagreements runs the same way — the workbook is the larger count. That is one table read at two moments, not two sources at odds.",
-        "The workbook is the fuller record of the two and its lines are what this archive publishes for this phase. The page's figures are kept above, and every one of them is still what that page said on the day it was stored."
-      ],
-      "ruling": "Resolved. The fuller record stands.",
-      "status": "closed"
-    },
-    {
-      "id": "book-2014-winter-regular-season",
-      "title": "Matter of the unfinished table — 2014 - Winter, regular season",
-      "body": [
-        "The captain's statistics workbook and the archived page state 13 of these lines differently, across one figure. The widest is Bryan Karchensky: PTS 24 on the page, 67 in the workbook.",
-        "Every one of the 13 disagreements runs the same way — the workbook is the larger count. That is one table read at two moments, not two sources at odds.",
-        "The workbook is the fuller record of the two and its lines are what this archive publishes for this phase. The page's figures are kept above, and every one of them is still what that page said on the day it was stored."
-      ],
-      "ruling": "Resolved. The fuller record stands.",
-      "status": "closed"
-    }
-  ],
   "games": [
     {
       "id": "tgr-2012-09-24",

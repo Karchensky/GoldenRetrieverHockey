@@ -39,7 +39,7 @@ import { buildGames } from "./games.ts";
 const properSurname = (name: string): string =>
   name.replace(/\bMc([a-z])/g, (_, letter: string) => `Mc${letter.toUpperCase()}`);
 import type {
-  SiteData, Player, PlayerSession, Provenance, Session, AssistEdge, Case,
+  SiteData, Player, PlayerSession, Provenance, Session, AssistEdge,
   Trophy, RecapGame, ScoringRank, SessionRecord, SessionTeamStats, StatKey,
 } from "./types.ts";
 
@@ -2335,112 +2335,18 @@ export async function generate(): Promise<SiteData> {
 
   const sessions = [...sessMap.values()].sort((a, b) => a.sort - b.sort);
 
-  // ---- the Department's cases ------------------------------------------
-  // GENERATED from real reconciliation, never authored. If the archive stops
-  // disagreeing with itself, these disappear — which is the point.
-  const cases: Case[] = [];
-  const multi = players.filter((p) => p.aliases.length > 0);
-  for (const p of multi.slice(0, 3)) {
-    cases.push({
-      id: `alias-${p.slug}`,
-      title: `Matter of the name — ${p.name}`,
-      body: [
-        `Recorded across the archive as ${[p.name, ...p.aliases].join(", ")}. ` +
-        `${p.jerseys.length === 1 ? `All wore number ${p.jerseys[0]}.` : `Numbers worn: ${p.jerseys.join(", ")}.`}`,
-        // WHAT THE BUILD ACTUALLY DOES, not an appeal to an authority the site
-        // no longer names. This read "The Golden Retriever Archive is held to be
-        // the more reliable authority on the spelling of its own players' names"
-        // — a source label that has since merged into `The team archive`, and a
-        // rule the identity pass has never followed. It follows this one.
-        `Where the sources disagree the site publishes the fullest form recorded, and where two are the same length, the spelling the record uses most often. Every other form is kept as it was written.`,
-      ],
-      ruling: p.jerseys.length === 1 ? "Resolved. One player." : "Sources disagree.",
-      status: "closed",
-    });
-  }
-  // THE WORKBOOK AGAINST THE ARCHIVED PAGE.
-  //
-  // The captain's statistics workbook overlaps six sessions the corpus already
-  // held, and on four of them it agrees exactly — Winter 2012-13 matches the
-  // team's own archived roster page cell for cell across thirty lines. On two
-  // phases it does not, and those are these.
-  //
-  // The build keeps whichever of the two states MORE of the season, on the
-  // captain's ruling. The losing figures do not simply vanish: a disagreement
-  // is evidence in its own right and belongs on the site rather than in a build
-  // log, so both sides are raised here, from the reconciliation itself, and the
-  // case records which one the archive publishes. Every sentence below is
-  // counted off the rows; if the two sources ever stop disagreeing, these
-  // disappear.
-  const clashPhases = new Map<string, typeof bookClashes>();
-  for (const c of bookClashes) {
-    const k = `${c.session}|${c.phase}`;
-    clashPhases.set(k, [...(clashPhases.get(k) ?? []), c]);
-  }
-  for (const [k, rows] of clashPhases) {
-    const [rawLabel, phase] = k.split("|") as [string, string];
-    // The DISPLAY label, never the source page's own spelling. `raw` carries
-    // "2014-15" because that is what the archived page called it; every other
-    // session name on this site is the canonical form.
-    const parsedLabel = parseSessionLabel(rawLabel);
-    const session = parsedLabel ? sessionLabel(parsedLabel) : rawLabel;
-    // Is the workbook uniformly the LARGER count? That is the shape of one
-    // table caught at two moments, not of two sources contradicting each other,
-    // and it is the whole reason this is an open matter rather than a defect.
-    const numeric = rows.flatMap((r) => r.fields).filter(
-      (f) => Number.isFinite(Number(f.book)) && Number.isFinite(Number(f.page)),
-    );
-    const allGreater = numeric.length > 0 && numeric.every((f) => Number(f.book) > Number(f.page));
-    const widest = [...rows].sort(
-      (a, b) => Math.max(...b.fields.map((f) => Number(f.book) - Number(f.page)))
-              - Math.max(...a.fields.map((f) => Number(f.book) - Number(f.page))),
-    )[0]!;
-    const w = widest.fields.reduce((m, f) =>
-      Number(f.book) - Number(f.page) > Number(m.book) - Number(m.page) ? f : m);
-    const keys = new Set(rows.flatMap((r) => r.fields.map((f) => f.key))).size;
-    // WHICH SIDE THE ARCHIVE PUBLISHES, read back off the reconciliation rather
-    // than assumed. A phase where the two sources trade the fuller line row by
-    // row would say so here instead of claiming a winner it does not have.
-    const wonN = rows.filter((r) => r.bookWon).length;
-    const verdict = wonN === rows.length
-      ? `The workbook is the fuller record of the two and its lines are what this archive publishes for this phase. The page's figures are kept above, and every one of them is still what that page said on the day it was stored.`
-      : wonN === 0
-        ? `The page is the fuller record of the two and its figures stand. The workbook's lines for this phase are kept above but not published.`
-        : `${wonN} of these lines are fuller in the workbook and are published from it; the other ${rows.length - wonN} are fuller on the page and stand as the page states them.`;
-    cases.push({
-      id: `book-${slugify(session)}-${slugify(phase)}`,
-      title: `Matter of the unfinished table — ${session}, ${phase.toLowerCase()}`,
-      body: [
-        `The captain's statistics workbook and the archived page state ${rows.length} of these lines differently, ` +
-        `across ${keys === 1 ? `one figure` : `${keys} figures`}. ` +
-        `The widest is ${widest.name}: ${w.key} ${w.page} on the page, ${w.book} in the workbook.`,
-        allGreater
-          ? `Every one of the ${numeric.length} disagreements runs the same way — the workbook is the larger count. That is one table read at two moments, not two sources at odds.`
-          : `The disagreements run in both directions.`,
-        verdict,
-      ],
-      ruling: wonN === rows.length
-        ? "Resolved. The fuller record stands."
-        : wonN === 0
-          ? "Resolved. The fuller record stands — here it is the page."
-          : "Resolved line by line. The fuller record stands in each.",
-      status: "closed",
-    });
-  }
-
-  // THE GAME #2 CASE IS GONE, on the captain's instruction:
-  //
-  //   "just drop it. This was likely a note that eventually was overridden
-  //    when the data did come in."
-  //
-  // He is right, and the archive can see it: the 2012-13 page was captured
-  // four times while the season was being written up. The earliest is
-  // captioned "Still missing game # 2 stats"; a later one is captioned
-  // "Missing Game 25" and no longer mentions game 2. The scorekeeper found it.
-  // We kept his oldest complaint on the site as an open case for years after
-  // he had resolved it — an archive citing a note that its own later evidence
-  // supersedes. The dedup already keeps the latest snapshot, so the DATA was
-  // always right; only this hand-written case was stale.
+  // ---- the Department's cases: REMOVED 2026-08-04 ----------------------
+  // They were generated from real reconciliation and rendered under
+  // `On the record` on three player pages and two season pages: which
+  // spelling of a name won, and which of two sources stated a table.
+  // The captain took them off the site  working notes between the archive
+  // and its sources, not something a reader asked to watch  and they are
+  // out of `site.json` too, because `lib/data.ts` imports the whole file
+  // and webpack shipped all five of them inside a 1MB client chunk where
+  // nothing displayed them.
+  // The DECISIONS still stand: which figure wins is settled above, at
+  // "THE FULLER RECORD WINS", and that logic is untouched. What went is the
+  // writing-up of it.
 
   const totals = {
     sessions: sessions.length,
@@ -2490,7 +2396,7 @@ export async function generate(): Promise<SiteData> {
 
   return {
     generatedAt: new Date().toISOString(),
-    totals, sessions, players, assists, partnerships, cases, games, gameTotals,
+    totals, sessions, players, assists, partnerships, games, gameTotals,
     trophies: ruled, recaps,
   };
 }

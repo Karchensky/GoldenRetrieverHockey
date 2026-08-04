@@ -6,7 +6,6 @@ import GameList from "../../../components/games/GameList";
 import { rows } from "../../../components/games/games";
 import Recaps from "../../../components/seasons/Recaps";
 import s from "../../../components/seasons/seasons.module.css";
-import { CASES } from "../../../lib/cases";
 import { leagueRecord, plural, record } from "../../../lib/format";
 import { rosterStateAt } from "../../../lib/scope";
 import {
@@ -117,7 +116,6 @@ export default async function SeasonPage({ params }: { params: Promise<{ slug: s
         ? "roster incomplete"
         : null;
   const division = divisionAt(sort);
-  const rulings = CASES.filter((item) => item.session === entry.label);
 
   const figures: [string, number | string][] = [
     ...(standing
@@ -287,20 +285,11 @@ export default async function SeasonPage({ params }: { params: Promise<{ slug: s
           </section>
         )}
 
-        {rulings.length > 0 && (
-          <section className="section" data-reveal>
-            <div className="card">
-              <div className="head"><h2>On the record</h2></div>
-              {rulings.map((item) => (
-                <div className={s.ruling} key={item.id}>
-                  <h3>{item.title.replace(/\s+—\s+.*$/, "")}</h3>
-                  {item.body.map((line, index) => <p key={index}>{line}</p>)}
-                  <strong>{item.ruling}</strong>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* NO `On the record`. The last two rulings came off here on
+            2026-08-04, with the three on the player pages. They were working
+            notes from reconciling the corpus — which source won, and why — and
+            a reader did not ask to watch that argument. The decisions stand in
+            the figures; the reasoning does not belong on the page. */}
 
         <nav className={s.seasonNav} aria-label="Adjacent seasons">
           <span>{previous && <Link href={seasonHref(previous.sort)} className="kicker">← {previous.label}</Link>}</span>
