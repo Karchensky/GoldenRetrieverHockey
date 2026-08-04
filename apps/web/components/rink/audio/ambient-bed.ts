@@ -8,10 +8,15 @@
  * offset, and each rides a slow drift on its own period. Nothing in the sum
  * repeats on a cycle a listener can learn.
  *
+ * And a dog on it, since 2026-08-04, barking every few seconds on a timer of
+ * his own. He is the loudest and by far the most frequent thing here, which is
+ * a deliberate inversion of what this file used to be: the beds were pulled
+ * down around him rather than him being fitted under them.
+ *
  * Replaces the scroll-mixed journey bed. Kept from it: the loading, the gesture
  * gate, and the velocity-mapped one-shot.
  *
- * Licences for every file are in docs/HANDBOOK.md §10.
+ * Licences for every file are in MANUAL.md §12.
  *
  * THREE THINGS HERE ARE LOAD-BEARING.
  *
@@ -42,6 +47,41 @@ const FILES: Record<BedName, string> = {
 };
 
 const CRACK_FILE = "/audio/ice-crack.ogg";
+const BARK_FILE = "/audio/barks.ogg";
+
+/**
+ * TEN TAKES IN ONE FILE, PLAYED AS SLICES.
+ *
+ * A dog barking every few seconds cannot be one recording — the ear learns a
+ * repeated sample faster than anything else in the mix, and the moment it does,
+ * the pond becomes a web page again. So there are ten: five barks cut from a
+ * single field recording, each in two treatments, all levelled to the same core
+ * RMS so the rotation never jumps in volume.
+ *
+ * They are ONE file rather than ten because ten would be ten requests for
+ * 99 KB total. `start(offset, duration)` plays a region of a buffer natively,
+ * so a sprite costs nothing at playback and saves nine round trips.
+ *
+ * THE OFFSETS ARE MEASURED THROUGH A REAL ENCODE, NOT COMPUTED FROM THE CUT.
+ * Vorbis decode does not land sample-exact — the note on `loopEnd` below is the
+ * same problem — so each take is laid down with 300 ms of silence after it and
+ * the table was verified by decoding the shipped file back and confirming every
+ * take's onset sits 43–73 ms inside its own slot with no energy leaking into a
+ * neighbour. That margin is the padding doing its job. Recut the file and this
+ * table is wrong: rebuild it, do not edit it by hand.
+ */
+const BARKS: { at: number; dur: number }[] = [
+  { at: 0.150, dur: 1.148 },    // take 06, near — most low end of the set
+  { at: 1.598, dur: 1.648 },    // take 06, far
+  { at: 3.545, dur: 1.135 },    // take 18, near — best body against level
+  { at: 4.980, dur: 1.635 },    // take 18, far
+  { at: 6.915, dur: 1.110 },    // take 15, near — tighter, reads younger
+  { at: 8.325, dur: 1.610 },    // take 15, far
+  { at: 10.235, dur: 1.186 },   // take 19, near — lowest crest, most sustain
+  { at: 11.721, dur: 1.686 },   // take 19, far
+  { at: 13.706, dur: 1.554 },   // take 01, near — already distant in the room
+  { at: 15.560, dur: 2.054 },   // take 01, far
+];
 
 /**
  * THE MIX. A frozen lake at dawn with a game somewhere across it.
@@ -59,29 +99,35 @@ const CRACK_FILE = "/audio/ice-crack.ogg";
  * wind, and a bed that swells and recedes never reads as a file on repeat.
  */
 const MIX: Record<BedName, { gain: number; period: number; drift: number }> = {
-  /* Set by the captain on 2026-07-29, after listening — his numbers, not a
-     computed balance, given to me as 0-100 and written here as fractions.
-     This is a REVERSAL of his 2026-07-27 mix and worth recording as such: that
-     one pushed the blades to 0.50 and buried the wind at 0.10, a game with
-     weather around it. This one puts the ice forward, brings the wind back up
-     and pulls the sticks right down to 0.15 — a cold empty rink you are
-     standing in rather than a game you are watching. */
-  wind: { gain: 0.40, period: 41, drift: 0.18 },
-  rink: { gain: 0.20, period: 67, drift: 0.25 },
-  ice: { gain: 0.50, period: 53, drift: 0.20 },
+  /* Set by the captain on 2026-08-04, after listening against the dog — his
+     numbers again, not a computed balance.
+
+     The whole bed comes DOWN, and that is the point: every value except the
+     blades is cut, ice hardest (0.50 → 0.20) and rink to a third (0.20 → 0.10).
+     Read alongside MASTER, also halved, this is not a quieter version of the
+     2026-07-29 mix — it is a different one. That mix was the subject. This one
+     is the room a dog is barking in, and everything in it steps back far enough
+     to leave him the foreground.
+
+     The previous mix, for the record, and worth keeping because it is the one
+     the site shipped with for a week: wind 0.40, rink 0.20, ice 0.50,
+     blades 0.15, MASTER 0.60. */
+  wind: { gain: 0.30, period: 41, drift: 0.18 },
+  rink: { gain: 0.10, period: 67, drift: 0.25 },
+  ice: { gain: 0.20, period: 53, drift: 0.20 },
   blades: { gain: 0.15, period: 31, drift: 0.42 },
 };
 
 /** Loaded in this order and heard as they land; the first pair is the place. */
 const WAVES: BedName[][] = [["wind", "rink"], ["ice", "blades"]];
 
-const MASTER = 0.60;
+const MASTER = 0.30;
 /** Reduced motion asks for less, so it gets less — and none of the events. */
 /* Held at the same ratio to MASTER as before the captain's numbers landed
    (0.44/0.62), so reduced-motion stays about 3 dB under the standard mix
    rather than becoming a fixed level that drifts as MASTER is tuned. Scaled
-   with MASTER when he moved it to 0.60. */
-const MASTER_CALM = 0.42;
+   again with MASTER when he halved it to 0.30 for the dog. */
+const MASTER_CALM = 0.21;
 
 export type AmbientBed = {
   /**
@@ -102,7 +148,10 @@ export function createAmbientBed(): AmbientBed {
   let master: GainNode | null = null;
   let synth: GainNode | null = null;
   let crackBuffer: AudioBuffer | null = null;
+  let barkBuffer: AudioBuffer | null = null;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  let barkTimer: ReturnType<typeof setTimeout> | null = null;
+  let lastBark = -1;
   let lastPoke = 0;
   let generation = 0;
   let calm = false;
@@ -220,6 +269,34 @@ export function createAmbientBed(): AmbientBed {
     src.start(now);
   }
 
+  /**
+   * The dog, somewhere out there.
+   *
+   * NEVER THE SAME TAKE TWICE RUNNING. Uniform random over ten takes still
+   * repeats one in ten times, and at a bark every few seconds a listener meets
+   * that repeat within a minute — which is the whole reason there are ten takes
+   * and not one. Excluding the last one played costs a line and removes it.
+   */
+  function bark(c: AudioContext, out: GainNode) {
+    if (!barkBuffer) return;
+    let i = Math.floor(Math.random() * BARKS.length);
+    if (i === lastBark) i = (i + 1 + Math.floor(Math.random() * (BARKS.length - 1))) % BARKS.length;
+    lastBark = i;
+    const take = BARKS[i];
+
+    const now = c.currentTime;
+    const src = c.createBufferSource();
+    src.buffer = barkBuffer;
+    const gain = c.createGain();
+    gain.gain.value = 0.44;                   // the captain's number, 2026-08-04
+    const pan = c.createStereoPanner();
+    pan.pan.value = (Math.random() * 2 - 1) * 0.45;
+    src.connect(gain).connect(pan).connect(out);
+    // Playing a region, not the file: offset into the sprite, and stopped at
+    // the end of the take so the next one never bleeds in.
+    src.start(now, take.at, take.dur);
+  }
+
   /** The pond settling: a low sine bending down under a closing filter. */
   function creak(c: AudioContext, out: GainNode, strength: number) {
     const now = c.currentTime;
@@ -234,7 +311,8 @@ export function createAmbientBed(): AmbientBed {
     filter.frequency.setValueAtTime(900, now);
     filter.frequency.exponentialRampToValueAtTime(120, now + 1.1);
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.055 * strength, now + 0.025);
+    // 0.055 before the dog; pulled down with the rest of the bed on 2026-08-04.
+    gain.gain.exponentialRampToValueAtTime(0.035 * strength, now + 0.025);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.25);
     osc.connect(filter).connect(gain).connect(out);
     osc.start(now);
@@ -300,6 +378,29 @@ export function createAmbientBed(): AmbientBed {
       else crack(c, out);
       schedule();
     }, 9000 + Math.random() * 16000);
+  }
+
+  /**
+   * THE DOG KEEPS HIS OWN TIME, AND THAT IS WHY THIS IS A SECOND TIMER.
+   *
+   * He barks every 3–8 s; the ice and the sticks carry on at 9–25 s. Those two
+   * rates cannot come out of one weighted draw — a single timer has one gap,
+   * and pulling it in to suit the dog would speed the whole pond up with him.
+   * So the ice keeps the cadence it always had and the dog runs beside it.
+   *
+   * The consequence is worth stating plainly: the dog is now the most frequent
+   * thing in the mix by a factor of about four, and at 0.44 the loudest. That
+   * is the captain's call, made listening, and it is what the levels above were
+   * rebalanced around.
+   */
+  function scheduleBark() {
+    const c = ctx, out = master;
+    if (!c || !out || calm) return;
+    barkTimer = setTimeout(() => {
+      if (ctx !== c) return;
+      bark(c, out);
+      scheduleBark();
+    }, 3000 + Math.random() * 5000);
   }
 
   /**
@@ -421,6 +522,25 @@ export function createAmbientBed(): AmbientBed {
       });
     }
 
+    // THE DOG LOADS ON PHONES, AND THE CRACKLE ABOVE DOES NOT. That is not an
+    // oversight and the two are not comparable: the crackle is the quietest
+    // thing in the mix and skipping it costs a texture nobody misses through a
+    // phone speaker. The dog is the loudest thing in the mix and the reason the
+    // rest of it was rebalanced — skip him and a phone gets a bed that was
+    // mixed around a sound it never hears. He costs 99 KB, more than the 73 KB
+    // the crackle was refused for, and that is the trade being made knowingly.
+    //
+    // Nothing waits on him either: the beds are already up, and the first bark
+    // is 3–8 s away. The timer starts when the file lands rather than now, so
+    // the first one to fire actually has something to play.
+    if (!calm) {
+      void decode(c, BARK_FILE).then((buffer) => {
+        if (ctx !== c || generation !== gen) return;
+        barkBuffer = buffer;
+        if (buffer) scheduleBark();
+      });
+    }
+
     schedule();
     return true;
   }
@@ -432,7 +552,10 @@ export function createAmbientBed(): AmbientBed {
     master = null;
     synth = null;
     crackBuffer = null;
+    barkBuffer = null;
+    lastBark = -1;
     if (timer) { clearTimeout(timer); timer = null; }
+    if (barkTimer) { clearTimeout(barkTimer); barkTimer = null; }
     if (onVisibility) {
       document.removeEventListener("visibilitychange", onVisibility);
       onVisibility = null;
