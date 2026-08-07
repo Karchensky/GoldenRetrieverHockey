@@ -42,6 +42,28 @@ usually lands on **3002**.
 colourway is a complete size run or it is not offered. A gap sells the wrong
 garment.
 
+**What Google is told is DERIVED — keep it that way.** The sitemap, the JSON-LD
+on every page and `/feed/products.xml` all read `products.json` and `site.json`
+at build time, so a new product, player, game or season appears in all of them
+with no extra step. **Never hand-maintain a list of URLs or products** — that
+list is what goes stale. If a change makes you want to, the derivation is what
+needs fixing.
+
+Two things that do NOT derive, and both are caught by `npm test`:
+
+- **A new garment type throws.** Google demands a product category, age group
+  and size system per item; `GOOGLE` in `packages/store/src/feed.ts` is keyed on
+  `itemId` and an unmapped one refuses rather than guessing. Filing hoodies as
+  homeware is what that prevents.
+- **The social card is a committed file.** `og:image` points at
+  `/store/<id>-card.jpg`, written by `npm run store:mockups`, not by the site
+  build. Add a product without re-running mockups and its link preview 404s
+  while the page renders fine.
+
+**Anything sold with a minimum gets no feed row AND no product markup.**
+`excludedBecause` governs both halves. It governed only the feed once, and ten
+sticker pages shipped a $3.50 offer above a page selling three for $10.50.
+
 **`packages/build/src/generate.ts` contains NUL bytes and ripgrep skips it
 silently.** Search it with node reading the file directly.
 
@@ -69,5 +91,10 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (473), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (524), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
+
+**One successful probe does not mean a deploy has landed.** A new URL was
+measured 200, then 404, then 200 over about a minute on 2026-08-07 — edges pick
+up a build at different times. Check the URL twice, a little apart, and read the
+body rather than the status code.

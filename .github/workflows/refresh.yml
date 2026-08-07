@@ -80,3 +80,26 @@ jobs:
           Captured, regenerated and verified by the scheduled job. The guard
           passed: nothing decreased, no player lost, no session vanished."
           git push
+
+      # AFTER THE PUSH, DELIBERATELY, AND THAT ORDER IS THE WHOLE POINT.
+      #
+      # This job's one irreplaceable output is the captured corpus. A test or a
+      # build failing must never be the reason a day's capture is lost, so the
+      # data is committed and pushed first and only then checked. A failure here
+      # turns the run red — which is the notification — while the bytes are
+      # already safe on `origin/main`.
+      #
+      # What it catches: a data change that breaks the site build. Cloudflare
+      # builds from the push, and if that build fails it silently keeps serving
+      # the previous deploy — the site does not break, it just stops being
+      # current, and nothing says so. This is the thing that says so.
+      #
+      # It also renders /feed/products.xml and every page's JSON-LD, so it
+      # proves the whole derived-metadata chain still holds against today's data.
+      - name: Check the build still succeeds
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build:site
+
+      - name: Check the suite still passes
+        if: steps.diff.outputs.changed == 'true'
+        run: npm test

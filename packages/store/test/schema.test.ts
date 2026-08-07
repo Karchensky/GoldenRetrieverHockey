@@ -266,6 +266,35 @@ test("the rendered feed is well-formed and escapes its data", { skip }, () => {
 });
 
 /**
+ * THE SOCIAL CARD IS A COMMITTED FILE, AND NOTHING ELSE CHECKS IT EXISTS.
+ *
+ * `og:image` on a product page points at `/store/<id>-card.jpg`, which is
+ * written by `npm run store:mockups` and committed — it is NOT produced by the
+ * site build. So a product added to `MATRIX` and synced without re-running
+ * mockups gets a card URL that 404s, and the failure is invisible: the page
+ * renders, the build passes, and only the link preview is broken. That is the
+ * one channel this shop distributes through.
+ *
+ * Skips on a checkout where the mirror has not been run.
+ */
+const MIRROR = join(ROOT, "apps/web/public/store");
+const mirrored = skip || !existsSync(MIRROR) ? "no mirror — run `npm run store:mockups`" : false;
+
+test("every product with photographs has its social card on disk", { skip: mirrored }, () => {
+  const missing: string[] = [];
+  for (const product of products) {
+    // A product with no mockups falls back to the club card by design.
+    if (!product.mockups.length) continue;
+    if (!existsSync(join(MIRROR, `${product.id}-card.jpg`))) missing.push(product.id);
+  }
+  assert.deepEqual(
+    missing,
+    [],
+    `these products' link previews would 404 — run \`npm run store:mockups\` and commit the result`,
+  );
+});
+
+/**
  * THE PAGE AS BUILT, AGAINST THE MARKUP IT CARRIES.
  *
  * Every assertion above is about the functions. This one is about the artifact
