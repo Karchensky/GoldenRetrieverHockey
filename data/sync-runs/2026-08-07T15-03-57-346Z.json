@@ -1,0 +1,66 @@
+{
+  "ranAt": "2026-08-07T15:03:57.346Z",
+  "freshnessHours": 12,
+  "before": {
+    "totals": {
+      "sessions": 31,
+      "playerSeasons": 649,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1183,
+      "assistEdges": 1316,
+      "gameSheets": 284,
+      "captures": 5961,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 31,
+    "games": 328
+  },
+  "after": {
+    "totals": {
+      "sessions": 31,
+      "playerSeasons": 649,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1195,
+      "assistEdges": 1326,
+      "gameSheets": 285,
+      "captures": 6077,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 31,
+    "games": 328
+  },
+  "newSessions": [],
+  "changes": [
+    "totals.goals: 1183 -> 1195",
+    "totals.assistEdges: 1316 -> 1326",
+    "totals.gameSheets: 284 -> 285",
+    "totals.captures: 5961 -> 6077",
+    "Bryan Karchensky.gp: 459 -> 460",
+    "Bryan Karchensky.g: 739 -> 743",
+    "Bryan Karchensky.a: 503 -> 505",
+    "Adam Kaplewicz.gp: 397 -> 398",
+    "Adam Kaplewicz.g: 369 -> 372",
+    "Adam Kaplewicz.a: 385 -> 386",
+    "Jason Kaplewicz.gp: 362 -> 363",
+    "Jason Kaplewicz.g: 238 -> 239",
+    "Jason Kaplewicz.a: 304 -> 305",
+    "Anthony Christy.gp: 227 -> 228",
+    "Anthony Christy.a: 163 -> 165",
+    "John Rein.gp: 112 -> 113",
+    "John Rein.g: 47 -> 48",
+    "John Rein.a: 53 -> 54",
+    "Devin Arnold.gp: 70 -> 71",
+    "Devin Arnold.a: 36 -> 37",
+    "Andrew Murphy.gp: 81 -> 82",
+    "Andrew Murphy.a: 19 -> 20",
+    "Jeremy McDonald.gp: 18 -> 19",
+    "Jeremy McDonald.g: 13 -> 14",
+    "Jeremy McDonald.a: 9 -> 10",
+    "Corey Muff.gp: 259 -> 260",
+    "Anthony Orange.gp: 5 -> 6",
+    "Anthony Orange.g: 2 -> 4"
+  ],
+  "regressions": []
+}

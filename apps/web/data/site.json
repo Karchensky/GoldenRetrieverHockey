@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-05T16:08:29.247Z",
+  "generatedAt": "2026-08-07T15:03:47.598Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
     "recordedNames": 93,
     "people": 80,
-    "goals": 1183,
-    "assistEdges": 1316,
-    "gameSheets": 284,
-    "captures": 5961,
+    "goals": 1195,
+    "assistEdges": 1326,
+    "gameSheets": 285,
+    "captures": 6077,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -795,10 +795,10 @@
       ],
       "career": {
         "sessions": 30,
-        "gp": 459,
-        "g": 739,
-        "a": 503,
-        "pts": 1242,
+        "gp": 460,
+        "g": 743,
+        "a": 505,
+        "pts": 1248,
         "pim": 150,
         "ppg": 2.71,
         "gpInferred": true
@@ -1687,10 +1687,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "F",
-          "gp": 8,
-          "g": 11,
-          "a": 2,
-          "pts": 13,
+          "gp": 9,
+          "g": 15,
+          "a": 4,
+          "pts": 19,
           "pim": 4,
           "status": null,
           "gpInferred": false,
@@ -2027,24 +2027,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 4,
+            "points": 3,
             "goals": 1,
-            "assists": 39,
-            "pim": 16
+            "assists": 22,
+            "pim": 17
           },
           "leagueRanks": {
-            "points": 30,
-            "goals": 5,
-            "assists": 271,
-            "pim": 103
+            "points": 7,
+            "goals": 2,
+            "assists": 118,
+            "pim": 119
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 13,
-          "g": 11,
-          "a": 2,
+          "leagueField": 875,
+          "pts": 19,
+          "g": 15,
+          "a": 4,
           "pim": 4,
-          "gp": 8,
+          "gp": 9,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -2068,11 +2068,11 @@
       ],
       "career": {
         "sessions": 28,
-        "gp": 397,
-        "g": 369,
-        "a": 385,
-        "pts": 754,
-        "pim": 164,
+        "gp": 398,
+        "g": 372,
+        "a": 386,
+        "pts": 758,
+        "pim": 166,
         "ppg": 1.9,
         "gpInferred": true
       },
@@ -2891,11 +2891,11 @@
           "kind": "skater",
           "goalie": null,
           "position": "F",
-          "gp": 7,
-          "g": 7,
-          "a": 6,
-          "pts": 13,
-          "pim": 2,
+          "gp": 8,
+          "g": 10,
+          "a": 7,
+          "pts": 17,
+          "pim": 4,
           "status": null,
           "gpInferred": false,
           "gpBasis": null,
@@ -3260,24 +3260,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 4,
-            "goals": 6,
-            "assists": 6,
-            "pim": 25
+            "points": 5,
+            "goals": 4,
+            "assists": 4,
+            "pim": 17
           },
           "leagueRanks": {
-            "points": 30,
-            "goals": 37,
-            "assists": 37,
-            "pim": 198
+            "points": 15,
+            "goals": 18,
+            "assists": 22,
+            "pim": 119
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 13,
-          "g": 7,
-          "a": 6,
-          "pim": 2,
-          "gp": 7,
+          "leagueField": 875,
+          "pts": 17,
+          "g": 10,
+          "a": 7,
+          "pim": 4,
+          "gp": 8,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -3303,10 +3303,10 @@
       ],
       "career": {
         "sessions": 29,
-        "gp": 362,
-        "g": 238,
-        "a": 304,
-        "pts": 542,
+        "gp": 363,
+        "g": 239,
+        "a": 305,
+        "pts": 544,
         "pim": 201,
         "ppg": 1.5,
         "gpInferred": false
@@ -4172,10 +4172,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "F",
-          "gp": 7,
-          "g": 5,
-          "a": 3,
-          "pts": 8,
+          "gp": 8,
+          "g": 6,
+          "a": 4,
+          "pts": 10,
           "pim": 4,
           "status": null,
           "gpInferred": false,
@@ -4541,24 +4541,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 18,
+            "points": 13,
             "goals": 11,
-            "assists": 27,
-            "pim": 16
+            "assists": 22,
+            "pim": 17
           },
           "leagueRanks": {
-            "points": 115,
-            "goals": 89,
-            "assists": 161,
-            "pim": 103
+            "points": 90,
+            "goals": 75,
+            "assists": 118,
+            "pim": 119
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 8,
-          "g": 5,
-          "a": 3,
+          "leagueField": 875,
+          "pts": 10,
+          "g": 6,
+          "a": 4,
           "pim": 4,
-          "gp": 7,
+          "gp": 8,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -5358,18 +5358,18 @@
           "division": "Silver",
           "divisionRanks": {
             "points": 87,
-            "goals": 65,
+            "goals": 72,
             "assists": 76,
-            "pim": 47
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 732,
-            "goals": 608,
-            "assists": 610,
-            "pim": 409
+            "points": 748,
+            "goals": 636,
+            "assists": 631,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -6661,19 +6661,19 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 41,
-            "goals": 30,
-            "assists": 39,
-            "pim": 25
+            "points": 45,
+            "goals": 36,
+            "assists": 48,
+            "pim": 28
           },
           "leagueRanks": {
-            "points": 314,
-            "goals": 285,
-            "assists": 271,
-            "pim": 198
+            "points": 349,
+            "goals": 315,
+            "assists": 310,
+            "pim": 224
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -7215,10 +7215,10 @@
       ],
       "career": {
         "sessions": 26,
-        "gp": 227,
+        "gp": 228,
         "g": 173,
-        "a": 163,
-        "pts": 336,
+        "a": 165,
+        "pts": 338,
         "pim": 19,
         "ppg": 1.48,
         "gpInferred": false
@@ -7969,10 +7969,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "F",
-          "gp": 7,
+          "gp": 8,
           "g": 1,
-          "a": 6,
-          "pts": 7,
+          "a": 8,
+          "pts": 9,
           "pim": 0,
           "status": null,
           "gpInferred": false,
@@ -8338,24 +8338,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 22,
-            "goals": 48,
-            "assists": 6,
-            "pim": 47
+            "points": 17,
+            "goals": 51,
+            "assists": 3,
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 144,
-            "goals": 413,
-            "assists": 37,
-            "pim": 409
+            "points": 111,
+            "goals": 442,
+            "assists": 17,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 7,
+          "leagueField": 875,
+          "pts": 9,
           "g": 1,
-          "a": 6,
+          "a": 8,
           "pim": 0,
-          "gp": 7,
+          "gp": 8,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -9580,19 +9580,19 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 72,
-            "goals": 65,
-            "assists": 61,
-            "pim": 47
+            "points": 78,
+            "goals": 72,
+            "assists": 67,
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 603,
-            "goals": 608,
-            "assists": 414,
-            "pim": 409
+            "points": 634,
+            "goals": 636,
+            "assists": 454,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -10854,18 +10854,18 @@
           "division": "Silver",
           "divisionRanks": {
             "points": 87,
-            "goals": 65,
+            "goals": 72,
             "assists": 76,
-            "pim": 47
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 732,
-            "goals": 608,
-            "assists": 610,
-            "pim": 409
+            "points": 748,
+            "goals": 636,
+            "assists": 631,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -13475,18 +13475,18 @@
           "division": "Silver",
           "divisionRanks": {
             "points": 87,
-            "goals": 65,
+            "goals": 72,
             "assists": 76,
-            "pim": 47
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 732,
-            "goals": 608,
-            "assists": 610,
-            "pim": 409
+            "points": 748,
+            "goals": 636,
+            "assists": 631,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -13514,12 +13514,12 @@
       ],
       "career": {
         "sessions": 12,
-        "gp": 112,
-        "g": 47,
-        "a": 53,
-        "pts": 100,
+        "gp": 113,
+        "g": 48,
+        "a": 54,
+        "pts": 102,
         "pim": 62,
-        "ppg": 0.89,
+        "ppg": 0.9,
         "gpInferred": false
       },
       "seasons": [
@@ -13831,10 +13831,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "D",
-          "gp": 7,
-          "g": 0,
-          "a": 2,
-          "pts": 2,
+          "gp": 8,
+          "g": 1,
+          "a": 3,
+          "pts": 4,
           "pim": 6,
           "status": null,
           "gpInferred": false,
@@ -14084,24 +14084,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 60,
-            "goals": 65,
-            "assists": 39,
-            "pim": 10
+            "points": 45,
+            "goals": 51,
+            "assists": 32,
+            "pim": 12
           },
           "leagueRanks": {
-            "points": 497,
-            "goals": 608,
-            "assists": 271,
-            "pim": 62
+            "points": 349,
+            "goals": 442,
+            "assists": 196,
+            "pim": 75
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 2,
-          "g": 0,
-          "a": 2,
+          "leagueField": 875,
+          "pts": 4,
+          "g": 1,
+          "a": 3,
           "pim": 6,
-          "gp": 7,
+          "gp": 8,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -14918,19 +14918,19 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 33,
-            "goals": 30,
-            "assists": 27,
-            "pim": 16
+            "points": 39,
+            "goals": 36,
+            "assists": 32,
+            "pim": 17
           },
           "leagueRanks": {
-            "points": 241,
-            "goals": 285,
-            "assists": 161,
-            "pim": 103
+            "points": 271,
+            "goals": 315,
+            "assists": 196,
+            "pim": 119
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 5,
           "g": 2,
           "a": 3,
@@ -14957,11 +14957,11 @@
       ],
       "career": {
         "sessions": 7,
-        "gp": 70,
+        "gp": 71,
         "g": 30,
-        "a": 36,
-        "pts": 66,
-        "pim": 38,
+        "a": 37,
+        "pts": 67,
+        "pim": 40,
         "ppg": 0.94,
         "gpInferred": false
       },
@@ -15113,11 +15113,11 @@
           "kind": "skater",
           "goalie": null,
           "position": "P",
-          "gp": 5,
+          "gp": 6,
           "g": 0,
-          "a": 1,
-          "pts": 1,
-          "pim": 8,
+          "a": 2,
+          "pts": 2,
+          "pim": 10,
           "status": null,
           "gpInferred": false,
           "gpBasis": null,
@@ -15308,24 +15308,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 72,
-            "goals": 65,
-            "assists": 61,
-            "pim": 8
+            "points": 66,
+            "goals": 72,
+            "assists": 48,
+            "pim": 7
           },
           "leagueRanks": {
-            "points": 603,
-            "goals": 608,
-            "assists": 414,
-            "pim": 50
+            "points": 538,
+            "goals": 636,
+            "assists": 310,
+            "pim": 47
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 1,
+          "leagueField": 875,
+          "pts": 2,
           "g": 0,
-          "a": 1,
-          "pim": 8,
-          "gp": 5,
+          "a": 2,
+          "pim": 10,
+          "gp": 6,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -16104,19 +16104,19 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 33,
-            "goals": 17,
-            "assists": 61,
+            "points": 39,
+            "goals": 18,
+            "assists": 67,
             "pim": 2
           },
           "leagueRanks": {
-            "points": 241,
-            "goals": 136,
-            "assists": 414,
-            "pim": 12
+            "points": 271,
+            "goals": 152,
+            "assists": 454,
+            "pim": 13
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 5,
           "g": 4,
           "a": 1,
@@ -16995,19 +16995,19 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 72,
-            "goals": 65,
-            "assists": 61,
-            "pim": 10
+            "points": 78,
+            "goals": 72,
+            "assists": 67,
+            "pim": 12
           },
           "leagueRanks": {
-            "points": 603,
-            "goals": 608,
-            "assists": 414,
-            "pim": 62
+            "points": 634,
+            "goals": 636,
+            "assists": 454,
+            "pim": 75
           },
           "divisionField": 101,
-          "leagueField": 873,
+          "leagueField": 875,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -17620,10 +17620,10 @@
       ],
       "career": {
         "sessions": 17,
-        "gp": 81,
+        "gp": 82,
         "g": 5,
-        "a": 19,
-        "pts": 24,
+        "a": 20,
+        "pts": 25,
         "pim": 14,
         "ppg": 0.3,
         "gpInferred": false
@@ -18075,10 +18075,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "D",
-          "gp": 4,
+          "gp": 5,
           "g": 0,
-          "a": 1,
-          "pts": 1,
+          "a": 2,
+          "pts": 2,
           "pim": 0,
           "status": null,
           "gpInferred": false,
@@ -18415,24 +18415,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 72,
-            "goals": 65,
-            "assists": 61,
-            "pim": 47
+            "points": 66,
+            "goals": 72,
+            "assists": 48,
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 603,
-            "goals": 608,
-            "assists": 414,
-            "pim": 409
+            "points": 538,
+            "goals": 636,
+            "assists": 310,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 1,
+          "leagueField": 875,
+          "pts": 2,
           "g": 0,
-          "a": 1,
+          "a": 2,
           "pim": 0,
-          "gp": 4,
+          "gp": 5,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -18833,12 +18833,12 @@
       ],
       "career": {
         "sessions": 2,
-        "gp": 18,
-        "g": 13,
-        "a": 9,
-        "pts": 22,
+        "gp": 19,
+        "g": 14,
+        "a": 10,
+        "pts": 24,
         "pim": 0,
-        "ppg": 1.22,
+        "ppg": 1.26,
         "gpInferred": false
       },
       "seasons": [
@@ -18874,10 +18874,10 @@
           "kind": "skater",
           "goalie": null,
           "position": "F",
-          "gp": 2,
-          "g": 0,
-          "a": 1,
-          "pts": 1,
+          "gp": 3,
+          "g": 1,
+          "a": 2,
+          "pts": 3,
           "pim": 0,
           "status": null,
           "gpInferred": false,
@@ -18924,24 +18924,24 @@
           "sessionSort": 2026,
           "division": "Silver",
           "divisionRanks": {
-            "points": 72,
-            "goals": 65,
-            "assists": 61,
-            "pim": 47
+            "points": 60,
+            "goals": 51,
+            "assists": 48,
+            "pim": 55
           },
           "leagueRanks": {
-            "points": 603,
-            "goals": 608,
-            "assists": 414,
-            "pim": 409
+            "points": 443,
+            "goals": 442,
+            "assists": 310,
+            "pim": 440
           },
           "divisionField": 101,
-          "leagueField": 873,
-          "pts": 1,
-          "g": 0,
-          "a": 1,
+          "leagueField": 875,
+          "pts": 3,
+          "g": 1,
+          "a": 2,
           "pim": 0,
-          "gp": 2,
+          "gp": 3,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -20940,6 +20940,83 @@
       ]
     },
     {
+      "slug": "anthony-orange",
+      "name": "Anthony Orange",
+      "aliases": [],
+      "jerseys": [
+        "10"
+      ],
+      "positions": [
+        "F"
+      ],
+      "career": {
+        "sessions": 1,
+        "gp": 6,
+        "g": 4,
+        "a": 0,
+        "pts": 4,
+        "pim": 0,
+        "ppg": 0.67,
+        "gpInferred": false
+      },
+      "seasons": [
+        {
+          "session": "2026 - Summer",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Anthony Orange",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 6,
+          "g": 4,
+          "a": 0,
+          "pts": 4,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        }
+      ],
+      "scoringRanks": [
+        {
+          "session": "2026 - Summer",
+          "sessionSort": 2026,
+          "division": "Silver",
+          "divisionRanks": {
+            "points": 45,
+            "goals": 18,
+            "assists": 76,
+            "pim": 55
+          },
+          "leagueRanks": {
+            "points": 349,
+            "goals": 152,
+            "assists": 631,
+            "pim": 440
+          },
+          "divisionField": 101,
+          "leagueField": 875,
+          "pts": 4,
+          "g": 4,
+          "a": 0,
+          "pim": 0,
+          "gp": 6,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        }
+      ]
+    },
+    {
       "slug": "chris-kendall",
       "name": "Chris Kendall",
       "aliases": [],
@@ -21455,7 +21532,7 @@
       ],
       "career": {
         "sessions": 19,
-        "gp": 259,
+        "gp": 260,
         "g": 1,
         "a": 1,
         "pts": 2,
@@ -22167,17 +22244,17 @@
           "jersey": "1",
           "kind": "goalie",
           "goalie": {
-            "w": "3",
+            "w": "4",
             "l": "4",
             "t": "1",
             "so": "0",
-            "ga": "36",
-            "gaa": "4.41",
+            "ga": "40",
+            "gaa": "4.36",
             "sv": "0",
             "svPct": ".000"
           },
           "position": "G",
-          "gp": 8,
+          "gp": 9,
           "g": 0,
           "a": 1,
           "pts": 1,
@@ -22294,83 +22371,6 @@
           "provenance": {
             "source": "eriemetro",
             "label": "Erie Metro",
-            "archiveOnly": false
-          }
-        }
-      ]
-    },
-    {
-      "slug": "anthony-orange",
-      "name": "Anthony Orange",
-      "aliases": [],
-      "jerseys": [
-        "10"
-      ],
-      "positions": [
-        "F"
-      ],
-      "career": {
-        "sessions": 1,
-        "gp": 5,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 0,
-        "ppg": 0.4,
-        "gpInferred": false
-      },
-      "seasons": [
-        {
-          "session": "2026 - Summer",
-          "phase": "Regular Season",
-          "team": "Golden Retrievers",
-          "recordedAs": "Anthony Orange",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 5,
-          "g": 2,
-          "a": 0,
-          "pts": 2,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "harborcenter-hockeyshift",
-            "label": "HarborCenter",
-            "archiveOnly": false
-          }
-        }
-      ],
-      "scoringRanks": [
-        {
-          "session": "2026 - Summer",
-          "sessionSort": 2026,
-          "division": "Silver",
-          "divisionRanks": {
-            "points": 60,
-            "goals": 30,
-            "assists": 76,
-            "pim": 47
-          },
-          "leagueRanks": {
-            "points": 497,
-            "goals": 285,
-            "assists": 610,
-            "pim": 409
-          },
-          "divisionField": 101,
-          "leagueField": 873,
-          "pts": 2,
-          "g": 2,
-          "a": 0,
-          "pim": 0,
-          "gp": 5,
-          "provenance": {
-            "source": "harborcenter-hockeyshift",
-            "label": "HarborCenter",
             "archiveOnly": false
           }
         }
@@ -24524,7 +24524,7 @@
     {
       "from": "Adam Kaplewicz",
       "to": "Bryan Karchensky",
-      "n": 43
+      "n": 44
     },
     {
       "from": "Adam Kaplewicz",
@@ -24533,13 +24533,13 @@
     },
     {
       "from": "Jason Kaplewicz",
-      "to": "Bryan Karchensky",
+      "to": "Adam Kaplewicz",
       "n": 35
     },
     {
       "from": "Jason Kaplewicz",
-      "to": "Adam Kaplewicz",
-      "n": 34
+      "to": "Bryan Karchensky",
+      "n": 35
     },
     {
       "from": "Brent Boeing",
@@ -24559,7 +24559,7 @@
     {
       "from": "Anthony Christy",
       "to": "Bryan Karchensky",
-      "n": 25
+      "n": 26
     },
     {
       "from": "Adam Kaplewicz",
@@ -24569,7 +24569,7 @@
     {
       "from": "Bryan Karchensky",
       "to": "Adam Kaplewicz",
-      "n": 22
+      "n": 23
     },
     {
       "from": "Bryan Karchensky",
@@ -24707,6 +24707,11 @@
       "n": 9
     },
     {
+      "from": "Anthony Christy",
+      "to": "Adam Kaplewicz",
+      "n": 9
+    },
+    {
       "from": "Anthony Gugino",
       "to": "Adam Kaplewicz",
       "n": 9
@@ -24724,11 +24729,6 @@
     {
       "from": "Jason Kaplewicz",
       "to": "Brendan Kaplewicz",
-      "n": 8
-    },
-    {
-      "from": "Anthony Christy",
-      "to": "Adam Kaplewicz",
       "n": 8
     },
     {
@@ -24753,6 +24753,11 @@
     },
     {
       "from": "John Rein",
+      "to": "Adam Kaplewicz",
+      "n": 8
+    },
+    {
+      "from": "John Rein",
       "to": "Jason Kaplewicz",
       "n": 8
     },
@@ -24767,12 +24772,12 @@
       "n": 7
     },
     {
-      "from": "John Rein",
-      "to": "Adam Kaplewicz",
+      "from": "Andrew Murphy",
+      "to": "Bryan Karchensky",
       "n": 7
     },
     {
-      "from": "Andrew Murphy",
+      "from": "Jeremy McDonald",
       "to": "Bryan Karchensky",
       "n": 7
     },
@@ -24813,11 +24818,6 @@
     },
     {
       "from": "Jake Steinmetz",
-      "to": "Bryan Karchensky",
-      "n": 6
-    },
-    {
-      "from": "Jeremy McDonald",
       "to": "Bryan Karchensky",
       "n": 6
     },
@@ -24864,6 +24864,11 @@
     {
       "from": "Jason Kaplewicz",
       "to": "John Rein",
+      "n": 5
+    },
+    {
+      "from": "Andrew Murphy",
+      "to": "Jason Kaplewicz",
       "n": 5
     },
     {
@@ -24939,11 +24944,6 @@
     {
       "from": "Brett Koeppel",
       "to": "John Rein",
-      "n": 4
-    },
-    {
-      "from": "Andrew Murphy",
-      "to": "Jason Kaplewicz",
       "n": 4
     },
     {
@@ -25494,6 +25494,11 @@
     {
       "from": "Anthony Christy",
       "to": "Jake Steinmetz",
+      "n": 2
+    },
+    {
+      "from": "Devin Arnold",
+      "to": "Anthony Orange",
       "n": 2
     },
     {
@@ -26132,11 +26137,6 @@
       "n": 1
     },
     {
-      "from": "Devin Arnold",
-      "to": "Anthony Orange",
-      "n": 1
-    },
-    {
       "from": "Corey Muff",
       "to": "Bryan Karchensky",
       "n": 1
@@ -26145,18 +26145,23 @@
       "from": "Jeremy McDonald",
       "to": "Jason Kaplewicz",
       "n": 1
+    },
+    {
+      "from": "Bryan Karchensky",
+      "to": "Anthony Orange",
+      "n": 1
     }
   ],
   "partnerships": [
     {
       "a": "Adam Kaplewicz",
       "b": "Jason Kaplewicz",
-      "n": 69
+      "n": 70
     },
     {
       "a": "Adam Kaplewicz",
       "b": "Bryan Karchensky",
-      "n": 65
+      "n": 67
     },
     {
       "a": "Bryan Karchensky",
@@ -26171,7 +26176,7 @@
     {
       "a": "Anthony Christy",
       "b": "Bryan Karchensky",
-      "n": 54
+      "n": 55
     },
     {
       "a": "Brent Boeing",
@@ -26186,7 +26191,7 @@
     {
       "a": "Adam Kaplewicz",
       "b": "Anthony Christy",
-      "n": 27
+      "n": 28
     },
     {
       "a": "Bryan Karchensky",
@@ -26294,6 +26299,11 @@
       "n": 11
     },
     {
+      "a": "Adam Kaplewicz",
+      "b": "John Rein",
+      "n": 11
+    },
+    {
       "a": "Brendan Kaplewicz",
       "b": "Vincent Terrana",
       "n": 11
@@ -26310,17 +26320,17 @@
     },
     {
       "a": "Adam Kaplewicz",
-      "b": "John Rein",
-      "n": 10
-    },
-    {
-      "a": "Adam Kaplewicz",
       "b": "Daniel Schmitt",
       "n": 10
     },
     {
       "a": "Adam Kaplewicz",
       "b": "Anthony Gugino",
+      "n": 9
+    },
+    {
+      "a": "Bryan Karchensky",
+      "b": "Jeremy McDonald",
       "n": 9
     },
     {
@@ -26346,11 +26356,6 @@
     {
       "a": "Adam Kaplewicz",
       "b": "Devin Arnold",
-      "n": 8
-    },
-    {
-      "a": "Bryan Karchensky",
-      "b": "Jeremy McDonald",
       "n": 8
     },
     {
@@ -26449,6 +26454,11 @@
       "n": 6
     },
     {
+      "a": "Andrew Murphy",
+      "b": "Jason Kaplewicz",
+      "n": 5
+    },
+    {
       "a": "Brent Boeing",
       "b": "Justin Wheeler",
       "n": 5
@@ -26496,11 +26506,6 @@
     {
       "a": "Brett Koeppel",
       "b": "John Rein",
-      "n": 4
-    },
-    {
-      "a": "Andrew Murphy",
-      "b": "Jason Kaplewicz",
       "n": 4
     },
     {
@@ -26801,6 +26806,11 @@
     {
       "a": "Adam Kaplewicz",
       "b": "Jeremy McDonald",
+      "n": 2
+    },
+    {
+      "a": "Anthony Orange",
+      "b": "Devin Arnold",
       "n": 2
     },
     {
@@ -27189,11 +27199,6 @@
       "n": 1
     },
     {
-      "a": "Anthony Orange",
-      "b": "Devin Arnold",
-      "n": 1
-    },
-    {
       "a": "Bryan Karchensky",
       "b": "Corey Muff",
       "n": 1
@@ -27201,6 +27206,11 @@
     {
       "a": "Jason Kaplewicz",
       "b": "Jeremy McDonald",
+      "n": 1
+    },
+    {
+      "a": "Anthony Orange",
+      "b": "Bryan Karchensky",
       "n": 1
     }
   ],
@@ -75489,26 +75499,233 @@
       "league": "Seneca HAHL",
       "round": null,
       "away": "Lumber Lions",
-      "awayScore": null,
+      "awayScore": 4,
       "home": "The Golden Retrievers",
-      "homeScore": null,
+      "homeScore": 12,
       "gr": "home",
       "venueUnknown": false,
       "opponent": "Lumber Lions",
-      "gf": null,
-      "ga": null,
-      "result": null,
-      "status": "Not Started",
+      "gf": 12,
+      "ga": 4,
+      "result": "W",
+      "status": "Final",
       "ot": false,
       "shootoutWinner": null,
       "rink": "Rink 2",
-      "periodLabels": [],
-      "linescore": [],
-      "goals": [],
-      "penalties": [],
+      "periodLabels": [
+        "1st",
+        "2nd",
+        "3rd"
+      ],
+      "linescore": [
+        {
+          "team": "Lumber Lions",
+          "periods": [
+            "0",
+            "3",
+            "1"
+          ],
+          "final": "4"
+        },
+        {
+          "team": "The Golden Retrievers",
+          "periods": [
+            "4",
+            "2",
+            "6"
+          ],
+          "final": "12"
+        }
+      ],
+      "goals": [
+        {
+          "period": "1st",
+          "time": "06:18",
+          "team": "The Golden Retrievers",
+          "scorer": "Bryan Karchensky",
+          "assists": [
+            "Adam Kaplewicz",
+            "Anthony Christy"
+          ],
+          "strength": "Power Play"
+        },
+        {
+          "period": "1st",
+          "time": "03:19",
+          "team": "The Golden Retrievers",
+          "scorer": "Bryan Karchensky",
+          "assists": [
+            "Jeremy McDonald"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "1st",
+          "time": "01:54",
+          "team": "The Golden Retrievers",
+          "scorer": "Adam Kaplewicz",
+          "assists": [
+            "Jason Kaplewicz"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "1st",
+          "time": "00:19",
+          "team": "The Golden Retrievers",
+          "scorer": "Adam Kaplewicz",
+          "assists": [
+            "John Rein"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "06:52",
+          "team": "Lumber Lions",
+          "scorer": "Noah Kalsner-Lowe",
+          "assists": [
+            "Kyle Neudorf",
+            "Tibor Setteducati"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "04:03",
+          "team": "The Golden Retrievers",
+          "scorer": "Jason Kaplewicz",
+          "assists": [
+            "Andrew Murphy"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "02:55",
+          "team": "Lumber Lions",
+          "scorer": "Zachary Wagner",
+          "assists": [
+            "Cameron Ellis",
+            "CJ Lenahan"
+          ],
+          "strength": "Short Handed"
+        },
+        {
+          "period": "2nd",
+          "time": "01:09",
+          "team": "Lumber Lions",
+          "scorer": "Noah Kalsner-Lowe",
+          "assists": [],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "00:58",
+          "team": "The Golden Retrievers",
+          "scorer": "John Rein",
+          "assists": [],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "17:31",
+          "team": "The Golden Retrievers",
+          "scorer": "Bryan Karchensky",
+          "assists": [],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "17:19",
+          "team": "Lumber Lions",
+          "scorer": "CJ Lenahan",
+          "assists": [],
+          "strength": "Power Play"
+        },
+        {
+          "period": "3rd",
+          "time": "13:32",
+          "team": "The Golden Retrievers",
+          "scorer": "Jeremy McDonald",
+          "assists": [],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "13:01",
+          "team": "The Golden Retrievers",
+          "scorer": "Anthony Orange",
+          "assists": [
+            "Devin Arnold"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "07:17",
+          "team": "The Golden Retrievers",
+          "scorer": "Bryan Karchensky",
+          "assists": [],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "04:35",
+          "team": "The Golden Retrievers",
+          "scorer": "Adam Kaplewicz",
+          "assists": [
+            "Anthony Christy",
+            "Bryan Karchensky"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "3rd",
+          "time": "00:33",
+          "team": "The Golden Retrievers",
+          "scorer": "Anthony Orange",
+          "assists": [
+            "Bryan Karchensky"
+          ],
+          "strength": "Even Strength"
+        }
+      ],
+      "penalties": [
+        {
+          "period": "1st",
+          "time": "07:43",
+          "team": "Lumber Lions",
+          "detail": "#29 CJ Lenahan Holding (Minor) 02:00"
+        },
+        {
+          "period": "2nd",
+          "time": "06:01",
+          "team": "Lumber Lions",
+          "detail": "#14 Tibor Setteducati Roughing (Minor) 02:00"
+        },
+        {
+          "period": "2nd",
+          "time": "06:01",
+          "team": "The Golden Retrievers",
+          "detail": "#26 Devin Arnold Cross-checking (Minor) 02:00"
+        },
+        {
+          "period": "2nd",
+          "time": "03:55",
+          "team": "Lumber Lions",
+          "detail": "#49 Andrew Urban Interference (Minor) 02:00"
+        },
+        {
+          "period": "2nd",
+          "time": "00:50",
+          "team": "The Golden Retrievers",
+          "detail": "#96 Adam Kaplewicz Hooking (Minor) 02:00"
+        }
+      ],
       "goalies": [],
-      "hasDetail": false,
-      "scheduleOnly": true,
+      "hasDetail": true,
+      "scheduleOnly": false,
       "provenance": {
         "source": "harborcenter-hockeyshift",
         "label": "HarborCenter",
@@ -75590,18 +75807,18 @@
   ],
   "gameTotals": {
     "games": 328,
-    "played": 318,
-    "unplayed": 10,
+    "played": 319,
+    "unplayed": 9,
     "scoreUnrecorded": 7,
-    "withSheet": 251,
-    "scheduleOnly": 77,
-    "w": 176,
+    "withSheet": 252,
+    "scheduleOnly": 76,
+    "w": 177,
     "l": 139,
     "t": 3,
-    "gf": 1805,
-    "ga": 1619,
-    "goalsRecorded": 1183,
-    "penalties": 1096,
+    "gf": 1817,
+    "ga": 1623,
+    "goalsRecorded": 1195,
+    "penalties": 1101,
     "goalieLines": 103,
     "shootouts": 20,
     "shootoutWins": 8,
