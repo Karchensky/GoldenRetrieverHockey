@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AnimatedCounter from "../../../components/AnimatedCounter";
+import JsonLd from "../../../components/JsonLd";
 import CareerArc from "../../../components/CareerArc";
 import ScoringHonours, { AWARD, ordinal, placing, tone } from "../../../components/players/ScoringHonours";
 import AssistNetwork from "../../../components/stats/AssistNetwork";
@@ -10,6 +11,8 @@ import { players, bySlug, goaltending, linemates, recorded, savePctOf, savesOf, 
 import { shortDate } from "../../../lib/dates";
 import { num, plural, record } from "../../../lib/format";
 import { bestGame } from "../../../lib/best-game";
+import { pageMeta } from "../../../lib/meta";
+import { ARCHIVE_CRUMB, breadcrumbSchema, playerSchema } from "../../../lib/schema";
 import { ScopeNote } from "../../../components/seasons/DataCoverage";
 import { SCOPE } from "../../../lib/scope";
 import { NETWORK, TRACE_MIN_SESSIONS, drawableSessions } from "../../../lib/stats";
@@ -44,15 +47,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const jersey = p.jerseys[0] ? `#${p.jerseys[0]} ` : "";
   const pts = recorded(p, "pts");
-  return {
+  return pageMeta({
     title: `${jersey}${p.name}`,
+    path: `/players/${p.slug}`,
     // A man whose columns were never filled in is not summarised as a nought
     // here either — the description is the first thing a search result shows.
     description: pts === null
       ? `${plural(p.career.sessions, "session")} in the Golden Retrievers archive.`
       : `${pts} points across ${p.career.sessions} sessions, `
         + `${p.career.g} goals and ${p.career.a} assists in ${p.career.gp} games.`,
-  };
+  });
 }
 
 export default async function PlayerPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -273,6 +277,11 @@ export default async function PlayerPage({ params }: { params: Promise<{ slug: s
 
   return (
     <>
+      {/* Name, page and club — nothing the page does not already print. These
+          eighty men being findable under their own names is the archive's whole
+          argument; this is the machine-readable half of it. */}
+      <JsonLd data={playerSchema(p)} />
+      <JsonLd data={breadcrumbSchema([ARCHIVE_CRUMB, { name: p.name, path: `/players/${p.slug}` }])} />
       <StatsStyles />
       <div className="wrap page stx">
       <div style={{ paddingTop: 8 }}>

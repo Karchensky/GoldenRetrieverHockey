@@ -2,7 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductCard from "../../../components/store/ProductCard";
 import ProductView from "../../../components/store/ProductView";
-import { markTitle, paragraphs, productById, products } from "../../../lib/store";
+import JsonLd from "../../../components/JsonLd";
+import { productSchema } from "../../../../../packages/store/src/schema";
+import { pageMeta, SITE_URL } from "../../../lib/meta";
+import { breadcrumbSchema, STORE_CRUMB } from "../../../lib/schema";
+import { markTitle, paragraphs, productById, productCard, products } from "../../../lib/store";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -31,10 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const product = productById(id);
   if (!product) return {};
-  return {
+  return pageMeta({
     title: product.title,
-    description: paragraphs(product)[0],
-  };
+    description: paragraphs(product)[0] ?? "",
+    path: `/store/${product.id}`,
+    // The garment, not the crest. See `productCard`.
+    image: productCard(product),
+  });
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -55,8 +62,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   /* The same crest on the other garments. Ordered as MATRIX orders them, so it
      is stable between builds and does not need a rule of its own. */
   const alsoWearing = products.filter((p) => p.markId === product.markId && p.id !== product.id);
+  const schema = productSchema(product, SITE_URL);
   return (
     <div className="wrap page shop-detail">
+      {/* THE PRICES IN HERE ARE RESOLVED BY THE FUNCTION THE WORKER CHARGES
+          FROM, and a test asserts it stays that way.
+          `productSchema` returns NULL for anything sold with a minimum — the
+          stickers go in threes, so a per-unit offer would be a price nobody can
+          pay, and the page beside it says "$10.50 for 3". The breadcrumb below
+          still renders: what is withheld is the price claim, not the page's
+          place in the site. See packages/store/src/schema.ts. */}
+      {schema && <JsonLd data={schema} />}
+      <JsonLd data={breadcrumbSchema([STORE_CRUMB, { name: product.title, path: `/store/${product.id}` }])} />
       <header className="hero hero-shelf seq">
         <p className="crumb">
           <Link href="/store">Store</Link>

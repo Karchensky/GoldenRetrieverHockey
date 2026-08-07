@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { players } from "../lib/data";
+import { SITE_URL } from "../lib/meta";
 import { AVAILABLE_SEASONS, seasonGames } from "../lib/seasons";
 import { products } from "../lib/store";
 import { games } from "../components/games/games";
@@ -37,7 +38,12 @@ import { games } from "../components/games/games";
  */
 export const dynamic = "force-static";
 
-const SITE = "https://goldenretrieverhockey.com";
+/**
+ * The origin, shared with `layout.tsx`'s `metadataBase` and every canonical.
+ * It was written out a third time here; a sitemap that names a different origin
+ * from the canonicals is a sitemap that indexes duplicates.
+ */
+const SITE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 import RinkMount from "../components/rink/RinkMount";
 import { CartProvider } from "../components/store/Cart";
 import { FOUNDED } from "../lib/data";
+import { DEFAULT_CARD, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from "../lib/meta";
 import "./globals.css";
 
 const DESCRIPTION =
@@ -12,7 +13,7 @@ const DESCRIPTION =
 const TITLE = `Golden Retrievers — Buffalo, est. ${FOUNDED}`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://goldenretrieverhockey.com"),
+  metadataBase: new URL(SITE_URL),
   // The team is the GOLDEN RETRIEVERS, plural, everywhere it is written. The
   // domain is still goldenretrieverhockey.com and that is fine — a URL is not
   // the club's name. "Hockey" comes off with the singular: "Buffalo, est. …"
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   // The year is counted from the earliest session on file, never typed.
   title: {
     default: TITLE,
-    template: "%s — Golden Retrievers",
+    template: TITLE_TEMPLATE,
   },
   description: DESCRIPTION,
   icons: {
@@ -35,16 +36,22 @@ export const metadata: Metadata = {
   // distribution this shop has — previewed as a thumbnail in a corner or as
   // nothing at all. `golden-retrievers-card.png` is built from the vector master
   // by `npm run build:brand-assets`.
+  //
+  // **THIS BLOCK IS THE HOME PAGE'S CARD AND THE FALLBACK, NOT THE SITE'S.**
+  // Because it sets `title` and `description` explicitly, Next stopped deriving
+  // them from each page's own metadata and handed these two literal strings to
+  // all 505 pages — measured in the built export on 2026-08-07, every route
+  // from a product to a player unfurled as the club rather than as itself. That
+  // is fixed in `lib/meta.ts`, where every real route states its own card; what
+  // is left inheriting this is the four `redirect()` stubs and 404, which have
+  // no identity of their own and should unfurl as the club.
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
     type: "website",
-    images: [{
-      url: "/brand/golden-retrievers-card.png",
-      width: 1200,
-      height: 630,
-      alt: "The Golden Retrievers rink-board lockup — the dog in a gold roundel beside the club name",
-    }],
+    images: [DEFAULT_CARD],
   },
 };
 

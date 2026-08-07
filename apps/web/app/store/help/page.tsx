@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMeta } from "../../../lib/meta";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -43,12 +44,13 @@ import s from "../../../components/store/store.module.css";
  */
 const CONTACT = "store@goldenretrieverhockey.com";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Shipping and returns",
+  path: "/store/help",
   description:
     "How long an order takes, what happens if something arrives wrong, and how to " +
     "reach a person about it.",
-};
+});
 
 export default function HelpPage() {
   return (

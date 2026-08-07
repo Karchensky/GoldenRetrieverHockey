@@ -55,8 +55,25 @@ const wanted = new Set();
 let fetched = 0;
 let skipped = 0;
 
+/**
+ * The social card is 1200x630 and the mockups are 1200x1200.
+ *
+ * `summary_large_image` wants 1.91:1, and a square handed to it is letterboxed
+ * by the platform or dropped. Cropping a square garment shot to 1.91:1 would cut
+ * the sleeves off, so the garment is CONTAINED and the remainder filled white —
+ * which is the mockups' own studio background, so there is no visible seam.
+ *
+ * **JPEG, not WebP, and that is the whole reason this file exists rather than
+ * `og:image` pointing at the mockup already on disk.** The unfurl is rendered by
+ * whatever crawler the link was pasted into, and that is the one audience here
+ * whose format support cannot be measured from this machine. A WebP that one
+ * chat client will not draw is the same failure as the 256px favicon this
+ * replaced: a link that previews as nothing.
+ */
+const CARD = { width: 1200, height: 630, quality: 82 };
+
 const existing = new Set(
-  (await readdir(OUT).catch(() => [])).filter((f) => f.endsWith(".webp")),
+  (await readdir(OUT).catch(() => [])).filter((f) => f.endsWith(".webp") || f.endsWith(".jpg")),
 );
 
 /** filename -> the CDN URL it was fetched from. Gitignored; a cache key, not data. */
@@ -156,6 +173,38 @@ for (const product of catalog.products) {
     }
     console.log(`${name.padEnd(44)} ${(source.length / 1024).toFixed(0)} KB fetched —${derived}`);
   }
+
+  /**
+   * THE CARD A SHARED LINK UNFURLS AS — one per product, from its hero mockup.
+   *
+   * Until 2026-08-07 every one of the 505 pages on this site unfurled as the
+   * club lockup with the site's own blurb, product pages included, so the link
+   * a player sent a teammate showed the crest and never the shirt. See
+   * `apps/web/lib/meta.ts` for the metadata half of that fix; this is the
+   * picture half.
+   *
+   * Keyed on the hero mockup's own source URL, so a re-rendered placement
+   * regenerates the card as well as the photograph.
+   */
+  const mockupCount = mockups.length;
+  if (!mockupCount) continue;
+  const at = Number.isInteger(product.heroIndex) && product.heroIndex >= 0 && product.heroIndex < mockupCount
+    ? product.heroIndex
+    : 0;
+  const cardName = `${product.id}-card.jpg`;
+  const heroName = `${product.id}-${at}.webp`;
+  const heroUrl = mockups[at];
+  wanted.add(cardName);
+  if (existing.has(cardName) && sources[cardName] === heroUrl) continue;
+
+  const card = await sharp(await readFile(join(OUT, heroName)))
+    .resize(CARD.width, CARD.height, { fit: "contain", background: { r: 255, g: 255, b: 255 } })
+    .flatten({ background: { r: 255, g: 255, b: 255 } })
+    .jpeg({ quality: CARD.quality, mozjpeg: true })
+    .toBuffer();
+  await writeFile(join(OUT, cardName), card);
+  sources[cardName] = heroUrl;
+  console.log(`${cardName.padEnd(44)} social card — ${(card.length / 1024).toFixed(0)}KB`);
 }
 
 let removed = 0;

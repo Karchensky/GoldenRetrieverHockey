@@ -47,6 +47,16 @@ export type CatalogProduct = {
   taxCode: string;
   markId: string;
   itemId: string;
+  /**
+   * That maker's real first-item US postage, in cents, as the sync measured it.
+   *
+   * It has been written into `products.json` all along and was missing from
+   * this type, so nothing could read it without an assertion. The checkout does
+   * not use it — the Worker quotes Printify per basket, which is the only
+   * figure that can be charged — but a single-item listing has to state a
+   * postage somewhere, and this is the honest one. See `schema.ts`.
+   */
+  postageCents?: number;
   colors: CatalogColor[];
   sizes: string[];
   sale?: { minQuantity?: number; addOnOnly?: boolean; why: string };

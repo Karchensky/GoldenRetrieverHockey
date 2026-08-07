@@ -2,6 +2,8 @@ import catalog from "../data/products.json";
 import { money, priceRange } from "../../../packages/store/src/basket";
 import type { CatalogProduct } from "../../../packages/store/src/basket";
 import { photographsOf } from "../../../packages/store/src/gallery";
+import { cardHref, mockupHref } from "../../../packages/store/src/schema";
+import type { SocialImage } from "./meta";
 
 /**
  * The store's data contract.
@@ -117,8 +119,7 @@ export const groups: ItemGroup[] = (() => {
  * already the fastest thing in the path. `scripts/mirror-mockups.mjs` fills
  * this directory and `npm run store:mockups` runs it.
  */
-export const mockupPath = (productId: string, index: number): string =>
-  `/store/${productId}-${index}.webp`;
+export const mockupPath = mockupHref;
 
 /**
  * The same mockup at 400 and 800, for a card that draws it at 220–314 CSS px.
@@ -157,6 +158,28 @@ export const heroIndex = (product: Product): number => {
 
 export const heroMockup = (product: Product): string | null =>
   product.mockups.length ? mockupPath(product.id, heroIndex(product)) : null;
+
+/**
+ * The 1200×630 card this product's link unfurls as.
+ *
+ * **Every product page used to unfurl as the club lockup.** Measured in the
+ * built export on 2026-08-07: all 505 pages carried the same `og:image`, so the
+ * link a player sent a teammate previewed the crest and never the garment — on
+ * a shop whose entire distribution is that one link.
+ *
+ * Written by `npm run store:mockups` from the hero mockup, as JPEG rather than
+ * WebP because the renderer is somebody else's chat client. A product with no
+ * mockups mirrored yet falls back to the club card rather than to a 404.
+ */
+export const productCard = (product: Product): SocialImage | undefined =>
+  product.mockups.length
+    ? {
+        url: cardHref(product.id),
+        width: 1200,
+        height: 630,
+        alt: `${product.title}, in ${product.mockups[heroIndex(product)]!.color}`,
+      }
+    : undefined;
 
 /**
  * The photographs of one colourway, as indices into `product.mockups`.

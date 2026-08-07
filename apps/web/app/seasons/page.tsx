@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AnimatedCounter from "../../components/AnimatedCounter";
+import JsonLd from "../../components/JsonLd";
 import StatsStyles from "../../components/stats/styles";
 import AssistNetwork from "../../components/stats/AssistNetwork";
 import Trajectories from "../../components/stats/Trajectories";
@@ -24,6 +25,8 @@ import {
   SIN_BIN,
   SPAN_SUMMARY,
 } from "../../lib/hubs";
+import { pageMeta } from "../../lib/meta";
+import { teamSchema } from "../../lib/schema";
 import { SCOPE } from "../../lib/scope";
 import {
   BOARD_CELLS,
@@ -35,10 +38,11 @@ import {
   TRACES,
 } from "../../lib/stats";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Team Archive",
+  path: "/seasons",
   description: `${totals.sessions} seasons of Golden Retrievers rosters, statistics, games, honours, and stories in one chronological archive.`,
-};
+});
 
 /**
  * The archive, in the order a reader wants it.
@@ -153,6 +157,12 @@ export default function SeasonsPage() {
 
   return (
     <>
+      {/* The same `@id` the home page states, deliberately. This is the
+          archive's front door and the page most likely to be found first, and a
+          crawler arriving here should get the club rather than a table with no
+          subject. Repeating a node under one identifier is not a contradiction;
+          stating the club twice under two would be. */}
+      <JsonLd data={teamSchema()} />
       <div className="wrap wrap-wide page stx">
         <StatsStyles />
 

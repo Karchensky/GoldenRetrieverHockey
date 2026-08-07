@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ClearBasket from "../../../components/store/ClearBasket";
+import { pageMeta } from "../../../lib/meta";
 import s from "../../../components/store/store.module.css";
 
 /**
@@ -34,10 +35,15 @@ import s from "../../../components/store/store.module.css";
  */
 
 export const metadata: Metadata = {
-  title: "Thank you",
-  description: "The order is in.",
+  ...pageMeta({
+    title: "Thank you",
+    path: "/store/thanks",
+    description: "The order is in.",
+  }),
   // Nothing to index: it is reachable only with a session id and says the same
-  // thing to everybody.
+  // thing to everybody. The canonical above costs nothing and is the honest
+  // answer if a crawler ever reaches it anyway — `robots` is the instruction,
+  // not the canonical's absence.
   robots: { index: false, follow: false },
 };
 

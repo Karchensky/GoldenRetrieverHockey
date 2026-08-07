@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JsonLd from "../../../components/JsonLd";
 import Reveal from "../../../components/games/Reveal";
 import { games, gameById, grSide } from "../../../components/games/games";
 import s from "../../../components/games/games.module.css";
 import { longDate } from "../../../lib/dates";
 import { plural } from "../../../lib/format";
+import { pageMeta } from "../../../lib/meta";
+import { breadcrumbSchema, gameCrumbs, gameSchema } from "../../../lib/schema";
 
 export function generateStaticParams() {
   return games.map((g) => ({ id: g.id }));
@@ -14,12 +17,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const g = gameById(id);
   if (!g) return { title: "Not found" };
-  return {
+  return pageMeta({
     // A game that was never played has no score, so it is not given a pair of
     // dashes where two numbers would go.
     title: g.result === null
       ? `${g.away} at ${g.home} — ${g.status}`
       : `${g.away} ${g.awayScore} at ${g.home} ${g.homeScore}`,
+    path: `/games/${g.id}`,
     // COUNT THE NOUN. This read "1 penalties" on 22 of the 328 game pages, and
     // a meta description is the sentence a search result shows. `plural` is the
     // same helper GameList already uses; "penalty" is the one word here whose
@@ -29,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       (g.hasDetail
         ? ` ${plural(g.goals.length, "goal")}, ${plural(g.penalties.length, "penalty", "penalties")}.`
         : ""),
-  };
+  });
 }
 
 export default async function GamePage({ params }: { params: Promise<{ id: string }> }) {
@@ -45,6 +49,11 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
 
   return (
     <>
+      {/* 119 of these 328 sheets do not record which club was at home, and the
+          markup says so by naming an unordered pair instead of inventing one.
+          See `gameSchema`. */}
+      <JsonLd data={gameSchema(g)} />
+      <JsonLd data={breadcrumbSchema(gameCrumbs(g))} />
       <div className="wrap page">
       <div style={{ paddingTop: 8 }}>
         <Link href="/seasons#seasons" className="kicker">&larr; All seasons</Link>

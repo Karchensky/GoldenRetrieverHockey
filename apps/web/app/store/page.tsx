@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "../../components/store/ProductCard";
+import { pageMeta } from "../../lib/meta";
 import { groups, products } from "../../lib/store";
 import s from "../../components/store/store.module.css";
 
@@ -43,13 +44,14 @@ import s from "../../components/store/store.module.css";
  * line is data. Keep it to what cannot go stale: the categories change, the
  * club does not.
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Store",
+  path: "/store",
   description:
     "Tees, long sleeves, crewnecks, hoodies, youth tees, mugs and stickers, " +
     "carrying the crests of the Golden Retrievers — Buffalo's premier " +
     "golden-retriever-themed hockey team since 2011.",
-};
+});
 
 export default function StorePage() {
   return (

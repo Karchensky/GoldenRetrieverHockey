@@ -135,6 +135,12 @@ apps/web/public/store/.sources.json
 /TODO.md
 /docs/HANDBOOK.md
 
+# Design specs written while working. Same class as the two above: they are
+# notes to the captain and to whoever picks this up, not documentation of the
+# shipped thing. What they decided ends up in the code's own comments, which is
+# where the next reader will actually be standing.
+/docs/superpowers/
+
 # Superseded concept rounds, 62 MB of PNGs that nothing reads. The artwork in
 # use is docs/logos/vector/master-svg/.
 /output/

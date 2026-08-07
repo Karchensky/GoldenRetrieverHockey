@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AnimatedCounter from "../../../components/AnimatedCounter";
+import JsonLd from "../../../components/JsonLd";
 import GameList from "../../../components/games/GameList";
 import { rows } from "../../../components/games/games";
 import Recaps from "../../../components/seasons/Recaps";
 import s from "../../../components/seasons/seasons.module.css";
 import { leagueRecord, plural, record } from "../../../lib/format";
+import { pageMeta } from "../../../lib/meta";
+import { ARCHIVE_CRUMB, breadcrumbSchema } from "../../../lib/schema";
 import { rosterStateAt } from "../../../lib/scope";
 import {
   AVAILABLE_SEASONS,
@@ -34,10 +37,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const sort = sortFromSeasonSlug(slug);
   const entry = sort === null ? undefined : SEASON_ATLAS.find((item) => item.sort === sort && item.href);
   if (!entry) return { title: "Season not found" };
-  return {
+  return pageMeta({
     title: entry.label,
+    path: entry.href!,
     description: `${entry.label}: ${entry.players} players, ${entry.games} games${entry.record ? `, ${entry.record}` : ""}.`,
-  };
+  });
 }
 
 const nsum = (values: (number | null)[]): number | null =>
@@ -150,6 +154,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ slug: s
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema([ARCHIVE_CRUMB, { name: entry.label, path: entry.href! }])} />
       <div className="wrap page">
         <header className={`hero ${s.seasonHero} seq`}>
           <span className="kicker">
