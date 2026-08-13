@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T15:08:23.375Z",
+  "generatedAt": "2026-08-13T15:08:36.571Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1195,
     "assistEdges": 1326,
     "gameSheets": 285,
-    "captures": 6652,
+    "captures": 6767,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -2038,7 +2038,7 @@
             "assists": 141,
             "pim": 128
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 19,
           "g": 15,
@@ -3271,7 +3271,7 @@
             "assists": 28,
             "pim": 128
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 17,
           "g": 10,
@@ -4552,7 +4552,7 @@
             "assists": 141,
             "pim": 128
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 10,
           "g": 6,
@@ -5368,7 +5368,7 @@
             "assists": 645,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 0,
           "g": 0,
@@ -6672,7 +6672,7 @@
             "assists": 327,
             "pim": 233
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 4,
           "g": 2,
@@ -8349,7 +8349,7 @@
             "assists": 20,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 9,
           "g": 1,
@@ -9591,7 +9591,7 @@
             "assists": 480,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 1,
           "g": 0,
@@ -10864,7 +10864,7 @@
             "assists": 645,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 0,
           "g": 0,
@@ -13485,7 +13485,7 @@
             "assists": 645,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 0,
           "g": 0,
@@ -14095,7 +14095,7 @@
             "assists": 219,
             "pim": 83
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 4,
           "g": 1,
@@ -14929,7 +14929,7 @@
             "assists": 219,
             "pim": 128
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 5,
           "g": 2,
@@ -15319,7 +15319,7 @@
             "assists": 327,
             "pim": 52
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 2,
           "g": 0,
@@ -16115,7 +16115,7 @@
             "assists": 480,
             "pim": 16
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 5,
           "g": 4,
@@ -17006,7 +17006,7 @@
             "assists": 480,
             "pim": 83
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 1,
           "g": 0,
@@ -18426,7 +18426,7 @@
             "assists": 327,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 2,
           "g": 0,
@@ -18935,7 +18935,7 @@
             "assists": 327,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 3,
           "g": 1,
@@ -21001,7 +21001,7 @@
             "assists": 645,
             "pim": 453
           },
-          "divisionField": 101,
+          "divisionField": 102,
           "leagueField": 883,
           "pts": 4,
           "g": 4,
