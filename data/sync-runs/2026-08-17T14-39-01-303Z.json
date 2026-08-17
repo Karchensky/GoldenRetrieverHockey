@@ -1,0 +1,56 @@
+{
+  "ranAt": "2026-08-17T14:39:01.303Z",
+  "freshnessHours": 12,
+  "before": {
+    "totals": {
+      "sessions": 31,
+      "playerSeasons": 649,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1195,
+      "assistEdges": 1326,
+      "gameSheets": 285,
+      "captures": 7112,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 31,
+    "games": 328
+  },
+  "after": {
+    "totals": {
+      "sessions": 31,
+      "playerSeasons": 649,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1196,
+      "assistEdges": 1327,
+      "gameSheets": 286,
+      "captures": 7228,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 31,
+    "games": 328
+  },
+  "newSessions": [],
+  "changes": [
+    "totals.goals: 1195 -> 1196",
+    "totals.assistEdges: 1326 -> 1327",
+    "totals.gameSheets: 285 -> 286",
+    "totals.captures: 7112 -> 7228",
+    "Bryan Karchensky.gp: 460 -> 461",
+    "Bryan Karchensky.a: 505 -> 506",
+    "Vincent Terrana.gp: 319 -> 320",
+    "Anthony Christy.gp: 228 -> 229",
+    "Richard Fedele.gp: 301 -> 302",
+    "John Rein.gp: 113 -> 114",
+    "Anthony Gugino.gp: 152 -> 153",
+    "Jake Steinmetz.gp: 37 -> 38",
+    "Anthony Galante.gp: 61 -> 62",
+    "Andrew Murphy.gp: 82 -> 83",
+    "Jeremy McDonald.gp: 19 -> 20",
+    "Jeremy McDonald.g: 14 -> 15",
+    "Anthony Orange.gp: 6 -> 7",
+    "Corey Muff.gp: 260 -> 261"
+  ],
+  "regressions": []
+}
