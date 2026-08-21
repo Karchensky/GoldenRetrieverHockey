@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T14:46:07.089Z",
+  "generatedAt": "2026-08-21T14:45:49.841Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1200,
     "assistEdges": 1331,
     "gameSheets": 287,
-    "captures": 7459,
+    "captures": 7574,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -2033,13 +2033,13 @@
             "pim": 20
           },
           "leagueRanks": {
-            "points": 7,
+            "points": 8,
             "goals": 4,
-            "assists": 72,
-            "pim": 154
+            "assists": 75,
+            "pim": 159
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 22,
           "g": 16,
           "a": 6,
@@ -3268,11 +3268,11 @@
           "leagueRanks": {
             "points": 14,
             "goals": 13,
-            "assists": 30,
-            "pim": 154
+            "assists": 34,
+            "pim": 159
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 20,
           "g": 12,
           "a": 8,
@@ -4547,13 +4547,13 @@
             "pim": 20
           },
           "leagueRanks": {
-            "points": 130,
-            "goals": 101,
-            "assists": 174,
-            "pim": 154
+            "points": 133,
+            "goals": 102,
+            "assists": 178,
+            "pim": 159
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 10,
           "g": 6,
           "a": 4,
@@ -5363,13 +5363,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 770,
-            "goals": 674,
-            "assists": 668,
-            "pim": 483
+            "points": 771,
+            "goals": 675,
+            "assists": 669,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -6667,13 +6667,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 415,
-            "goals": 365,
-            "assists": 361,
-            "pim": 258
+            "points": 423,
+            "goals": 368,
+            "assists": 367,
+            "pim": 262
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -8344,13 +8344,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 130,
-            "goals": 491,
-            "assists": 19,
-            "pim": 258
+            "points": 133,
+            "goals": 498,
+            "assists": 20,
+            "pim": 262
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 10,
           "g": 1,
           "a": 9,
@@ -9586,13 +9586,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 686,
-            "goals": 674,
-            "assists": 510,
-            "pim": 483
+            "points": 690,
+            "goals": 675,
+            "assists": 514,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -10859,13 +10859,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 770,
-            "goals": 674,
-            "assists": 668,
-            "pim": 483
+            "points": 771,
+            "goals": 675,
+            "assists": 669,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -13480,13 +13480,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 770,
-            "goals": 674,
-            "assists": 668,
-            "pim": 483
+            "points": 771,
+            "goals": 675,
+            "assists": 669,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -14090,13 +14090,13 @@
             "pim": 11
           },
           "leagueRanks": {
-            "points": 415,
-            "goals": 491,
-            "assists": 253,
-            "pim": 70
+            "points": 423,
+            "goals": 498,
+            "assists": 256,
+            "pim": 75
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 4,
           "g": 1,
           "a": 3,
@@ -14924,13 +14924,13 @@
             "pim": 20
           },
           "leagueRanks": {
-            "points": 338,
-            "goals": 365,
-            "assists": 253,
-            "pim": 154
+            "points": 339,
+            "goals": 368,
+            "assists": 256,
+            "pim": 159
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 5,
           "g": 2,
           "a": 3,
@@ -15314,13 +15314,13 @@
             "pim": 7
           },
           "leagueRanks": {
-            "points": 415,
-            "goals": 491,
-            "assists": 253,
-            "pim": 56
+            "points": 423,
+            "goals": 498,
+            "assists": 256,
+            "pim": 60
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 4,
           "g": 1,
           "a": 3,
@@ -16110,13 +16110,13 @@
             "pim": 3
           },
           "leagueRanks": {
-            "points": 338,
-            "goals": 198,
-            "assists": 510,
-            "pim": 22
+            "points": 339,
+            "goals": 203,
+            "assists": 514,
+            "pim": 24
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 5,
           "g": 4,
           "a": 1,
@@ -17001,13 +17001,13 @@
             "pim": 15
           },
           "leagueRanks": {
-            "points": 686,
-            "goals": 674,
-            "assists": 510,
-            "pim": 101
+            "points": 690,
+            "goals": 675,
+            "assists": 514,
+            "pim": 106
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -18421,13 +18421,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 588,
-            "goals": 674,
-            "assists": 361,
-            "pim": 258
+            "points": 591,
+            "goals": 675,
+            "assists": 367,
+            "pim": 262
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 2,
           "g": 0,
           "a": 2,
@@ -18551,13 +18551,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 415,
-            "goals": 365,
-            "assists": 361,
-            "pim": 483
+            "points": 423,
+            "goals": 368,
+            "assists": 367,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -20996,13 +20996,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 415,
-            "goals": 198,
-            "assists": 668,
-            "pim": 483
+            "points": 423,
+            "goals": 203,
+            "assists": 669,
+            "pim": 486
           },
           "divisionField": 102,
-          "leagueField": 885,
+          "leagueField": 887,
           "pts": 4,
           "g": 4,
           "a": 0,
