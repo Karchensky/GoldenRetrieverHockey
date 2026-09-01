@@ -14,9 +14,10 @@
  * THE HUMAN STEP is stated at the end of every run: a person decides whether
  * the refreshed data ships. Nothing here publishes.
  *
- *   npm run sync:current                 # refresh + verify + report
- *   npm run sync:current -- --commit     # ...and commit it (not on the default branch)
- *   npm run sync:current -- --build-site # ...and build the static export
+ *   npm run sync:current                  # refresh + verify + report
+ *   npm run sync:current -- --commit      # ...and commit it (not on the default branch)
+ *   npm run sync:current -- --build-site  # ...and build the static export
+ *   npm run sync:current -- --skip-verify # ...capture and guard only (see step 4)
  *   npm run sync:current -- --freshness-hours=6
  *
  * `--build-site` is OFF by default and should stay off for a scheduled run.
@@ -38,6 +39,16 @@ const valueOf = (name, fallback) => {
 
 const buildSite = has("--build-site");
 const commit = has("--commit");
+
+/**
+ * Capture and guard, but leave the suite and the typecheck to the caller.
+ *
+ * Only for a caller that verifies AFTERWARDS and can say so — the scheduled
+ * job does, at .github/workflows/refresh.yml, once the bytes are pushed. A
+ * person running this by hand should not pass it: there is nothing to lose at
+ * a keyboard, and the whole point of step 4 is to be told before you look.
+ */
+const skipVerify = has("--skip-verify");
 
 /**
  * The freshness window the live captures run under.
@@ -284,8 +295,34 @@ if (regressions.length > 0) {
 // ---------------------------------------------------------------------------
 // 4. Prove it still holds together
 // ---------------------------------------------------------------------------
-run("Run corpus tests", ["test"]);
-run("Run typecheck", ["run", "typecheck"]);
+//
+// THESE RUN BEFORE THE COMMIT, AND THAT IS ONLY RIGHT WHEN NOTHING IS AT STAKE.
+//
+// A red suite exits here, so the captures never reach step 6 at all. At a
+// keyboard that is exactly what you want: the corpus is on your disk either
+// way, and being stopped before you look is the point. On a runner it is the
+// opposite — the bytes exist nowhere else and the machine is about to be
+// destroyed.
+//
+// One stale assertion cost seven days of capture that way, 25 to 31 August
+// 2026. The fetch worked perfectly every morning; a test that assumed a season
+// was in progress failed once the last game was played; each day's bytes were
+// thrown away. A page cannot be re-fetched as it was yesterday, and the archive
+// is the one thing here that cannot be rebuilt.
+//
+// So the scheduled job passes --skip-verify and runs all of this AFTER it has
+// pushed, where a failure still turns the run red — which is the notification —
+// with the bytes already safe on origin/main.
+//
+// THE GUARD ABOVE IS NOT SKIPPABLE and still blocks the commit. Losing data is
+// a regression; failing a test is news. They are not the same event.
+if (skipVerify) {
+  console.log("\n=== Verification skipped (--skip-verify) ===");
+  console.log("  The caller runs the suite and the typecheck itself, once these captures are safe.");
+} else {
+  run("Run corpus tests", ["test"]);
+  run("Run typecheck", ["run", "typecheck"]);
+}
 if (buildSite) run("Build the static export", ["run", "build:site"]);
 
 // ---------------------------------------------------------------------------

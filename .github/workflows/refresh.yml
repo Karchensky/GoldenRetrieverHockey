@@ -34,7 +34,16 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+
+    # Sixty, not thirty, and the extra half hour is for one predictable spike.
+    #
+    # Settled data — a Final boxscore, an ended season's leaderboard — is
+    # re-fetched once every thirty days (SETTLED_FRESHNESS_MS), and that clock is
+    # reset only by a commit landing. A run that arrives just after the window
+    # expires re-fetches several hundred pages instead of skipping them: 22
+    # minutes measured on 2026-08-31 against the old 30-minute ceiling, versus
+    # about 5 on a quiet day. The run after it is cheap again.
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v4
@@ -48,22 +57,37 @@ jobs:
 
       - run: npm ci
 
-      # capture -> diff -> regenerate -> guard -> verify.
+      # capture -> diff -> regenerate -> guard. NOT verify — see below.
       #
       # Deliberately WITHOUT --commit: the script refuses the default branch,
       # and the commit below is the explicit act. If the guard finds the archive
       # lost anything — a total down, a player gone, a session vanished — this
-      # exits non-zero and nothing is committed.
+      # exits non-zero and nothing is committed. That guard is NOT skipped and
+      # must never be: losing data is a regression, and a regression stops here.
+      #
+      # --skip-verify moves the suite and the typecheck to after the push, which
+      # is the order the comment further down describes and the order this job
+      # did not actually have. sync:current runs them at its own step 4, BEFORE
+      # its commit, so until now a failing test discarded that morning's capture
+      # rather than merely reporting it. Seven consecutive days were lost that
+      # way in August 2026 to a single test that assumed a season was in
+      # progress. Nothing about that failure was worth a byte of capture.
       - name: Sync
-        run: npm run sync:current
+        run: npm run sync:current -- --skip-verify
 
       # Nothing changed on most days, and that is not a failure.
+      #
+      # Scoped to the SAME TWO PATHS the commit below stages, and they have to
+      # stay in step. Asked of the whole tree, a change anywhere else would set
+      # changed=true, stage nothing, and fail `git commit` with "nothing to
+      # commit" — turning a green run red and dropping the push, which is the
+      # exact accident this job has just been fixed to stop having.
       - name: Detect changes
         id: diff
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          if [ -n "$(git status --porcelain -- data apps/web/data/site.json)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            git status --porcelain | head -20
+            git status --porcelain -- data apps/web/data/site.json | head -20
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Nothing new."
@@ -74,11 +98,18 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
+          # The two paths a refresh produces, named — the same pair
+          # sync-current.mjs stages, and for its reason. `git add -A` happened to
+          # be equivalent on a clean runner, but it is a promise about the whole
+          # tree, and this step is only ever entitled to the corpus and the data
+          # generated from it.
+          git add -- data apps/web/data/site.json
           git commit -m "chore(data): current season refresh
 
-          Captured, regenerated and verified by the scheduled job. The guard
-          passed: nothing decreased, no player lost, no session vanished."
+          Captured, regenerated and guarded by the scheduled job: nothing
+          decreased, no player lost, no session vanished. The suite and the
+          build are checked in the steps after this one, deliberately — see
+          the comment below."
           git push
 
       # AFTER THE PUSH, DELIBERATELY, AND THAT ORDER IS THE WHOLE POINT.
@@ -88,6 +119,13 @@ jobs:
       # data is committed and pushed first and only then checked. A failure here
       # turns the run red — which is the notification — while the bytes are
       # already safe on `origin/main`.
+      #
+      # This paragraph described the intended order for months while the job did
+      # something else, because `sync:current` verifies at its own step 4 and
+      # that step ran before this commit. `--skip-verify` above is what finally
+      # makes the words true. If a future edit drops that flag, it silently
+      # restores the failure mode: the tests move back in front of the commit
+      # and a red suite starts eating captures again.
       #
       # What it catches: a data change that breaks the site build. Cloudflare
       # builds from the push, and if that build fails it silently keeps serving
@@ -103,3 +141,8 @@ jobs:
       - name: Check the suite still passes
         if: steps.diff.outputs.changed == 'true'
         run: npm test
+
+      # Also skipped inside the sync now, so it has to happen somewhere.
+      - name: Check the types still hold
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run typecheck

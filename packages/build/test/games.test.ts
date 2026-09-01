@@ -13,7 +13,7 @@ import {
   isRetrievers as isRetrieversTeam,
   teamIdentity,
 } from "../../capture/src/sources/digitalshift.ts";
-import { corpusHtml, corpusPages } from "../../parse/test/helpers/corpus.ts";
+import { corpusHtml, corpusPages, corpusSnapshots } from "../../parse/test/helpers/corpus.ts";
 
 /**
  * The game record, assembled from REAL captured bytes.
@@ -348,15 +348,77 @@ test("which side the Retrievers were is decided by team id, never by name", { sk
 });
 
 test("an unplayed fixture is not a scoreless draw", { skip: noCorpus }, () => {
-  // The API reports 0-0 for a game nobody has skated. Four Summer 2026
-  // fixtures are in that state; recording them as ties would invent results.
-  const notStarted = all!.games.filter((g) => g.status === "Not Started");
-  assert.ok(notStarted.length > 0);
-  for (const g of notStarted) {
+  // The API reports 0-0 for a game nobody has skated, so `status` is the only
+  // thing separating a fixture from a real scoreless draw. However many the
+  // record holds today — and between seasons it holds none — not one of them
+  // may carry a result.
+  for (const g of all!.games.filter((g) => g.status === "Not Started")) {
     assert.equal(g.result, null);
     assert.equal(g.gf, null);
     assert.equal(g.ga, null);
     assert.equal(g.goals.length, 0);
+  }
+});
+
+/**
+ * THE SEASON ENDS, AND THE FIXTURES DO NOT COME BACK.
+ *
+ * The loop above is built from `corpusPages`, which returns the NEWEST capture
+ * of each URL — the archive's last word. So the moment a session's final game
+ * goes Final there is no unplayed fixture left in it, and the loop passes
+ * having tested nothing.
+ *
+ * That is not hypothetical. This test used to open with
+ * `assert.ok(notStarted.length > 0)` to stop exactly that vacuity, and it made
+ * the daily refresh fail every day from 25 August 2026 — the morning after
+ * Summer 2026's playoff game was played and the last "Not Started" row in the
+ * corpus became a "Final" one. The assertion was true only while a season was
+ * in progress, and it took the whole job down with it: `sync:current` runs the
+ * suite BEFORE it commits, so a week of capture was fetched and thrown away.
+ * It had already fired once on 19 August, when the league's own schedule route
+ * dropped the upcoming fixture for a day and put it back the next.
+ *
+ * The archive's EARLIER words are the durable place to prove this. Blobs are
+ * content-addressed and kept, so the schedule tables captured while the season
+ * was running still hold real "Not Started" rows, and always will. Read that
+ * way the assertion is about the PARSER — which is where the nulling actually
+ * happens, in `scheduleRows` — and not about whether the club has a game on
+ * the calendar this week.
+ */
+test("a Not Started row is nulled, on bytes the league really served", { skip: noCorpus }, () => {
+  // Reading the archive's WHOLE history means meeting whatever it ever stored
+  // here, and a 4xx body is stored: the fetcher commits 429 and 5xx with no
+  // blob at all, but anything else is hashed and kept, so a retired team id
+  // would leave an HTML error page under one of these URLs. Skip what is not
+  // the JSON partial rather than throwing on it — the guard below still fails
+  // if the rows that ARE there stop parsing, which is the thing worth knowing.
+  const rows = corpusSnapshots("%partials/stats/schedule/table%").flatMap(({ html }) => {
+    let content: unknown;
+    try {
+      content = (JSON.parse(html) as { content?: unknown }).content;
+    } catch {
+      return [];
+    }
+    return typeof content === "string" ? scheduleRows(content) : [];
+  });
+  assert.ok(rows.length > 0, "no schedule row anywhere in the archive");
+
+  // The vacuity guard, and the reason it is asked of the SNAPSHOTS: the archive
+  // has seen this state and cannot stop having seen it.
+  assert.ok(
+    rows.some((r) => r.status === "Not Started"),
+    "not one 'Not Started' row in any snapshot — has the status field stopped parsing?",
+  );
+
+  // Stated over every non-Final row rather than over the two labels seen so
+  // far. `scheduleRows` nulls the score for anything that is not "Final", so a
+  // state this league has yet to use — a game in progress, a forfeit — is
+  // covered by the rule and does not break the run for being unfamiliar. That
+  // matters: a test failing on a label nobody has seen before is how this
+  // whole job came to be red for a week.
+  for (const r of rows.filter((r) => r.status !== "Final")) {
+    assert.equal(r.homeScore, null, `game ${r.gameId}: ${r.status} row carries a home score`);
+    assert.equal(r.awayScore, null, `game ${r.gameId}: ${r.status} row carries an away score`);
   }
 });
 
