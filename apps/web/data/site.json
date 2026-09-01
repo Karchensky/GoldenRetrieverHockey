@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T14:52:58.581Z",
+  "generatedAt": "2026-09-01T11:52:58.091Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -7,8 +7,8 @@
     "people": 80,
     "goals": 1200,
     "assistEdges": 1331,
-    "gameSheets": 287,
-    "captures": 7919,
+    "gameSheets": 288,
+    "captures": 8387,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -2035,11 +2035,11 @@
           "leagueRanks": {
             "points": 8,
             "goals": 4,
-            "assists": 79,
-            "pim": 159
+            "assists": 80,
+            "pim": 165
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 22,
           "g": 16,
           "a": 6,
@@ -3268,11 +3268,11 @@
           "leagueRanks": {
             "points": 14,
             "goals": 15,
-            "assists": 34,
-            "pim": 159
+            "assists": 37,
+            "pim": 165
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 20,
           "g": 12,
           "a": 8,
@@ -4547,13 +4547,13 @@
             "pim": 20
           },
           "leagueRanks": {
-            "points": 137,
-            "goals": 105,
-            "assists": 183,
-            "pim": 159
+            "points": 140,
+            "goals": 110,
+            "assists": 186,
+            "pim": 165
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 10,
           "g": 6,
           "a": 4,
@@ -5363,13 +5363,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 774,
-            "goals": 678,
-            "assists": 673,
-            "pim": 490
+            "points": 778,
+            "goals": 685,
+            "assists": 677,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -6667,13 +6667,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 428,
-            "goals": 372,
-            "assists": 373,
-            "pim": 265
+            "points": 432,
+            "goals": 377,
+            "assists": 376,
+            "pim": 271
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -8344,13 +8344,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 137,
-            "goals": 502,
-            "assists": 20,
-            "pim": 265
+            "points": 140,
+            "goals": 511,
+            "assists": 22,
+            "pim": 271
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 10,
           "g": 1,
           "a": 9,
@@ -9586,13 +9586,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 692,
-            "goals": 678,
-            "assists": 518,
-            "pim": 490
+            "points": 698,
+            "goals": 685,
+            "assists": 526,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -10859,13 +10859,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 774,
-            "goals": 678,
-            "assists": 673,
-            "pim": 490
+            "points": 778,
+            "goals": 685,
+            "assists": 677,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -13480,13 +13480,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 774,
-            "goals": 678,
-            "assists": 673,
-            "pim": 490
+            "points": 778,
+            "goals": 685,
+            "assists": 677,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 0,
           "g": 0,
           "a": 0,
@@ -14090,13 +14090,13 @@
             "pim": 11
           },
           "leagueRanks": {
-            "points": 428,
-            "goals": 502,
-            "assists": 260,
-            "pim": 78
+            "points": 432,
+            "goals": 511,
+            "assists": 264,
+            "pim": 84
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 4,
           "g": 1,
           "a": 3,
@@ -14924,13 +14924,13 @@
             "pim": 20
           },
           "leagueRanks": {
-            "points": 346,
-            "goals": 372,
-            "assists": 260,
-            "pim": 159
+            "points": 352,
+            "goals": 377,
+            "assists": 264,
+            "pim": 165
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 5,
           "g": 2,
           "a": 3,
@@ -15314,13 +15314,13 @@
             "pim": 7
           },
           "leagueRanks": {
-            "points": 428,
-            "goals": 502,
-            "assists": 260,
-            "pim": 62
+            "points": 432,
+            "goals": 511,
+            "assists": 264,
+            "pim": 65
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 4,
           "g": 1,
           "a": 3,
@@ -16110,13 +16110,13 @@
             "pim": 3
           },
           "leagueRanks": {
-            "points": 346,
-            "goals": 203,
-            "assists": 518,
-            "pim": 25
+            "points": 352,
+            "goals": 211,
+            "assists": 526,
+            "pim": 27
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 5,
           "g": 4,
           "a": 1,
@@ -17001,13 +17001,13 @@
             "pim": 15
           },
           "leagueRanks": {
-            "points": 692,
-            "goals": 678,
-            "assists": 518,
-            "pim": 108
+            "points": 698,
+            "goals": 685,
+            "assists": 526,
+            "pim": 113
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 1,
           "g": 0,
           "a": 1,
@@ -18421,13 +18421,13 @@
             "pim": 31
           },
           "leagueRanks": {
-            "points": 594,
-            "goals": 678,
-            "assists": 373,
-            "pim": 265
+            "points": 602,
+            "goals": 685,
+            "assists": 376,
+            "pim": 271
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 2,
           "g": 0,
           "a": 2,
@@ -18551,13 +18551,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 428,
-            "goals": 372,
-            "assists": 373,
-            "pim": 490
+            "points": 432,
+            "goals": 377,
+            "assists": 376,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 4,
           "g": 2,
           "a": 2,
@@ -20996,13 +20996,13 @@
             "pim": 65
           },
           "leagueRanks": {
-            "points": 428,
-            "goals": 203,
-            "assists": 673,
-            "pim": 490
+            "points": 432,
+            "goals": 211,
+            "assists": 677,
+            "pim": 496
           },
           "divisionField": 102,
-          "leagueField": 887,
+          "leagueField": 888,
           "pts": 4,
           "g": 4,
           "a": 0,
@@ -24772,7 +24772,7 @@
       "n": 7
     },
     {
-      "from": "Andrew Murphy",
+      "from": "Jeremy McDonald",
       "to": "Bryan Karchensky",
       "n": 7
     },
@@ -24782,7 +24782,7 @@
       "n": 7
     },
     {
-      "from": "Jeremy McDonald",
+      "from": "Andrew Murphy",
       "to": "Bryan Karchensky",
       "n": 7
     },
@@ -24857,6 +24857,11 @@
       "n": 5
     },
     {
+      "from": "Andrew Murphy",
+      "to": "Jason Kaplewicz",
+      "n": 5
+    },
+    {
       "from": "Anthony Gugino",
       "to": "Jason Kaplewicz",
       "n": 5
@@ -24864,11 +24869,6 @@
     {
       "from": "Jason Kaplewicz",
       "to": "John Rein",
-      "n": 5
-    },
-    {
-      "from": "Andrew Murphy",
-      "to": "Jason Kaplewicz",
       "n": 5
     },
     {
@@ -25057,6 +25057,11 @@
       "n": 3
     },
     {
+      "from": "Bryan Karchensky",
+      "to": "Jeremy McDonald",
+      "n": 3
+    },
+    {
       "from": "Brendan Kaplewicz",
       "to": "John Rein",
       "n": 3
@@ -25129,11 +25134,6 @@
     {
       "from": "Adam Kaplewicz",
       "to": "Jake Steinmetz",
-      "n": 3
-    },
-    {
-      "from": "Bryan Karchensky",
-      "to": "Jeremy McDonald",
       "n": 3
     },
     {
@@ -25264,6 +25264,11 @@
     {
       "from": "Anthony Gugino",
       "to": "Brent Boeing",
+      "n": 2
+    },
+    {
+      "from": "Devin Arnold",
+      "to": "Anthony Orange",
       "n": 2
     },
     {
@@ -25497,11 +25502,6 @@
       "n": 2
     },
     {
-      "from": "Devin Arnold",
-      "to": "Anthony Orange",
-      "n": 2
-    },
-    {
       "from": "Justin Wheeler",
       "to": "Daniel Schmitt",
       "n": 1
@@ -25729,6 +25729,11 @@
     {
       "from": "Brendan Kaplewicz",
       "to": "Brett Koeppel",
+      "n": 1
+    },
+    {
+      "from": "Bryan Karchensky",
+      "to": "Anthony Orange",
       "n": 1
     },
     {
@@ -26144,11 +26149,6 @@
     {
       "from": "Jeremy McDonald",
       "to": "Jason Kaplewicz",
-      "n": 1
-    },
-    {
-      "from": "Bryan Karchensky",
-      "to": "Anthony Orange",
       "n": 1
     }
   ],
@@ -26744,6 +26744,11 @@
       "n": 2
     },
     {
+      "a": "Anthony Orange",
+      "b": "Devin Arnold",
+      "n": 2
+    },
+    {
       "a": "Anthony Gugino",
       "b": "Ryan Neidrauer",
       "n": 2
@@ -26806,11 +26811,6 @@
     {
       "a": "Adam Kaplewicz",
       "b": "Jeremy McDonald",
-      "n": 2
-    },
-    {
-      "a": "Anthony Orange",
-      "b": "Devin Arnold",
       "n": 2
     },
     {
@@ -27034,6 +27034,11 @@
       "n": 1
     },
     {
+      "a": "Anthony Orange",
+      "b": "Bryan Karchensky",
+      "n": 1
+    },
+    {
       "a": "Darryl McLaughlin",
       "b": "Vincent Terrana",
       "n": 1
@@ -27206,11 +27211,6 @@
     {
       "a": "Jason Kaplewicz",
       "b": "Jeremy McDonald",
-      "n": 1
-    },
-    {
-      "a": "Anthony Orange",
-      "b": "Bryan Karchensky",
       "n": 1
     }
   ],
@@ -76079,26 +76079,49 @@
       "league": "Seneca HAHL",
       "round": "Playoffs",
       "away": "The Golden Retrievers",
-      "awayScore": null,
+      "awayScore": 2,
       "home": "Tioga Tavern",
-      "homeScore": null,
+      "homeScore": 5,
       "gr": "away",
       "venueUnknown": false,
       "opponent": "Tioga Tavern",
-      "gf": null,
-      "ga": null,
-      "result": null,
-      "status": "Not Started",
+      "gf": 2,
+      "ga": 5,
+      "result": "L",
+      "status": "Final",
       "ot": false,
       "shootoutWinner": null,
       "rink": "Rink 2",
-      "periodLabels": [],
-      "linescore": [],
+      "periodLabels": [
+        "1st",
+        "2nd",
+        "3rd"
+      ],
+      "linescore": [
+        {
+          "team": "The Golden Retrievers",
+          "periods": [
+            null,
+            null,
+            null
+          ],
+          "final": "2"
+        },
+        {
+          "team": "Tioga Tavern",
+          "periods": [
+            null,
+            null,
+            null
+          ],
+          "final": "5"
+        }
+      ],
       "goals": [],
       "penalties": [],
       "goalies": [],
       "hasDetail": false,
-      "scheduleOnly": true,
+      "scheduleOnly": false,
       "provenance": {
         "source": "harborcenter-hockeyshift",
         "label": "HarborCenter",
@@ -76108,16 +76131,16 @@
   ],
   "gameTotals": {
     "games": 329,
-    "played": 321,
-    "unplayed": 8,
+    "played": 322,
+    "unplayed": 7,
     "scoreUnrecorded": 7,
-    "withSheet": 254,
-    "scheduleOnly": 75,
+    "withSheet": 255,
+    "scheduleOnly": 74,
     "w": 177,
-    "l": 141,
+    "l": 142,
     "t": 3,
-    "gf": 1822,
-    "ga": 1636,
+    "gf": 1824,
+    "ga": 1641,
     "goalsRecorded": 1200,
     "penalties": 1108,
     "goalieLines": 103,
@@ -76126,9 +76149,9 @@
     "otGames": 26,
     "playoffGames": 31,
     "playoffGoalsRecorded": 27,
-    "playoffGoalsScored": 141,
+    "playoffGoalsScored": 143,
     "scheduleOnlyGoalsScored": 491,
-    "sheetsWithoutDetail": 26,
+    "sheetsWithoutDetail": 27,
     "sessionsWithGames": 19,
     "scheduleComplete": true,
     "scheduledGames": 59
