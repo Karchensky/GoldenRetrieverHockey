@@ -299,20 +299,38 @@ test("only four of sixteen sessions have a single game on file", { skip: noCorpu
 // --- the HarborCenter era ------------------------------------------------
 
 test("every Retrievers session at HarborCenter has its games", { skip: noCorpus }, () => {
-  // Eleven sessions, 2021 to 2026. Before the schedule/table route was found
-  // the archive held not one HockeyShift game: the assist network covered two
-  // sessions of eighteen and said so.
-  assert.equal(hsSchedules.length, 11, "eleven Retrievers teams at HarborCenter");
+  // Eleven sessions as at Summer 2026, 2021 onward. Before the schedule/table
+  // route was found the archive held not one HockeyShift game: the assist
+  // network covered two sessions of eighteen and said so.
+  //
+  // AT LEAST, for the same reason the game count below is at-least. The club
+  // has played a half-year every summer and every fall since 2011 and the walk
+  // finds each new season by itself, so eleven is a floor that the next
+  // fall/winter raises. Pinning it would turn the daily job red every morning
+  // from the day a twelfth team was discovered — which is this file's own
+  // recent failure told backwards: a season ENDING emptied the unplayed
+  // fixtures and cost a week of capture.
+  assert.ok(
+    hsSchedules.length >= 11,
+    `${hsSchedules.length} Retrievers teams at HarborCenter — was 11 and must not shrink`,
+  );
   const hs = all!.games.filter((g) => g.league === "Seneca HAHL");
   // AT LEAST, not EXACTLY. This is the one era still being played, and its
   // schedule grows: 193 when this was written, 195 the first time the
   // current-season sync ran, and more the next time the league adds a playoff
   // fixture. Pinning it made a green suite depend on the season standing
   // still, which is the opposite of what this archive is for. The count must
-  // never SHRINK — that would mean games left the schedule — and the session
-  // structure below is the part that is genuinely fixed.
+  // never SHRINK — that would mean games left the schedule.
   assert.ok(hs.length >= 193, `${hs.length} HarborCenter games — was 193 and must not shrink`);
-  assert.equal(new Set(hs.map((g) => g.sessionSort)).size, 11);
+  // Sessions WITH GAMES, which is deliberately not compared to the team count
+  // above. A new session enters the archive from its ROSTER, and the league
+  // can take weeks to post a fixture for it — the 2026-27 fall/winter was
+  // known to be coming and unscheduled at the start of September 2026. So this
+  // number is allowed to lag the number of teams, and neither may shrink.
+  assert.ok(
+    new Set(hs.map((g) => g.sessionSort)).size >= 11,
+    "HarborCenter sessions with games — was 11 and must not shrink",
+  );
 });
 
 test("a HAHL summer session keeps its May and September games", { skip: noCorpus }, () => {
