@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T16:47:23.541Z",
+  "generatedAt": "2026-09-06T16:54:24.406Z",
   "totals": {
     "sessions": 31,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1200,
     "assistEdges": 1331,
     "gameSheets": 288,
-    "captures": 8847,
+    "captures": 8963,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -24772,17 +24772,17 @@
       "n": 7
     },
     {
-      "from": "Jeremy McDonald",
-      "to": "Bryan Karchensky",
-      "n": 7
-    },
-    {
       "from": "Devin Arnold",
       "to": "Adam Kaplewicz",
       "n": 7
     },
     {
       "from": "Andrew Murphy",
+      "to": "Bryan Karchensky",
+      "n": 7
+    },
+    {
+      "from": "Jeremy McDonald",
       "to": "Bryan Karchensky",
       "n": 7
     },
@@ -24857,11 +24857,6 @@
       "n": 5
     },
     {
-      "from": "Andrew Murphy",
-      "to": "Jason Kaplewicz",
-      "n": 5
-    },
-    {
       "from": "Anthony Gugino",
       "to": "Jason Kaplewicz",
       "n": 5
@@ -24869,6 +24864,11 @@
     {
       "from": "Jason Kaplewicz",
       "to": "John Rein",
+      "n": 5
+    },
+    {
+      "from": "Andrew Murphy",
+      "to": "Jason Kaplewicz",
       "n": 5
     },
     {
@@ -25267,11 +25267,6 @@
       "n": 2
     },
     {
-      "from": "Devin Arnold",
-      "to": "Anthony Orange",
-      "n": 2
-    },
-    {
       "from": "John Rein",
       "to": "Vincent Terrana",
       "n": 2
@@ -25502,6 +25497,11 @@
       "n": 2
     },
     {
+      "from": "Devin Arnold",
+      "to": "Anthony Orange",
+      "n": 2
+    },
+    {
       "from": "Justin Wheeler",
       "to": "Daniel Schmitt",
       "n": 1
@@ -25729,11 +25729,6 @@
     {
       "from": "Brendan Kaplewicz",
       "to": "Brett Koeppel",
-      "n": 1
-    },
-    {
-      "from": "Bryan Karchensky",
-      "to": "Anthony Orange",
       "n": 1
     },
     {
@@ -26149,6 +26144,11 @@
     {
       "from": "Jeremy McDonald",
       "to": "Jason Kaplewicz",
+      "n": 1
+    },
+    {
+      "from": "Bryan Karchensky",
+      "to": "Anthony Orange",
       "n": 1
     }
   ],
@@ -26744,11 +26744,6 @@
       "n": 2
     },
     {
-      "a": "Anthony Orange",
-      "b": "Devin Arnold",
-      "n": 2
-    },
-    {
       "a": "Anthony Gugino",
       "b": "Ryan Neidrauer",
       "n": 2
@@ -26811,6 +26806,11 @@
     {
       "a": "Adam Kaplewicz",
       "b": "Jeremy McDonald",
+      "n": 2
+    },
+    {
+      "a": "Anthony Orange",
+      "b": "Devin Arnold",
       "n": 2
     },
     {
@@ -27034,11 +27034,6 @@
       "n": 1
     },
     {
-      "a": "Anthony Orange",
-      "b": "Bryan Karchensky",
-      "n": 1
-    },
-    {
       "a": "Darryl McLaughlin",
       "b": "Vincent Terrana",
       "n": 1
@@ -27211,6 +27206,11 @@
     {
       "a": "Jason Kaplewicz",
       "b": "Jeremy McDonald",
+      "n": 1
+    },
+    {
+      "a": "Anthony Orange",
+      "b": "Bryan Karchensky",
       "n": 1
     }
   ],
