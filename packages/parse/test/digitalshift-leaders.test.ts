@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parseLeaders, type LeaderRow } from "../src/digitalshift/leaders.ts";
-import { corpusPages } from "./helpers/corpus.ts";
+import { corpusPages, corpusSnapshots } from "./helpers/corpus.ts";
 
 /**
  * REAL CAPTURED BYTES ONLY — no hand-written page fixtures.
@@ -31,6 +31,19 @@ function pages(): { url: string; html: string }[] {
 const seasonIdOf = (url: string) => Number(url.match(/season_id=(\d+)/)?.[1]);
 const divisionIdOf = (url: string) => url.match(/division_id=(\d+)/)?.[1] ?? null;
 const pageOf = (url: string) => Number(url.match(/[?&]page=(\d+)/)?.[1] ?? 1);
+
+/** Preseason tables keep their headers and explicitly say nobody has stats. */
+function assertEmptyLeaderboard(html: string, url: string): void {
+  const table = parseLeaders(html);
+  assert.equal(table.rows.length, 0, `${url}: claimed empty table contains players`);
+  assert.ok(table.title && ["Rk", "Name", "Team", "Pts"].every((h) => table.headers.includes(h)),
+    `${url}: unrecognized leaderboard markup`);
+  assert.match(html, /<p\b[^>]*class="no"[^>]*>\s*No players found for the selected filters above\.\s*<\/p>/,
+    `${url}: no explicit empty leaderboard message`);
+  const bodies = [...html.matchAll(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/g)];
+  assert.ok(bodies.length > 0 && bodies.every((body) => body[1]!.trim() === ""),
+    `${url}: unparsed table rows must not count as an empty leaderboard`);
+}
 
 /** The whole field for one (season, scope), assembled from every captured page
  *  and deduped on player id — exactly what generate.ts ranks against. */
@@ -69,10 +82,13 @@ test("points equal goals plus assists on every row of every captured page", () =
   assert.ok(checked > 3000, `only ${checked} rows reconciled — corpus too thin`);
 });
 
-test("each captured page is points-sorted, with no player repeated", () => {
+test("each captured page is explicitly empty or points-sorted, with no player repeated", () => {
   for (const { url, html } of pages()) {
     const rows = parseLeaders(html).rows;
-    assert.ok(rows.length > 0, `${url} parsed to no rows`);
+    if (rows.length === 0) {
+      assertEmptyLeaderboard(html, url);
+      continue;
+    }
     // Dedup within the page removed the responsive clone.
     const ids = rows.map((r) => r.playerId);
     assert.equal(new Set(ids).size, ids.length, `${url}: a player id repeats — clone not deduped`);
@@ -85,6 +101,25 @@ test("each captured page is points-sorted, with no player repeated", () => {
     // Page 1 starts the rank at 1; a later page continues it, never restarts.
     if (pageOf(url) === 1) assert.equal(rows[0]!.rank, 1, `${url}: page 1 does not start at rank 1`);
   }
+});
+
+test("a captured preseason leaderboard is empty, while damaged markup still fails", () => {
+  // Keep the actual preseason snapshot after the current page gains players.
+  // Negative cases damage those captured bytes rather than inventing a page.
+  const empty = corpusSnapshots("%partials/stats/leaders/table%season_id=11355%")
+    .map((p) => (JSON.parse(p.html) as { content: string }).content)
+    .find((html) => html.includes("No players found for the selected filters above."));
+  assert.ok(empty, "the corpus must retain the real preseason empty leaderboard");
+  assertEmptyLeaderboard(empty, "captured preseason leaderboard");
+  assert.throws(() => assertEmptyLeaderboard(
+    empty.replace("No players found for the selected filters above.", "Service unavailable."), "missing empty state",
+  ), /no explicit empty leaderboard message/);
+  assert.throws(() => assertEmptyLeaderboard(
+    empty.replaceAll("leaders_players", "changed_table"), "changed table class",
+  ), /unrecognized leaderboard markup/);
+  assert.throws(() => assertEmptyLeaderboard(
+    empty.replace("<tbody></tbody>", "<tbody><tr><td>Unreadable player row</td></tr></tbody>"), "unparsed rows",
+  ), /unparsed table rows/);
 });
 
 test("the full field assembles across pages to the whole division / league", () => {

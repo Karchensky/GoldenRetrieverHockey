@@ -323,9 +323,8 @@ test("every Retrievers session at HarborCenter has its games", { skip: noCorpus 
   // never SHRINK — that would mean games left the schedule.
   assert.ok(hs.length >= 193, `${hs.length} HarborCenter games — was 193 and must not shrink`);
   // Sessions WITH GAMES, which is deliberately not compared to the team count
-  // above. A new session enters the archive from its ROSTER, and the league
-  // can take weeks to post a fixture for it — the 2026-27 fall/winter was
-  // known to be coming and unscheduled at the start of September 2026. So this
+  // above. A new session's team is discovered from the league directory, and
+  // the league can take weeks to post a fixture for it. So this
   // number is allowed to lag the number of teams, and neither may shrink.
   assert.ok(
     new Set(hs.map((g) => g.sessionSort)).size >= 11,

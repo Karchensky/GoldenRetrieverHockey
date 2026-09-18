@@ -16,7 +16,6 @@ import {
   authHeader,
   endpoints,
   playerIdsIn,
-  teamIdsIn,
   isRetrievers,
   teamIdentity,
   teamsByDivision,
@@ -28,6 +27,7 @@ import {
   rosterPlayerIds,
   gameShowIds,
 } from "./sources/sportngin.ts";
+import { discoverHarborcenter } from "./sources/harborcenter-discovery.ts";
 import type { TeamSeason } from "./sources/sportngin.ts";
 
 const DATA = process.env.GR_DATA_DIR ?? "data";
@@ -84,9 +84,9 @@ const FRESHNESS_MS = (() => {
 const SETTLED_FRESHNESS_MS = Math.max(FRESHNESS_MS, 30 * 24 * 60 * 60 * 1000);
 
 /**
- * Seed for the HarborCenter walk: one known Golden Retriever.
- * Discovery follows PEOPLE, not names — the only reliable anchor when the
- * team's name changes and the roster does not (§2.5).
+ * Seed for the player-history half of HarborCenter discovery.
+ * The independent league directory search also finds freshly entered teams
+ * whose players have new ids, or whose roster has not been entered yet.
  *
  * This is the COLD-START seed. `captureHarborcenterLive` now also seeds from
  * every Retrievers player already on disk (see `knownRetrieversPlayerIds`),
@@ -420,17 +420,9 @@ async function rescueWayback(cfg: WaybackRescue): Promise<void> {
 /**
  * Capture the LIVE HarborCenter era (HockeyShift / DigitalShift API).
  *
- * Discovery follows PEOPLE, not team names — which works here only because
- * HarborCenter has persistent player identity (§6.5.1), unlike SportsEngine.
- * Seeded from one known player, it walks:
- *
- *   player -> every team that player appeared on
- *          -> for each team: is it a Golden Retrievers team?
- *          -> if so: its full roster -> every player on it -> repeat
- *
- * until no new players or teams appear. The team-name test must accept BOTH
- * "Golden Retrievers" and "The Golden Retrievers": both are in live,
- * alternating use across consecutive sessions (§6.5.2).
+ * Search the league's season/team directories by the club's name, then walk
+ * player histories for additional teams. The directories find a season even
+ * when its roster is empty or the league has recreated every player id.
  */
 async function captureHarborcenterLive(): Promise<void> {
   const { store, log, index } = openStore();
@@ -462,7 +454,7 @@ async function captureHarborcenterLive(): Promise<void> {
 
   const opts = { source: "harborcenter-hockeyshift", via: "live" as const, authorization: auth, freshnessMs: FRESHNESS_MS };
 
-  /** Capture a URL and return its body text, or null if it failed. */
+  /** Preserve the raw JSON: filters return data, the other routes return HTML. */
   const grab = async (url: string): Promise<string | null> => {
     const rec = await fetcher.capture(url, opts);
     if (rec.error || !rec.contentHash) {
@@ -470,84 +462,42 @@ async function captureHarborcenterLive(): Promise<void> {
       return null;
     }
     const buf = await store.get(rec.contentHash);
-    if (!buf) return null;
-    try {
-      return (JSON.parse(buf.toString("utf8")) as { content?: string }).content ?? null;
-    } catch {
-      return null;
-    }
+    return buf?.toString("utf8") ?? null;
   };
 
-  // SEED FROM EVERYONE WE ALREADY KNOW, not from one man.
-  //
-  // The walk's shape is player -> teams -> is it ours -> roster -> more
-  // players, so a single seed is enough WHEN IT WORKS. When it does not — one
-  // 500, one timeout, one id retired by the platform — `grab` returns null,
-  // `continue` runs, the queue empties, and the command exits reporting
-  // "0 teams inspected, 0 RETRIEVERS sessions" with a zero exit code. That is
-  // indistinguishable from "the team did not play", and on a scheduled refresh
-  // nobody is watching the log to tell the difference.
-  //
-  // Every Retriever the corpus can already name is a valid entry point to the
-  // same graph, and they cost nothing to add: they are all walked anyway.
-  // Ordering the known ids first also means a NEW session is normally found on
-  // the first page fetched, by whichever teammate is rostered on it.
+  // Known players remain a second path into the archive, independent of the
+  // directory. The actual roster route also supplies ids before stats exist.
   const known = await knownRetrieversPlayerIds();
   const seedPlayers = [...new Set([...known, SEED_PLAYER_ID])];
   console.log(
-    `  Seeding the walk with ${seedPlayers.length} player id(s): ${known.length} already in the corpus, ` +
-      `plus the cold-start seed. A new session is found via whichever of them is rostered on it.\n`,
+    `  Searching every published league season for the Golden Retrievers, then walking ` +
+      `${seedPlayers.length} known player id(s) for additional history.\n`,
   );
-  const playerQueue = [...seedPlayers];
-  const seenPlayers = new Set<number>();
-  const seenTeams = new Set<number>();
-  const grTeams = new Map<number, string>();
-  let calls = 0;
-
-  while (playerQueue.length > 0) {
-    const pid = playerQueue.shift()!;
-    if (seenPlayers.has(pid)) continue;
-    seenPlayers.add(pid);
-
-    const content = await grab(endpoints.player(pid));
-    calls++;
-    if (!content) continue;
-
-    // Every team this person ever appeared on — Retrievers and otherwise.
-    for (const tid of teamIdsIn(content)) {
-      if (seenTeams.has(tid)) continue;
-      seenTeams.add(tid);
-
-      const t = await grab(endpoints.team(tid));
-      calls++;
-      if (!t) continue;
-
-      // isRetrievers tests the team's OWN name. Testing the raw content
-      // instead matches any team sharing a division with the Retrievers,
-      // because a team partial embeds its whole division's team list.
-      if (!isRetrievers(t)) continue;
-      const id = teamIdentity(t);
-      const label = id ? `${id.name}, ${id.session}, ${id.division}` : `team ${tid}`;
-      grTeams.set(tid, label);
-      console.log(`  RETRIEVERS  ${label}`);
-
-      const stats = await grab(endpoints.teamStats(tid));
-      calls++;
-      if (!stats) continue;
-      for (const p of playerIdsIn(stats)) {
-        if (!seenPlayers.has(p)) playerQueue.push(p);
-      }
-    }
+  let found: Awaited<ReturnType<typeof discoverHarborcenter>>;
+  try {
+    found = await discoverHarborcenter({
+      grab, seedPlayers,
+      onTeam: (_teamId, label) => console.log(`  RETRIEVERS  ${label}`),
+      onWarning: (message) => console.warn(`  WARNING: ${message}`),
+    });
+  } catch (err) {
+    console.error(`  Discovery failed: ${err instanceof Error ? err.message : String(err)}`);
+    index.close();
+    process.exitCode = 1;
+    return;
   }
 
   const hashes = index.distinctHashes();
   const blobs = await store.count();
   console.log("\n--- HarborCenter (live) capture summary ---");
   console.log("  this run:");
-  console.log(`    api calls           : ${calls}`);
-  console.log(`    players walked      : ${seenPlayers.size}`);
-  console.log(`    teams inspected     : ${seenTeams.size}`);
-  console.log(`    RETRIEVERS sessions : ${grTeams.size}`);
+  console.log(`    api calls           : ${found.calls}`);
+  console.log(`    seasons searched    : ${found.seasonsSearched}`);
+  console.log(`    directory matches   : ${found.directoryTeams}`);
+  console.log(`    directory check     : ${found.directoryComplete ? "complete" : "INCOMPLETE — see warnings; confirmed teams still refreshed"}`);
+  console.log(`    players walked      : ${found.playersWalked}`);
+  console.log(`    teams inspected     : ${found.teamsInspected}`);
+  console.log(`    RETRIEVERS sessions : ${found.teams.size}`);
   console.log("  corpus totals:");
   console.log(`    captures logged     : ${index.countCaptures()}`);
   console.log(`    distinct hashes     : ${hashes}`);
@@ -597,9 +547,9 @@ async function retrieversTeamsInCorpus(): Promise<{ teamId: number; label: strin
 
 /**
  * Every player id that has appeared on a Golden Retrievers roster, read out of
- * the corpus.
+ * the corpus, including preseason roster pages without statistics.
  *
- * The seed list for the live walk. Taken from the `team/stats` partials of
+ * The seed list for the live walk. Taken from the roster and stats partials of
  * teams `isRetrievers` has already vouched for — NEVER from the `team`
  * partials themselves, which embed every sibling team in the division and
  * would seed the walk with several hundred strangers' ids.
@@ -639,7 +589,7 @@ async function knownRetrieversPlayerIds(): Promise<number[]> {
   const ids = new Set<number>();
   for (const r of records) {
     if (!r.contentHash) continue;
-    const teamId = Number(r.url.match(/partials\/stats\/team\/stats\?team_id=(\d+)/)?.[1]);
+    const teamId = Number(r.url.match(/partials\/stats\/team\/(?:stats|roster)\?team_id=(\d+)/)?.[1]);
     if (!Number.isFinite(teamId) || !ours.has(teamId)) continue;
     const content = await bodyOf(r.contentHash);
     if (!content) continue;

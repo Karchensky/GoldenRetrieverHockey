@@ -159,9 +159,9 @@ console.log(`\nLive captures run with a ${freshnessHours}-hour freshness window.
 
 // Order matters. The live walk discovers which teams are ours and stores the
 // rosters; games needs those team ids; leaders needs the season and division
-// ids the first two stored. A NEW SESSION enters the archive at step one, by
-// whichever known player is rostered on it — no id is written down anywhere
-// for a season to be picked up.
+// ids the first two stored. A NEW SESSION enters through the league's season
+// and team directories, even with no roster or entirely new player ids. The
+// player-history walk provides an additional path; no seasonal ids are listed.
 run("Capture current rosters and season tables", ["run", "capture:harborcenter-live"], liveEnv);
 run("Capture schedules and completed boxscores", ["run", "capture:harborcenter-games"], liveEnv);
 run("Capture league and division scoring leaderboards", ["run", "capture:harborcenter-leaders"], liveEnv);

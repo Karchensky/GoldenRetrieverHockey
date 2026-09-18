@@ -74,16 +74,22 @@ export function partialUrl(endpoint: string, params: Record<string, string | num
 }
 
 export const endpoints = {
+  /** The league's season selector, including seasons with no player history. */
+  leagueSeasons: () => partialUrl("filters", { type: "league", id: HAHL_LEAGUE_ID }),
+  /** All teams in one season, across every division. */
+  seasonTeams: (seasonId: number) => partialUrl("teams/table", { season_id: seasonId }),
   /** Team header: name, division, session label, sibling teams. */
   team: (teamId: number) => partialUrl("team", { team_id: teamId }),
+  /** Registered players, available before the first game or any stats. */
+  teamRoster: (teamId: number) => partialUrl("team/roster", { team_id: teamId }),
   /** Full roster with positions and season stats. */
   teamStats: (teamId: number) => partialUrl("team/stats", { team_id: teamId }),
   /**
    * A player's ENTIRE career across every session, plus game-by-game logs.
    *
-   * HarborCenter has persistent player identity — unlike SportsEngine, where
-   * a player has a different id every season and no career page exists. One
-   * call here yields the full season list and every per-session team id.
+   * The platform normally preserves player identity, so one call can span
+   * many seasons. League staff can also create a fresh id for the same person;
+   * the independent season/team search and roster capture find those records.
    */
   player: (playerId: number) => partialUrl("player", { player_id: playerId }),
   /**
@@ -308,6 +314,56 @@ export function scheduleRows(content: string): ScheduleRow[] {
 /** Response envelope: an Angular HTML partial, with data also in ng-init JSON. */
 export type Partial = { content: string };
 
+/** Unlike the HTML partials, /filters returns the selector data as JSON. */
+export function leagueSeasons(body: unknown): { id: number; name: string }[] {
+  const options = (body as { season?: { options?: unknown } } | null)?.season?.options;
+  if (!Array.isArray(options) || options.length === 0) {
+    throw new Error("HarborCenter season directory is missing season.options; discovery is incomplete.");
+  }
+  const seasons = new Map<number, string>();
+  for (const option of options) {
+    const id = Number(option?.id);
+    if (!Number.isSafeInteger(id) || id <= 0 || typeof option?.name !== "string" || !option.name.trim()
+      || (option.league_id !== undefined && Number(option.league_id) !== HAHL_LEAGUE_ID)) {
+      throw new Error("HarborCenter season directory contains an invalid or unrelated season.");
+    }
+    seasons.set(id, option.name.trim());
+  }
+  return [...seasons].map(([id, name]) => ({ id, name }));
+}
+
+/** Match the club's known names, independently of a season-specific team id. */
+export function isRetrieversName(name: string): boolean {
+  return /^(the\s+)?golden\s+retrievers$/i.test(name.trim());
+}
+
+/**
+ * Name/id pairs from /teams/table. Read each card separately: a Retrievers
+ * mention elsewhere on the page must never turn a neighbouring team into us.
+ * A changed response must be reported instead of looking like a quiet season.
+ */
+export function seasonTeams(content: string): { id: number; name: string }[] {
+  const cards = [...content.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
+    .filter((m) => m[1]!.split(/\s+/).includes("team"));
+  if (cards.length === 0) {
+    throw new Error("HarborCenter team directory has no team cards; discovery is incomplete.");
+  }
+  const teams = new Map<number, string>();
+  for (let i = 0; i < cards.length; i++) {
+    const card = content.slice(cards[i]!.index, cards[i + 1]?.index ?? content.length);
+    const nameHtml = card.match(/<div\b[^>]*\bclass="[^"]*\bteam-name\b[^"]*"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+    const name = nameHtml === undefined ? "" : decodeAttr(nameHtml.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " "))
+      .replace(/\s+/g, " ").trim();
+    const ids = new Set([...card.matchAll(/href="[^"]*\/team\/(\d+)\/(?:roster|stats)"/g)].map((m) => Number(m[1])));
+    const id = [...ids][0];
+    if (!name || ids.size !== 1 || id === undefined || !Number.isSafeInteger(id) || id <= 0) {
+      throw new Error("HarborCenter team directory contains an unreadable team card.");
+    }
+    teams.set(id, name);
+  }
+  return [...teams].map(([id, name]) => ({ id, name }));
+}
+
 /**
  * A team partial's OWN identity, from its `<h1 class="sr-only">`:
  *   "The Golden Retrievers, Summer 2026, Silver" -> name / session / division
@@ -342,7 +398,7 @@ export function teamIdentity(
 export function isRetrievers(content: string): boolean {
   const id = teamIdentity(content);
   if (!id) return false;
-  return /^(the\s+)?golden\s+retrievers$/i.test(id.name.trim());
+  return isRetrieversName(id.name);
 }
 
 /**
