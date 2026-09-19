@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T17:37:11.250Z",
+  "generatedAt": "2026-09-19T17:11:56.731Z",
   "totals": {
     "sessions": 32,
     "playerSeasons": 649,
@@ -8,7 +8,7 @@
     "goals": 1200,
     "assistEdges": 1331,
     "gameSheets": 288,
-    "captures": 10360,
+    "captures": 10492,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -24790,13 +24790,13 @@
       "n": 7
     },
     {
-      "from": "Devin Arnold",
-      "to": "Adam Kaplewicz",
+      "from": "Andrew Murphy",
+      "to": "Bryan Karchensky",
       "n": 7
     },
     {
-      "from": "Andrew Murphy",
-      "to": "Bryan Karchensky",
+      "from": "Devin Arnold",
+      "to": "Adam Kaplewicz",
       "n": 7
     },
     {
