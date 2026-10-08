@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-07T19:56:44.584Z",
+  "generatedAt": "2026-10-08T19:52:06.418Z",
   "totals": {
     "sessions": 32,
-    "playerSeasons": 649,
+    "playerSeasons": 664,
     "recordedNames": 93,
     "people": 80,
-    "goals": 1200,
-    "assistEdges": 1331,
-    "gameSheets": 288,
-    "captures": 13270,
+    "goals": 1201,
+    "assistEdges": 1332,
+    "gameSheets": 289,
+    "captures": 13412,
     "archiveOnlySessions": 6
   },
   "sessions": [
@@ -793,9 +793,9 @@
       },
       "record": null,
       "teamStats": null,
-      "players": 0,
+      "players": 15,
       "rosterStatus": null,
-      "rosterLost": true,
+      "rosterLost": false,
       "rosterPartial": false
     }
   ],
@@ -812,13 +812,13 @@
         "P"
       ],
       "career": {
-        "sessions": 30,
-        "gp": 462,
+        "sessions": 31,
+        "gp": 463,
         "g": 744,
         "a": 507,
         "pts": 1251,
         "pim": 150,
-        "ppg": 2.71,
+        "ppg": 2.7,
         "gpInferred": true
       },
       "seasons": [
@@ -1718,6 +1718,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Bryan Karchensky",
+          "jersey": "21",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -2068,6 +2091,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -2085,11 +2137,11 @@
         "P"
       ],
       "career": {
-        "sessions": 28,
-        "gp": 399,
-        "g": 374,
+        "sessions": 29,
+        "gp": 400,
+        "g": 375,
         "a": 387,
-        "pts": 761,
+        "pts": 762,
         "pim": 166,
         "ppg": 1.91,
         "gpInferred": true
@@ -2922,6 +2974,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Adam Kaplewicz",
+          "jersey": "96",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 1,
+          "a": 0,
+          "pts": 1,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -3301,6 +3376,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 3,
+            "goals": 2,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 144,
+            "goals": 64,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 1,
+          "g": 1,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -3320,8 +3424,8 @@
         "P"
       ],
       "career": {
-        "sessions": 29,
-        "gp": 364,
+        "sessions": 30,
+        "gp": 365,
         "g": 239,
         "a": 305,
         "pts": 544,
@@ -4203,6 +4307,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Jason Kaplewicz",
+          "jersey": "47",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -4582,6 +4709,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -4597,7 +4753,7 @@
         "P"
       ],
       "career": {
-        "sessions": 20,
+        "sessions": 21,
         "gp": 204,
         "g": 238,
         "a": 264,
@@ -5135,6 +5291,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Brent Boeing",
+          "jersey": "80",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 0,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -5417,12 +5596,12 @@
         "P"
       ],
       "career": {
-        "sessions": 30,
-        "gp": 321,
+        "sessions": 31,
+        "gp": 322,
         "g": 225,
         "a": 244,
         "pts": 469,
-        "pim": 265,
+        "pim": 267,
         "ppg": 1.46,
         "gpInferred": false
       },
@@ -6323,6 +6502,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Vincent Terrana",
+          "jersey": "89",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 2,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -6697,6 +6899,35 @@
           "a": 2,
           "pim": 2,
           "gp": 9,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 1
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 15
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 2,
+          "gp": 1,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -7232,8 +7463,8 @@
         "P"
       ],
       "career": {
-        "sessions": 26,
-        "gp": 230,
+        "sessions": 27,
+        "gp": 231,
         "g": 173,
         "a": 166,
         "pts": 339,
@@ -8000,6 +8231,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Anthony Christy",
+          "jersey": "44",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -8379,6 +8633,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -8394,13 +8677,13 @@
         "P"
       ],
       "career": {
-        "sessions": 30,
-        "gp": 301,
+        "sessions": 31,
+        "gp": 302,
         "g": 72,
         "a": 261,
         "pts": 333,
         "pim": 418,
-        "ppg": 1.11,
+        "ppg": 1.1,
         "gpInferred": false
       },
       "seasons": [
@@ -9300,6 +9583,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Brett Koeppel",
+          "jersey": "18",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -9621,6 +9927,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -9638,7 +9973,7 @@
         "P"
       ],
       "career": {
-        "sessions": 31,
+        "sessions": 32,
         "gp": 303,
         "g": 35,
         "a": 161,
@@ -10532,6 +10867,29 @@
           "goalie": null,
           "position": "D",
           "gp": 5,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Richard Fedele",
+          "jersey": "16",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 0,
           "g": 0,
           "a": 0,
           "pts": 0,
@@ -13531,8 +13889,8 @@
         "P"
       ],
       "career": {
-        "sessions": 12,
-        "gp": 114,
+        "sessions": 13,
+        "gp": 115,
         "g": 48,
         "a": 54,
         "pts": 102,
@@ -13862,6 +14220,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "John Rein",
+          "jersey": "28",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -14125,6 +14506,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -14140,7 +14550,7 @@
         "P"
       ],
       "career": {
-        "sessions": 17,
+        "sessions": 18,
         "gp": 153,
         "g": 18,
         "a": 69,
@@ -14609,6 +15019,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Anthony Gugino",
+          "jersey": "2",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 0,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -14974,13 +15407,13 @@
         "P"
       ],
       "career": {
-        "sessions": 7,
-        "gp": 72,
+        "sessions": 8,
+        "gp": 73,
         "g": 31,
         "a": 38,
         "pts": 69,
         "pim": 40,
-        "ppg": 0.96,
+        "ppg": 0.95,
         "gpInferred": false
       },
       "seasons": [
@@ -15136,6 +15569,29 @@
           "a": 3,
           "pts": 4,
           "pim": 10,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Devin Arnold",
+          "jersey": "26",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
           "status": null,
           "gpInferred": false,
           "gpBasis": null,
@@ -15344,6 +15800,35 @@
           "a": 3,
           "pim": 10,
           "gp": 7,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
           "provenance": {
             "source": "harborcenter-hockeyshift",
             "label": "HarborCenter",
@@ -15874,13 +16359,13 @@
         "P"
       ],
       "career": {
-        "sessions": 5,
-        "gp": 38,
+        "sessions": 6,
+        "gp": 39,
         "g": 28,
         "a": 22,
         "pts": 50,
         "pim": 34,
-        "ppg": 1.32,
+        "ppg": 1.28,
         "gpInferred": false
       },
       "seasons": [
@@ -15990,6 +16475,29 @@
           "a": 1,
           "pts": 5,
           "pim": 16,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Jake Steinmetz",
+          "jersey": "7",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
           "status": null,
           "gpInferred": false,
           "gpBasis": null,
@@ -16145,6 +16653,35 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 8,
+            "goals": 4,
+            "assists": 5,
+            "pim": 7
+          },
+          "leagueRanks": {
+            "points": 283,
+            "goals": 176,
+            "assists": 194,
+            "pim": 72
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 0,
+          "g": 0,
+          "a": 0,
+          "pim": 0,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
     },
@@ -16289,191 +16826,6 @@
       "scoringRanks": []
     },
     {
-      "slug": "craig-pope",
-      "name": "Craig Pope",
-      "aliases": [],
-      "jerseys": [
-        "10"
-      ],
-      "positions": [
-        "F"
-      ],
-      "career": {
-        "sessions": 4,
-        "gp": 31,
-        "g": 12,
-        "a": 23,
-        "pts": 35,
-        "pim": 0,
-        "ppg": 1.13,
-        "gpInferred": false
-      },
-      "seasons": [
-        {
-          "session": "2013 - Summer",
-          "phase": "Regular Season",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 10,
-          "g": 6,
-          "a": 7,
-          "pts": 13,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2013 - Summer",
-          "phase": "Playoffs",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 1,
-          "g": 0,
-          "a": 0,
-          "pts": 0,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2013 - Winter",
-          "phase": "Regular Season",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 11,
-          "g": 4,
-          "a": 8,
-          "pts": 12,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2013 - Winter",
-          "phase": "Playoffs",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 2,
-          "g": 0,
-          "a": 2,
-          "pts": 2,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2014 - Summer",
-          "phase": "Regular Season",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 4,
-          "g": 0,
-          "a": 2,
-          "pts": 2,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2014 - Winter",
-          "phase": "Regular Season",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 3,
-          "g": 2,
-          "a": 4,
-          "pts": 6,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        },
-        {
-          "session": "2014 - Winter",
-          "phase": "Playoffs",
-          "team": "Golden Retrievers",
-          "recordedAs": "Craig Pope",
-          "jersey": "10",
-          "kind": "skater",
-          "goalie": null,
-          "position": "F",
-          "gp": 0,
-          "g": 0,
-          "a": 0,
-          "pts": 0,
-          "pim": 0,
-          "status": null,
-          "gpInferred": false,
-          "gpBasis": null,
-          "provenance": {
-            "source": "team-archive",
-            "label": "The team archive",
-            "archiveOnly": false
-          }
-        }
-      ],
-      "scoringRanks": []
-    },
-    {
       "slug": "anthony-galante",
       "name": "Anthony Galante",
       "aliases": [],
@@ -16488,12 +16840,12 @@
         "P"
       ],
       "career": {
-        "sessions": 10,
-        "gp": 63,
+        "sessions": 11,
+        "gp": 64,
         "g": 15,
-        "a": 20,
-        "pts": 35,
-        "pim": 54,
+        "a": 21,
+        "pts": 36,
+        "pim": 56,
         "ppg": 0.56,
         "gpInferred": false
       },
@@ -16773,6 +17125,29 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Anthony Galante",
+          "jersey": "4",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 1,
+          "g": 0,
+          "a": 1,
+          "pts": 1,
+          "pim": 2,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ],
       "scoringRanks": [
@@ -17036,8 +17411,222 @@
             "label": "HarborCenter",
             "archiveOnly": false
           }
+        },
+        {
+          "session": "2026 - Winter",
+          "sessionSort": 2026.5,
+          "division": "Silver Division",
+          "divisionRanks": {
+            "points": 3,
+            "goals": 4,
+            "assists": 2,
+            "pim": 1
+          },
+          "leagueRanks": {
+            "points": 144,
+            "goals": 176,
+            "assists": 65,
+            "pim": 15
+          },
+          "divisionField": 32,
+          "leagueField": 606,
+          "pts": 1,
+          "g": 0,
+          "a": 1,
+          "pim": 2,
+          "gp": 1,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
         }
       ]
+    },
+    {
+      "slug": "craig-pope",
+      "name": "Craig Pope",
+      "aliases": [],
+      "jerseys": [
+        "10"
+      ],
+      "positions": [
+        "F"
+      ],
+      "career": {
+        "sessions": 4,
+        "gp": 31,
+        "g": 12,
+        "a": 23,
+        "pts": 35,
+        "pim": 0,
+        "ppg": 1.13,
+        "gpInferred": false
+      },
+      "seasons": [
+        {
+          "session": "2013 - Summer",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 10,
+          "g": 6,
+          "a": 7,
+          "pts": 13,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2013 - Summer",
+          "phase": "Playoffs",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2013 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 11,
+          "g": 4,
+          "a": 8,
+          "pts": 12,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2013 - Winter",
+          "phase": "Playoffs",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 2,
+          "g": 0,
+          "a": 2,
+          "pts": 2,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2014 - Summer",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 4,
+          "g": 0,
+          "a": 2,
+          "pts": 2,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2014 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 3,
+          "g": 2,
+          "a": 4,
+          "pts": 6,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2014 - Winter",
+          "phase": "Playoffs",
+          "team": "Golden Retrievers",
+          "recordedAs": "Craig Pope",
+          "jersey": "10",
+          "kind": "skater",
+          "goalie": null,
+          "position": "F",
+          "gp": 0,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "team-archive",
+            "label": "The team archive",
+            "archiveOnly": false
+          }
+        }
+      ],
+      "scoringRanks": []
     },
     {
       "slug": "pat-diebold",
@@ -17637,7 +18226,7 @@
         "P"
       ],
       "career": {
-        "sessions": 17,
+        "sessions": 18,
         "gp": 83,
         "g": 5,
         "a": 20,
@@ -18098,6 +18687,29 @@
           "a": 2,
           "pts": 2,
           "pim": 2,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Andrew Murphy",
+          "jersey": "12",
+          "kind": "skater",
+          "goalie": null,
+          "position": "D",
+          "gp": 0,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
+          "pim": 0,
           "status": null,
           "gpInferred": false,
           "gpBasis": null,
@@ -21549,8 +22161,8 @@
         "G"
       ],
       "career": {
-        "sessions": 19,
-        "gp": 262,
+        "sessions": 20,
+        "gp": 263,
         "g": 1,
         "a": 1,
         "pts": 2,
@@ -22276,6 +22888,38 @@
           "g": 0,
           "a": 1,
           "pts": 1,
+          "pim": 0,
+          "status": null,
+          "gpInferred": false,
+          "gpBasis": null,
+          "provenance": {
+            "source": "harborcenter-hockeyshift",
+            "label": "HarborCenter",
+            "archiveOnly": false
+          }
+        },
+        {
+          "session": "2026 - Winter",
+          "phase": "Regular Season",
+          "team": "Golden Retrievers",
+          "recordedAs": "Corey Muff",
+          "jersey": "1",
+          "kind": "goalie",
+          "goalie": {
+            "w": "0",
+            "l": "1",
+            "t": "0",
+            "so": "0",
+            "ga": "3",
+            "gaa": "3.00",
+            "sv": "0",
+            "svPct": ".000"
+          },
+          "position": "G",
+          "gp": 1,
+          "g": 0,
+          "a": 0,
+          "pts": 0,
           "pim": 0,
           "status": null,
           "gpInferred": false,
@@ -25110,6 +25754,11 @@
       "n": 3
     },
     {
+      "from": "Anthony Galante",
+      "to": "Adam Kaplewicz",
+      "n": 3
+    },
+    {
       "from": "John Rein",
       "to": "Brendan Kaplewicz",
       "n": 3
@@ -25352,11 +26001,6 @@
     {
       "from": "Vincent Terrana",
       "to": "John Rein",
-      "n": 2
-    },
-    {
-      "from": "Anthony Galante",
-      "to": "Adam Kaplewicz",
       "n": 2
     },
     {
@@ -26562,6 +27206,11 @@
       "n": 4
     },
     {
+      "a": "Adam Kaplewicz",
+      "b": "Anthony Galante",
+      "n": 4
+    },
+    {
       "a": "John Rein",
       "b": "Vincent Terrana",
       "n": 4
@@ -26669,11 +27318,6 @@
     {
       "a": "Anthony Christy",
       "b": "Luke Grahnert",
-      "n": 3
-    },
-    {
-      "a": "Adam Kaplewicz",
-      "b": "Anthony Galante",
       "n": 3
     },
     {
@@ -76156,26 +76800,115 @@
       "league": "Seneca HAHL",
       "round": null,
       "away": "Mediak Construction Kings",
-      "awayScore": null,
+      "awayScore": 3,
       "home": "The Golden Retrievers",
-      "homeScore": null,
+      "homeScore": 1,
       "gr": "home",
       "venueUnknown": false,
       "opponent": "Mediak Construction Kings",
-      "gf": null,
-      "ga": null,
-      "result": null,
-      "status": "Not Started",
+      "gf": 1,
+      "ga": 3,
+      "result": "L",
+      "status": "Final",
       "ot": false,
       "shootoutWinner": null,
       "rink": "Rink 1",
-      "periodLabels": [],
-      "linescore": [],
-      "goals": [],
-      "penalties": [],
+      "periodLabels": [
+        "1st",
+        "2nd",
+        "3rd"
+      ],
+      "linescore": [
+        {
+          "team": "Mediak Construction Kings",
+          "periods": [
+            "1",
+            "2",
+            "0"
+          ],
+          "final": "3"
+        },
+        {
+          "team": "The Golden Retrievers",
+          "periods": [
+            "1",
+            "0",
+            "0"
+          ],
+          "final": "1"
+        }
+      ],
+      "goals": [
+        {
+          "period": "1st",
+          "time": "02:45",
+          "team": "The Golden Retrievers",
+          "scorer": "Adam Kaplewicz",
+          "assists": [
+            "Anthony Galante"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "1st",
+          "time": "00:11",
+          "team": "Mediak Construction Kings",
+          "scorer": "Griffin Lunn",
+          "assists": [
+            "Kyle Leto"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "11:30",
+          "team": "Mediak Construction Kings",
+          "scorer": "Griffin Lunn",
+          "assists": [
+            "Michael McDonald"
+          ],
+          "strength": "Even Strength"
+        },
+        {
+          "period": "2nd",
+          "time": "02:55",
+          "team": "Mediak Construction Kings",
+          "scorer": "Griffin Lunn",
+          "assists": [
+            "Michael McDonald"
+          ],
+          "strength": "Even Strength"
+        }
+      ],
+      "penalties": [
+        {
+          "period": "1st",
+          "time": "08:33",
+          "team": "Mediak Construction Kings",
+          "detail": "#27 Tomas Missert Roughing (Minor) 02:00"
+        },
+        {
+          "period": "3rd",
+          "time": "10:08",
+          "team": "The Golden Retrievers",
+          "detail": "#4 Anthony Galante Roughing (Minor) 02:00"
+        },
+        {
+          "period": "3rd",
+          "time": "10:08",
+          "team": "Mediak Construction Kings",
+          "detail": "#77 Kevin Hoddick Roughing (Minor) 02:00"
+        },
+        {
+          "period": "3rd",
+          "time": "04:39",
+          "team": "The Golden Retrievers",
+          "detail": "#89 Vincent Terrana Slashing (Minor) 02:00"
+        }
+      ],
       "goalies": [],
-      "hasDetail": false,
-      "scheduleOnly": true,
+      "hasDetail": true,
+      "scheduleOnly": false,
       "provenance": {
         "source": "harborcenter-hockeyshift",
         "label": "HarborCenter",
@@ -76293,18 +77026,18 @@
   ],
   "gameTotals": {
     "games": 333,
-    "played": 322,
-    "unplayed": 11,
+    "played": 323,
+    "unplayed": 10,
     "scoreUnrecorded": 7,
-    "withSheet": 255,
-    "scheduleOnly": 78,
+    "withSheet": 256,
+    "scheduleOnly": 77,
     "w": 177,
-    "l": 142,
+    "l": 143,
     "t": 3,
-    "gf": 1824,
-    "ga": 1641,
-    "goalsRecorded": 1200,
-    "penalties": 1108,
+    "gf": 1825,
+    "ga": 1644,
+    "goalsRecorded": 1201,
+    "penalties": 1112,
     "goalieLines": 103,
     "shootouts": 20,
     "shootoutWins": 8,

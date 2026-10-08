@@ -1,0 +1,71 @@
+{
+  "ranAt": "2026-10-08T19:52:06.485Z",
+  "freshnessHours": 12,
+  "before": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 649,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1200,
+      "assistEdges": 1331,
+      "gameSheets": 288,
+      "captures": 13270,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 333
+  },
+  "after": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 664,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1201,
+      "assistEdges": 1332,
+      "gameSheets": 289,
+      "captures": 13412,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 333
+  },
+  "newSessions": [],
+  "changes": [
+    "totals.playerSeasons: 649 -> 664",
+    "totals.goals: 1200 -> 1201",
+    "totals.assistEdges: 1331 -> 1332",
+    "totals.gameSheets: 288 -> 289",
+    "totals.captures: 13270 -> 13412",
+    "Bryan Karchensky.gp: 462 -> 463",
+    "Bryan Karchensky.seasons: 39 -> 40",
+    "Adam Kaplewicz.gp: 399 -> 400",
+    "Adam Kaplewicz.g: 374 -> 375",
+    "Adam Kaplewicz.seasons: 36 -> 37",
+    "Jason Kaplewicz.gp: 364 -> 365",
+    "Jason Kaplewicz.seasons: 38 -> 39",
+    "Brent Boeing.seasons: 23 -> 24",
+    "Vincent Terrana.gp: 321 -> 322",
+    "Vincent Terrana.seasons: 39 -> 40",
+    "Anthony Christy.gp: 230 -> 231",
+    "Anthony Christy.seasons: 33 -> 34",
+    "Brett Koeppel.gp: 301 -> 302",
+    "Brett Koeppel.seasons: 39 -> 40",
+    "Richard Fedele.seasons: 39 -> 40",
+    "John Rein.gp: 114 -> 115",
+    "John Rein.seasons: 14 -> 15",
+    "Anthony Gugino.seasons: 20 -> 21",
+    "Devin Arnold.gp: 72 -> 73",
+    "Devin Arnold.seasons: 7 -> 8",
+    "Jake Steinmetz.gp: 38 -> 39",
+    "Jake Steinmetz.seasons: 5 -> 6",
+    "Anthony Galante.gp: 63 -> 64",
+    "Anthony Galante.a: 20 -> 21",
+    "Anthony Galante.seasons: 12 -> 13",
+    "Andrew Murphy.seasons: 20 -> 21",
+    "Corey Muff.gp: 262 -> 263",
+    "Corey Muff.seasons: 23 -> 24"
+  ],
+  "regressions": []
+}
