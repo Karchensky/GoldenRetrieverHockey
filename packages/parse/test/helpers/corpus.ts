@@ -76,23 +76,15 @@ export function corpusHtml(urlLike: string): string[] {
 }
 
 /**
- * EVERY capture of a URL, OLDEST FIRST — the archive's successive words, not
- * just its last one.
- *
- * The other two readers here deliberately collapse repeats: `corpusHtml` to
- * distinct content and `corpusPages` to the newest per URL. Neither can answer
- * "what did this page look like before, and does the parser handle both?" —
- * and that question only became answerable once the live season was refreshed
- * and the corpus started holding two genuinely different bodies for the same
- * player.
- *
- * ORDER IS THE POINT. `corpusHtml` returns rows in whatever order SQLite hands
- * back, so a test that assumed oldest-first from it asserted "GP went 7 -> 5"
- * and failed against a corpus that was entirely correct. Ordering by
- * `fetched_at` here is what makes "the live session only ever grows" a
- * statement about the data rather than about SQLite's row order.
+ * Captured bodies ordered oldest first, so tests can follow a page's history.
+ * By default, return each distinct body at its first capture. Set
+ * distinctContent=false to include unchanged captures and returns to earlier
+ * content when checking which bytes were served most recently.
  */
-export function corpusSnapshots(urlLike: string): { fetchedAt: string; html: string }[] {
+export function corpusSnapshots(
+  urlLike: string,
+  { distinctContent = true }: { distinctContent?: boolean } = {},
+): { fetchedAt: string; html: string }[] {
   const dbPath = join(ROOT, "manifest.sqlite");
   if (!existsSync(dbPath)) return [];
 
@@ -110,7 +102,9 @@ export function corpusSnapshots(urlLike: string): { fetchedAt: string; html: str
     for (const r of rows) {
       // A re-capture that found the page unchanged logs a new row against the
       // same blob. That is one state of the page, not two.
-      if (seen.has(r.content_hash)) continue;
+      // Include repeats when checking the latest capture: a source can revert
+      // to previously seen bytes, which must still be its newest word.
+      if (distinctContent && seen.has(r.content_hash)) continue;
       seen.add(r.content_hash);
       const p = join(ROOT, "blobs", r.content_hash.slice(0, 2), `${r.content_hash}.gz`);
       if (!existsSync(p)) continue;

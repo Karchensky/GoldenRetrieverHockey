@@ -402,118 +402,46 @@ test("every captured player page yields a name", () => {
 });
 
 test("a re-captured player is one career, not two", () => {
-  // THE PROPERTY THIS FILE PREVIOUSLY ASSUMED RATHER THAN TESTED.
-  //
-  // Refreshing the live season captures a player's page a second time, and
-  // because he has played since, the body genuinely differs — so the corpus
-  // now holds two distinct blobs for the same URL. The danger is that both get
-  // read and his career comes out doubled, which is the exact shape of the
-  // 1,064-phantom-goals bug: plausible numbers, twice as large as the truth.
-  //
-  // The old assertion here was "the corpus holds exactly one page per player",
-  // which forbade the situation instead of testing it, and went red the moment
-  // it arose. This tests the thing that actually matters, against the two real
-  // snapshots that now exist.
-  const repeats = [MUFF, KARCHENSKY, ARNOLD].filter((id) => allSnapshotsOf(id).length > 1);
-  assert.ok(
-    repeats.length > 0,
-    "no player has been captured twice yet — re-run the sync and this test gains its teeth",
-  );
-
-  for (const id of repeats) {
+  // Careers gain seasons and the league can correct earlier figures. Check
+  // each capture against its own totals, without freezing its row count.
+  for (const id of [MUFF, KARCHENSKY, ARNOLD]) {
     const snapshots = allSnapshotsOf(id);
-
-    // 1. Each snapshot on its own is internally deduped: the SPA renders every
-    //    table twice (desktop + mobile) and both copies are in the bytes.
-    //
-    //    Measured, so the claim is not larger than the check: `parseHsPlayer`
-    //    dedupes career rows on session|team|kind and keeps the FIRST, so it
-    //    cannot emit a doubled career even if two whole bodies were handed to
-    //    it at once — verified by concatenating these two snapshots, which
-    //    yields 19 rows, not 38. What concatenation DOES do is silently keep
-    //    the older figures (Summer 2026 GP 5, not 7), which is why the real
-    //    protection is choosing exactly one body, and why the next test
-    //    exists.
+    assert.ok(snapshots.length > 1, 'player ' + id + ' needs repeated captures');
+    const names = new Set<string | null>();
     for (const [i, content] of snapshots.entries()) {
       const p = parseHsPlayer(content, id);
-      const keys = p.career.map((r) => `${r.session}|${r.team}|${r.kind}`);
-      assert.equal(
-        new Set(keys).size,
-        keys.length,
-        `player ${id} snapshot ${i}: a session is counted twice`,
-      );
-      const games = p.games.map((r) => `${r.date}|${r.game}|${r.kind}`);
-      assert.equal(new Set(games).size, games.length, `player ${id} snapshot ${i}: a game is counted twice`);
-    }
-
-    // 2. The snapshots agree on identity and on the SHAPE of the career. A
-    //    later capture must not add a row for a session that already existed —
-    //    that is what doubling would look like from the outside.
-    const parsed = snapshots.map((c) => parseHsPlayer(c, id));
-    const names = new Set(parsed.map((p) => p.name));
-    assert.equal(names.size, 1, `player ${id} is one man across every capture`);
-    const sessionSets = parsed.map((p) => new Set(p.career.map((r) => `${r.session}|${r.kind}`)));
-    for (const s of sessionSets) {
-      assert.equal(s.size, sessionSets[0]!.size, `player ${id}: the session list changed size`);
-    }
-
-    // 3. EVERY FINISHED session reads identically no matter which capture it
-    //    came from. A settled season is where summing two snapshots rather
-    //    than superseding one would show first, and this checks all of them
-    //    rather than a session guessed in advance.
-    //
-    //    Keyed on session|team|kind, never on session alone: a man can play
-    //    two teams in one session, and both rows are real.
-    const live = parsed[0]!.career[0]!.session;
-    const settledOf = (p: (typeof parsed)[number]) =>
-      new Map(
-        p.career
-          .filter((r) => r.session !== live)
-          .map((r) => [`${r.session}|${r.team}|${r.kind}`, JSON.stringify(r.stats)] as const),
-      );
-    const baseline = settledOf(parsed[0]!);
-    for (const p of parsed.slice(1)) {
-      const later = settledOf(p);
-      assert.equal(later.size, baseline.size, `player ${id}: the settled season count changed`);
-      for (const [key, stats] of baseline) {
-        assert.equal(later.get(key), stats, `player ${id}: ${key} differs between captures`);
+      names.add(p.name);
+      const label = 'player ' + id + ' snapshot ' + i;
+      const keys = p.career.map((r) => [r.session, r.team, r.kind].join('|'));
+      assert.equal(new Set(keys).size, keys.length, label + ': a session is counted twice');
+      const games = p.games.map((r) => [r.date, r.game, r.kind].join('|'));
+      assert.equal(new Set(games).size, games.length, label + ': a game is counted twice');
+      assert.ok(p.career.length > 0, label + ': no career rows');
+      for (const kind of new Set(p.career.map((r) => r.kind))) {
+        const aggregate = totalsRow(content, kind);
+        assert.ok(aggregate, label + ': missing ' + kind + ' totals');
+        const rows = p.career.filter((r) => r.kind === kind);
+        const sum = (stat: string) => rows.reduce((n, r) => n + Number(r.stats[stat] ?? 0), 0);
+        // The footer omits Team/Division, plus Pos on skater tables.
+        assert.equal(sum("GP"), Number(aggregate[1]), label + ': ' + kind + ' GP');
+        assert.equal(sum("G"), Number(aggregate[kind === "goalie" ? 14 : 2]), label + ': ' + kind + ' goals');
+        assert.equal(sum("A"), Number(aggregate[kind === "goalie" ? 15 : 3]), label + ': ' + kind + ' assists');
       }
     }
-
-    // 4. The LIVE session only ever grows. `allSnapshotsOf` is ordered oldest
-    //    first, so a later capture reporting fewer games played means the
-    //    newer body was misread — or an older one is being preferred.
-    const gps = parsed.map((p) =>
-      p.career
-        .filter((r) => r.session === live)
-        .reduce((s, r) => s + Number(r.stats.GP ?? 0), 0),
-    );
-    for (let i = 1; i < gps.length; i++) {
-      assert.ok(gps[i]! >= gps[i - 1]!, `player ${id}: ${live} GP went ${gps[i - 1]} -> ${gps[i]}`);
-    }
+    assert.equal(names.size, 1, 'player ' + id + ' has one identity across captures');
   }
 });
 
-test("the build reads the archive's LAST word, not every word", () => {
-  // `partial()` goes through corpusPages, which collapses a URL to its newest
-  // capture. That is the same rule the build layer applies, and it is what
-  // keeps a re-captured page from being counted twice downstream.
-  const twice = [MUFF, KARCHENSKY, ARNOLD].find((id) => allSnapshotsOf(id).length > 1);
-  if (twice === undefined) return; // nothing captured twice yet
-  const chosen = parseHsPlayer(partial(twice), twice);
-  const every = allSnapshotsOf(twice).map((c) => parseHsPlayer(c, twice));
-  const live = chosen.career[0]!.session;
-  const gpIn = (p: (typeof every)[number]) =>
-    p.career.filter((r) => r.session === live).reduce((s, r) => s + Number(r.stats.GP ?? 0), 0);
-
-  const chosenGp = gpIn(chosen);
-  const perSnapshot = every.map(gpIn);
-  assert.equal(chosenGp, Math.max(...perSnapshot), "the chosen page is the most recent, not the first");
-  assert.notEqual(
-    chosenGp,
-    perSnapshot.reduce((a, b) => a + b, 0),
-    "and it is one page's figure, never the sum of both",
-  );
+test("the corpus selects the latest player capture across season changes", () => {
+  // Compare the whole page with the timestamp-ordered capture, not max(GP).
+  // A new season may exist only in the newest capture, so its GP can equal
+  // the sum across captures without anything having been counted twice.
+  for (const id of [MUFF, KARCHENSKY, ARNOLD]) {
+    const snapshots = corpusSnapshots('%partials/stats/player?player_id=' + id, { distinctContent: false });
+    assert.ok(snapshots.length > 1, 'player ' + id + ' needs repeated captures');
+    const latest = JSON.parse(snapshots.at(-1)!.html) as { content: string };
+    assert.equal(partial(id), latest.content, 'player ' + id + ': newest captured bytes win');
+  }
 });
 
 test("parseHsPlayer on an empty partial yields empty, not a throw", () => {
