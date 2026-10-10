@@ -1,0 +1,39 @@
+{
+  "ranAt": "2026-10-10T18:29:22.232Z",
+  "freshnessHours": 12,
+  "before": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 664,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1201,
+      "assistEdges": 1332,
+      "gameSheets": 289,
+      "captures": 13553,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 333
+  },
+  "after": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 664,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1201,
+      "assistEdges": 1332,
+      "gameSheets": 289,
+      "captures": 13694,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 333
+  },
+  "newSessions": [],
+  "changes": [
+    "totals.captures: 13553 -> 13694"
+  ],
+  "regressions": []
+}
