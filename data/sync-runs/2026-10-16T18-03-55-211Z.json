@@ -1,0 +1,62 @@
+{
+  "ranAt": "2026-10-16T18:03:55.211Z",
+  "freshnessHours": 12,
+  "before": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 664,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1201,
+      "assistEdges": 1332,
+      "gameSheets": 289,
+      "captures": 14403,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 334
+  },
+  "after": {
+    "totals": {
+      "sessions": 32,
+      "playerSeasons": 664,
+      "recordedNames": 93,
+      "people": 80,
+      "goals": 1205,
+      "assistEdges": 1338,
+      "gameSheets": 290,
+      "captures": 14547,
+      "archiveOnlySessions": 6
+    },
+    "sessions": 32,
+    "games": 334
+  },
+  "newSessions": [],
+  "changes": [
+    "totals.goals: 1201 -> 1205",
+    "totals.assistEdges: 1332 -> 1338",
+    "totals.gameSheets: 289 -> 290",
+    "totals.captures: 14403 -> 14547",
+    "Bryan Karchensky.gp: 463 -> 464",
+    "Bryan Karchensky.a: 507 -> 509",
+    "Adam Kaplewicz.gp: 400 -> 401",
+    "Adam Kaplewicz.a: 387 -> 388",
+    "Jason Kaplewicz.gp: 365 -> 366",
+    "Jason Kaplewicz.g: 239 -> 240",
+    "Brent Boeing.gp: 204 -> 205",
+    "Brent Boeing.a: 264 -> 265",
+    "Vincent Terrana.gp: 322 -> 323",
+    "Anthony Christy.gp: 231 -> 232",
+    "Anthony Christy.g: 173 -> 175",
+    "Anthony Christy.a: 166 -> 167",
+    "Brett Koeppel.gp: 302 -> 303",
+    "Richard Fedele.gp: 303 -> 304",
+    "John Rein.gp: 115 -> 116",
+    "John Rein.g: 48 -> 49",
+    "John Rein.a: 54 -> 55",
+    "Anthony Gugino.gp: 153 -> 154",
+    "Anthony Galante.gp: 64 -> 65",
+    "Corey Muff.gp: 263 -> 264"
+  ],
+  "regressions": []
+}
