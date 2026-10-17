@@ -30,6 +30,7 @@ concurrency:
 
 permissions:
   contents: write
+  checks: read
 
 jobs:
   refresh:
@@ -127,10 +128,9 @@ jobs:
       # restores the failure mode: the tests move back in front of the commit
       # and a red suite starts eating captures again.
       #
-      # What it catches: a data change that breaks the site build. Cloudflare
-      # builds from the push, and if that build fails it silently keeps serving
-      # the previous deploy — the site does not break, it just stops being
-      # current, and nothing says so. This is the thing that says so.
+      # This catches a data change that breaks the site build. It cannot prove
+      # Cloudflare deployed it: the hosting build can fail independently. The
+      # deployment check below verifies that separate result on the pushed SHA.
       #
       # It also renders /feed/products.xml and every page's JSON-LD, so it
       # proves the whole derived-metadata chain still holds against today's data.
@@ -146,3 +146,12 @@ jobs:
       - name: Check the types still hold
         if: steps.diff.outputs.changed == 'true'
         run: npm run typecheck
+
+      # The 2026-10-16 capture passed every check, but Cloudflare's asset upload
+      # timed out and the live site kept the Buffalo Cigars game unplayed.
+      # Check even on quiet days so an unresolved failed deploy stays visible.
+      - name: Verify Cloudflare deployment
+        timeout-minutes: 11
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/check-deployment.ts
