@@ -27,15 +27,19 @@ type Sim = {
   /** Where the clock actually stops for each goal, when the scorekeeper typed something else. */
   stoppedAt?: Record<number, string>;
   whistles?: Whistle[];
+  /** Seconds after the whistle the score goes up, for a goal the board was late with. */
+  boardLate?: Record<number, number>;
   showScore?: boolean;
   endAt?: number;
 };
 
-function simulate({ practice = true, stoppedAt = {}, whistles = [], showScore = true, endAt = Infinity }: Sim = {}) {
+function simulate({ practice = true, stoppedAt = {}, whistles = [], boardLate = {}, showScore = true, endAt = Infinity }: Sim = {}) {
   const readings: Reading[] = [];
   const truth: number[] = [];
+  const late: { at: number; home: boolean }[] = [];
   let t = 0, home = 0, away = 0;
   const emit = (period: string | null, clock: number | null) => {
+    for (const l of late.filter((x) => x.at === t)) l.home ? home++ : away++;
     if (t < endAt) readings.push({ t, period, clock, home: showScore ? home : null, away: showScore ? away : null });
     t++;
   };
@@ -58,7 +62,11 @@ function simulate({ practice = true, stoppedAt = {}, whistles = [], showScore = 
       for (const s of pending.filter((x) => parseClock(x.clock) === c)) {
         if (s.goal !== undefined) truth[s.goal] = t;
         for (let i = 0; i < s.hold; i++) {
-          if (s.goal !== undefined && i === 12) GOALS[s.goal]!.team === HOME ? home++ : away++;
+          if (s.goal !== undefined && i === 12) {
+            const isHome = GOALS[s.goal]!.team === HOME;
+            if (boardLate[s.goal] === undefined) isHome ? home++ : away++;
+            else late.push({ at: truth[s.goal]! + boardLate[s.goal]!, home: isHome });
+          }
           emit(period, c);
         }
       }
@@ -139,6 +147,15 @@ test("an offside two seconds before a goal is not the goal", () => {
   const located = locateGoals(readings, GOALS, HOME, AWAY);
   assert.equal(located.ready, true);
   near(located.goals[6]!.t, truth[6]!);
+});
+
+test("a late board is not fooled by a re-drop after the goal", () => {
+  // 2026-10-15: the score went up 150s after 1st 11:52, with play long resumed, and
+  // the faceoff after the goal was dropped twice — the clock held at 11:51 between.
+  const { readings, truth } = simulate({ boardLate: { 0: 150 }, whistles: [{ period: "1st", clock: "11:51", hold: 5 }] });
+  const located = locateGoals(readings, GOALS, HOME, AWAY);
+  assert.equal(located.ready, true, JSON.stringify(located.goals.map((g) => g.problem)));
+  near(located.goals[0]!.t, truth[0]!);
 });
 
 test("without a score on the overlay a practice cannot be told apart, and says so", () => {

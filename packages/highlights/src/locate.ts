@@ -181,11 +181,16 @@ export function scoreChange(
 /**
  * Where one crossing puts the goal. The goal is the whistle, not the crossing:
  * the clock stops on it and the score goes up during that stop. So once the
- * score has changed, the goal is the start of the last stop before it near the
- * scoresheet's time — which also catches a scorekeeper typing 11:48 for a goal
+ * score has changed, the goal is the stop near the scoresheet's time that the
+ * score went up in — which also catches a scorekeeper typing 11:48 for a goal
  * the clock froze on at 11:50, and ignores an offside two seconds earlier
- * because the score did not change during that one. A clock that never stops
- * leaves the crossing itself.
+ * because the score did not change during that one.
+ *
+ * A late board puts the score up after play has resumed, inside no stop at all:
+ * on 2026-10-15 it went up two and a half minutes after 1st 11:52, past a
+ * re-dropped faceoff that held the clock at 11:51. Then the goal is the longest
+ * stop near the time — a goal brings a centre-ice faceoff, an offside or a
+ * re-drop does not. A clock that never stops leaves the crossing itself.
  */
 function settle(
   readings: Reading[], goal: ScoredGoal, before: Score, after: Score, t0: number,
@@ -194,9 +199,9 @@ function settle(
   const s = scoreChange(readings, before, after, t0 - 120, t0 + scoreLagSeconds);
   if (s === null) return { t: t0, confirmed: false };
   const clock = parseClock(goal.time);
-  const stop = stops(readings, goal.period, stoppedSeconds)
-    .filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds)
-    .at(-1);
+  const near = stops(readings, goal.period, stoppedSeconds)
+    .filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds);
+  const stop = near.find((x) => s <= x.end + 3) ?? [...near].sort((a, b) => b.end - b.start - (a.end - a.start))[0];
   if (stop) return { t: stop.start, confirmed: true };
   return t0 <= s ? { t: t0, confirmed: true } : { t: t0, confirmed: false };
 }
