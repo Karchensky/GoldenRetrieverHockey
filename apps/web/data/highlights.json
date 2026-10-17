@@ -1,1 +1,51 @@
-{}
+{
+  "1335891": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "02:45",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1335891-0.mp4",
+      "poster": "1335891-0.jpg",
+      "seconds": 23
+    }
+  ],
+  "1335913": [
+    {
+      "goal": 2,
+      "period": "1st",
+      "time": "06:42",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1335913-2.mp4",
+      "poster": "1335913-2.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 3,
+      "period": "1st",
+      "time": "02:22",
+      "scorer": "Anthony Christy",
+      "clip": "1335913-3.mp4",
+      "poster": "1335913-3.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "05:34",
+      "scorer": "John Rein",
+      "clip": "1335913-6.mp4",
+      "poster": "1335913-6.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 7,
+      "period": "3rd",
+      "time": "02:46",
+      "scorer": "Anthony Christy",
+      "clip": "1335913-7.mp4",
+      "poster": "1335913-7.jpg",
+      "seconds": 23
+    }
+  ]
+}
