@@ -1,4 +1,5 @@
 import site from "../../data/site.json";
+import highlightsJson from "../../data/highlights.json";
 import type { SiteData, Game, Session } from "../../../../packages/build/src/types";
 import type { GameRow } from "./GameList";
 
@@ -9,6 +10,31 @@ export const gameTotals = data.gameTotals;
 export const totals = data.totals;
 
 export const gameById = (id: string) => games.find((g) => g.id === id);
+
+/**
+ * One of our goals, clipped from the rink's recording.
+ *
+ * `goal` is the goal's place on the scoresheet, from 0 — the same order
+ * `game.goals` is in. The period, time and scorer are carried too, and a test
+ * holds them to that goal, so a clip cannot come to sit beside the wrong line
+ * if a scoresheet is ever corrected. The files are served from R2 by the
+ * Worker, never from this repository.
+ */
+export type Highlight = {
+  goal: number;
+  period: string;
+  time: string;
+  scorer: string;
+  clip: string;
+  poster: string;
+  seconds: number;
+};
+
+const highlights = highlightsJson as Record<string, Highlight[]>;
+
+/** A game's clips, keyed by the goal's place on the scoresheet. */
+export const highlightsFor = (id: string): Map<number, Highlight> =>
+  new Map((highlights[id] ?? []).map((h) => [h.goal, h]));
 
 /**
  * Spell a small number.

@@ -2,18 +2,20 @@ import { resolveBasket } from "../../packages/store/src/basket";
 import type { BasketLine, CatalogProduct } from "../../packages/store/src/basket";
 import catalogJson from "../../apps/web/data/products.json";
 import { createSession, getSessionWithLineItems, verifySignature } from "./stripe";
+import { isHighlight, serveHighlight } from "./highlights";
 import { quoteShipping, splitName, submitOrder } from "./printify";
 import type { OrderLine } from "./printify";
 
 /**
  * The checkout.
  *
- * Everything that is not `/api/*` falls through to the static export, which is
- * the whole site. This Worker exists for two routes and holds no state beyond
- * one KV key per completed order.
+ * Everything that is not one of these falls through to the static export, which
+ * is the whole site. This Worker holds no state beyond one KV key per completed
+ * order.
  *
  *   POST /api/checkout        basket in, Stripe Checkout URL out
  *   POST /api/stripe-webhook  Stripe says it was paid, Printify is told to print
+ *   GET  /highlights/<file>   a goal clip from R2 — see highlights.ts
  *
  * **The catalog is compiled in.** It is the same `apps/web/data/products.json`
  * the storefront renders from, written by the sync out of the verified read-back
@@ -39,6 +41,8 @@ export type Env = {
   ORDERS: KVNamespace;
   /** The static export. Bound by wrangler.jsonc; serves everything else. */
   ASSETS: Fetcher;
+  /** The goal clips. Bound by wrangler.jsonc once the bucket exists; optional so the site runs without it. */
+  HIGHLIGHTS?: R2Bucket;
 };
 
 const catalog = (catalogJson as { products: unknown[] }).products as CatalogProduct[];
@@ -98,6 +102,8 @@ export default {
       if (request.method !== "POST") return json({ error: "POST only" }, 405);
       return handleWebhook(request, env, ctx);
     }
+
+    if (isHighlight(url.pathname)) return serveHighlight(request, env.HIGHLIGHTS);
 
     return env.ASSETS.fetch(request);
   },

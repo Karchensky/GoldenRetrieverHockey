@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
 import Reveal from "../../../components/games/Reveal";
-import { games, gameById, grSide } from "../../../components/games/games";
+import { games, gameById, grSide, highlightsFor } from "../../../components/games/games";
 import s from "../../../components/games/games.module.css";
 import { longDate } from "../../../lib/dates";
 import { plural } from "../../../lib/format";
@@ -43,6 +43,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
 
   const us = grSide(g);
   const periods = [...new Set(g.goals.map((x) => x.period))];
+  const clips = highlightsFor(g.id);
   const idx = games.findIndex((x) => x.id === g.id);
   const prev = games[idx - 1];
   const next = games[idx + 1];
@@ -164,10 +165,11 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
             {periods.map((p, pi) => (
               <Reveal key={p} index={pi}>
                 <h3 className={s.periodHead}>{p} period</h3>
-                {g.goals.filter((x) => x.period === p).map((x, i) => {
+                {g.goals.map((x, n) => ({ x, n })).filter(({ x }) => x.period === p).map(({ x, n }) => {
                   const ours = x.team === us;
+                  const clip = ours ? clips.get(n) : undefined;
                   return (
-                    <div key={i} className={`${s.event} ${ours ? s.us : s.them}`}>
+                    <div key={n} className={`${s.event} ${ours ? s.us : s.them}`}>
                       <span className={s.evTime}>{x.time}</span>
                       <span>
                         <span className={s.scorer}>
@@ -181,6 +183,19 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
                             : "unassisted"}
                           {x.strength && x.strength !== "even strength" && <> · {x.strength}</>}
                         </span>
+                        {/* Nothing loads until it is played: a page of four goals
+                            is four posters, not four videos. */}
+                        {clip && (
+                          <video
+                            className={s.clip}
+                            src={`/highlights/${clip.clip}`}
+                            poster={`/highlights/${clip.poster}`}
+                            controls
+                            playsInline
+                            preload="none"
+                            aria-label={`${x.scorer}'s goal, ${x.period} period ${x.time}`}
+                          />
+                        )}
                       </span>
                     </div>
                   );
