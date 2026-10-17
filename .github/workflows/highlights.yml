@@ -6,9 +6,9 @@
 #
 # On a day with one, it signs in to the rink's video site as the account owner,
 # finds the game and reads its recording for the goals, marks a clip of each of
-# OURS and asks the rink to render it — ONE DOWNLOAD CREDIT EACH, of twenty a
-# month, two goals sharing one when they fit in a minute. Out of credit, a clip
-# waits in the ledger for next month's. A rendered clip is checked twice before
+# OURS and asks the rink to render it — ONE OF THE ACCOUNT'S 20 DOWNLOADS A
+# MONTH EACH (the platform calls them credits), two goals sharing one when they
+# fit in a minute. With none left, a clip waits in the ledger for next month's. A rendered clip is checked twice before
 # it goes anywhere: its own scoreboard must show the goal going in at the score
 # either side of it, and it must match, frame by frame, the stretch of the
 # recording it was asked for, with the goal where the search put it. Then it is
@@ -27,10 +27,10 @@
 #   - a game "not found", "no recording" or with a goal it could not pin down:
 #     the game's "problem" — delete it (and "sheet") to have it looked at again.
 #     A corrected scoresheet does this by itself.
-#   - a clip that failed its checks: its "status" is "failed". The credit is
-#     spent, but while the rink still has the download, setting it back to
+#   - a clip that failed its checks: its "status" is "failed". The download is
+#     used, but while the rink still has the download, setting it back to
 #     "requested" (and deleting any "tries") re-checks that same download for
-#     nothing. Never set one to "queued" unless it should cost another credit.
+#     nothing. Never set one to "queued" unless it should use another download.
 # Red every day is a different thing: the sign-in failing (the password, or the
 # subscription ended) or the rink's site changed. To stop it for good, disable
 # this workflow; the clips already up stay up.

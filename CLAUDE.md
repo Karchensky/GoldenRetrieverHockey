@@ -73,13 +73,14 @@ When the till fails the reason is in that terminal, not the browser.
 ## The goal highlights
 
 `packages/highlights`, run daily by `.github/workflows/highlights.yml`, clips
-our goals from the rink's recordings onto the box scores. **It spends real
-money too**: each clip is one of the rink account's 20 download credits a
-month. Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
+our goals from the rink's recordings onto the box scores. **It uses up
+something scarce**: each clip is one of the 20 downloads the rink account gets
+a month (the platform calls them credits; `clipsCredit` reads what is left).
+Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
 
-The account, not the ledger, is what stops a credit being spent twice — the job
-reuses any clip of its own at the same start and length. Never set a ledger
-clip to `queued` by hand unless it should cost another credit; the recovery
+The account, not the ledger, is what stops a download being used twice — the
+job reuses any clip of its own at the same start and length. Never set a ledger
+clip to `queued` by hand unless it should use another download; the recovery
 steps are in the workflow's header.
 
 **The Actions logs are public.** Never print the recording's address, a token or
