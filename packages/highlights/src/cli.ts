@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { daily, type Highlights, type Ledger } from "./daily.ts";
+import { daily, gamesWithWork, type Highlights, type Ledger } from "./daily.ts";
 import { locateGoals, type Location, type Reading, type ScoredGoal } from "./locate.ts";
 import { chapters, planClips, render } from "./reel.ts";
 
@@ -36,12 +36,14 @@ const USAGE = `
       Cut the located goals into one captioned reel. Refuses a game that
       'locate' could not finish unless --force.
 
-  daily [--dry-run] [--wait 25]
+  daily [--dry-run] [--wait 25] [--check]
       The scheduled job: clip every one of OUR goals from ${SINCE} on, from the
       rink's recording, onto its line on the box score. Needs HARBORCENTER_EMAIL
       and HARBORCENTER_PASSWORD, and for the upload CLOUDFLARE_API_TOKEN and
       CLOUDFLARE_ACCOUNT_ID. Writes packages/highlights/ledger.json and
       apps/web/data/highlights.json. --dry-run spends and uploads nothing.
+      --check only says whether there is anything to do, from the files alone —
+      no sign-in, no network, no dependencies — for the workflow to stop early.
 `;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -86,6 +88,7 @@ const { values } = parseArgs({
     tail: { type: "string" },
     force: { type: "boolean" },
     "dry-run": { type: "boolean" },
+    check: { type: "boolean" },
     wait: { type: "string" },
   },
 });
@@ -131,6 +134,12 @@ if (command === "locate" && values.game && values.readings) {
   const ledger = JSON.parse(fs.readFileSync(LEDGER, "utf8")) as Ledger;
   const highlights = JSON.parse(fs.readFileSync(HIGHLIGHTS, "utf8")) as Highlights;
   const dryRun = values["dry-run"] === true;
+  if (values.check) {
+    const work = gamesWithWork({ since: SINCE, games: site.games, ledger, highlights });
+    console.log(work.length ? `Work on ${work.length} game(s): ${work.map((g) => `${g.date} ${g.id}`).join(", ")}` : "Nothing to do.");
+    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `work=${work.length > 0}\n`);
+    process.exit(0);
+  }
   const write = () => {
     if (dryRun) return;
     // Sorted keys: a run that changes nothing changes no byte, and commits nothing.

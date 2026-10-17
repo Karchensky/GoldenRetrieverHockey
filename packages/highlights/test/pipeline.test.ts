@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { normalizePeriods } from "../src/periods.ts";
 import { isUs, to24h } from "../src/rink.ts";
 import { verifyClip, type ClipReading } from "../src/clip.ts";
-import { matchRinkGame, planClips } from "../src/daily.ts";
+import { gamesWithWork, matchRinkGame, movedSincePlanned, planClips } from "../src/daily.ts";
 import type { LocatedGoal, ScoredGoal } from "../src/locate.ts";
 
 const row = (t: number, period: string | null, clock: number | null, home: number | null = 0, away: number | null = 0) =>
@@ -99,4 +99,48 @@ test("a box score is matched to a rink game by date, time and rink, or not at al
   assert.equal(matchRinkGame(game, [rinkGame(2, "2026-10-15", "21:30", "Rink 2")]), null);
   // Two candidates is not an answer.
   assert.equal(matchRinkGame(game, [rinkGame(3, "2026-10-15", "20:30", "Rink 2"), rinkGame(4, "2026-10-15", "20:30", "Rink 2")]), null);
+});
+
+
+/** Oct 15 in miniature: Buffalo scored first, then us twice. */
+const game = {
+  id: "1335913", date: "2026-10-15", time: "20:30", rink: "Rink 2", status: "Final", gr: "home" as const,
+  home: "The Golden Retrievers", away: "Buffalo Cigars",
+  goals: [
+    { period: "1st", time: "11:52", team: "Buffalo Cigars", scorer: "Mike Kline", assists: [], strength: "" },
+    { period: "1st", time: "06:42", team: "The Golden Retrievers", scorer: "Jason Kaplewicz", assists: [], strength: "" },
+    { period: "1st", time: "02:22", team: "The Golden Retrievers", scorer: "Anthony Christy", assists: [], strength: "" },
+  ],
+};
+const clipOf = (goal: number, period: string, time: string, scorer: string) =>
+  ({ goal, period, time, scorer, clip: `1335913-${goal}.mp4`, poster: `1335913-${goal}.jpg`, seconds: 23 });
+
+test("a day with every goal of ours on its box score is nothing to do — before signing in to anything", () => {
+  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
+  assert.deepEqual(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights }), []);
+  // A goal of ours with no clip is work; a game before the start date never is.
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights: { "1335913": [highlights["1335913"][0]!] } }).length, 1);
+  assert.equal(gamesWithWork({ since: "2026-10-16", games: [game], ledger: {}, highlights: {} }).length, 0);
+});
+
+test("a corrected scoresheet: a clip follows its goal, and one with no goal left is reported once", () => {
+  // The league adds a goal it missed, at the top: ours move down one place each.
+  const corrected = { ...game, goals: [{ ...game.goals[0]!, time: "14:10" }, ...game.goals] };
+  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
+  // Found by period and time, both clips still have their goal: nothing to do, nothing to report.
+  assert.deepEqual(gamesWithWork({ since: "2026-10-07", games: [corrected], ledger: {}, highlights }), []);
+  // The time of one is corrected instead: that clip matches no goal of ours, which is work — once.
+  const retimed = { ...game, goals: [game.goals[0]!, { ...game.goals[1]!, time: "06:41" }, game.goals[2]!] };
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [retimed], ledger: { "1335913": { rinkGame: 42732, clips: [{ goals: [1], start: 0, seconds: 23, moment: "m", status: "published" }] } }, highlights }).length, 1);
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [retimed], ledger: { "1335913": { rinkGame: 42732, clips: [{ goals: [1], start: 0, seconds: 23, moment: "m", status: "published" }], stale: ["1335913-1.mp4"] } }, highlights }).length, 0);
+});
+
+test("no credit is spent on a clip whose goal moved, or is not ours, since it was found", () => {
+  const planned = { goals: [1], labels: ["1st 06:42"] };
+  assert.deepEqual(movedSincePlanned(game, planned), []);
+  // A goal added above it: index 1 is now Buffalo's.
+  const corrected = { ...game, goals: [game.goals[0]!, { ...game.goals[0]!, time: "08:00" }, ...game.goals.slice(1)] };
+  assert.deepEqual(movedSincePlanned(corrected, planned), [1]);
+  // Same place, time corrected.
+  assert.deepEqual(movedSincePlanned({ ...game, goals: [game.goals[0]!, { ...game.goals[1]!, time: "06:41" }, game.goals[2]!] }, planned), [1]);
 });

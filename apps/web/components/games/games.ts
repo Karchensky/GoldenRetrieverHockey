@@ -14,10 +14,12 @@ export const gameById = (id: string) => games.find((g) => g.id === id);
 /**
  * One of our goals, clipped from the rink's recording.
  *
- * `goal` is the goal's place on the scoresheet, from 0 — the same order
- * `game.goals` is in. The period, time and scorer are carried too, and a test
- * holds them to that goal, so a clip cannot come to sit beside the wrong line
- * if a scoresheet is ever corrected. The files are served from R2 by the
+ * `goal` is the goal's place on the scoresheet when it was clipped, and names
+ * the files; it is NOT how the page finds the clip. A scoresheet can be
+ * corrected after the fact — a missing goal added, the order changed — and a
+ * clip attached by position would then sit beside somebody else's goal. So a
+ * clip is shown beside the goal of ours with its period and time, and beside
+ * nothing at all if no such goal is left. The files are served from R2 by the
  * Worker, never from this repository.
  */
 export type Highlight = {
@@ -32,9 +34,9 @@ export type Highlight = {
 
 const highlights = highlightsJson as Record<string, Highlight[]>;
 
-/** A game's clips, keyed by the goal's place on the scoresheet. */
-export const highlightsFor = (id: string): Map<number, Highlight> =>
-  new Map((highlights[id] ?? []).map((h) => [h.goal, h]));
+/** The clip of this goal, by the goal's period and time. Only ever asked for one of ours. */
+export const clipFor = (id: string, goal: { period: string; time: string }): Highlight | undefined =>
+  (highlights[id] ?? []).find((h) => h.period === goal.period && h.time === goal.time);
 
 /**
  * Spell a small number.

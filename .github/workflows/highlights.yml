@@ -1,9 +1,8 @@
 # Our goals, clipped onto the box scores, daily.
 #
 # Runs when the morning's refresh finishes — the refresh is what brings in last
-# night's scoresheet — and does nothing on a day with no new goal of ours: it
-# reads site.json, finds every goal already on its box score, and stops before
-# signing in to anything.
+# night's scoresheet. On a day with no new goal of ours it reads three files,
+# finds nothing to do and stops: no install, no sign-in, about ten seconds.
 #
 # On a day with one, it signs in to the rink's video site as the account owner,
 # finds the game and reads its recording for the goals, marks a clip of each of
@@ -49,17 +48,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
 
-      - run: npm ci
+      # From the files alone, with nothing installed: is there a goal of ours to
+      # clip, a clip to collect, or a corrected scoresheet to report?
+      - name: Anything to do?
+        id: check
+        run: node packages/highlights/src/cli.ts daily --check
+
+      - if: steps.check.outputs.work == 'true'
+        run: npm ci
 
       - name: Install ffmpeg
+        if: steps.check.outputs.work == 'true'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
       # Red only for a NEW problem — a goal it could not pin down, a clip that
       # failed its check — and the email that turns red is the notification.
       # The ledger records it, so the next run does not search that game again.
       - name: Clip our goals
+        if: steps.check.outputs.work == 'true'
         env:
           HARBORCENTER_EMAIL: ${{ secrets.HARBORCENTER_EMAIL }}
           HARBORCENTER_PASSWORD: ${{ secrets.HARBORCENTER_PASSWORD }}
@@ -71,7 +78,7 @@ jobs:
       # losing it would leave tomorrow's run not knowing.
       - name: Commit
         id: commit
-        if: always()
+        if: always() && steps.check.outputs.work == 'true'
         run: |
           if [ -z "$(git status --porcelain -- apps/web/data/highlights.json packages/highlights/ledger.json)" ]; then
             echo "pushed=false" >> "$GITHUB_OUTPUT"

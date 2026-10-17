@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
 import Reveal from "../../../components/games/Reveal";
-import { games, gameById, grSide, highlightsFor } from "../../../components/games/games";
+import { clipFor, games, gameById, grSide } from "../../../components/games/games";
 import s from "../../../components/games/games.module.css";
 import { longDate } from "../../../lib/dates";
 import { plural } from "../../../lib/format";
@@ -43,7 +43,6 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
 
   const us = grSide(g);
   const periods = [...new Set(g.goals.map((x) => x.period))];
-  const clips = highlightsFor(g.id);
   const idx = games.findIndex((x) => x.id === g.id);
   const prev = games[idx - 1];
   const next = games[idx + 1];
@@ -167,7 +166,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
                 <h3 className={s.periodHead}>{p} period</h3>
                 {g.goals.map((x, n) => ({ x, n })).filter(({ x }) => x.period === p).map(({ x, n }) => {
                   const ours = x.team === us;
-                  const clip = ours ? clips.get(n) : undefined;
+                  const clip = ours ? clipFor(g.id, x) : undefined;
                   return (
                     <div key={n} className={`${s.event} ${ours ? s.us : s.them}`}>
                       <span className={s.evTime}>{x.time}</span>
