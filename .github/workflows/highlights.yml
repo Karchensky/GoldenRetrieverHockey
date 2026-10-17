@@ -1,0 +1,105 @@
+# Our goals, clipped onto the box scores, daily.
+#
+# Runs when the morning's refresh finishes — the refresh is what brings in last
+# night's scoresheet — and does nothing on a day with no new goal of ours: it
+# reads site.json, finds every goal already on its box score, and stops before
+# signing in to anything.
+#
+# On a day with one, it signs in to the rink's video site as the account owner,
+# finds the game and reads its recording for the goals, marks a clip of each of
+# OURS and asks the rink to render it — ONE DOWNLOAD CREDIT EACH, of twenty a
+# month — then checks each clip is that goal, encodes it for the web and puts
+# it in the grh-highlights R2 bucket. The rink takes a few minutes per clip; a
+# clip still rendering after 25 minutes is collected by tomorrow's run.
+#
+# Kept apart from the refresh deliberately: different secrets, a long wait on
+# the rink, and nothing it does can ever cost a day's data capture.
+#
+# THE LOGS ARE PUBLIC. The job prints game ids, goals and counts — never a
+# token, the recording's address or a clip's download link.
+
+name: Goal highlights
+
+on:
+  workflow_run:
+    workflows: ["Refresh current season"]
+    types: [completed]
+  workflow_dispatch:
+
+# The same group as the refresh: one job pushing to main at a time.
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  checks: read
+
+jobs:
+  highlights:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # main, not the SHA that triggered this: the refresh has just pushed to it.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      # Red only for a NEW problem — a goal it could not pin down, a clip that
+      # failed its check — and the email that turns red is the notification.
+      # The ledger records it, so the next run does not search that game again.
+      - name: Clip our goals
+        env:
+          HARBORCENTER_EMAIL: ${{ secrets.HARBORCENTER_EMAIL }}
+          HARBORCENTER_PASSWORD: ${{ secrets.HARBORCENTER_PASSWORD }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node packages/highlights/src/cli.ts daily
+
+      # Always, red or green: the ledger is what the job spent and asked for, and
+      # losing it would leave tomorrow's run not knowing.
+      - name: Commit
+        id: commit
+        if: always()
+        run: |
+          if [ -z "$(git status --porcelain -- apps/web/data/highlights.json packages/highlights/ledger.json)" ]; then
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/web/data/highlights.json packages/highlights/ledger.json
+          git commit -m "chore(highlights): goal clips
+
+          Clipped from the rink's recording, checked against the scoresheet
+          and uploaded by the scheduled job."
+          git push || (git pull --rebase && git push)
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # After the push, as the refresh does: a failure here is reported, the
+      # ledger is already safe.
+      - name: Check the build still succeeds
+        if: always() && steps.commit.outputs.pushed == 'true'
+        run: npm run build:site
+
+      - name: Check the suite still passes
+        if: always() && steps.commit.outputs.pushed == 'true'
+        run: npm test
+
+      - name: Verify Cloudflare deployment
+        if: always() && steps.commit.outputs.pushed == 'true'
+        timeout-minutes: 11
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/check-deployment.ts

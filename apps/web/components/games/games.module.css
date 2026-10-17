@@ -184,6 +184,15 @@ a.row:focus-visible {
 .assist { font-size: 11px; color: var(--dim); }
 .us .scorer { color: var(--ink); }
 .them .scorer { color: var(--dim); }
+.clip {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 16 / 9;
+  margin-top: 8px;
+  background: #000;
+  border: 1px solid var(--rule);
+}
 
 /* ---- collapsible seasons ---- */
 .seasonHead {
