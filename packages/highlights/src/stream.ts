@@ -11,14 +11,22 @@ import type { Frame } from "./overlay.ts";
  */
 
 export type Segment = { uri: string; start: number; duration: number };
-export type Stream = { segments: Segment[]; fetched: { segments: number; bytes: number } };
+export type Stream = {
+  segments: Segment[];
+  /** The playlist says it is complete. Both rinks' recordings, once posted, do; one still growing is not searched. */
+  ended: boolean;
+  fetched: { segments: number; bytes: number };
+};
 
 const W = 1280, H = 720;
 const FFMPEG = process.env.FFMPEG ?? "ffmpeg";
 const FFPROBE = process.env.FFPROBE ?? "ffprobe";
 
+/** A segment is a few megabytes: a minute is a stalled connection, not a slow one. */
+const TIMEOUT = 60_000;
+
 async function text(url: string): Promise<string> {
-  const r = await fetch(url);
+  const r = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT) });
   if (!r.ok) throw new Error(`recording playlist: ${r.status}`);
   return r.text();
 }
@@ -34,14 +42,15 @@ export async function openStream(streamUrl: string): Promise<Stream> {
   }
   const playlistUrl = variants.sort((a, b) => a.bandwidth - b.bandwidth)[0]?.url ?? streamUrl;
   const segments: Segment[] = [];
+  const playlist = await text(playlistUrl);
   let at = 0, duration = 0;
-  for (const line of (await text(playlistUrl)).split("\n").map((l) => l.trim())) {
+  for (const line of playlist.split("\n").map((l) => l.trim())) {
     const m = /^#EXTINF:([\d.]+)/.exec(line);
     if (m) duration = Number(m[1]);
     else if (line && !line.startsWith("#")) { segments.push({ uri: new URL(line, playlistUrl).href, start: at, duration }); at += duration; }
   }
   if (!segments.length) throw new Error("recording playlist: no segments");
-  return { segments, fetched: { segments: 0, bytes: 0 } };
+  return { segments, ended: /^#EXT-X-ENDLIST/m.test(playlist), fetched: { segments: 0, bytes: 0 } };
 }
 
 function run(cmd: string, args: string[]): Buffer {
@@ -61,7 +70,7 @@ function run(cmd: string, args: string[]): Buffer {
 export async function segmentFrames(stream: Stream, index: number, perSecond: number): Promise<{ t: number; frame: Frame }[]> {
   const seg = stream.segments[index];
   if (!seg) return [];
-  const r = await fetch(seg.uri);
+  const r = await fetch(seg.uri, { signal: AbortSignal.timeout(TIMEOUT) });
   if (!r.ok) throw new Error(`recording segment ${index}: ${r.status}`);
   const bytes = Buffer.from(await r.arrayBuffer());
   stream.fetched.segments++;

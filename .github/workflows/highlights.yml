@@ -7,12 +7,33 @@
 # On a day with one, it signs in to the rink's video site as the account owner,
 # finds the game and reads its recording for the goals, marks a clip of each of
 # OURS and asks the rink to render it — ONE DOWNLOAD CREDIT EACH, of twenty a
-# month — then checks each clip is that goal, encodes it for the web and puts
-# it in the grh-highlights R2 bucket. The rink takes a few minutes per clip; a
-# clip still rendering after 25 minutes is collected by tomorrow's run.
+# month, two goals sharing one when they fit in a minute. Out of credit, a clip
+# waits in the ledger for next month's. A rendered clip is checked twice before
+# it goes anywhere: its own scoreboard must show the goal going in at the score
+# either side of it, and it must match, frame by frame, the stretch of the
+# recording it was asked for, with the goal where the search put it. Then it is
+# encoded for the web and put in the grh-highlights R2 bucket. The rink takes a
+# few minutes per clip; one still rendering after 25 minutes is collected by
+# tomorrow's run.
 #
 # Kept apart from the refresh deliberately: different secrets, a long wait on
-# the rink, and nothing it does can ever cost a day's data capture.
+# the rink, and nothing it does can ever cost a day's data capture. Nothing it
+# does can take a page down either: the box score shows a clip only once the
+# clip is uploaded.
+#
+# RED means something for a person, said once in the log's PROBLEM lines; the
+# ledger (packages/highlights/ledger.json) remembers it, so the next run is
+# green and does not repeat it. Most are cleared by editing the ledger on main:
+#   - a game "not found", "no recording" or with a goal it could not pin down:
+#     the game's "problem" — delete it (and "sheet") to have it looked at again.
+#     A corrected scoresheet does this by itself.
+#   - a clip that failed its checks: its "status" is "failed". The credit is
+#     spent, but while the rink still has the download, setting it back to
+#     "requested" (and deleting any "tries") re-checks that same download for
+#     nothing. Never set one to "queued" unless it should cost another credit.
+# Red every day is a different thing: the sign-in failing (the password, or the
+# subscription ended) or the rink's site changed. To stop it for good, disable
+# this workflow; the clips already up stay up.
 #
 # THE LOGS ARE PUBLIC. The job prints game ids, goals and counts — never a
 # token, the recording's address or a clip's download link.

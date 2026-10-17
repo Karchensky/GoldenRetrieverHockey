@@ -5,17 +5,16 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { daily, gamesWithWork, type Highlights, type Ledger } from "./daily.ts";
 import { locateGoals, type Location, type Reading, type ScoredGoal } from "./locate.ts";
-import { chapters, planClips, render } from "./reel.ts";
 
 /**
- * Highlights for one game, from the rink's recording.
+ * Our goals, clipped from the rink's recordings onto the box scores.
  *
- *   locate  overlay readings + scoresheet  ->  where every goal is in the video
- *   reel    recording + located goals      ->  clips, reel.mp4, poster.jpg, reel.json
+ *   daily   the scheduled job — see daily.ts and .github/workflows/highlights.yml
+ *   locate  overlay readings + scoresheet -> where every goal is, for looking into one game by hand
  *
- * Everything lands in tmp/highlights/<game>/ — gitignored, because the
- * recording and anything cut from it never belong in a public repository.
- * Publishing the reel is a separate, deliberate step.
+ * Anything written for a person lands in tmp/highlights/<game>/ — gitignored,
+ * because the recording and anything cut from it never belong in a public
+ * repository.
  */
 
 /**
@@ -32,17 +31,14 @@ const USAGE = `
       Find every goal of that game in the overlay readings. Writes located.json.
       Exits 1 unless every goal is found once and confirmed by the score.
 
-  reel --game <id> --recording <video> --font <file.ttf> [--lead 15] [--tail 8] [--force]
-      Cut the located goals into one captioned reel. Refuses a game that
-      'locate' could not finish unless --force.
-
   daily [--dry-run] [--wait 25] [--check]
       The scheduled job: clip every one of OUR goals from ${SINCE} on, from the
       rink's recording, onto its line on the box score. Needs HARBORCENTER_EMAIL
       and HARBORCENTER_PASSWORD, and for the upload CLOUDFLARE_API_TOKEN and
       CLOUDFLARE_ACCOUNT_ID. Writes packages/highlights/ledger.json and
-      apps/web/data/highlights.json. --dry-run spends and uploads nothing.
-      --check only says whether there is anything to do, from the files alone —
+      apps/web/data/highlights.json. --dry-run spends and uploads nothing —
+      run it that way anywhere but the workflow: without it, it spends the
+      month's REAL download credits. --check only says whether there is anything to do, from the files alone —
       no sign-in, no network, no dependencies — for the workflow to stop early.
 `;
 
@@ -82,11 +78,6 @@ const { values } = parseArgs({
   options: {
     game: { type: "string" },
     readings: { type: "string" },
-    recording: { type: "string" },
-    font: { type: "string" },
-    lead: { type: "string" },
-    tail: { type: "string" },
-    force: { type: "boolean" },
     "dry-run": { type: "boolean" },
     check: { type: "boolean" },
     wait: { type: "string" },
@@ -102,28 +93,6 @@ if (command === "locate" && values.game && values.readings) {
   fs.writeFileSync(path.join(outDir(game.id), "located.json"), JSON.stringify(location, null, 2) + "\n");
   report(location);
   process.exitCode = location.ready ? 0 : 1;
-} else if (command === "reel" && values.game && values.recording && values.font) {
-  const game = loadGame(values.game);
-  const dir = outDir(game.id);
-  const location = JSON.parse(fs.readFileSync(path.join(dir, "located.json"), "utf8")) as Location;
-  if (!location.ready && !values.force) {
-    report(location);
-    throw new Error("Refusing to cut a reel with goals missing or unconfirmed. Fix the readings, or pass --force to cut what was found.");
-  }
-  const clips = planClips(location.goals, {
-    lead: values.lead ? Number(values.lead) : undefined,
-    tail: values.tail ? Number(values.tail) : undefined,
-  });
-  const files = render(clips, location.goals, game.home, game.away, { recording: values.recording, outDir: dir, font: values.font });
-  const reel = {
-    game: game.id,
-    clips: clips.map((c) => ({ ...c, start: Number(c.start.toFixed(2)), end: Number(c.end.toFixed(2)) })),
-    duration: Number(clips.reduce((s, c) => s + c.end - c.start, 0).toFixed(2)),
-    chapters: chapters(clips, location.goals),
-  };
-  fs.writeFileSync(path.join(dir, "reel.json"), JSON.stringify(reel, null, 2) + "\n");
-  console.log(`${clips.length} clips, ${reel.duration.toFixed(0)}s:`);
-  for (const f of [...files, path.join(dir, "reel.json")]) console.log("  " + f);
 } else if (command === "daily") {
   const env = (k: string) => {
     const v = process.env[k];
@@ -147,16 +116,20 @@ if (command === "locate" && values.game && values.readings) {
     fs.writeFileSync(LEDGER, JSON.stringify(sorted(ledger), null, 2) + "\n");
     fs.writeFileSync(HIGHLIGHTS, JSON.stringify(sorted(highlights), null, 2) + "\n");
   };
+  // A cancelled run — the job's hour up — still records what it spent and asked for.
+  process.once("SIGTERM", () => { write(); process.exit(1); });
+  process.once("SIGINT", () => { write(); process.exit(1); });
   try {
     const report = await daily({
       since: SINCE, games: site.games, ledger, highlights, dryRun,
+      today: new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" }),
       waitMinutes: values.wait ? Number(values.wait) : 25,
       credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
       upload: (key, file, contentType) => {
         env("CLOUDFLARE_API_TOKEN");
         env("CLOUDFLARE_ACCOUNT_ID");
-        const r = spawnSync("npx", ["wrangler", "r2", "object", "put", `${BUCKET}/${key}`, "--file", file, "--content-type", contentType, "--remote"], { cwd: ROOT, encoding: "utf8" });
-        if (r.status !== 0) throw new Error(`upload of ${key} failed: ${(r.stderr || r.stdout).slice(-400)}`);
+        const r = spawnSync("npx", ["wrangler", "r2", "object", "put", `${BUCKET}/${key}`, "--file", file, "--content-type", contentType, "--remote"], { cwd: ROOT, encoding: "utf8", timeout: 300_000 });
+        if (r.status !== 0) throw new Error(`upload of ${key} failed: ${r.error?.message ?? (r.stderr || r.stdout).slice(-400)}`);
       },
       log: (line) => console.log(line),
     });

@@ -7,6 +7,12 @@
         "goals": [
           0
         ],
+        "labels": [
+          "1st 02:45"
+        ],
+        "at": [
+          2178
+        ],
         "start": 2163,
         "seconds": 23,
         "moment": "01M55P3AW63RVS1JHJ4GZWZRKK",
@@ -22,6 +28,12 @@
         "goals": [
           2
         ],
+        "labels": [
+          "1st 06:42"
+        ],
+        "at": [
+          3615
+        ],
         "start": 3600,
         "seconds": 23,
         "moment": "01M55M6XG1NNB132B663MS14HK",
@@ -30,6 +42,12 @@
       {
         "goals": [
           3
+        ],
+        "labels": [
+          "1st 02:22"
+        ],
+        "at": [
+          3943
         ],
         "start": 3928,
         "seconds": 23,
@@ -40,6 +58,12 @@
         "goals": [
           6
         ],
+        "labels": [
+          "3rd 05:34"
+        ],
+        "at": [
+          6136.5
+        ],
         "start": 6121.5,
         "seconds": 23,
         "moment": "01M55P33XC9Q01QFS53D6A0B5W",
@@ -48,6 +72,12 @@
       {
         "goals": [
           7
+        ],
+        "labels": [
+          "3rd 02:46"
+        ],
+        "at": [
+          6304.5
         ],
         "start": 6289.5,
         "seconds": 23,

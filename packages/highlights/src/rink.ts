@@ -23,8 +23,11 @@ const CUSTOMER = 10;
 
 export type Session = { token: string };
 
+/** A platform that stops answering costs a minute, not the job's hour. */
+const TIMEOUT = 60_000;
+
 async function call<T>(label: string, url: string, init: RequestInit = {}): Promise<T> {
-  const r = await fetch(url, init);
+  const r = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT), ...init });
   if (!r.ok) {
     let message = "";
     try { const j = await r.json() as { message?: string; error?: string }; message = j.message ?? j.error ?? ""; } catch {}
@@ -35,7 +38,7 @@ async function call<T>(label: string, url: string, init: RequestInit = {}): Prom
 
 export async function signIn(email: string, password: string): Promise<Session> {
   // The rink's app sends the caller's public address with the sign-in, so this does too.
-  const ip = (await (await fetch("https://api.ipify.org")).text()).trim();
+  const ip = await publicAddress();
   const j = await call<{ data?: { AccessToken?: string } }>("sign in", `${MAIN}/login`, {
     method: "POST",
     headers: { "content-type": "application/json", accept: "application/json" },
@@ -44,6 +47,18 @@ export async function signIn(email: string, password: string): Promise<Session> 
   const token = j.data?.AccessToken;
   if (!token) throw new Error("sign in: no token in the reply");
   return { token };
+}
+
+/** The caller's public address, from whichever of two lookups answers. */
+async function publicAddress(): Promise<string> {
+  for (const url of ["https://api.ipify.org", "https://icanhazip.com"]) {
+    try {
+      const r = await fetch(url, { signal: AbortSignal.timeout(10_000) });
+      const ip = (await r.text()).trim();
+      if (r.ok && /^[\d.:a-f]+$/i.test(ip)) return ip;
+    } catch {}
+  }
+  throw new Error("sign in: could not look up this machine's public address");
 }
 
 const main = (s: Session) => ({ Authorization: `bearer ${s.token}` });

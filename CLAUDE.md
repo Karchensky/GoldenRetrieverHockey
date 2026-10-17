@@ -70,6 +70,27 @@ silently.** Search it with node reading the file directly.
 **`/api/checkout` does not exist under `npm run dev`.** Use `npx wrangler dev`.
 When the till fails the reason is in that terminal, not the browser.
 
+## The goal highlights
+
+`packages/highlights`, run daily by `.github/workflows/highlights.yml`, clips
+our goals from the rink's recordings onto the box scores. **It spends real
+money too**: each clip is one of the rink account's 20 download credits a
+month. Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
+
+The account, not the ledger, is what stops a credit being spent twice — the job
+reuses any clip of its own at the same start and length. Never set a ledger
+clip to `queued` by hand unless it should cost another credit; the recovery
+steps are in the workflow's header.
+
+**The Actions logs are public.** Never print the recording's address, a token or
+a clip's download link — not in a log line, not in an error message.
+
+Clip names carry their own hash (`<game>-<goal>-<hash>.mp4`) because the Worker
+lets browsers cache them for a year. Never upload over an existing name.
+
+The scoreboard reader knows two boards, `layouts/*.json`. A recording on a
+board it does not know is reported, never guessed at, and costs nothing.
+
 ## Safety
 
 Never read, print or commit anything under `.secrets/`. Report a credential's
@@ -91,7 +112,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (524), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (609, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

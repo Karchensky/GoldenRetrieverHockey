@@ -2,6 +2,7 @@ import site from "../../data/site.json";
 import highlightsJson from "../../data/highlights.json";
 import type { SiteData, Game, Session } from "../../../../packages/build/src/types";
 import type { GameRow } from "./GameList";
+import { clipBeside, type Highlight } from "../../../../packages/highlights/src/beside";
 
 const data = site as unknown as SiteData;
 
@@ -12,31 +13,15 @@ export const totals = data.totals;
 export const gameById = (id: string) => games.find((g) => g.id === id);
 
 /**
- * One of our goals, clipped from the rink's recording.
- *
- * `goal` is the goal's place on the scoresheet when it was clipped, and names
- * the files; it is NOT how the page finds the clip. A scoresheet can be
- * corrected after the fact — a missing goal added, the order changed — and a
- * clip attached by position would then sit beside somebody else's goal. So a
- * clip is shown beside the goal of ours with its period and time, and beside
- * nothing at all if no such goal is left. The files are served from R2 by the
- * Worker, never from this repository.
+ * Our goals, clipped from the rink's recording by the daily highlights job.
+ * Which clip goes beside which goal is `clipBeside`'s rule — by the goal's
+ * period and time, never its place on a scoresheet that can be corrected. The
+ * files are served from R2 by the Worker, never from this repository.
  */
-export type Highlight = {
-  goal: number;
-  period: string;
-  time: string;
-  scorer: string;
-  clip: string;
-  poster: string;
-  seconds: number;
-};
-
 const highlights = highlightsJson as Record<string, Highlight[]>;
 
-/** The clip of this goal, by the goal's period and time. Only ever asked for one of ours. */
-export const clipFor = (id: string, goal: { period: string; time: string }): Highlight | undefined =>
-  (highlights[id] ?? []).find((h) => h.period === goal.period && h.time === goal.time);
+/** The clip beside goal `n` of this game, if it is one of ours and has one. */
+export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside(highlights[g.id], g.goals, n, grSide(g));
 
 /**
  * Spell a small number.
