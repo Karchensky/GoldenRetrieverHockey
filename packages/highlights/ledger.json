@@ -1,0 +1,19 @@
+{
+  "1335891": {
+    "rinkGame": 42705,
+    "board": "rink1-led",
+    "clips": [
+      { "goals": [0], "start": 2163, "seconds": 23, "moment": "01M55P3AW63RVS1JHJ4GZWZRKK", "status": "requested" }
+    ]
+  },
+  "1335913": {
+    "rinkGame": 42732,
+    "board": "rink2-tile",
+    "clips": [
+      { "goals": [2], "start": 3600, "seconds": 23, "moment": "01M55M6XG1NNB132B663MS14HK", "status": "requested" },
+      { "goals": [3], "start": 3928, "seconds": 23, "moment": "01M55P3XDPPHEDD71102MSMEBX", "status": "requested" },
+      { "goals": [6], "start": 6121.5, "seconds": 23, "moment": "01M55P33XC9Q01QFS53D6A0B5W", "status": "requested" },
+      { "goals": [7], "start": 6289.5, "seconds": 23, "moment": "01M55P36Z83ZESKFPD968DDEKQ", "status": "requested" }
+    ]
+  }
+}

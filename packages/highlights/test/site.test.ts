@@ -46,6 +46,16 @@ test("every clip sits beside one of our goals, the one it was cut for", () => {
   }
 });
 
+test("the job's ledger only ever names our goals", () => {
+  const ledger = read("packages/highlights/ledger.json") as Record<string, { clips: { goals: number[] }[] }>;
+  for (const [id, entry] of Object.entries(ledger)) {
+    const game = games.get(id);
+    assert.ok(game, `ledger has game ${id}, which site.json does not`);
+    const us = game.gr === "home" ? game.home : game.away;
+    for (const c of entry.clips) for (const n of c.goals) assert.equal(game.goals[n]?.team, us, `${id}: ledger clip for goal ${n}, which is not ours`);
+  }
+});
+
 test("every clip's files are named so the Worker will serve them", () => {
   for (const [id, clips] of Object.entries(highlights)) {
     for (const h of clips) {
