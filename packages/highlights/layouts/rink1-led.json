@@ -1,0 +1,58 @@
+{
+ "name": "rink1-led",
+ "what": "Rink 1 mock LED scoreboard, top left: red scores, yellow dot-matrix clock in a grey box, yellow period digit",
+ "seenOn": [
+  42705
+ ],
+ "fields": {
+  "home": {
+   "box": [
+    0.0578,
+    0.0781,
+    0.0861,
+    0.125
+   ],
+   "ink": "red",
+   "thr": 70
+  },
+  "away": {
+   "box": [
+    0.1859,
+    0.2156,
+    0.0861,
+    0.125
+   ],
+   "ink": "red",
+   "thr": 70
+  },
+  "clock": {
+   "box": [
+    0.096,
+    0.1578,
+    0.0486,
+    0.0875
+   ],
+   "ink": "light",
+   "thr": 100
+  },
+  "period": {
+   "box": [
+    0.133,
+    0.152,
+    0.1028,
+    0.1333
+   ],
+   "ink": "light",
+   "thr": 100
+  }
+ },
+ "period": "digit",
+ "glyph": "seg7",
+ "bridge": 3,
+ "templateSize": [
+  12,
+  20
+ ],
+ "glyphs": {},
+ "words": {}
+}
