@@ -68,6 +68,16 @@
 			"id": "dfdd7585a2b742bbb42371898a01af48",
 			"remote": true
 		}
+	],
+	// The goal clips, served at /highlights/<game>-<goal>.mp4|jpg — see
+	// workers/checkout/highlights.ts. The rink's footage lives here and never in
+	// this public repository; the daily job uploads it. Not `remote`: a local
+	// `wrangler dev` gets an empty local bucket and /highlights/ answers 404.
+	"r2_buckets": [
+		{
+			"binding": "HIGHLIGHTS",
+			"bucket_name": "grh-highlights"
+		}
 	]
 	// The three secrets are NOT here and must never be. Set them once each:
 	//   npx wrangler secret put STRIPE_SECRET_KEY
