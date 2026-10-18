@@ -10,6 +10,15 @@
       "seconds": 23
     },
     {
+      "goal": 1,
+      "period": "1st",
+      "time": "02:05",
+      "scorer": "Bryan Karchensky",
+      "clip": "1280081-1-a3f1c76a.mp4",
+      "poster": "1280081-1-a3f1c76a.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 5,
       "period": "2nd",
       "time": "01:59",
@@ -48,6 +57,15 @@
       "seconds": 23
     },
     {
+      "goal": 5,
+      "period": "3rd",
+      "time": "04:50",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1280127-5-0403ed75.mp4",
+      "poster": "1280127-5-0403ed75.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 6,
       "period": "3rd",
       "time": "01:38",
@@ -83,6 +101,15 @@
       "scorer": "Anthony Christy",
       "clip": "1288561-5-f4ea102f.mp4",
       "poster": "1288561-5-f4ea102f.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 7,
+      "period": "3rd",
+      "time": "05:22",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1288561-7-7518c1b4.mp4",
+      "poster": "1288561-7-7518c1b4.jpg",
       "seconds": 23
     }
   ],
@@ -144,6 +171,15 @@
       "seconds": 23
     },
     {
+      "goal": 6,
+      "period": "2nd",
+      "time": "11:26",
+      "scorer": "Bryan Karchensky",
+      "clip": "1289161-6-a727f4e2.mp4",
+      "poster": "1289161-6-a727f4e2.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 7,
       "period": "2nd",
       "time": "07:39",
@@ -189,6 +225,15 @@
       "clip": "1289345-4-520e85ad.mp4",
       "poster": "1289345-4-520e85ad.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "01:25",
+      "scorer": "Bryan Karchensky",
+      "clip": "1289345-6-c2cf0a48.mp4",
+      "poster": "1289345-6-c2cf0a48.jpg",
+      "seconds": 23
     }
   ],
   "1306734": [
@@ -210,6 +255,33 @@
       "scorer": "Adam Kaplewicz",
       "clip": "1306888-3-6d7f105e.mp4",
       "poster": "1306888-3-6d7f105e.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 7,
+      "period": "3rd",
+      "time": "14:51",
+      "scorer": "Devin Arnold",
+      "clip": "1306888-7-3d5c475e.mp4",
+      "poster": "1306888-7-3d5c475e.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 8,
+      "period": "3rd",
+      "time": "14:29",
+      "scorer": "Bryan Karchensky",
+      "clip": "1306888-8-13ecc98a.mp4",
+      "poster": "1306888-8-13ecc98a.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 10,
+      "period": "3rd",
+      "time": "06:05",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1306888-10-2417c13d.mp4",
+      "poster": "1306888-10-2417c13d.jpg",
       "seconds": 23
     }
   ],
