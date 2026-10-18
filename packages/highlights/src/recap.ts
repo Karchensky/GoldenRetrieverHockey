@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { matchRinkGame, type Options } from "./daily.ts";
 import { findGoals } from "./find.ts";
-import { locateGoals, scoreline } from "./locate.ts";
+import { locateGoals, scoreline, type Reading } from "./locate.ts";
 import { readOverlay, type Layout } from "./overlay.ts";
 import { clockRuns, type ClockRun } from "./periods.ts";
 import { gameDetails, ourTeams, recordedGames, signIn, type Session } from "./rink.ts";
@@ -355,10 +355,25 @@ export type RecapSummary = { seconds: number; goals: number; of: number; penalti
 export const RECAP_EDITION = 2;
 
 /**
- * A recap leaves out no more than a quarter of the game's goals: one that
- * skipped most of the scoring would say the game went differently than it did.
+ * Why there can be no recap of this recording, or null. A recap shows the
+ * game: one goal found on the board, at its time and its score, is enough to
+ * know the recording is it, and the page says which goals the recap could not
+ * find. None found is no such sign — a board the summer's Rink 2 kept at 0–0
+ * all night, another game's recording. A game with no goals at all is taken
+ * as this one unless the board shows a score through most of its last period.
+ * (Until 18 October 2026 a recap wanted three goals in four found; a 2–1 game
+ * with one goal unfound went without.)
  */
-export const RECAP_SHARE = 0.75;
+export function recapRefusal(found: number, of: number, readings: Reading[], periods: ClockRun[]): string | null {
+  if (of > 0) return found > 0 ? null : `none of its ${of} goals could be found, so nothing shows the recording is this game`;
+  const last = periods.at(-1);
+  if (!last) return "no periods read on the recording";
+  const read = readings.filter((r) => r.t >= last.from && r.t <= last.to && r.home !== null && r.away !== null);
+  const scored = read.filter((r) => r.home! + r.away! > 0);
+  return read.length >= 3 && scored.length >= read.length * 0.8
+    ? `the board shows ${scored.at(-1)!.away}–${scored.at(-1)!.home} through the last period of a game the scoresheet has 0–0`
+    : null;
+}
 
 /**
  * One game's recap, to `out` and its poster to `poster`: its recording searched
@@ -387,7 +402,8 @@ export async function recapGame(o: {
   const located = locateGoals(found.readings, game.goals, game.home, game.away);
   const goals = located.goals.filter((g) => g.t !== null && g.confirmed);
   o.log(`${goals.length} of ${game.goals.length} goals found, board ${found.layout.name}`);
-  if (goals.length < game.goals.length * RECAP_SHARE) return `only ${goals.length} of its ${game.goals.length} goals could be found`;
+  const refused = recapRefusal(goals.length, game.goals.length, found.readings, found.periods);
+  if (refused) return refused;
 
   const regulation = !found.periods.some((p) => /^OT/.test(p.period ?? ""));
   const span = gameSpan(found.periods, game.ot === true && regulation);
