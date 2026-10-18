@@ -14,8 +14,11 @@ import { segmentAt, segmentFrames, type Stream } from "./stream.ts";
  * this goal's time. Only the stretch between those two is read densely, two
  * frames a second. On 2026-10-15 that was 138 segments of 1,245.
  *
- * A search moves only on an exact reading of the score before or after: one
- * misread digit once sent it to the wrong segment. Each goal is searched for
+ * A search moves only on an exact reading of a score this game had: one
+ * misread digit once sent it to the wrong segment. A later score counts as
+ * well as this goal's own — on 2026-07-01 a 2–0 was up for sixteen seconds
+ * before the next goal made it 2–1, and no sweep frame ever showed it, so
+ * looking for 2–0 alone never looked at all. Each goal is searched for
  * only after the last, because the recording can open on another game whose
  * board already shows this one's final score — 2026-10-07's did.
  */
@@ -63,21 +66,29 @@ export async function findGoals(stream: Stream, goals: ScoredGoal[], home: strin
 
   for (const [g, goal] of goals.entries()) {
     const before = g === 0 ? { home: 0, away: 0 } : scores[g - 1]!, after = scores[g]!;
-    const total = after.home + after.away;
     const swept = readings().filter((r) => r.period !== null && r.home !== null && r.t > after0 && Math.abs(r.t - start(segmentAt(stream, r.t))) < 0.01);
-    const j = swept.findIndex((r, k) => is(r, after) && swept[k + 1] && (is(swept[k + 1], after) || swept[k + 1]!.home! + swept[k + 1]!.away! > total));
+    // Which of this game's scores a reading shows: -1 for 0–0, the goal's index after it, undefined for none of them.
+    const stage = (r: Reading | undefined) => !r ? undefined : r.home === 0 && r.away === 0 ? -1 : scores.findIndex((x) => is(r, x)) === -1 ? undefined : scores.findIndex((x) => is(r, x));
+    const scored = (r: Reading | undefined) => (stage(r) ?? -2) >= g;
+    const unscored = (r: Reading | undefined) => stage(r) !== undefined && stage(r)! < g;
+    // Two sweep frames in a row at this goal's score or a later one: it has gone in by then. The game's last
+    // sweep frame stands alone — there is no next — or a goal in its last two minutes is never looked for:
+    // 2026-07-27's at 1:25 of the 3rd was seen once, at 1:04, and then the game was over.
+    const j = swept.findIndex((r, k) => scored(r) && (k === swept.length - 1 || scored(swept[k + 1])));
     if (j < 1) continue; // The locator reports it: the clock and the score never meet for this goal.
 
-    // Where the score changes. Only an exact before or after moves a bound.
-    let lo = segmentAt(stream, swept[j - 1]!.t), hi = segmentAt(stream, swept[j]!.t);
+    // Where the score changes. Only a score this game had moves a bound.
+    let back = j - 1;
+    while (back >= 0 && !unscored(swept[back])) back--;
+    let lo = segmentAt(stream, swept[back >= 0 ? back : j - 1]!.t), hi = segmentAt(stream, swept[j]!.t);
     while (hi - lo > 1) {
       const mid = (lo + hi) >> 1;
       let moved = false;
       for (const s of [mid, mid + 1, mid - 1].filter((s) => s > lo && s < hi)) {
         await probe(s, 0);
         const r = first(s);
-        if (is(r, after)) { hi = s; moved = true; break; }
-        if (is(r, before)) { lo = s; moved = true; break; }
+        if (scored(r)) { hi = s; moved = true; break; }
+        if (unscored(r)) { lo = s; moved = true; break; }
       }
       if (!moved) break;
     }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
 import Reveal from "../../../components/games/Reveal";
-import { clipFor, games, gameById, grSide } from "../../../components/games/games";
+import { clipFor, games, gameById, grSide, recapFor } from "../../../components/games/games";
 import s from "../../../components/games/games.module.css";
 import { longDate } from "../../../lib/dates";
 import { plural } from "../../../lib/format";
@@ -42,6 +42,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
   if (!g) notFound();
 
   const us = grSide(g);
+  const recap = recapFor(g);
   const periods = [...new Set(g.goals.map((x) => x.period))];
   const idx = games.findIndex((x) => x.id === g.id);
   const prev = games[idx - 1];
@@ -98,6 +99,40 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
           </p>
         </div>
       </header>
+
+      {/* ---- recap ---- */}
+      {recap && (
+        <section className="section">
+          <div className="card">
+            <div className="head">
+              <h2>Game recap</h2>
+              <span className="kicker">
+                {Math.floor(recap.seconds / 60)}:{String(recap.seconds % 60).padStart(2, "0")}
+                {" · "}{plural(recap.goals, "goal")}
+                {recap.shots > 0 && <> · {plural(recap.shots, "shot")}</>}
+                {recap.whistles > 0 && <> · {plural(recap.whistles, "more play", "more plays")}</>}
+              </span>
+            </div>
+            {/* Nothing loads until it is played, as with the goal clips. */}
+            <video
+              className={s.recap}
+              src={`/highlights/${recap.clip}`}
+              poster={`/highlights/${recap.poster}`}
+              controls
+              playsInline
+              preload="none"
+              aria-label={`Recap of ${g.away} at ${g.home}`}
+            />
+            {/* A recap is only made with most of the goals in it; say which are not. */}
+            {recap.goals < recap.of && (
+              <p className="lede" style={{ margin: "12px 0 0", color: "var(--dim)" }}>
+                {plural(recap.of - recap.goals, "goal")} could not be found in the rink&apos;s recording, so
+                {recap.of - recap.goals === 1 ? " it is" : " they are"} not in it.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ---- box score ---- */}
       {g.linescore.length > 0 && (

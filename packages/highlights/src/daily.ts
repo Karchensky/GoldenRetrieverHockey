@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { clipBeside, type Highlight } from "./beside.ts";
+import { clipBeside, type Highlight, type Recap } from "./beside.ts";
 import { clipThumbs, duration, encodeForWeb, readBoard, verifyClip } from "./clip.ts";
 import { crossCheck, recordingThumbs } from "./crosscheck.ts";
 import { findGoals } from "./find.ts";
@@ -11,6 +11,7 @@ import {
   CLIP_MAX, clipsCredit, createMoment, gameDetails, myMoments, ourTeams, recordedGames, requestDownload, signIn,
   type Moment, type RinkGame, type Session,
 } from "./rink.ts";
+import { MAX_SECONDS, recapGame } from "./recap.ts";
 import { cutClip, openStream, type Stream } from "./stream.ts";
 
 /**
@@ -95,10 +96,13 @@ export type GameEntry = {
   sheet?: string;
   /** Published clips a corrected scoresheet no longer has a goal for, already reported. */
   stale?: string[];
+  /** The recap's last outcome short of one: why there is none, or how many runs broke off making it. For the scoresheet it was made from. */
+  recap?: { sheet: string; problem?: string; tries?: number };
 };
 export type Ledger = Record<string, GameEntry>;
 export type Source = "download" | "recording";
 export type Highlights = Record<string, Highlight[]>;
+export type Recaps = Record<string, Recap>;
 
 type SiteGame = { id: string; date: string; time: string | null; rink: string | null; status: string; gr: "home" | "away" | null; home: string; away: string; goals: ScoredGoal[] };
 
@@ -121,9 +125,11 @@ export type Options = {
   /** Plan and report; spend nothing, upload nothing. */
   dryRun: boolean;
   log: (line: string) => void;
+  /** The recaps on the site. Given, a game gets one once its goals are searched; absent, none are made. */
+  recaps?: Recaps;
 };
 
-export type Report = { published: number; requested: number; cut: number; queued: number; problems: string[]; nothingToDo: boolean };
+export type Report = { published: number; requested: number; cut: number; queued: number; recaps: number; problems: string[]; nothingToDo: boolean };
 
 const us = (g: SiteGame) => (g.gr === "home" ? g.home : g.away);
 const goalLabel = (g: ScoredGoal) => `${g.period} ${g.time}`;
@@ -232,8 +238,20 @@ const staleClips = (o: Pick<Options, "highlights" | "ledger">, g: SiteGame) => {
   return (o.highlights[g.id] ?? []).filter((h) => !shown.has(h) && !(o.ledger[g.id]?.stale ?? []).includes(h.clip));
 };
 
+/**
+ * Does the game want its recap made: found on the rink's site, none on the
+ * site for this scoresheet, and not given up on for it. The goals are always
+ * searched first — a game the rink has not posted yet waits for that.
+ */
+const wantsRecap = (o: Pick<Options, "ledger" | "recaps">, g: SiteGame) => {
+  const entry = o.ledger[g.id];
+  if (!o.recaps || !entry || entry.rinkGame === null) return false;
+  if (o.recaps[g.id]?.sheet === sheetOf(g)) return false;
+  return !(entry.recap?.problem && entry.recap.sheet === sheetOf(g));
+};
+
 /** What there is to do for one game, from the files alone. */
-function workOn(o: Pick<Options, "ledger" | "highlights">, g: SiteGame) {
+function workOn(o: Pick<Options, "ledger" | "highlights" | "recaps">, g: SiteGame) {
   const entry = o.ledger[g.id];
   // A problem is reported once and is for a person — unless the scoresheet it was found on has been corrected.
   const blocked = !!entry?.problem && entry.sheet === sheetOf(g);
@@ -242,6 +260,7 @@ function workOn(o: Pick<Options, "ledger" | "highlights">, g: SiteGame) {
     locate: !blocked && ourGoals(g).some((n) => !done(o, g, n) && !planned.has(n)),
     collect: (entry?.clips ?? []).some((c) => c.status === "queued" || c.status === "requested"),
     stale: staleClips(o, g),
+    recap: wantsRecap(o, g),
   };
 }
 
@@ -249,16 +268,16 @@ function workOn(o: Pick<Options, "ledger" | "highlights">, g: SiteGame) {
  * The games with something to do, from the files alone: no sign-in, no network,
  * nothing installed. Most days it is none, and the workflow stops there.
  */
-export function gamesWithWork(o: Pick<Options, "since" | "games" | "ledger" | "highlights">): SiteGame[] {
+export function gamesWithWork(o: Pick<Options, "since" | "games" | "ledger" | "highlights" | "recaps">): SiteGame[] {
   return o.games.filter((g) => {
     if (g.date < o.since || g.gr === null || !played(g) || g.goals.length === 0) return false;
     const w = workOn(o, g);
-    return w.locate || w.collect || w.stale.length > 0;
+    return w.locate || w.collect || w.stale.length > 0 || w.recap;
   });
 }
 
 export async function daily(o: Options): Promise<Report> {
-  const report: Report = { published: 0, requested: 0, cut: 0, queued: 0, problems: [], nothingToDo: false };
+  const report: Report = { published: 0, requested: 0, cut: 0, queued: 0, recaps: 0, problems: [], nothingToDo: false };
   const problem = (p: string) => { if (!report.problems.includes(p)) report.problems.push(p); };
   const todo = gamesWithWork(o);
   if (!todo.length) { report.nothingToDo = true; return report; }
@@ -273,7 +292,7 @@ export async function daily(o: Options): Promise<Report> {
     }
   }
 
-  const online = todo.filter((g) => { const w = workOn(o, g); return w.locate || w.collect; });
+  const online = todo.filter((g) => { const w = workOn(o, g); return w.locate || w.collect || w.recap; });
   if (!online.length) return report;
 
   // The one failure every game shares — a password changed, the subscription ended — stops the run,
@@ -462,6 +481,41 @@ export async function daily(o: Options): Promise<Report> {
     }
     await new Promise((r) => setTimeout(r, 30_000));
   }
+  // The recaps, last: a few minutes of each game, once its goals have been searched.
+  for (const game of online) {
+    if (!wantsRecap(o, game)) continue;
+    const entry = o.ledger[game.id]!, label = labelOf(game), sheet = sheetOf(game);
+    if (o.dryRun) { o.log(`${label}: would make its recap`); continue; }
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-recap-"));
+    try {
+      const files = { mp4: path.join(dir, "recap.mp4"), jpg: path.join(dir, "recap.jpg") };
+      const made = await recapGame({
+        game, session: s, rinkGame: entry.rinkGame!, out: files.mp4, poster: files.jpg, budget: MAX_SECONDS,
+        log: (line) => o.log(`${label}: recap: ${line}`),
+      });
+      if (typeof made === "string") {
+        entry.recap = { sheet, problem: made };
+        problem(`${label}: no recap — ${made}`);
+        continue;
+      }
+      // Named for what is in it, as a goal's clip is: a recap made again is a new name, never one a browser has cached.
+      const name = `${game.id}-recap-${crypto.createHash("sha256").update(fs.readFileSync(files.mp4)).digest("hex").slice(0, 8)}`;
+      o.upload(`${name}.mp4`, files.mp4, "video/mp4");
+      o.upload(`${name}.jpg`, files.jpg, "image/jpeg");
+      o.recaps![game.id] = { clip: `${name}.mp4`, poster: `${name}.jpg`, ...made, sheet };
+      delete entry.recap;
+      report.recaps++;
+      o.log(`${label}: recap published, ${made.seconds}s`);
+    } catch (e) {
+      // Broke off — the recording stalled, a render failed. Another run tries again, up to a point.
+      const tries = (entry.recap?.sheet === sheet ? entry.recap.tries ?? 0 : 0) + 1;
+      entry.recap = tries >= TRIES ? { sheet, problem: `making it broke off ${TRIES} runs running, last: ${(e as Error).message}` } : { sheet, tries };
+      problem(`${label}: recap: ${(e as Error).message}${tries >= TRIES ? "" : " — tried again next run"}`);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+
   return report;
 
   /** Fetch, check twice, encode, upload. True, why not — or a throw, for the next run to try again. */

@@ -1,8 +1,9 @@
 import site from "../../data/site.json";
 import highlightsJson from "../../data/highlights.json";
+import recapsJson from "../../data/recaps.json";
 import type { SiteData, Game, Session } from "../../../../packages/build/src/types";
 import type { GameRow } from "./GameList";
-import { clipBeside, type Highlight } from "../../../../packages/highlights/src/beside";
+import { clipBeside, type Highlight, type Recap } from "../../../../packages/highlights/src/beside";
 
 const data = site as unknown as SiteData;
 
@@ -22,6 +23,14 @@ const highlights = highlightsJson as Record<string, Highlight[]>;
 
 /** The clip beside goal `n` of this game, if it is one of ours and has one. */
 export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside(highlights[g.id], g.goals, n, grSide(g));
+
+/**
+ * The game's recap, if the daily job has made one: its goals, both teams',
+ * its shots and the plays its whistles ended, a few minutes of the recording.
+ * Served from R2 by the Worker like the clips.
+ */
+const recaps = recapsJson as Record<string, Recap>;
+export const recapFor = (g: Game): Recap | undefined => recaps[g.id];
 
 /**
  * Spell a small number.

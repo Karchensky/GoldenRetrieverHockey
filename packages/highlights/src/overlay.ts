@@ -23,13 +23,15 @@ import { fileURLToPath } from "node:url";
 export type Ink = "light" | "dark" | "red";
 export type Field = { box: [number, number, number, number]; ink: Ink; thr?: number };
 export type FieldName = "home" | "away" | "clock" | "period";
+/** Shots on goal, on the boards that count them. */
+export type ShotsField = "homeShots" | "awayShots";
 
 export type Layout = {
   name: string;
   what: string;
   /** Rink game ids this board was learned from or checked against. */
   seenOn: number[];
-  fields: Record<FieldName, Field>;
+  fields: Record<FieldName, Field> & Partial<Record<ShotsField, Field>>;
   /** "word": the period box says "1st", "2nd", "OT2"…; "digit": it is a bare 1, 2, 3. */
   period: "word" | "digit";
   glyph: "templates" | "seg7";
@@ -60,6 +62,8 @@ export type OverlayReading = {
   clockText: string;
   home: number | null;
   away: number | null;
+  /** Shots on goal, where the board shows them; absent where it has no such line. */
+  shots?: { home: number | null; away: number | null };
 };
 
 const DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../layouts");
@@ -276,8 +280,10 @@ const SEGMENTS: [string, [number, number], [number, number]][] = [
 
 function seg7(p: Part, height: number): string {
   const { w, h, ink } = p.mask;
-  // A bare upright is a '1', if it runs the digit's height.
-  if (w < h * 0.3) return h >= height * 0.8 ? "1" : "?";
+  // A bare upright is a '1', if it runs most of the digit's height. Most, not all: the Rink 1 board's
+  // dot-matrix 1 stops short of the bars on its other digits — 20 rows to their 26 on 2026-07-22, and
+  // at 80% one 1 in "11:38" read and the other did not.
+  if (w < h * 0.3) return h >= height * 0.7 ? "1" : "?";
   // Every seven-segment digit is well taller than it is wide. Anything squatter — a lone
   // bar, the edge of a box — would light every sampled segment and read as an 8.
   if (h < w * 1.4) return "?";
@@ -344,13 +350,14 @@ export function parseClockText(t: string): number | null {
 }
 
 export function readOverlay(frame: Frame, layout: Layout): OverlayReading {
-  const field = (name: FieldName) => {
-    const { mask, mean } = crop(frame, layout.fields[name]);
+  const field = (name: FieldName | ShotsField) => {
+    // Only ever a field the layout has: the shots are asked for only when it has them.
+    const { mask, mean } = crop(frame, layout.fields[name]!);
     return { mask: band(mask, layout.bridge), mean };
   };
   const on = layout.on ? field(layout.on.field).mean > layout.on.min : true;
   if (!on) return { period: null, clock: null, clockText: "", home: null, away: null };
-  const score = (name: "home" | "away") => {
+  const score = (name: "home" | "away" | ShotsField) => {
     const t = readText(field(name).mask, layout, "s");
     return /^\d{1,2}$/.test(t) ? Number(t) : null;
   };
@@ -369,7 +376,9 @@ export function readOverlay(frame: Frame, layout: Layout): OverlayReading {
       period = score > 0.8 ? best : null;
     }
   }
-  return { period, clock: parseClockText(clockText), clockText, home: score("home"), away: score("away") };
+  const out: OverlayReading = { period, clock: parseClockText(clockText), clockText, home: score("home"), away: score("away") };
+  if (layout.fields.homeShots && layout.fields.awayShots) out.shots = { home: score("homeShots"), away: score("awayShots") };
+  return out;
 }
 
 /** A layout with every field moved `dx`, `dy` pixels at 1280x720. */

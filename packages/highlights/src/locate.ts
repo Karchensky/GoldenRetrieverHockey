@@ -74,6 +74,8 @@ export type LocateOptions = {
   stoppedSeconds?: number;
   /** How long after the goal the overlay's score may take to change. */
   scoreLagSeconds?: number;
+  /** In running time, how long before the scoresheet's time the score may go up. */
+  runningSeconds?: number;
 };
 
 export function parseClock(text: string): number {
@@ -156,6 +158,9 @@ export function stops(readings: Reading[], period: string, stoppedSeconds = 4, b
   return runs.filter((r) => r.end - r.start >= stoppedSeconds);
 }
 
+/** How long the board's operator takes to put a goal up, in running time: the clip starts this much earlier. */
+const OPERATOR_SECONDS = 3;
+
 const shows = (r: Reading, s: Score) => r.home === s.home && r.away === s.away;
 
 /**
@@ -193,17 +198,26 @@ export function scoreChange(
  * re-dropped faceoff that held the clock at 11:51. Then the goal is the longest
  * stop near the time — a goal brings a centre-ice faceoff, an offside or a
  * re-drop does not. A clock that never stops leaves the crossing itself.
+ *
+ * Except in RUNNING TIME — the summer's 3rd periods, a clock that does not
+ * stop for whistles. There the scorekeeper notes a goal some seconds after it,
+ * so the score goes up before the clock reaches the scoresheet's time: on
+ * 2026-07-13 at 5:28 for a goal written 5:22. With no stop between them, a
+ * change of exactly this goal's score up to `runningSeconds` before the
+ * crossing is this goal, a few seconds before the board showed it.
  */
 function settle(
   readings: Reading[], goal: ScoredGoal, before: Score, after: Score, t0: number,
-  { snapSeconds = 3, stoppedSeconds = 4, scoreLagSeconds = 180 }: LocateOptions,
+  { snapSeconds = 3, stoppedSeconds = 4, scoreLagSeconds = 180, runningSeconds = 45 }: LocateOptions,
 ): Candidate {
   const s = scoreChange(readings, before, after, t0 - 120, t0 + scoreLagSeconds);
   if (s === null) return { t: t0, confirmed: false };
   const clock = parseClock(goal.time);
-  const near = stops(readings, goal.period, stoppedSeconds).filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds);
+  const all = stops(readings, goal.period, stoppedSeconds);
+  const near = all.filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds);
   const stop = near.find((x) => s <= x.end + 3) ?? [...near].sort((a, b) => b.end - b.start - (a.end - a.start))[0];
   if (stop) return { t: stop.start, confirmed: true };
+  if (s < t0 && t0 - s <= runningSeconds && !all.some((x) => x.end >= s && x.start <= t0)) return { t: s - OPERATOR_SECONDS, confirmed: true };
   return t0 <= s ? { t: t0, confirmed: true } : { t: t0, confirmed: false };
 }
 

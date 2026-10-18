@@ -8,6 +8,7 @@ import path from "node:path";
 import { clipThumbs, duration } from "../src/clip.ts";
 import { align, recordingThumbs } from "../src/crosscheck.ts";
 import { routeClip } from "../src/daily.ts";
+import { renderRecap } from "../src/recap.ts";
 import { cutClip, openStream } from "../src/stream.ts";
 
 /**
@@ -64,6 +65,17 @@ test("a clip cut from the recording is exactly the stretch asked for, on the clo
     assert.equal(a?.offset, 0);
 
     await assert.rejects(cutClip(best, 35, 13, out), /does not reach/);
+
+    // A recap trims each play out of its joined segments in one encode: the play must be the stretch asked for,
+    // after the three-second title card, not a second or two either side.
+    if (fs.existsSync(process.env.RECAP_FONT ?? "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")) {
+      const recap = path.join(dir, "recap.mp4");
+      await renderRecap(best, [{ start: 20.3, end: 30.3, kind: "shot", label: "Shot · Test" }], ["A at B", "A day"], recap);
+      assert.ok(Math.abs(duration(recap) - 13) < 0.2, `recap is ${duration(recap)}s`);
+      const shown = clipThumbs(recap).filter((x) => x.t >= 4 && x.t <= 11).map((x) => ({ t: x.t - 3, v: x.v }));
+      const b = align(shown, await recordingThumbs(lightest, 20.3, 10), 20.3);
+      assert.equal(b?.offset, 0);
+    }
   } finally {
     server.close();
     fs.rmSync(dir, { recursive: true, force: true });

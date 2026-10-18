@@ -187,3 +187,16 @@ test("each goal says what the board's clock showed there", () => {
   assert.equal(located.goals[0]!.clock, parseClock("11:54"));
   assert.equal(located.goals[1]!.clock, parseClock("06:56"));
 });
+
+test("in running time the score goes up before the scoresheet's time, and that is the goal", () => {
+  // 2026-07-13: a 3rd period whose clock never stops; the board went to 1–0 at 5:28 for a goal written 5:22.
+  const goal: ScoredGoal = { period: "3rd", time: "05:22", team: HOME, scorer: "Jason Kaplewicz", assists: [], strength: "" };
+  // The clock runs down a second a second from 6:40; the board shows 1–0 from `scoreAt` on.
+  const running = (scoreAt: number) => Array.from({ length: 200 }, (_, t) => ({ t, period: "3rd", clock: 400 - t, home: 400 - t <= scoreAt ? 1 : 0, away: 0 }));
+  // The board changes at 5:28 (t = 72): the goal is just before it.
+  const ok = locateGoals(running(328), [goal], HOME, AWAY);
+  assert.equal(ok.ready, true, JSON.stringify(ok.goals[0]!.problem));
+  near(ok.goals[0]!.t, 72 - 3);
+  // A minute before the scoresheet's time is another moment, not a late pen.
+  assert.equal(locateGoals(running(382), [goal], HOME, AWAY).ready, false);
+});

@@ -2,16 +2,12 @@
   "1274479": {
     "rinkGame": 38673,
     "clips": [],
-    "board": "rink2-tile",
-    "problem": "1st 10:21 Bryan Karchensky: The overlay's 1st-period clock never reaches 10:21.; 2nd 09:17 Jake Steinmetz: The overlay never showed 1–1 becoming 1–2 here.; 3rd 07:57 Jake Steinmetz: The overlay never showed 6–2 becoming 6–3 here.; 3rd 01:02 Vinny Terana: The overlay's 3rd-period clock never reaches 01:02.",
-    "sheet": "1st 10:21 The Golden Retrievers; 1st 03:21 Lumber Lions; 2nd 09:17 The Golden Retrievers; 2nd 07:02 Lumber Lions; 2nd 04:18 Lumber Lions; 2nd 02:54 Lumber Lions; 2nd 00:43 Lumber Lions; 3rd 13:45 Lumber Lions; 3rd 07:57 The Golden Retrievers; 3rd 01:02 The Golden Retrievers; 3rd 00:40 Lumber Lions"
+    "board": "rink2-tile"
   },
   "1277969": {
     "rinkGame": 39165,
     "clips": [],
-    "board": "rink2-tile",
-    "problem": "2nd 07:06 Anthony Orange: The overlay never showed 0–0 becoming 0–1 here.; 3rd 13:37 Vinny Terana: The overlay never showed 4–1 becoming 4–2 here.",
-    "sheet": "2nd 07:06 The Golden Retrievers; 2nd 05:50 Rivermen; 2nd 04:00 Rivermen; 2nd 02:24 Rivermen; 3rd 14:34 Rivermen; 3rd 13:37 The Golden Retrievers; 3rd 02:00 Rivermen"
+    "board": "rink2-tile"
   },
   "1280081": {
     "rinkGame": 39201,
@@ -93,9 +89,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink2-tile",
-    "problem": "1st 02:05 Bryan Karchensky: The overlay never showed 1–0 becoming 2–0 here.; 3rd 00:17 Jake Steinmetz: The overlay's 3rd-period clock never reaches 00:17.",
-    "sheet": "1st 03:40 The Golden Retrievers; 1st 02:05 The Golden Retrievers; 1st 01:41 Tioga Tavern; 2nd 08:34 Tioga Tavern; 2nd 04:02 Tioga Tavern; 2nd 01:59 The Golden Retrievers; 3rd 15:12 The Golden Retrievers; 3rd 09:22 The Golden Retrievers; 3rd 05:04 Tioga Tavern; 3rd 00:17 The Golden Retrievers"
+    "board": "rink2-tile"
   },
   "1280127": {
     "rinkGame": 39223,
@@ -139,9 +133,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink2-tile",
-    "problem": "3rd 04:50 Jason Kaplewicz: The overlay never showed 1–4 becoming 2–4 here.",
-    "sheet": "1st 09:08 The Golden Retrievers; 1st 01:02 Big Kats Kittens; 2nd 11:48 Big Kats Kittens; 2nd 05:53 Big Kats Kittens; 2nd 01:26 Big Kats Kittens; 3rd 04:50 The Golden Retrievers; 3rd 01:38 The Golden Retrievers"
+    "board": "rink2-tile"
   },
   "1288561": {
     "rinkGame": 40371,
@@ -204,9 +196,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "problem": "3rd 05:22 Jason Kaplewicz: The overlay never showed 3–4 becoming 4–4 here.",
-    "sheet": "1st 08:43 Tall Boys Love Em; 1st 07:52 Tall Boys Love Em; 2nd 08:59 The Golden Retrievers; 2nd 05:39 The Golden Retrievers; 2nd 03:28 Tall Boys Love Em; 2nd 01:56 The Golden Retrievers; 2nd 00:39 Tall Boys Love Em; 3rd 05:22 The Golden Retrievers"
+    "board": "rink1-led"
   },
   "1288580": {
     "rinkGame": 40391,
@@ -273,9 +263,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink2-tile",
-    "problem": "3rd 04:40 Adam Kaplewicz: The overlay never showed 4–3 becoming 5–3 here.; 3rd 00:01 Adam Kaplewicz: The overlay's 3rd-period clock never reaches 00:01.",
-    "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers"
+    "board": "rink2-tile"
   },
   "1289161": {
     "rinkGame": 40416,
@@ -338,9 +326,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "problem": "2nd 11:26 Bryan Karchensky: The overlay never showed 4–2 becoming 4–3 here.",
-    "sheet": "1st 10:30 Tioga Tavern; 1st 06:35 Tioga Tavern; 1st 05:58 Tioga Tavern; 1st 00:49 The Golden Retrievers; 1st 00:25 The Golden Retrievers; 2nd 11:38 Tioga Tavern; 2nd 11:26 The Golden Retrievers; 2nd 07:39 The Golden Retrievers; 2nd 07:04 Tioga Tavern; 2nd 02:06 Tioga Tavern; 3rd 11:59 Tioga Tavern"
+    "board": "rink1-led"
   },
   "1289345": {
     "rinkGame": 40433,
@@ -407,16 +393,12 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "problem": "3rd 01:25 Bryan Karchensky: The overlay's 3rd-period clock never reaches 01:25.",
-    "sheet": "2nd 11:10 Tall Boys Love Em; 2nd 04:59 The Golden Retrievers; 2nd 01:24 The Golden Retrievers; 2nd 01:04 The Golden Retrievers; 3rd 16:20 The Golden Retrievers; 3rd 05:25 Tall Boys Love Em; 3rd 01:25 The Golden Retrievers"
+    "board": "rink1-led"
   },
   "1290297": {
     "rinkGame": 40483,
     "clips": [],
-    "board": "rink2-tile",
-    "problem": "1st 06:18 Bryan Karchensky: The overlay never showed 0–0 becoming 1–0 here.; 1st 03:19 Bryan Karchensky: The overlay's 1st-period clock never reaches 03:19.; 1st 01:54 Adam Kaplewicz: The overlay's 1st-period clock never reaches 01:54.; 1st 00:19 Adam Kaplewicz: The overlay's 1st-period clock never reaches 00:19.; 2nd 04:03 Jason Kaplewicz: The overlay never showed 4–1 becoming 5–1 here.; 2nd 00:58 John Rein: The overlay's 2nd-period clock never reaches 00:58.; 3rd 17:31 Bryan Karchensky: The overlay's 3rd-period clock never reaches 17:31.; 3rd 13:32 Jeremy McDonald: The overlay never showed 7–4 becoming 8–4 here.; 3rd 13:01 Anthony Orange: The overlay never showed 8–4 becoming 9–4 here.; 3rd 07:17 Bryan Karchensky: The overlay never showed 9–4 becoming 10–4 here.; 3rd 04:35 Adam Kaplewicz: The overlay never showed 10–4 becoming 11–4 here.; 3rd 00:33 Anthony Orange: The overlay's 3rd-period clock never reaches 00:33.",
-    "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers"
+    "board": "rink2-tile"
   },
   "1306734": {
     "rinkGame": 41648,
@@ -466,9 +448,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "problem": "3rd 14:51 Devin Arnold: The overlay never showed 1–6 becoming 2–6 here.; 3rd 14:29 Bryan Karchensky: The overlay never showed 2–6 becoming 3–6 here.; 3rd 06:05 Adam Kaplewicz: The overlay never showed 3–7 becoming 4–7 here.",
-    "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers"
+    "board": "rink1-led"
   },
   "1335891": {
     "rinkGame": 42705,
