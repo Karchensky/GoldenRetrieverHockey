@@ -42,6 +42,8 @@ export type Layout = {
   glyphs: Record<string, number[]>;
   /** Period words, by what the overlay shows. */
   words: Record<string, number[]>;
+  /** Pixels at 1280x720 this recording paints the board away from where the boxes say — see `calibrate`. */
+  offset?: [number, number];
 };
 
 /** One frame, 8-bit RGB, row-major. */
@@ -125,7 +127,7 @@ function band(m: Mask, bridge: number): Mask {
   return { w: m.w, h: m.h, ink: out };
 }
 
-type Part = { mask: Mask; top: number; bottom: number };
+type Part = { mask: Mask; top: number; bottom: number; left: number; right: number };
 
 /** A field split into glyphs, by runs of columns that hold ink. */
 function glyphs(m: Mask): Part[] {
@@ -147,7 +149,7 @@ function glyphs(m: Mask): Part[] {
     const h = bottom - top + 1;
     const ink = new Uint8Array(w * h);
     for (let y = 0; y < h; y++) for (let i = 0; i < w; i++) ink[y * w + i] = m.ink[(top + y) * m.w + x0 + i]!;
-    out.push({ mask: { w, h, ink }, top, bottom });
+    out.push({ mask: { w, h, ink }, top, bottom, left: x0, right: x });
   }
   return out;
 }
@@ -286,8 +288,17 @@ function seg7(p: Part, height: number): string {
   return SEG7[lit] ?? "?";
 }
 
+/**
+ * The edge of the box a field sits in, caught in its crop: a sliver against the
+ * crop's side, taller than any text. The summer 2026 Rink 1 recordings framed
+ * the clock box a few pixels further left than October's did, and its left
+ * edge read as a leading "1" — 8:43 as 18:43, 47.6 as 147.6. A digit is never
+ * that thin AND that tall AND on the crop's edge.
+ */
+const isEdge = (p: Part, m: Mask) => (p.left === 0 || p.right === m.w) && p.mask.w <= 3 && p.bottom - p.top + 1 >= m.h * 0.9;
+
 function readText(m: Mask, layout: Layout, prefix: string): string {
-  const parts = glyphs(m);
+  const parts = glyphs(m).filter((p) => !isEdge(p, m));
   if (!parts.length) return "";
   const height = Math.max(...parts.map((p) => p.bottom - p.top + 1));
   const templates = Object.entries(layout.glyphs).filter(([k]) => k[0] === prefix);
@@ -352,4 +363,62 @@ export function readOverlay(frame: Frame, layout: Layout): OverlayReading {
     }
   }
   return { period, clock: parseClockText(clockText), clockText, home: score("home"), away: score("away") };
+}
+
+/** A layout with every field moved `dx`, `dy` pixels at 1280x720. */
+export function shifted(layout: Layout, dx: number, dy: number): Layout {
+  const fields = Object.fromEntries(Object.entries(layout.fields).map(([k, f]) => {
+    const [x0, x1, y0, y1] = f.box;
+    return [k, { ...f, box: [x0 + dx / 1280, x1 + dx / 1280, y0 + dy / 720, y1 + dy / 720] }];
+  })) as Layout["fields"];
+  return { ...layout, fields, offset: [dx, dy] };
+}
+
+/** How far either way the board is looked for: a few digits' width, half a field's height. */
+const REACH = { x: 16, y: 10 };
+
+/**
+ * Where this recording paints the board. The same graphic sits a few pixels
+ * differently from one recording to the next — summer 2026's Rink 1 clock box
+ * was far enough off October's to cut "7:11" to "7:1" — so the layout's boxes
+ * are tried at every offset within reach, two pixels apart, and the board is
+ * where the most frames read a clock (and, after that, a score). Of the
+ * offsets that read best, the middle one: at the edge of that stretch a box
+ * is about to clip a digit.
+ */
+export function calibrate(frames: Frame[], layout: Layout): { layout: Layout; clocks: number } {
+  const tried: { dx: number; dy: number; score: number; clocks: number }[] = [];
+  for (let dy = -REACH.y; dy <= REACH.y; dy += 2) {
+    for (let dx = -REACH.x; dx <= REACH.x; dx += 2) {
+      const l = shifted(layout, dx, dy);
+      let score = 0, clocks = 0;
+      for (const f of frames) {
+        const r = readOverlay(f, l);
+        if (r.clock !== null) { clocks++; score += 2; }
+        if (r.home !== null && r.away !== null) score++;
+      }
+      tried.push({ dx, dy, score, clocks });
+    }
+  }
+  const top = Math.max(...tried.map((t) => t.score));
+  const best = tried.filter((t) => t.score >= top * 0.98);
+  const mid = (xs: number[]) => [...xs].sort((a, b) => a - b)[xs.length >> 1]!;
+  const centre = { dx: mid(best.map((t) => t.dx)), dy: mid(best.map((t) => t.dy)) };
+  // The middle of two separate stretches can be neither: then the best offset nearest none.
+  const chosen = best.find((t) => t.dx === centre.dx && t.dy === centre.dy)
+    ?? [...best].sort((a, b) => Math.hypot(a.dx, a.dy) - Math.hypot(b.dx, b.dy))[0]!;
+  return { layout: shifted(layout, chosen.dx, chosen.dy), clocks: chosen.clocks };
+}
+
+/**
+ * How a template is learned: the glyphs of one field, each as the vector a
+ * template is matched against, punctuation and box edges left out. A template
+ * is the mean of these over frames whose text was read by eye.
+ */
+export function fieldGlyphs(frame: Frame, layout: Layout, name: FieldName): number[][] {
+  const m = band(crop(frame, layout.fields[name]).mask, layout.bridge);
+  const parts = glyphs(m).filter((p) => !isEdge(p, m));
+  if (!parts.length) return [];
+  const height = Math.max(...parts.map((p) => p.bottom - p.top + 1));
+  return parts.filter((p) => !kind(p, height)).map((p) => [...norm(p.mask, layout.templateSize)]);
 }

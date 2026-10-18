@@ -179,3 +179,11 @@ test("a recording that stops early leaves the missing goals unfound", () => {
   assert.equal(located.goals[7]!.t, null);
   assert.match(located.goals[7]!.problem!, /never reaches 02:46/);
 });
+
+test("each goal says what the board's clock showed there", () => {
+  // The clip is checked against this, not the scoresheet: a scorekeeper's 11:52 can be the board's 11:54.
+  const { readings } = simulate({ stoppedAt: { 0: "11:54" } });
+  const located = locateGoals(readings, GOALS, HOME, AWAY);
+  assert.equal(located.goals[0]!.clock, parseClock("11:54"));
+  assert.equal(located.goals[1]!.clock, parseClock("06:56"));
+});

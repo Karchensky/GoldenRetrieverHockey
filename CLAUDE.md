@@ -78,6 +78,14 @@ something scarce**: each clip is one of the 20 downloads the rink account gets
 a month (the platform calls them credits; `clipsCredit` reads what is left).
 Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
 
+**The backup** cuts a clip straight from the recording the job already reads
+(`cutClip` in `stream.ts`) and spends nothing. `--source` picks: `auto` (the
+daily run: downloads while they last, then the recording), `download`,
+`recording`. A game before `SINCE` — only reached with `--since` — is never
+downloaded. A cut clip gets the same two checks as a download. `cli.ts compare
+--game <id>` puts a game's downloads beside the same clips cut from the
+recording, in `tmp/highlights/<id>/`, and spends nothing.
+
 The account, not the ledger, is what stops a download being used twice — the
 job reuses any clip of its own at the same start and length. Never set a ledger
 clip to `queued` by hand unless it should use another download; the recovery
@@ -91,6 +99,17 @@ lets browsers cache them for a year. Never upload over an existing name.
 
 The scoreboard reader knows two boards, `layouts/*.json`. A recording on a
 board it does not know is reported, never guessed at, and costs nothing.
+
+**Measure the search on many games, not one.** `cli.ts survey --since <date>
+[--clips]` runs it over every game in a range, reads only, and reports each
+goal found or why not. Tuned on two October games it found 4 of summer 2026's
+104 goals. What the summer taught it: the board sits a few pixels differently
+per recording (`calibrate`), its period label can be anything (periods come
+from the clock, `choosePeriods`), and on Rink 2 the graphic's SCORE is kept by
+hand and was stuck at 0–0, wrong, or a goal behind on most summer nights. A
+goal whose score change the graphic never shows is refused, which is right.
+Set `GRH_SEGMENT_CACHE=<dir>` to keep the segments read, so a second run is
+quick.
 
 ## Safety
 
@@ -113,7 +132,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (609, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (616, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

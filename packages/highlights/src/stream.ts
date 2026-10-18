@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,7 +8,8 @@ import type { Frame } from "./overlay.ts";
 /**
  * The rink's recording, read the way its player scrubs it: a segment at a
  * time, a frame or two from each, and the segment gone straight after. Nothing
- * is kept but what the scoreboard said, and the address is never printed.
+ * is kept but what the scoreboard said — except by `cutClip`, the backup to the
+ * rink's downloads — and the address is never printed.
  */
 
 export type Segment = { uri: string; start: number; duration: number };
@@ -15,6 +17,8 @@ export type Stream = {
   segments: Segment[];
   /** The playlist says it is complete. Both rinks' recordings, once posted, do; one still growing is not searched. */
   ended: boolean;
+  /** Which of the recording's variants this is: "1920x1080, 6.0 Mb/s", or "the only one". */
+  variant: string;
   fetched: { segments: number; bytes: number };
 };
 
@@ -31,16 +35,24 @@ async function text(url: string): Promise<string> {
   return r.text();
 }
 
-/** Every segment of the lightest variant, with where it starts. 720p is what the boards were measured on. */
-export async function openStream(streamUrl: string): Promise<Stream> {
+/**
+ * Every segment of one variant, with where it starts: the lightest for reading
+ * the board — 720p is what the boards were measured on — or the best, for a
+ * clip cut from the recording.
+ */
+export async function openStream(streamUrl: string, pick: "lightest" | "best" = "lightest"): Promise<Stream> {
   const master = await text(streamUrl);
-  const variants: { bandwidth: number; url: string }[] = [];
+  const variants: { bandwidth: number; resolution: string | undefined; url: string }[] = [];
   const lines = master.split("\n").map((l) => l.trim());
   for (let i = 0; i < lines.length; i++) {
     const m = /^#EXT-X-STREAM-INF:.*BANDWIDTH=(\d+)/.exec(lines[i]!);
-    if (m && lines[i + 1] && !lines[i + 1]!.startsWith("#")) variants.push({ bandwidth: Number(m[1]), url: new URL(lines[i + 1]!, streamUrl).href });
+    if (m && lines[i + 1] && !lines[i + 1]!.startsWith("#")) {
+      variants.push({ bandwidth: Number(m[1]), resolution: /RESOLUTION=(\d+x\d+)/.exec(lines[i]!)?.[1], url: new URL(lines[i + 1]!, streamUrl).href });
+    }
   }
-  const playlistUrl = variants.sort((a, b) => a.bandwidth - b.bandwidth)[0]?.url ?? streamUrl;
+  variants.sort((a, b) => (pick === "best" ? b.bandwidth - a.bandwidth : a.bandwidth - b.bandwidth));
+  const chosen = variants[0];
+  const playlistUrl = chosen?.url ?? streamUrl;
   const segments: Segment[] = [];
   const playlist = await text(playlistUrl);
   let at = 0, duration = 0;
@@ -50,7 +62,32 @@ export async function openStream(streamUrl: string): Promise<Stream> {
     else if (line && !line.startsWith("#")) { segments.push({ uri: new URL(line, playlistUrl).href, start: at, duration }); at += duration; }
   }
   if (!segments.length) throw new Error("recording playlist: no segments");
-  return { segments, ended: /^#EXT-X-ENDLIST/m.test(playlist), fetched: { segments: 0, bytes: 0 } };
+  const variant = chosen ? `${chosen.resolution ?? "unknown size"}, ${(chosen.bandwidth / 1e6).toFixed(1)} Mb/s, ${pick} of ${variants.length}` : "the only one";
+  return { segments, ended: /^#EXT-X-ENDLIST/m.test(playlist), variant, fetched: { segments: 0, bytes: 0 } };
+}
+
+/**
+ * For looking into games by hand: with GRH_SEGMENT_CACHE set to a directory,
+ * every segment read is kept there, named by a hash of its address, so a
+ * second look at a game fetches nothing. Never set in the workflow.
+ */
+const CACHE = process.env.GRH_SEGMENT_CACHE;
+
+async function segmentBytes(stream: Stream, index: number): Promise<Buffer> {
+  const uri = stream.segments[index]!.uri;
+  const cached = CACHE && path.join(CACHE, crypto.createHash("sha256").update(uri.split("?")[0]!).digest("hex").slice(0, 32) + ".ts");
+  if (cached && fs.existsSync(cached)) return fs.readFileSync(cached);
+  // One stalled segment once cost a whole game's search: it is asked for twice before that.
+  const get = async () => {
+    const r = await fetch(uri, { signal: AbortSignal.timeout(TIMEOUT) });
+    if (!r.ok) throw new Error(`recording segment ${index}: ${r.status}`);
+    return Buffer.from(await r.arrayBuffer());
+  };
+  const bytes = await get().catch(get);
+  stream.fetched.segments++;
+  stream.fetched.bytes += bytes.length;
+  if (cached) { fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cached, bytes); }
+  return bytes;
 }
 
 function run(cmd: string, args: string[]): Buffer {
@@ -70,11 +107,7 @@ function run(cmd: string, args: string[]): Buffer {
 export async function segmentFrames(stream: Stream, index: number, perSecond: number): Promise<{ t: number; frame: Frame }[]> {
   const seg = stream.segments[index];
   if (!seg) return [];
-  const r = await fetch(seg.uri, { signal: AbortSignal.timeout(TIMEOUT) });
-  if (!r.ok) throw new Error(`recording segment ${index}: ${r.status}`);
-  const bytes = Buffer.from(await r.arrayBuffer());
-  stream.fetched.segments++;
-  stream.fetched.bytes += bytes.length;
+  const bytes = await segmentBytes(stream, index);
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-seg-"));
   try {
     const file = path.join(dir, "s.ts");
@@ -106,4 +139,36 @@ export function segmentAt(stream: Stream, t: number): number {
     if (stream.segments[mid]!.start <= t + 1e-6) lo = mid; else hi = mid - 1;
   }
   return lo;
+}
+
+/**
+ * The backup to the rink's downloads: `seconds` of the recording from `start`,
+ * cut to `out` without asking the rink for anything, so it spends no download.
+ * The segments that hold it are joined as they came — MPEG-TS joins end to
+ * end — and cut on the playlist's clock, the one `segmentFrames` reads and the
+ * rink cuts its own clips on. Encoded near-losslessly: `encodeForWeb` encodes
+ * it again for the site, after the same two checks a download gets.
+ *
+ * ffmpeg is only ever given local files, so nothing it prints can carry the
+ * recording's address.
+ */
+export async function cutClip(stream: Stream, start: number, seconds: number, out: string): Promise<void> {
+  const first = segmentAt(stream, start), last = segmentAt(stream, start + seconds);
+  const end = stream.segments[last]!.start + stream.segments[last]!.duration;
+  if (start < 0 || start + seconds > end + 0.5) throw new Error(`the recording does not reach ${start}s +${seconds}s`);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-cut-"));
+  try {
+    const joined = path.join(dir, "cut.ts");
+    for (let i = first; i <= last; i++) fs.appendFileSync(joined, await segmentBytes(stream, i));
+    run(FFMPEG, [
+      "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
+      // Seeking on the output, not the input: an input seek into joined segments kept their
+      // start offset and lost the first 1.7 s of a test cut. Decoding a few segments to throw some away is cheap.
+      "-i", joined, "-ss", (start - stream.segments[first]!.start).toFixed(3), "-t", seconds.toFixed(3),
+      "-map", "0:v:0", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p",
+      "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", out,
+    ]);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 }
