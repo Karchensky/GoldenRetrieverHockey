@@ -144,7 +144,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (624, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (625, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

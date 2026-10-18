@@ -153,22 +153,34 @@ export function segmentAt(stream: Stream, t: number): number {
  * recording's address.
  */
 export async function cutClip(stream: Stream, start: number, seconds: number, out: string): Promise<void> {
-  const first = segmentAt(stream, start), last = segmentAt(stream, start + seconds);
-  const end = stream.segments[last]!.start + stream.segments[last]!.duration;
-  if (start < 0 || start + seconds > end + 0.5) throw new Error(`the recording does not reach ${start}s +${seconds}s`);
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-cut-"));
   try {
     const joined = path.join(dir, "cut.ts");
-    for (let i = first; i <= last; i++) fs.appendFileSync(joined, await segmentBytes(stream, i));
+    const offset = await joinSegments(stream, start, seconds, joined);
     run(FFMPEG, [
       "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
       // Seeking on the output, not the input: an input seek into joined segments kept their
       // start offset and lost the first 1.7 s of a test cut. Decoding a few segments to throw some away is cheap.
-      "-i", joined, "-ss", (start - stream.segments[first]!.start).toFixed(3), "-t", seconds.toFixed(3),
+      "-i", joined, "-ss", offset.toFixed(3), "-t", seconds.toFixed(3),
       "-map", "0:v:0", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p",
       "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", out,
     ]);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
+}
+
+/**
+ * The segments holding `seconds` of the recording from `start`, joined end to
+ * end into `file` as they came, and where in that file `start` falls — for a
+ * cut made in one pass with others, as the recap's are. Trim from the
+ * returned offset on the file's own timeline, never by an input seek.
+ */
+export async function joinSegments(stream: Stream, start: number, seconds: number, file: string): Promise<number> {
+  const first = segmentAt(stream, start), last = segmentAt(stream, start + seconds);
+  const end = stream.segments[last]!.start + stream.segments[last]!.duration;
+  if (start < 0 || start + seconds > end + 0.5) throw new Error(`the recording does not reach ${start}s +${seconds}s`);
+  fs.rmSync(file, { force: true });
+  for (let i = first; i <= last; i++) fs.appendFileSync(file, await segmentBytes(stream, i));
+  return start - stream.segments[first]!.start;
 }

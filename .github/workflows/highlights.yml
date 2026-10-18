@@ -31,7 +31,7 @@
 # (never the recording: with none left a clip waits for next month, as before
 # the backup) or "recording" (never a download). And, optionally, a date to look
 # back from: the one-time look at games before this season, which are only ever
-# cut from the recording. The look back has five hours, not one.
+# cut from the recording. The look back has six hours, not two.
 #
 # Kept apart from the refresh deliberately: different secrets, a long wait on
 # the rink, and nothing it does can ever cost a day's data capture. Nothing it
@@ -87,8 +87,10 @@ permissions:
 jobs:
   highlights:
     runs-on: ubuntu-latest
-    # Two hours a day: a recap reads the whole recording, ten-odd minutes a game, after the goals.
-    timeout-minutes: ${{ inputs.since && 300 || 120 }}
+    # Two hours a day: a recap reads the whole recording, ten to thirty minutes a game, after the goals.
+    # A look back gets the most a job may have. One that runs out still commits what it finished — the
+    # job writes its files when it is stopped — and running it again carries on from there.
+    timeout-minutes: ${{ inputs.since && 355 || 120 }}
 
     steps:
       # main, not the SHA that triggered this: the refresh has just pushed to it.

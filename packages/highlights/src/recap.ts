@@ -8,7 +8,7 @@ import { locateGoals, scoreline } from "./locate.ts";
 import { readOverlay, type Layout } from "./overlay.ts";
 import type { ClockRun } from "./periods.ts";
 import { gameDetails, ourTeams, recordedGames, signIn, type Session } from "./rink.ts";
-import { cutClip, openStream, segmentAt, segmentFrames, type Stream } from "./stream.ts";
+import { joinSegments, openStream, segmentAt, segmentFrames, type Stream } from "./stream.ts";
 
 /**
  * A game recap: the game's goals, both teams', and its shots on goal, cut from
@@ -176,6 +176,9 @@ function merge(plays: Play[]): Play[] {
   return out;
 }
 
+const hasAudio = (file: string) =>
+  spawnSync(process.env.FFPROBE ?? "ffprobe", ["-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", file]).stdout.toString().trim() !== "";
+
 /** Seconds of title card. */
 const TITLE = 3;
 
@@ -203,20 +206,29 @@ export async function renderRecap(best: Stream, plays: Play[], title: string[], 
       `fade=t=in:st=0:d=${FADE},fade=t=out:st=${T - FADE}:d=${FADE},format=yuv420p[v0];[1:a]anull[a0]`);
 
     for (const [n, p] of plays.entries()) {
-      const clip = path.join(dir, `play${n}.mp4`);
-      await cutClip(best, Math.max(0, p.start), p.end - Math.max(0, p.start), clip);
-      const k = n + 1, idx = 2 + n, len = p.end - Math.max(0, p.start);
-      inputs.push("-i", clip);
-      filters.push(`[${idx}:v]scale=${W}:${H},fps=30,` +
+      // Each play's segments as they came, trimmed in the one encode below: cutting each to a file first
+      // encoded every frame twice, and doubled the time a recap took.
+      const joined = path.join(dir, `play${n}.ts`);
+      const from = Math.max(0, p.start), len = p.end - from;
+      const offset = await joinSegments(best, from, len, joined);
+      const k = n + 1, idx = 2 + n;
+      inputs.push("-i", joined);
+      filters.push(`[${idx}:v]trim=start=${offset.toFixed(3)}:duration=${len.toFixed(3)},setpts=PTS-STARTPTS,scale=${W}:${H},fps=30,` +
         `drawbox=x=0:y=${H - 70}:w=${W}:h=70:color=black@0.55:t=fill,${draw(text(`label${n}.txt`, p.label), 28, `${H - 52}`)},` +
         `fade=t=in:st=0:d=${FADE},fade=t=out:st=${(len - FADE).toFixed(2)}:d=${FADE},format=yuv420p[v${k}];` +
-        `[${idx}:a]aresample=48000,aformat=channel_layouts=stereo,afade=t=in:st=0:d=${FADE},afade=t=out:st=${(len - FADE).toFixed(2)}:d=${FADE}[a${k}]`);
+        // The rink's sound where the recording has it; silence of the same length where it has none.
+        (hasAudio(joined)
+          ? `[${idx}:a]atrim=start=${offset.toFixed(3)}:duration=${len.toFixed(3)},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,`
+          : `anullsrc=r=48000:cl=stereo,atrim=duration=${len.toFixed(3)},`) +
+        `afade=t=in:st=0:d=${FADE},afade=t=out:st=${(len - FADE).toFixed(2)}:d=${FADE}[a${k}]`);
     }
     const n = plays.length + 1;
     filters.push(`${Array.from({ length: n }, (_, i) => `[v${i}][a${i}]`).join("")}concat=n=${n}:v=1:a=1[v][a]`);
     const r = spawnSync(process.env.FFMPEG ?? "ffmpeg", [
       "-hide_banner", "-loglevel", "error", "-nostdin", "-y", ...inputs, "-filter_complex", filters.join(";"),
-      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-profile:v", "high",
+      // "faster", not the goal clips' "slow": a recap is minutes long, and on the job's two cores "slow" took twice the time for the same
+      // size. A notch lighter than a clip, too: eight minutes at 23 was 115 MB.
+      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "faster", "-crf", "24", "-profile:v", "high",
       "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out,
     ], { maxBuffer: 1 << 26 });
     if (r.status !== 0) throw new Error(`recap render failed: ${r.stderr.toString().slice(-600)}`);
