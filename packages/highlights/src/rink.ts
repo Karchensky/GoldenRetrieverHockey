@@ -21,7 +21,14 @@ const MOMENTS = "https://al-api.htptv.net";
 /** The platform's id for the HarborCenter tenant, as its own web app sends it. */
 const CUSTOMER = 10;
 
-export type Session = { token: string };
+/**
+ * A signed-in session. Its token expires — on 2026-10-18 half an hour into a
+ * run that made recaps, every call after that was refused "401 — Token
+ * expired" — so a session from `signIn` can `renew` itself, and every call
+ * made with one signs in again once when the platform says the token is no
+ * good. A refused call did nothing, so asking again is safe, even a download.
+ */
+export type Session = { token: string; renew?: () => Promise<void> };
 
 /** A platform that stops answering costs a minute, not the job's hour. */
 const TIMEOUT = 60_000;
@@ -31,22 +38,38 @@ async function call<T>(label: string, url: string, init: RequestInit = {}): Prom
   if (!r.ok) {
     let message = "";
     try { const j = await r.json() as { message?: string; error?: string }; message = j.message ?? j.error ?? ""; } catch {}
-    throw new Error(`${label}: ${r.status}${message ? ` — ${message}` : ""}`);
+    throw Object.assign(new Error(`${label}: ${r.status}${message ? ` — ${message}` : ""}`), { status: r.status });
   }
   return r.status === 204 ? (undefined as T) : (await r.json() as T);
 }
 
 export async function signIn(email: string, password: string): Promise<Session> {
-  // The rink's app sends the caller's public address with the sign-in, so this does too.
-  const ip = await publicAddress();
-  const j = await call<{ data?: { AccessToken?: string } }>("sign in", `${MAIN}/login`, {
-    method: "POST",
-    headers: { "content-type": "application/json", accept: "application/json" },
-    body: JSON.stringify({ email, password, ip_address: ip }),
-  });
-  const token = j.data?.AccessToken;
-  if (!token) throw new Error("sign in: no token in the reply");
-  return { token };
+  const login = async () => {
+    // The rink's app sends the caller's public address with the sign-in, so this does too.
+    const ip = await publicAddress();
+    const j = await call<{ data?: { AccessToken?: string } }>("sign in", `${MAIN}/login`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({ email, password, ip_address: ip }),
+    });
+    const token = j.data?.AccessToken;
+    if (!token) throw new Error("sign in: no token in the reply");
+    return token;
+  };
+  const s: Session = { token: await login() };
+  s.renew = async () => { s.token = await login(); };
+  return s;
+}
+
+/** A call made with the session's token: refused as unauthorised, the session signs in again and it is made once more. */
+export async function authed<T>(s: Session, go: () => Promise<T>): Promise<T> {
+  try {
+    return await go();
+  } catch (e) {
+    if ((e as { status?: number }).status !== 401 || !s.renew) throw e;
+    await s.renew();
+    return go();
+  }
 }
 
 /** The caller's public address, from whichever of two lookups answers. */
@@ -66,7 +89,7 @@ const moments = (s: Session) => ({ Authorization: `Bearer ${s.token}`, "x-htp-de
 
 /** Download credits left this billing month. */
 export async function clipsCredit(s: Session): Promise<number> {
-  const j = await call<{ data?: { ClipsCredit?: number } }>("download credit", `${MAIN}/getUserDownloadCredit`, { headers: main(s) });
+  const j = await authed(s, () => call<{ data?: { ClipsCredit?: number } }>("download credit", `${MAIN}/getUserDownloadCredit`, { headers: main(s) }));
   if (typeof j.data?.ClipsCredit !== "number") throw new Error("download credit: no ClipsCredit in the reply");
   return j.data.ClipsCredit;
 }
@@ -135,8 +158,8 @@ export type GameDetails = { live: boolean; rink: string; dateTime: string; strea
 
 /** The game's player details. `streamUrl` is the recording — never log it. */
 export async function gameDetails(s: Session, id: number): Promise<GameDetails> {
-  const j = await call<{ data?: { is_live: number; pad_name: string; game_date_time: string; vod_url: string | null }[] }>(
-    `game ${id}`, `${PUBLIC}/player/${id}`, { headers: main(s) });
+  const j = await authed(s, () => call<{ data?: { is_live: number; pad_name: string; game_date_time: string; vod_url: string | null }[] }>(
+    `game ${id}`, `${PUBLIC}/player/${id}`, { headers: main(s) }));
   const g = j.data?.[0];
   if (!g) throw new Error(`game ${id}: no details`);
   return { live: g.is_live === 1, rink: g.pad_name, dateTime: g.game_date_time, streamUrl: g.vod_url || null };
@@ -156,7 +179,7 @@ const moment = (m: RawMoment): Moment => ({ id: m.id, type: m.type, startSec: m.
 
 /** The account's own clips of a game. */
 export async function myMoments(s: Session, game: number): Promise<Moment[]> {
-  const j = await call<{ moments?: RawMoment[] }>(`moments of ${game}`, `${MOMENTS}/games/${game}/moments?tab=mine&sort=oldest`, { headers: moments(s) });
+  const j = await authed(s, () => call<{ moments?: RawMoment[] }>(`moments of ${game}`, `${MOMENTS}/games/${game}/moments?tab=mine&sort=oldest`, { headers: moments(s) }));
   return (j.moments ?? []).map(moment);
 }
 
@@ -166,15 +189,15 @@ export const CLIP_MIN = 20, CLIP_MAX = 60;
 /** Mark a clip. Free: a clip is a start and a length saved to the account. */
 export async function createMoment(s: Session, game: number, startSec: number, durationSec: number): Promise<Moment> {
   if (durationSec < CLIP_MIN || durationSec > CLIP_MAX) throw new Error(`A ${durationSec}s clip — the rink cuts ${CLIP_MIN} to ${CLIP_MAX}`);
-  const j = await call<{ moment: RawMoment }>(`new clip of ${game}`, `${MOMENTS}/games/${game}/moments`, {
+  const j = await authed(s, () => call<{ moment: RawMoment }>(`new clip of ${game}`, `${MOMENTS}/games/${game}/moments`, {
     method: "POST",
     headers: moments(s),
     body: JSON.stringify({ type: "goal", startMs: Math.round(startSec * 1000), durationMs: Math.round(durationSec * 1000), feed: "home" }),
-  });
+  }));
   return moment(j.moment);
 }
 
 /** SPENDS ONE DOWNLOAD CREDIT. The rink renders the clip; `myMoments` shows it COMPLETE, with a link, a few minutes later. */
 export async function requestDownload(s: Session, momentId: string): Promise<void> {
-  await call<void>(`download of clip ${momentId}`, `${MOMENTS}/moments/${momentId}/download`, { method: "POST", headers: moments(s) });
+  await authed(s, () => call<void>(`download of clip ${momentId}`, `${MOMENTS}/moments/${momentId}/download`, { method: "POST", headers: moments(s) }));
 }
