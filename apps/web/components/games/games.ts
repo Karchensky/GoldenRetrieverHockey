@@ -26,7 +26,8 @@ export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside
 
 /**
  * The game's recap, if the daily job has made one: its goals, both teams',
- * its shots and the plays its whistles ended, a few minutes of the recording.
+ * its shots, chances and the plays its whistles ended, a few minutes of the
+ * recording.
  * Served from R2 by the Worker like the clips.
  */
 const recaps = recapsJson as Record<string, Recap>;

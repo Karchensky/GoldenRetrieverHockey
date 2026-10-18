@@ -19,12 +19,13 @@
 # tomorrow's run.
 #
 # Once a game's goals are searched it also makes the game's RECAP: its goals,
-# both teams', then its shots on goal where the board counts them and the
-# plays its whistles ended, cut from the recording into a few minutes of video
-# (apps/web/data/recaps.json). No download is spent on it. A game with more
-# than a quarter of its goals unfound gets none, reported once in the ledger's
-# "recap" — delete that to have it tried again. A corrected scoresheet makes
-# it again.
+# both teams', then its shots on goal where the board counts them, the plays
+# its whistles in a zone ended and the chances the camera followed, cut from
+# the recording into a few minutes of video (apps/web/data/recaps.json). No
+# download is spent on it. A game with more than a quarter of its goals
+# unfound gets none, reported once in the ledger's "recap" — delete that to
+# have it tried again. A corrected scoresheet makes it again, and so does a
+# new RECAP_EDITION, three games a run.
 #
 # Run by hand, it asks where clips come from: "auto", the daily run's (the
 # rink's downloads while the month's last, then the recording), "download"

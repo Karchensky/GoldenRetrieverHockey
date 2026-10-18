@@ -88,12 +88,17 @@ recording, in `tmp/highlights/<id>/`, and spends nothing.
 
 **The recap** (`recap.ts`) is a few minutes of each game: every goal found,
 both teams', then shots on goal (the Rink 1 board counts them; each rise is a
-shot, about 2 s late) and the plays the whistles ended — the best first, up to
-eight minutes. The daily job makes it once a game's goals are searched, to
-`apps/web/data/recaps.json` and R2 as `<game>-recap-<hash>.mp4`. It reads the
-whole recording, so it costs the job ten-odd minutes a game and no download.
-None is made for a game with over a quarter of its goals unfound. `cli.ts recap
---game <id>` makes one locally.
+shot, about 2 s late), the plays whistles in a zone ended, and the chances no
+one counted — rushes and spells of pressure — the best first, up to eight
+minutes. Chances, and which whistles were offsides and icings in the neutral
+zone (left out), come from where the camera looks (`view.ts`): the blue lines
+on the ice say the zone, the camera's turn how deep. Nothing finds the net
+itself; its frame is too thin on video. The daily job makes it once a game's
+goals are searched, to `apps/web/data/recaps.json` and R2 as
+`<game>-recap-<hash>.mp4`. It reads the whole recording, so it costs the job a
+quarter of an hour a game and no download. None is made for a game with over a
+quarter of its goals unfound. Raising `RECAP_EDITION` makes every recap again,
+`REMAKES_PER_RUN` a run. `cli.ts recap --game <id>` makes one locally.
 
 The account, not the ledger, is what stops a download being used twice — the
 job reuses any clip of its own at the same start and length. Never set a ledger
@@ -144,7 +149,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (627, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (636, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

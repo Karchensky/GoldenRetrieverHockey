@@ -18,7 +18,11 @@ export type Highlight = { goal: number; period: string; time: string; scorer: st
  * for a corrected one. Here, with the clip's shape, so the page never imports
  * the job.
  */
-export type Recap = { clip: string; poster: string; seconds: number; goals: number; of: number; shots: number; whistles: number; sheet: string };
+export type Recap = {
+  clip: string; poster: string; seconds: number; goals: number; of: number; shots: number; whistles: number; sheet: string;
+  /** Chances no one counted (`view.ts`), and the edition of the job that made it: both from edition 2 on. */
+  chances?: number; edition?: number;
+};
 
 type Goal = { period: string; time: string; team: string };
 

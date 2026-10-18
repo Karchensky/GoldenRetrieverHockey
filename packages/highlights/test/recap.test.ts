@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  GOAL_LEAD, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
+  boardClock, GOAL_LEAD, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
   type Candidate,
 } from "../src/recap.ts";
 
@@ -60,4 +60,28 @@ test("among plays of equal worth, the one furthest from what is in goes first", 
   const goals = [{ t: 100, label: "GOAL" }];
   const one = planRecap(goals, [shot(130), shot(900)], GOAL_LEAD + GOAL_TAIL + SHOT_LEAD + SHOT_TAIL + 1);
   assert.deepEqual(one.map((p) => p.start), [100 - GOAL_LEAD, 900 - SHOT_LEAD]);
+});
+
+test("a chance shows its own stretch of play, and a whistle it runs into is the same play, under the chance's name", () => {
+  const goals = [{ t: 100, label: "GOAL" }];
+  const rush: Candidate = { t: 500, kind: "chance", label: "Chance", worth: 1.2, lead: 4, tail: 9 };
+  const plays = planRecap(goals, [rush, { ...whistle(512), label: "2nd 4:00" }], 1000);
+  assert.deepEqual(plays.map((p) => [p.kind, p.start, p.end, p.label]), [["goal", 100 - GOAL_LEAD, 100 + GOAL_TAIL, "GOAL"], ["chance", 496, 513, "Chance"]]);
+  // Worth more than a whistle the zone of which is unknown, less than a shot.
+  const tight = planRecap(goals, [whistle(800), rush, shot(300)], GOAL_LEAD + GOAL_TAIL + SHOT_LEAD + SHOT_TAIL + 14);
+  assert.deepEqual(tight.map((p) => p.kind), ["goal", "shot", "chance"]);
+});
+
+test("the clock between two readings: running, the time between them; stopped, the time they share", () => {
+  const at = boardClock([{ t: 0, clock: 600 }, { t: 6, clock: 594 }, { t: 12, clock: 590 }, { t: 18, clock: 590 }, { t: 24, clock: null }, { t: 30, clock: 590 }]);
+  assert.deepEqual(at(3), { clock: 597, running: true });
+  // A whistle inside the six seconds: the clock runs on until it reaches the stopped time, and no further.
+  assert.deepEqual(at(8), { clock: 592, running: true });
+  assert.deepEqual(at(11), { clock: 590, running: true });
+  assert.deepEqual(at(15), { clock: 590, running: false });
+  // A reading missed is bridged, up to eight seconds either side; past that, nothing is said.
+  assert.deepEqual(at(25), { clock: 590, running: false });
+  assert.equal(at(40), null);
+  // The clock set back up for a new period is not running time.
+  assert.equal(boardClock([{ t: 0, clock: 2 }, { t: 6, clock: 900 }])(3)?.running, false);
 });

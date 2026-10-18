@@ -73,7 +73,18 @@ export async function openStream(streamUrl: string, pick: "lightest" | "best" = 
  */
 const CACHE = process.env.GRH_SEGMENT_CACHE;
 
+/** The segment read last, per recording: the recap reads each one twice over, for the board and for the camera. */
+const lastRead = new WeakMap<Stream, { index: number; bytes: Buffer }>();
+
 async function segmentBytes(stream: Stream, index: number): Promise<Buffer> {
+  const held = lastRead.get(stream);
+  if (held?.index === index) return held.bytes;
+  const bytes = await fetchSegment(stream, index);
+  lastRead.set(stream, { index, bytes });
+  return bytes;
+}
+
+async function fetchSegment(stream: Stream, index: number): Promise<Buffer> {
   const uri = stream.segments[index]!.uri;
   const cached = CACHE && path.join(CACHE, crypto.createHash("sha256").update(uri.split("?")[0]!).digest("hex").slice(0, 32) + ".ts");
   if (cached && fs.existsSync(cached)) return fs.readFileSync(cached);
@@ -99,12 +110,13 @@ function run(cmd: string, args: string[]): Buffer {
 
 /**
  * Frames from one segment, `perSecond` a second — or its first frame only, for
- * 0 — picked by frame number and scaled to 1280x720. `t` is seconds into the
- * recording, on the playlist's own clock, which is the clock the rink's clips
- * are cut on: measured on 2026-10-15, a clip asked for at 3600s began within
- * about a second of the frame this read at 3600s.
+ * 0 — picked by frame number and scaled to 1280x720, or to `size`. `t` is
+ * seconds into the recording, on the playlist's own clock, which is the clock
+ * the rink's clips are cut on: measured on 2026-10-15, a clip asked for at
+ * 3600s began within about a second of the frame this read at 3600s.
  */
-export async function segmentFrames(stream: Stream, index: number, perSecond: number): Promise<{ t: number; frame: Frame }[]> {
+export async function segmentFrames(stream: Stream, index: number, perSecond: number, size: [number, number] = [W, H]): Promise<{ t: number; frame: Frame }[]> {
+  const [w, h] = size;
   const seg = stream.segments[index];
   if (!seg) return [];
   const bytes = await segmentBytes(stream, index);
@@ -118,12 +130,12 @@ export async function segmentFrames(stream: Stream, index: number, perSecond: nu
     const every = perSecond > 0 ? Math.max(1, Math.round(fps / perSecond)) : Number.MAX_SAFE_INTEGER;
     const raw = run(FFMPEG, [
       "-hide_banner", "-loglevel", "error", "-nostdin", "-i", file,
-      "-vf", `select='not(mod(n\\,${every}))',scale=${W}:${H}`, "-vsync", "0", ...(perSecond > 0 ? [] : ["-frames:v", "1"]),
+      "-vf", `select='not(mod(n\\,${every}))',scale=${w}:${h}`, "-vsync", "0", ...(perSecond > 0 ? [] : ["-frames:v", "1"]),
       "-f", "rawvideo", "-pix_fmt", "rgb24", "-",
     ]);
-    const size = W * H * 3, out: { t: number; frame: Frame }[] = [];
-    for (let i = 0; (i + 1) * size <= raw.length; i++) {
-      out.push({ t: seg.start + (i * (perSecond > 0 ? every : 0)) / fps, frame: { width: W, height: H, rgb: new Uint8Array(raw.buffer, raw.byteOffset + i * size, size) } });
+    const one = w * h * 3, out: { t: number; frame: Frame }[] = [];
+    for (let i = 0; (i + 1) * one <= raw.length; i++) {
+      out.push({ t: seg.start + (i * (perSecond > 0 ? every : 0)) / fps, frame: { width: w, height: h, rgb: new Uint8Array(raw.buffer, raw.byteOffset + i * one, one) } });
     }
     return out;
   } finally {

@@ -11,7 +11,7 @@ import {
   CLIP_MAX, clipsCredit, createMoment, gameDetails, myMoments, ourTeams, recordedGames, requestDownload, signIn,
   type Moment, type RinkGame, type Session,
 } from "./rink.ts";
-import { MAX_SECONDS, recapGame } from "./recap.ts";
+import { MAX_SECONDS, RECAP_EDITION, recapGame } from "./recap.ts";
 import { cutClip, openStream, type Stream } from "./stream.ts";
 
 /**
@@ -240,15 +240,24 @@ const staleClips = (o: Pick<Options, "highlights" | "ledger">, g: SiteGame) => {
 
 /**
  * Does the game want its recap made: found on the rink's site, none on the
- * site for this scoresheet, and not given up on for it. The goals are always
- * searched first — a game the rink has not posted yet waits for that.
+ * site for this scoresheet — or one of an earlier edition (`RECAP_EDITION`) —
+ * and not given up on for it. The goals are always searched first — a game
+ * the rink has not posted yet waits for that.
  */
 const wantsRecap = (o: Pick<Options, "ledger" | "recaps">, g: SiteGame) => {
   const entry = o.ledger[g.id];
   if (!o.recaps || !entry || entry.rinkGame === null) return false;
-  if (o.recaps[g.id]?.sheet === sheetOf(g)) return false;
+  const made = o.recaps[g.id];
+  if (made?.sheet === sheetOf(g) && (made.edition ?? 1) >= RECAP_EDITION) return false;
   return !(entry.recap?.problem && entry.recap.sheet === sheetOf(g));
 };
+
+/**
+ * Recaps made again for a new edition, at most, in one run: each reads a whole
+ * recording, a quarter of an hour, and a daily run has two hours. A game with
+ * no recap at all goes first and is never held back by this.
+ */
+export const REMAKES_PER_RUN = 3;
 
 /** What there is to do for one game, from the files alone. */
 function workOn(o: Pick<Options, "ledger" | "highlights" | "recaps">, g: SiteGame) {
@@ -481,9 +490,14 @@ export async function daily(o: Options): Promise<Report> {
     }
     await new Promise((r) => setTimeout(r, 30_000));
   }
-  // The recaps, last: a few minutes of each game, once its goals have been searched.
-  for (const game of online) {
+  // The recaps, last: a few minutes of each game, once its goals have been searched. Games with none first.
+  let remakes = 0;
+  for (const game of [...online].sort((a, b) => Number(Boolean(o.recaps?.[a.id])) - Number(Boolean(o.recaps?.[b.id])))) {
     if (!wantsRecap(o, game)) continue;
+    if (o.recaps?.[game.id]?.sheet === sheetOf(game)) {
+      if (remakes >= REMAKES_PER_RUN) { o.log(`${labelOf(game)}: its recap is made again on a later run`); continue; }
+      remakes++;
+    }
     const entry = o.ledger[game.id]!, label = labelOf(game), sheet = sheetOf(game);
     if (o.dryRun) { o.log(`${label}: would make its recap`); continue; }
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-recap-"));

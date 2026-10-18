@@ -165,7 +165,7 @@ if (command === "locate" && values.game && values.readings) {
     credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
   });
   if (typeof made === "string") { console.log(`No recap: ${made}`); process.exitCode = 1; }
-  else console.log(`Wrote ${path.relative(ROOT, out)}: ${made.seconds}s, ${made.goals} of ${made.of} goals, ${made.shots} shots, ${made.whistles} whistles`);
+  else console.log(`Wrote ${path.relative(ROOT, out)}: ${made.seconds}s, ${made.goals} of ${made.of} goals, ${made.shots} shots, ${made.chances} chances, ${made.whistles} whistles`);
 } else if (command === "survey" && values.since) {
   const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Options["games"] };
   const until = values.until ?? "9999";
