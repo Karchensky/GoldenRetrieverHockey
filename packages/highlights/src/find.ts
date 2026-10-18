@@ -71,8 +71,10 @@ export async function findGoals(stream: Stream, goals: ScoredGoal[], home: strin
     const stage = (r: Reading | undefined) => !r ? undefined : r.home === 0 && r.away === 0 ? -1 : scores.findIndex((x) => is(r, x)) === -1 ? undefined : scores.findIndex((x) => is(r, x));
     const scored = (r: Reading | undefined) => (stage(r) ?? -2) >= g;
     const unscored = (r: Reading | undefined) => stage(r) !== undefined && stage(r)! < g;
-    // Two sweep frames in a row at this goal's score or a later one: it has gone in by then.
-    const j = swept.findIndex((r, k) => scored(r) && scored(swept[k + 1]));
+    // Two sweep frames in a row at this goal's score or a later one: it has gone in by then. The game's last
+    // sweep frame stands alone — there is no next — or a goal in its last two minutes is never looked for:
+    // 2026-07-27's at 1:25 of the 3rd was seen once, at 1:04, and then the game was over.
+    const j = swept.findIndex((r, k) => scored(r) && (k === swept.length - 1 || scored(swept[k + 1])));
     if (j < 1) continue; // The locator reports it: the clock and the score never meet for this goal.
 
     // Where the score changes. Only a score this game had moves a bound.
