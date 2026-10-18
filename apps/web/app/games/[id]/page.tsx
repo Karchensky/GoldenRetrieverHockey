@@ -106,12 +106,6 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
           <div className="card">
             <div className="head">
               <h2>Game recap</h2>
-              <span className="kicker">
-                {Math.floor(recap.seconds / 60)}:{String(recap.seconds % 60).padStart(2, "0")}
-                {" · "}{plural(recap.goals, "goal")}
-                {recap.shots > 0 && <> · {plural(recap.shots, "shot")}</>}
-                {recap.whistles > 0 && <> · {plural(recap.whistles, "more play", "more plays")}</>}
-              </span>
             </div>
             {/* Nothing loads until it is played, as with the goal clips. */}
             <video
