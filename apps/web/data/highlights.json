@@ -1,4 +1,218 @@
 {
+  "1280081": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "03:40",
+      "scorer": "Jake Steinmetz",
+      "clip": "1280081-0-ac635ab1.mp4",
+      "poster": "1280081-0-ac635ab1.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 5,
+      "period": "2nd",
+      "time": "01:59",
+      "scorer": "Anthony Gugino",
+      "clip": "1280081-5-aa7a4fde.mp4",
+      "poster": "1280081-5-aa7a4fde.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "15:12",
+      "scorer": "Anthony Orange",
+      "clip": "1280081-6-95e32037.mp4",
+      "poster": "1280081-6-95e32037.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 7,
+      "period": "3rd",
+      "time": "09:22",
+      "scorer": "Bryan Karchensky",
+      "clip": "1280081-7-dc56e908.mp4",
+      "poster": "1280081-7-dc56e908.jpg",
+      "seconds": 23
+    }
+  ],
+  "1280127": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "09:08",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1280127-0-9e231b21.mp4",
+      "poster": "1280127-0-9e231b21.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "01:38",
+      "scorer": "Anthony Gugino",
+      "clip": "1280127-6-436581dc.mp4",
+      "poster": "1280127-6-436581dc.jpg",
+      "seconds": 23
+    }
+  ],
+  "1288561": [
+    {
+      "goal": 2,
+      "period": "2nd",
+      "time": "08:59",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1288561-2-3ef93102.mp4",
+      "poster": "1288561-2-3ef93102.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "05:39",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1288561-3-51904d95.mp4",
+      "poster": "1288561-3-51904d95.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 5,
+      "period": "2nd",
+      "time": "01:56",
+      "scorer": "Anthony Christy",
+      "clip": "1288561-5-f4ea102f.mp4",
+      "poster": "1288561-5-f4ea102f.jpg",
+      "seconds": 23
+    }
+  ],
+  "1288580": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "07:53",
+      "scorer": "Bryan Karchensky",
+      "clip": "1288580-0-4de7b6da.mp4",
+      "poster": "1288580-0-4de7b6da.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "1st",
+      "time": "02:19",
+      "scorer": "Bryan Karchensky",
+      "clip": "1288580-2-6c4c1bb8.mp4",
+      "poster": "1288580-2-6c4c1bb8.jpg",
+      "seconds": 46
+    },
+    {
+      "goal": 3,
+      "period": "1st",
+      "time": "01:52",
+      "scorer": "Bryan Karchensky",
+      "clip": "1288580-3-6c4c1bb8.mp4",
+      "poster": "1288580-3-6c4c1bb8.jpg",
+      "seconds": 46
+    },
+    {
+      "goal": 5,
+      "period": "2nd",
+      "time": "08:43",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1288580-5-c6c448f6.mp4",
+      "poster": "1288580-5-c6c448f6.jpg",
+      "seconds": 23
+    }
+  ],
+  "1289161": [
+    {
+      "goal": 3,
+      "period": "1st",
+      "time": "00:49",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1289161-3-c7086f40.mp4",
+      "poster": "1289161-3-c7086f40.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "1st",
+      "time": "00:25",
+      "scorer": "Bryan Karchensky",
+      "clip": "1289161-4-91189c1e.mp4",
+      "poster": "1289161-4-91189c1e.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 7,
+      "period": "2nd",
+      "time": "07:39",
+      "scorer": "Bryan Karchensky",
+      "clip": "1289161-7-fdded50a.mp4",
+      "poster": "1289161-7-fdded50a.jpg",
+      "seconds": 23
+    }
+  ],
+  "1289345": [
+    {
+      "goal": 1,
+      "period": "2nd",
+      "time": "04:59",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1289345-1-19a59aa6.mp4",
+      "poster": "1289345-1-19a59aa6.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "2nd",
+      "time": "01:24",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1289345-2-2922b613.mp4",
+      "poster": "1289345-2-2922b613.jpg",
+      "seconds": 35
+    },
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "01:04",
+      "scorer": "Jason Kaplewicz",
+      "clip": "1289345-3-2922b613.mp4",
+      "poster": "1289345-3-2922b613.jpg",
+      "seconds": 35
+    },
+    {
+      "goal": 4,
+      "period": "3rd",
+      "time": "16:20",
+      "scorer": "Bryan Karchensky",
+      "clip": "1289345-4-520e85ad.mp4",
+      "poster": "1289345-4-520e85ad.jpg",
+      "seconds": 23
+    }
+  ],
+  "1306734": [
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "00:54",
+      "scorer": "Jeremy McDonald",
+      "clip": "1306734-3-a7c9ebae.mp4",
+      "poster": "1306734-3-a7c9ebae.jpg",
+      "seconds": 23
+    }
+  ],
+  "1306888": [
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "10:37",
+      "scorer": "Adam Kaplewicz",
+      "clip": "1306888-3-6d7f105e.mp4",
+      "poster": "1306888-3-6d7f105e.jpg",
+      "seconds": 23
+    }
+  ],
   "1335891": [
     {
       "goal": 0,
