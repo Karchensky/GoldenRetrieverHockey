@@ -108,6 +108,9 @@ per recording (`calibrate`), its period label can be anything (periods come
 from the clock, `choosePeriods`), and on Rink 2 the graphic's SCORE is kept by
 hand and was stuck at 0–0, wrong, or a goal behind on most summer nights. A
 goal whose score change the graphic never shows is refused, which is right.
+The summer tile also drew its digits thinner and showed scores past 4: a digit
+can carry several templates (`c0`, `c0b`), learnt from summer frames and kept
+only when no glyph that read before reads differently.
 Set `GRH_SEGMENT_CACHE=<dir>` to keep the segments read, so a second run is
 quick.
 
@@ -132,7 +135,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (616, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (617, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

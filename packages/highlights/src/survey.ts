@@ -60,9 +60,12 @@ export async function survey(o: {
     fs.writeFileSync(path.join(dir, "located.json"), JSON.stringify({ rinkGame: hit.id, board: found.layout.name, ...located }, null, 2) + "\n");
     const ok = located.goals.filter((g: LocatedGoal) => g.t !== null && g.confirmed).length;
     o.log(`${label}: board ${found.layout.name}, ${found.fetched.segments} of ${stream.segments.length} segments fetched in ${Math.round((Date.now() - started) / 1000)}s — ${ok} of ${game.goals.length} goals found`);
-    const best = o.clips ? await openStream(d.streamUrl, "best") : null;
+    // A recording that will not open for cutting still has its search to report.
+    let best = null, cutting = "";
+    if (o.clips) best = await openStream(d.streamUrl, "best").catch((e: Error) => { cutting = e.message; return null; });
     for (const g of located.goals) {
       const row: SurveyRow = { game: game.id, date: game.date, index: g.index, label: `${g.goal.period} ${g.goal.time}`, ours: g.goal.team === us, t: g.t, confirmed: g.confirmed, ...(g.problem ? { problem: g.problem } : {}) };
+      if (o.clips && !best && g.t !== null && g.confirmed) row.clip = `not cut: ${cutting}`;
       if (best && g.t !== null && g.confirmed) {
         const start = Math.round(Math.max(0, g.t - LEAD) * 10) / 10;
         const file = path.join(dir, `${g.index}-${g.goal.period}-${g.goal.time.replace(":", "")}.mp4`);

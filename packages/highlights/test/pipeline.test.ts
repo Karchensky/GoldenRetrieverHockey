@@ -221,3 +221,17 @@ test("a misread high clock in the middle of a period does not split it", () => {
   const runs = clockRuns([{ t: 0, clock: 700 }, { t: 120, clock: 600 }, { t: 240, clock: 1600 }, { t: 360, clock: 450 }, { t: 480, clock: 300 }]);
   assert.equal(runs.length, 1);
 });
+
+test("a warm-up countdown that fits the 1st period's goals is not taken for it, past the real 2nd", () => {
+  // 2026-07-01 on Rink 2: the warm-up ran 8:42 down to 0:59, and every 1st-period goal time is inside it.
+  const sweep = [
+    [360, 123], [480, 3], [720, 522], [840, 402], [960, 282], [1080, 162], [1200, 176], [1320, 59],
+    [1560, 695], [1680, 595], [1800, 515], [1920, 419], [2160, 227], [2280, 132],
+    [2760, 561], [3000, 402], [3240, 210], [3360, 135], [3480, 68], [3600, 20],
+    [3720, 1012], [3840, 892], [3960, 772], [4200, 532], [4320, 412], [4440, 292], [4560, 234], [4680, 137], [4800, 74],
+    [4920, 585], [5040, 469], [5160, 349],
+  ].map(([t, clock]) => ({ t: t!, clock: clock! }));
+  const goals = ["1st 03:40", "1st 02:05", "1st 01:41", "2nd 08:34", "2nd 04:02", "2nd 01:59", "3rd 15:12", "3rd 09:22", "3rd 05:04", "3rd 00:17"]
+    .map((g) => ({ period: g.split(" ")[0]!, time: g.split(" ")[1]! }));
+  assert.deepEqual(choosePeriods(clockRuns(sweep), goals).map((c) => [c.period, c.from]), [["1st", 1560], ["2nd", 2760], ["3rd", 3720]]);
+});

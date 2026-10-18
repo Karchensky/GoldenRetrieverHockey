@@ -50,7 +50,10 @@ export function normalizePeriods(rows: (OverlayReading & { t: number })[]): Read
  * warm-up — so the game's periods are the stretches, in order, that its
  * scoresheet fits best: each goal's time inside its period's stretch of the
  * clock, with longer stretches preferred and the board's own label, where it
- * agrees, as the tie-break.
+ * agrees, as the tie-break. A game's periods follow one another, so a choice
+ * that skips a stretch between two of them pays for it: on 2026-07-01 the
+ * warm-up countdown, 8:42 down to 0:59, fitted the 1st period's goals as well
+ * as the 1st did, and taking it as the 1st put the 1st in the 2nd's place.
  */
 
 export type ClockRun = { from: number; to: number; first: number; last: number; samples: number; period: string | null };
@@ -74,6 +77,9 @@ export function clockRuns(sweep: { t: number; clock: number | null }[]): ClockRu
   }
   return runs;
 }
+
+/** What skipping a stretch between two periods costs: less than one goal fitting, more than every tie-break. */
+const SKIP = 5;
 
 /** How far past the last sample a period's clock may have run before the next sample missed it. */
 const SLACK = 130;
@@ -103,7 +109,7 @@ export function choosePeriods(runs: ClockRun[], goals: { period: string; time: s
       const here = worth(run, period);
       if (k === 0) { best[k]![i] = { w: here, prev: -1 }; continue; }
       for (let j = 0; j < i; j++) {
-        const w = best[k - 1]![j]!.w + here;
+        const w = best[k - 1]![j]!.w + here - SKIP * (i - j - 1);
         if (w > best[k]![i]!.w) best[k]![i] = { w, prev: j };
       }
     }
