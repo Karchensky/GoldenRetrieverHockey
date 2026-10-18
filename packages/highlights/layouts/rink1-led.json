@@ -44,6 +44,26 @@
    ],
    "ink": "light",
    "thr": 100
+  },
+  "homeShots": {
+   "box": [
+    0.1,
+    0.1219,
+    0.1778,
+    0.2167
+   ],
+   "ink": "light",
+   "thr": 100
+  },
+  "awayShots": {
+   "box": [
+    0.1297,
+    0.1547,
+    0.1778,
+    0.2167
+   ],
+   "ink": "light",
+   "thr": 100
   }
  },
  "period": "digit",

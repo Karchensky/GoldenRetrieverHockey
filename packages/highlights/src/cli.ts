@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { compare } from "./compare.ts";
 import { daily, gamesWithWork, type Highlights, type Ledger, type Options } from "./daily.ts";
+import { recapGame } from "./recap.ts";
 import { survey } from "./survey.ts";
 import { locateGoals, type Location, type Reading, type ScoredGoal } from "./locate.ts";
 
@@ -14,6 +15,7 @@ import { locateGoals, type Location, type Reading, type ScoredGoal } from "./loc
  *   daily   the scheduled job — see daily.ts and .github/workflows/highlights.yml
  *   compare one game's downloaded clips beside the same clips cut from the recording
  *   survey  how well the goal search holds up over a stretch of games, read only
+ *   recap   one game's goals and shots, cut from the recording into a short video
  *   locate  overlay readings + scoresheet -> where every goal is, for looking into one game by hand
  *
  * Anything written for a person lands in tmp/highlights/<game>/ — gitignored,
@@ -64,6 +66,12 @@ const USAGE = `
       tmp/highlights/survey.json. --clips also cuts each goal found from the
       recording, as the backup would, and puts it through the clip checks,
       keeping the clips there to watch. Spends and uploads nothing.
+
+  recap --game <id> [--budget 240]
+      A recap of one game: every goal found, both teams', and its shots on goal
+      where the board counts them, cut from the recording into one video of
+      about --budget seconds. Writes tmp/highlights/<id>/recap.mp4. Spends and
+      uploads nothing.
 `;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -122,6 +130,7 @@ const { values } = parseArgs({
     since: { type: "string" },
     until: { type: "string" },
     clips: { type: "boolean" },
+    budget: { type: "string" },
   },
 });
 
@@ -145,6 +154,15 @@ if (command === "locate" && values.game && values.readings) {
     credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
   });
   process.exitCode = failed ? 1 : 0;
+} else if (command === "recap" && values.game) {
+  const game = loadSiteGame(values.game);
+  fs.mkdirSync(outDir(game.id), { recursive: true });
+  const out = path.join(outDir(game.id), "recap.mp4");
+  await recapGame({
+    game, out, budget: values.budget ? Number(values.budget) : 240, log: (line) => console.log(line),
+    credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
+  });
+  console.log(`Wrote ${path.relative(ROOT, out)}`);
 } else if (command === "survey" && values.since) {
   const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Options["games"] };
   const until = values.until ?? "9999";
