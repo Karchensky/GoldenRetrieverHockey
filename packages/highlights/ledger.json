@@ -7,7 +7,8 @@
     "sheet": "1st 10:21 The Golden Retrievers; 1st 03:21 Lumber Lions; 2nd 09:17 The Golden Retrievers; 2nd 07:02 Lumber Lions; 2nd 04:18 Lumber Lions; 2nd 02:54 Lumber Lions; 2nd 00:43 Lumber Lions; 3rd 13:45 Lumber Lions; 3rd 07:57 The Golden Retrievers; 3rd 01:02 The Golden Retrievers; 3rd 00:40 Lumber Lions",
     "recap": {
       "sheet": "1st 10:21 The Golden Retrievers; 1st 03:21 Lumber Lions; 2nd 09:17 The Golden Retrievers; 2nd 07:02 Lumber Lions; 2nd 04:18 Lumber Lions; 2nd 02:54 Lumber Lions; 2nd 00:43 Lumber Lions; 3rd 13:45 Lumber Lions; 3rd 07:57 The Golden Retrievers; 3rd 01:02 The Golden Retrievers; 3rd 00:40 Lumber Lions",
-      "problem": "only 0 of its 11 goals could be found"
+      "problem": "none of its 11 goals could be found, so nothing shows the recording is this game",
+      "edition": 2
     },
     "covers": "every"
   },
@@ -19,7 +20,8 @@
     "sheet": "2nd 07:06 The Golden Retrievers; 2nd 05:50 Rivermen; 2nd 04:00 Rivermen; 2nd 02:24 Rivermen; 3rd 14:34 Rivermen; 3rd 13:37 The Golden Retrievers; 3rd 02:00 Rivermen",
     "recap": {
       "sheet": "2nd 07:06 The Golden Retrievers; 2nd 05:50 Rivermen; 2nd 04:00 Rivermen; 2nd 02:24 Rivermen; 3rd 14:34 Rivermen; 3rd 13:37 The Golden Retrievers; 3rd 02:00 Rivermen",
-      "problem": "only 0 of its 7 goals could be found"
+      "problem": "none of its 7 goals could be found, so nothing shows the recording is this game",
+      "edition": 2
     },
     "covers": "every"
   },
@@ -606,10 +608,6 @@
     "board": "rink2-tile",
     "problem": "3rd 04:40 Adam Kaplewicz: The overlay never showed 4–3 becoming 5–3 here.; 3rd 00:01 Adam Kaplewicz: The overlay's 3rd-period clock never reaches 00:01.; 1st 04:40 Jonah Ahrens: The overlay never showed 1–0 becoming 1–1 here.",
     "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
-    "recap": {
-      "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
-      "problem": "only 6 of its 9 goals could be found"
-    },
     "covers": "every"
   },
   "1289161": {
@@ -959,7 +957,8 @@
     "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
     "recap": {
       "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
-      "problem": "only 0 of its 16 goals could be found"
+      "problem": "none of its 16 goals could be found, so nothing shows the recording is this game",
+      "edition": 2
     },
     "covers": "every"
   },
@@ -1259,10 +1258,6 @@
       }
     ],
     "board": "rink1-led",
-    "recap": {
-      "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers",
-      "problem": "only 8 of its 11 goals could be found"
-    },
     "problem": "1st 09:49 Mike Burke: The overlay never showed 0–0 becoming 0–1 here.; 1st 07:32 Ethan Palinski: The overlay never showed 0–1 becoming 0–2 here.; 3rd 18:00 Josh Higgins: The overlay's 3rd-period clock never reaches 18:00.",
     "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers",
     "covers": "every"
