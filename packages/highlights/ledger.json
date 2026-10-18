@@ -3,23 +3,25 @@
     "rinkGame": 38673,
     "clips": [],
     "board": "rink2-tile",
-    "problem": "1st 10:21 Bryan Karchensky: The overlay's 1st-period clock never reaches 10:21.; 2nd 09:17 Jake Steinmetz: The overlay never showed 1–1 becoming 1–2 here.; 3rd 07:57 Jake Steinmetz: The overlay never showed 6–2 becoming 6–3 here.; 3rd 01:02 Vinny Terana: The overlay's 3rd-period clock never reaches 01:02.",
+    "problem": "1st 10:21 Bryan Karchensky: The overlay's 1st-period clock never reaches 10:21.; 2nd 09:17 Jake Steinmetz: The overlay never showed 1–1 becoming 1–2 here.; 3rd 07:57 Jake Steinmetz: The overlay never showed 6–2 becoming 6–3 here.; 3rd 01:02 Vinny Terana: The overlay's 3rd-period clock never reaches 01:02.; 1st 03:21 Jonah Ahrens: The overlay's 1st-period clock never reaches 03:21.; 2nd 07:02 Jesse Calhoun: The overlay never showed 1–2 becoming 2–2 here.; 2nd 04:18 Noah Kalsner-Lowe: The overlay never showed 2–2 becoming 3–2 here.; 2nd 02:54 CJ Lenahan: The overlay never showed 3–2 becoming 4–2 here.; 2nd 00:43 Ian Schmidt: The overlay's 2nd-period clock never reaches 00:43.; 3rd 13:45 CJ Lenahan: The overlay never showed 5–2 becoming 6–2 here.; 3rd 00:40 CJ Lenahan: The overlay's 3rd-period clock never reaches 00:40.",
     "sheet": "1st 10:21 The Golden Retrievers; 1st 03:21 Lumber Lions; 2nd 09:17 The Golden Retrievers; 2nd 07:02 Lumber Lions; 2nd 04:18 Lumber Lions; 2nd 02:54 Lumber Lions; 2nd 00:43 Lumber Lions; 3rd 13:45 Lumber Lions; 3rd 07:57 The Golden Retrievers; 3rd 01:02 The Golden Retrievers; 3rd 00:40 Lumber Lions",
     "recap": {
       "sheet": "1st 10:21 The Golden Retrievers; 1st 03:21 Lumber Lions; 2nd 09:17 The Golden Retrievers; 2nd 07:02 Lumber Lions; 2nd 04:18 Lumber Lions; 2nd 02:54 Lumber Lions; 2nd 00:43 Lumber Lions; 3rd 13:45 Lumber Lions; 3rd 07:57 The Golden Retrievers; 3rd 01:02 The Golden Retrievers; 3rd 00:40 Lumber Lions",
       "problem": "only 0 of its 11 goals could be found"
-    }
+    },
+    "covers": "every"
   },
   "1277969": {
     "rinkGame": 39165,
     "clips": [],
     "board": "rink2-tile",
-    "problem": "2nd 07:06 Anthony Orange: The overlay never showed 0–0 becoming 0–1 here.; 3rd 13:37 Vinny Terana: The overlay never showed 4–1 becoming 4–2 here.",
+    "problem": "2nd 07:06 Anthony Orange: The overlay never showed 0–0 becoming 0–1 here.; 3rd 13:37 Vinny Terana: The overlay never showed 4–1 becoming 4–2 here.; 2nd 05:50 Chase Chodkowski: The overlay never showed 0–1 becoming 1–1 here.; 2nd 04:00 Logan Tobias: The overlay never showed 1–1 becoming 2–1 here.; 2nd 02:24 Eli Marino: The overlay's 2nd-period clock never reaches 02:24.; 3rd 14:34 Chase Chodkowski: The overlay never showed 3–1 becoming 4–1 here.; 3rd 02:00 Mike Burke: The overlay never showed 4–2 becoming 5–2 here.",
     "sheet": "2nd 07:06 The Golden Retrievers; 2nd 05:50 Rivermen; 2nd 04:00 Rivermen; 2nd 02:24 Rivermen; 3rd 14:34 Rivermen; 3rd 13:37 The Golden Retrievers; 3rd 02:00 Rivermen",
     "recap": {
       "sheet": "2nd 07:06 The Golden Retrievers; 2nd 05:50 Rivermen; 2nd 04:00 Rivermen; 2nd 02:24 Rivermen; 3rd 14:34 Rivermen; 3rd 13:37 The Golden Retrievers; 3rd 02:00 Rivermen",
       "problem": "only 0 of its 7 goals could be found"
-    }
+    },
+    "covers": "every"
   },
   "1280081": {
     "rinkGame": 39201,
@@ -118,6 +120,82 @@
         "moment": null,
         "status": "published",
         "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          2342.5
+        ],
+        "clocks": [
+          101
+        ],
+        "start": 2327.5,
+        "seconds": 23,
+        "labels": [
+          "1st 01:41"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          3
+        ],
+        "at": [
+          2807
+        ],
+        "clocks": [
+          514
+        ],
+        "start": 2792,
+        "seconds": 23,
+        "labels": [
+          "2nd 08:34"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3183.5
+        ],
+        "clocks": [
+          242
+        ],
+        "start": 3168.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 04:02"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          8
+        ],
+        "at": [
+          4428.5
+        ],
+        "clocks": [
+          304
+        ],
+        "start": 4413.5,
+        "seconds": 23,
+        "labels": [
+          "3rd 05:04"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ],
     "board": "rink2-tile",
@@ -179,6 +257,83 @@
         "seconds": 23,
         "labels": [
           "3rd 04:50"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          2224
+        ],
+        "clocks": [
+          62
+        ],
+        "start": 2209,
+        "seconds": 23,
+        "labels": [
+          "1st 01:02"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          2431.5
+        ],
+        "clocks": [
+          708
+        ],
+        "start": 2416.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 11:48"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          3
+        ],
+        "at": [
+          2940
+        ],
+        "clocks": [
+          354
+        ],
+        "start": 2925,
+        "seconds": 23,
+        "labels": [
+          "2nd 05:53"
+        ],
+        "moment": null,
+        "status": "failed",
+        "source": "recording",
+        "problem": "the clip's clock reaches 2nd 05:53 at 12.0s, but the recording put that goal at 15.0s"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3291.5
+        ],
+        "clocks": [
+          85
+        ],
+        "start": 3276.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 01:26"
         ],
         "moment": null,
         "status": "published",
@@ -265,6 +420,82 @@
         "moment": null,
         "status": "published",
         "source": "recording"
+      },
+      {
+        "goals": [
+          0
+        ],
+        "at": [
+          2220.5
+        ],
+        "clocks": [
+          523
+        ],
+        "start": 2205.5,
+        "seconds": 23,
+        "labels": [
+          "1st 08:43"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          2321.5
+        ],
+        "clocks": [
+          472
+        ],
+        "start": 2306.5,
+        "seconds": 23,
+        "labels": [
+          "1st 07:52"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3989.5
+        ],
+        "clocks": [
+          208
+        ],
+        "start": 3974.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 03:28"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          6
+        ],
+        "at": [
+          4217
+        ],
+        "clocks": [
+          39
+        ],
+        "start": 4202,
+        "seconds": 23,
+        "labels": [
+          "2nd 00:39"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ],
     "board": "rink1-led"
@@ -332,15 +563,54 @@
         "moment": null,
         "status": "published",
         "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3234
+        ],
+        "clocks": [
+          612
+        ],
+        "start": 3219,
+        "seconds": 23,
+        "labels": [
+          "2nd 10:12"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          6
+        ],
+        "at": [
+          4755
+        ],
+        "clocks": [
+          555
+        ],
+        "start": 4740,
+        "seconds": 23,
+        "labels": [
+          "3rd 09:15"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ],
     "board": "rink2-tile",
-    "problem": "3rd 04:40 Adam Kaplewicz: The overlay never showed 4–3 becoming 5–3 here.; 3rd 00:01 Adam Kaplewicz: The overlay's 3rd-period clock never reaches 00:01.",
+    "problem": "3rd 04:40 Adam Kaplewicz: The overlay never showed 4–3 becoming 5–3 here.; 3rd 00:01 Adam Kaplewicz: The overlay's 3rd-period clock never reaches 00:01.; 1st 04:40 Jonah Ahrens: The overlay never showed 1–0 becoming 1–1 here.",
     "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
     "recap": {
       "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
       "problem": "only 6 of its 9 goals could be found"
-    }
+    },
+    "covers": "every"
   },
   "1289161": {
     "rinkGame": 40416,
@@ -416,6 +686,139 @@
         "seconds": 23,
         "labels": [
           "2nd 11:26"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          0
+        ],
+        "at": [
+          1521.5
+        ],
+        "clocks": [
+          630
+        ],
+        "start": 1506.5,
+        "seconds": 23,
+        "labels": [
+          "1st 10:30"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          1843
+        ],
+        "clocks": [
+          395
+        ],
+        "start": 1828,
+        "seconds": 23,
+        "labels": [
+          "1st 06:35"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          1921.5
+        ],
+        "clocks": [
+          358
+        ],
+        "start": 1906.5,
+        "seconds": 23,
+        "labels": [
+          "1st 05:58"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          5
+        ],
+        "at": [
+          2589
+        ],
+        "clocks": [
+          698
+        ],
+        "start": 2574,
+        "seconds": 23,
+        "labels": [
+          "2nd 11:38"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          8
+        ],
+        "at": [
+          3007
+        ],
+        "clocks": [
+          424
+        ],
+        "start": 2992,
+        "seconds": 23,
+        "labels": [
+          "2nd 07:04"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          9
+        ],
+        "at": [
+          3349.5
+        ],
+        "clocks": [
+          126
+        ],
+        "start": 3334.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 02:06"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          10
+        ],
+        "at": [
+          3997.5
+        ],
+        "clocks": [
+          719
+        ],
+        "start": 3982.5,
+        "seconds": 23,
+        "labels": [
+          "3rd 11:59"
         ],
         "moment": null,
         "status": "published",
@@ -506,6 +909,44 @@
         "moment": null,
         "status": "published",
         "source": "recording"
+      },
+      {
+        "goals": [
+          0
+        ],
+        "at": [
+          2586.5
+        ],
+        "clocks": [
+          670
+        ],
+        "start": 2571.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 11:10"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          5
+        ],
+        "at": [
+          4359
+        ],
+        "clocks": [
+          325
+        ],
+        "start": 4344,
+        "seconds": 23,
+        "labels": [
+          "3rd 05:25"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ],
     "board": "rink1-led"
@@ -514,12 +955,13 @@
     "rinkGame": 40483,
     "clips": [],
     "board": "rink2-tile",
-    "problem": "1st 06:18 Bryan Karchensky: The overlay never showed 0–0 becoming 1–0 here.; 1st 03:19 Bryan Karchensky: The overlay's 1st-period clock never reaches 03:19.; 1st 01:54 Adam Kaplewicz: The overlay's 1st-period clock never reaches 01:54.; 1st 00:19 Adam Kaplewicz: The overlay's 1st-period clock never reaches 00:19.; 2nd 04:03 Jason Kaplewicz: The overlay never showed 4–1 becoming 5–1 here.; 2nd 00:58 John Rein: The overlay's 2nd-period clock never reaches 00:58.; 3rd 17:31 Bryan Karchensky: The overlay's 3rd-period clock never reaches 17:31.; 3rd 13:32 Jeremy McDonald: The overlay never showed 7–4 becoming 8–4 here.; 3rd 13:01 Anthony Orange: The overlay never showed 8–4 becoming 9–4 here.; 3rd 07:17 Bryan Karchensky: The overlay never showed 9–4 becoming 10–4 here.; 3rd 04:35 Adam Kaplewicz: The overlay never showed 10–4 becoming 11–4 here.; 3rd 00:33 Anthony Orange: The overlay's 3rd-period clock never reaches 00:33.",
+    "problem": "1st 06:18 Bryan Karchensky: The overlay never showed 0–0 becoming 1–0 here.; 1st 03:19 Bryan Karchensky: The overlay's 1st-period clock never reaches 03:19.; 1st 01:54 Adam Kaplewicz: The overlay's 1st-period clock never reaches 01:54.; 1st 00:19 Adam Kaplewicz: The overlay's 1st-period clock never reaches 00:19.; 2nd 04:03 Jason Kaplewicz: The overlay never showed 4–1 becoming 5–1 here.; 2nd 00:58 John Rein: The overlay's 2nd-period clock never reaches 00:58.; 3rd 17:31 Bryan Karchensky: The overlay's 3rd-period clock never reaches 17:31.; 3rd 13:32 Jeremy McDonald: The overlay never showed 7–4 becoming 8–4 here.; 3rd 13:01 Anthony Orange: The overlay never showed 8–4 becoming 9–4 here.; 3rd 07:17 Bryan Karchensky: The overlay never showed 9–4 becoming 10–4 here.; 3rd 04:35 Adam Kaplewicz: The overlay never showed 10–4 becoming 11–4 here.; 3rd 00:33 Anthony Orange: The overlay's 3rd-period clock never reaches 00:33.; 2nd 06:52 Noah Kalsner-Lowe: The overlay never showed 4–0 becoming 4–1 here.; 2nd 02:55 Zachary Wagner: The overlay's 2nd-period clock never reaches 02:55.; 2nd 01:09 Noah Kalsner-Lowe: The overlay's 2nd-period clock never reaches 01:09.; 3rd 17:19 CJ Lenahan: The overlay's 3rd-period clock never reaches 17:19.",
     "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
     "recap": {
       "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
       "problem": "only 0 of its 16 goals could be found"
-    }
+    },
+    "covers": "every"
   },
   "1306734": {
     "rinkGame": 41648,
@@ -538,6 +980,120 @@
         "seconds": 23,
         "labels": [
           "2nd 00:54"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          0
+        ],
+        "at": [
+          2171.5
+        ],
+        "clocks": [
+          225
+        ],
+        "start": 2156.5,
+        "seconds": 23,
+        "labels": [
+          "1st 03:45"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          2450.5
+        ],
+        "clocks": [
+          5
+        ],
+        "start": 2435.5,
+        "seconds": 23,
+        "labels": [
+          "1st 00:05"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          3070.5
+        ],
+        "clocks": [
+          372
+        ],
+        "start": 3055.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 06:12"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3857.5
+        ],
+        "clocks": [
+          945
+        ],
+        "start": 3842.5,
+        "seconds": 23,
+        "labels": [
+          "3rd 15:45"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          5
+        ],
+        "at": [
+          3982.5
+        ],
+        "clocks": [
+          820
+        ],
+        "start": 3967.5,
+        "seconds": 23,
+        "labels": [
+          "3rd 13:40"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          6
+        ],
+        "at": [
+          4574
+        ],
+        "clocks": [
+          268
+        ],
+        "start": 4559,
+        "seconds": 23,
+        "labels": [
+          "3rd 04:28"
         ],
         "moment": null,
         "status": "published",
@@ -624,13 +1180,92 @@
         "moment": null,
         "status": "published",
         "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          2315.5
+        ],
+        "clocks": [
+          223
+        ],
+        "start": 2300.5,
+        "seconds": 23,
+        "labels": [
+          "1st 03:43"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          3555.5
+        ],
+        "clocks": [
+          60
+        ],
+        "start": 3540.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 01:00"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          5
+        ],
+        "at": [
+          3662.5
+        ],
+        "clocks": [
+          10
+        ],
+        "start": 3647.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 00:10"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          9
+        ],
+        "at": [
+          4192
+        ],
+        "clocks": [
+          667
+        ],
+        "start": 4177,
+        "seconds": 23,
+        "labels": [
+          "3rd 10:58"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ],
     "board": "rink1-led",
     "recap": {
       "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers",
       "problem": "only 8 of its 11 goals could be found"
-    }
+    },
+    "problem": "1st 09:49 Mike Burke: The overlay never showed 0–0 becoming 0–1 here.; 1st 07:32 Ethan Palinski: The overlay never showed 0–1 becoming 0–2 here.; 3rd 18:00 Josh Higgins: The overlay's 3rd-period clock never reaches 18:00.",
+    "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers",
+    "covers": "every"
   },
   "1335891": {
     "rinkGame": 42705,
@@ -650,6 +1285,63 @@
         "seconds": 23,
         "moment": "01M55P3AW63RVS1JHJ4GZWZRKK",
         "status": "published"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          2356
+        ],
+        "clocks": [
+          11
+        ],
+        "start": 2341,
+        "seconds": 23,
+        "labels": [
+          "1st 00:11"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          2
+        ],
+        "at": [
+          2509
+        ],
+        "clocks": [
+          690
+        ],
+        "start": 2494,
+        "seconds": 23,
+        "labels": [
+          "2nd 11:30"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          3
+        ],
+        "at": [
+          3229.5
+        ],
+        "clocks": [
+          175
+        ],
+        "start": 3214.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 02:55"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ]
   },
@@ -716,6 +1408,82 @@
         "seconds": 23,
         "moment": "01M55P36Z83ZESKFPD968DDEKQ",
         "status": "published"
+      },
+      {
+        "goals": [
+          0
+        ],
+        "at": [
+          3155.5
+        ],
+        "clocks": [
+          712
+        ],
+        "start": 3140.5,
+        "seconds": 23,
+        "labels": [
+          "1st 11:52"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          1
+        ],
+        "at": [
+          3578.5
+        ],
+        "clocks": [
+          416
+        ],
+        "start": 3563.5,
+        "seconds": 23,
+        "labels": [
+          "1st 06:56"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          4
+        ],
+        "at": [
+          4922.5
+        ],
+        "clocks": [
+          276
+        ],
+        "start": 4907.5,
+        "seconds": 23,
+        "labels": [
+          "2nd 04:36"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
+      },
+      {
+        "goals": [
+          5
+        ],
+        "at": [
+          6027
+        ],
+        "clocks": [
+          444
+        ],
+        "start": 6012,
+        "seconds": 23,
+        "labels": [
+          "3rd 07:24"
+        ],
+        "moment": null,
+        "status": "published",
+        "source": "recording"
       }
     ]
   }

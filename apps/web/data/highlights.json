@@ -19,6 +19,33 @@
       "seconds": 23
     },
     {
+      "goal": 2,
+      "period": "1st",
+      "time": "01:41",
+      "scorer": "Daniel Baco",
+      "clip": "1280081-2-ba398394.mp4",
+      "poster": "1280081-2-ba398394.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "08:34",
+      "scorer": "Daniel Baco",
+      "clip": "1280081-3-44986c2c.mp4",
+      "poster": "1280081-3-44986c2c.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "2nd",
+      "time": "04:02",
+      "scorer": "Kevin Rogers",
+      "clip": "1280081-4-9098d180.mp4",
+      "poster": "1280081-4-9098d180.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 5,
       "period": "2nd",
       "time": "01:59",
@@ -44,6 +71,15 @@
       "clip": "1280081-7-dc56e908.mp4",
       "poster": "1280081-7-dc56e908.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 8,
+      "period": "3rd",
+      "time": "05:04",
+      "scorer": "Daniel Baco",
+      "clip": "1280081-8-9abc27ae.mp4",
+      "poster": "1280081-8-9abc27ae.jpg",
+      "seconds": 23
     }
   ],
   "1280127": [
@@ -54,6 +90,33 @@
       "scorer": "Adam Kaplewicz",
       "clip": "1280127-0-9e231b21.mp4",
       "poster": "1280127-0-9e231b21.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "01:02",
+      "scorer": "Collin Rutherford",
+      "clip": "1280127-1-5cef72b8.mp4",
+      "poster": "1280127-1-5cef72b8.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "2nd",
+      "time": "11:48",
+      "scorer": "James Wieczorek",
+      "clip": "1280127-2-95985309.mp4",
+      "poster": "1280127-2-95985309.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "2nd",
+      "time": "01:26",
+      "scorer": "Collin Rutherford",
+      "clip": "1280127-4-9488e19e.mp4",
+      "poster": "1280127-4-9488e19e.jpg",
       "seconds": 23
     },
     {
@@ -77,6 +140,24 @@
   ],
   "1288561": [
     {
+      "goal": 0,
+      "period": "1st",
+      "time": "08:43",
+      "scorer": "Anthony Venditti",
+      "clip": "1288561-0-4a152c97.mp4",
+      "poster": "1288561-0-4a152c97.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "07:52",
+      "scorer": "Matthew Holst",
+      "clip": "1288561-1-f871bbab.mp4",
+      "poster": "1288561-1-f871bbab.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 2,
       "period": "2nd",
       "time": "08:59",
@@ -95,12 +176,30 @@
       "seconds": 23
     },
     {
+      "goal": 4,
+      "period": "2nd",
+      "time": "03:28",
+      "scorer": "Matthew Holst",
+      "clip": "1288561-4-4a95d468.mp4",
+      "poster": "1288561-4-4a95d468.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 5,
       "period": "2nd",
       "time": "01:56",
       "scorer": "Anthony Christy",
       "clip": "1288561-5-f4ea102f.mp4",
       "poster": "1288561-5-f4ea102f.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "2nd",
+      "time": "00:39",
+      "scorer": "Matthew Holst",
+      "clip": "1288561-6-e0228900.mp4",
+      "poster": "1288561-6-e0228900.jpg",
       "seconds": 23
     },
     {
@@ -142,6 +241,15 @@
       "seconds": 46
     },
     {
+      "goal": 4,
+      "period": "2nd",
+      "time": "10:12",
+      "scorer": "Ryan Atkinson",
+      "clip": "1288580-4-0386e30e.mp4",
+      "poster": "1288580-4-0386e30e.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 5,
       "period": "2nd",
       "time": "08:43",
@@ -149,9 +257,45 @@
       "clip": "1288580-5-c6c448f6.mp4",
       "poster": "1288580-5-c6c448f6.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "09:15",
+      "scorer": "Tibor Setteducati",
+      "clip": "1288580-6-bd4820b8.mp4",
+      "poster": "1288580-6-bd4820b8.jpg",
+      "seconds": 23
     }
   ],
   "1289161": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "10:30",
+      "scorer": "Kevin Rogers",
+      "clip": "1289161-0-b3178c83.mp4",
+      "poster": "1289161-0-b3178c83.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "06:35",
+      "scorer": "Nicholas Dewitt",
+      "clip": "1289161-1-9f2406cb.mp4",
+      "poster": "1289161-1-9f2406cb.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "1st",
+      "time": "05:58",
+      "scorer": "Daniel Baco",
+      "clip": "1289161-2-8c3cd479.mp4",
+      "poster": "1289161-2-8c3cd479.jpg",
+      "seconds": 23
+    },
     {
       "goal": 3,
       "period": "1st",
@@ -171,6 +315,15 @@
       "seconds": 23
     },
     {
+      "goal": 5,
+      "period": "2nd",
+      "time": "11:38",
+      "scorer": "Steve Murphy",
+      "clip": "1289161-5-333298e6.mp4",
+      "poster": "1289161-5-333298e6.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 6,
       "period": "2nd",
       "time": "11:26",
@@ -187,9 +340,45 @@
       "clip": "1289161-7-fdded50a.mp4",
       "poster": "1289161-7-fdded50a.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 8,
+      "period": "2nd",
+      "time": "07:04",
+      "scorer": "Steve Murphy",
+      "clip": "1289161-8-48c78522.mp4",
+      "poster": "1289161-8-48c78522.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 9,
+      "period": "2nd",
+      "time": "02:06",
+      "scorer": "Daniel Baco",
+      "clip": "1289161-9-61f1db2f.mp4",
+      "poster": "1289161-9-61f1db2f.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 10,
+      "period": "3rd",
+      "time": "11:59",
+      "scorer": "Steve Murphy",
+      "clip": "1289161-10-3a298a13.mp4",
+      "poster": "1289161-10-3a298a13.jpg",
+      "seconds": 23
     }
   ],
   "1289345": [
+    {
+      "goal": 0,
+      "period": "2nd",
+      "time": "11:10",
+      "scorer": "Tyler Zent",
+      "clip": "1289345-0-7836cbc6.mp4",
+      "poster": "1289345-0-7836cbc6.jpg",
+      "seconds": 23
+    },
     {
       "goal": 1,
       "period": "2nd",
@@ -227,6 +416,15 @@
       "seconds": 23
     },
     {
+      "goal": 5,
+      "period": "3rd",
+      "time": "05:25",
+      "scorer": "Dom Conte",
+      "clip": "1289345-5-10162d34.mp4",
+      "poster": "1289345-5-10162d34.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 6,
       "period": "3rd",
       "time": "01:25",
@@ -238,6 +436,33 @@
   ],
   "1306734": [
     {
+      "goal": 0,
+      "period": "1st",
+      "time": "03:45",
+      "scorer": "Mike Kline",
+      "clip": "1306734-0-cdeba2f0.mp4",
+      "poster": "1306734-0-cdeba2f0.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "00:05",
+      "scorer": "Collin Rutherford",
+      "clip": "1306734-1-8f1efd1e.mp4",
+      "poster": "1306734-1-8f1efd1e.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "2nd",
+      "time": "06:12",
+      "scorer": "Collin Rutherford",
+      "clip": "1306734-2-1bd8b503.mp4",
+      "poster": "1306734-2-1bd8b503.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 3,
       "period": "2nd",
       "time": "00:54",
@@ -245,9 +470,45 @@
       "clip": "1306734-3-a7c9ebae.mp4",
       "poster": "1306734-3-a7c9ebae.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "3rd",
+      "time": "15:45",
+      "scorer": "Mike Kline",
+      "clip": "1306734-4-d3d98b7a.mp4",
+      "poster": "1306734-4-d3d98b7a.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 5,
+      "period": "3rd",
+      "time": "13:40",
+      "scorer": "Mike Kline",
+      "clip": "1306734-5-9d021246.mp4",
+      "poster": "1306734-5-9d021246.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 6,
+      "period": "3rd",
+      "time": "04:28",
+      "scorer": "Cameron Mentel",
+      "clip": "1306734-6-05caf5da.mp4",
+      "poster": "1306734-6-05caf5da.jpg",
+      "seconds": 23
     }
   ],
   "1306888": [
+    {
+      "goal": 2,
+      "period": "1st",
+      "time": "03:43",
+      "scorer": "Josh Higgins",
+      "clip": "1306888-2-43d1c5b1.mp4",
+      "poster": "1306888-2-43d1c5b1.jpg",
+      "seconds": 23
+    },
     {
       "goal": 3,
       "period": "2nd",
@@ -255,6 +516,24 @@
       "scorer": "Adam Kaplewicz",
       "clip": "1306888-3-6d7f105e.mp4",
       "poster": "1306888-3-6d7f105e.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "2nd",
+      "time": "01:00",
+      "scorer": "Jacob Miller",
+      "clip": "1306888-4-cfc8ea43.mp4",
+      "poster": "1306888-4-cfc8ea43.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 5,
+      "period": "2nd",
+      "time": "00:10",
+      "scorer": "Jacob Miller",
+      "clip": "1306888-5-34d7bd32.mp4",
+      "poster": "1306888-5-34d7bd32.jpg",
       "seconds": 23
     },
     {
@@ -276,6 +555,15 @@
       "seconds": 23
     },
     {
+      "goal": 9,
+      "period": "3rd",
+      "time": "10:58",
+      "scorer": "Mike Burke",
+      "clip": "1306888-9-1824bc6a.mp4",
+      "poster": "1306888-9-1824bc6a.jpg",
+      "seconds": 23
+    },
+    {
       "goal": 10,
       "period": "3rd",
       "time": "06:05",
@@ -294,9 +582,54 @@
       "clip": "1335891-0.mp4",
       "poster": "1335891-0.jpg",
       "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "00:11",
+      "scorer": "Griffin Lunn",
+      "clip": "1335891-1-0c5e6e80.mp4",
+      "poster": "1335891-1-0c5e6e80.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 2,
+      "period": "2nd",
+      "time": "11:30",
+      "scorer": "Griffin Lunn",
+      "clip": "1335891-2-fa75a67d.mp4",
+      "poster": "1335891-2-fa75a67d.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 3,
+      "period": "2nd",
+      "time": "02:55",
+      "scorer": "Griffin Lunn",
+      "clip": "1335891-3-43289fa6.mp4",
+      "poster": "1335891-3-43289fa6.jpg",
+      "seconds": 23
     }
   ],
   "1335913": [
+    {
+      "goal": 0,
+      "period": "1st",
+      "time": "11:52",
+      "scorer": "Mike Kline",
+      "clip": "1335913-0-b3e5b214.mp4",
+      "poster": "1335913-0-b3e5b214.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 1,
+      "period": "1st",
+      "time": "06:56",
+      "scorer": "Mike Kline",
+      "clip": "1335913-1-03ddc4d5.mp4",
+      "poster": "1335913-1-03ddc4d5.jpg",
+      "seconds": 23
+    },
     {
       "goal": 2,
       "period": "1st",
@@ -313,6 +646,24 @@
       "scorer": "Anthony Christy",
       "clip": "1335913-3.mp4",
       "poster": "1335913-3.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 4,
+      "period": "2nd",
+      "time": "04:36",
+      "scorer": "Mike Kline",
+      "clip": "1335913-4-866c8a4b.mp4",
+      "poster": "1335913-4-866c8a4b.jpg",
+      "seconds": 23
+    },
+    {
+      "goal": 5,
+      "period": "3rd",
+      "time": "07:24",
+      "scorer": "Mike Kline",
+      "clip": "1335913-5-ba078ef0.mp4",
+      "poster": "1335913-5-ba078ef0.jpg",
       "seconds": 23
     },
     {
