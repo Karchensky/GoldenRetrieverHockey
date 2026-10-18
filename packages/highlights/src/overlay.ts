@@ -38,7 +38,11 @@ export type Layout = {
   /** The overlay is only up while this field is at least this bright. */
   on?: { field: FieldName; min: number };
   templateSize: [number, number];
-  /** "c0".."c9" clock digits, "s0".."s9" score digits, "p1".. period digits; unit vectors. */
+  /**
+   * "c0".."c9" clock digits, "s0".."s9" score digits, "p1".. period digits; unit
+   * vectors. A digit can have more than one, named on from its first: "c0",
+   * "c0b" — the summer 2026 tile drew its digits thinner than October's.
+   */
   glyphs: Record<string, number[]>;
   /** Period words, by what the overlay shows. */
   words: Record<string, number[]>;
@@ -309,7 +313,10 @@ function readText(m: Mask, layout: Layout, prefix: string): string {
     if (layout.glyph === "seg7") { text += seg7(p, height); continue; }
     if (!templates.length) { text += "?"; continue; }
     const v = norm(p.mask, layout.templateSize);
-    const scores = templates.map(([key, t]) => [dot(v, t), key.slice(1)] as const).sort((a, b) => b[0] - a[0]);
+    // Each digit by its best template, so a digit's own second template is never its rival.
+    const best = new Map<string, number>();
+    for (const [key, t] of templates) best.set(key[1]!, Math.max(best.get(key[1]!) ?? -1, dot(v, t)));
+    const scores = [...best].map(([d, c]) => [c, d] as const).sort((a, b) => b[0] - a[0]);
     // Unsure is unknown, never a guess.
     const sure = scores[0]![0] >= 0.6 && (scores.length === 1 || scores[0]![0] - scores[1]![0] >= 0.2);
     text += sure ? scores[0]![1] : "?";

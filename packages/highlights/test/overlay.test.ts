@@ -112,6 +112,8 @@ test("every layout is complete enough to read", () => {
     if (l.glyph === "templates") {
       for (const d of "0123456789") assert.ok(l.glyphs[`c${d}`], `${l.name} has no clock template for ${d}`);
       for (const v of Object.values(l.glyphs)) assert.equal(v.length, l.templateSize[0] * l.templateSize[1]);
+      // A second template of a digit is named on from the first — "c0b" — so the reader knows whose it is.
+      for (const k of Object.keys(l.glyphs)) assert.match(k, /^[csp]\d[a-z]?$/, `${l.name}: template "${k}" names no digit`);
     }
     if (l.period === "word") assert.ok(Object.keys(l.words).length > 0, `${l.name} reads period words but has none`);
   }
