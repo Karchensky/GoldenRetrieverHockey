@@ -3,13 +3,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { daily, gamesWithWork, type Highlights, type Ledger } from "./daily.ts";
+import { compare } from "./compare.ts";
+import { daily, gamesWithWork, type Highlights, type Ledger, type Options } from "./daily.ts";
 import { locateGoals, type Location, type Reading, type ScoredGoal } from "./locate.ts";
 
 /**
  * Our goals, clipped from the rink's recordings onto the box scores.
  *
  *   daily   the scheduled job — see daily.ts and .github/workflows/highlights.yml
+ *   compare one game's downloaded clips beside the same clips cut from the recording
  *   locate  overlay readings + scoresheet -> where every goal is, for looking into one game by hand
  *
  * Anything written for a person lands in tmp/highlights/<game>/ — gitignored,
@@ -18,9 +20,10 @@ import { locateGoals, type Location, type Reading, type ScoredGoal } from "./loc
  */
 
 /**
- * The first game clipped: the opener of the 2026 Winter season. Older games are
- * never looked at — each clip costs one of the month's download credits, and
- * these start from this season.
+ * The first game clipped: the opener of the 2026 Winter season. The daily job
+ * starts here. An older game is only looked at when a run is given an earlier
+ * --since — the one-time look back — and is only ever cut from the recording:
+ * the month's downloads are for this season.
  */
 const SINCE = "2026-10-07";
 
@@ -31,7 +34,7 @@ const USAGE = `
       Find every goal of that game in the overlay readings. Writes located.json.
       Exits 1 unless every goal is found once and confirmed by the score.
 
-  daily [--dry-run] [--wait 25] [--check]
+  daily [--dry-run] [--wait 25] [--check] [--source auto|download|recording] [--since YYYY-MM-DD]
       The scheduled job: clip every one of OUR goals from ${SINCE} on, from the
       rink's recording, onto its line on the box score. Needs HARBORCENTER_EMAIL
       and HARBORCENTER_PASSWORD, and for the upload CLOUDFLARE_API_TOKEN and
@@ -40,6 +43,17 @@ const USAGE = `
       run it that way anywhere but the workflow: without it, it spends the
       month's REAL download credits. --check only says whether there is anything to do, from the files alone —
       no sign-in, no network, no dependencies — for the workflow to stop early.
+      --source is where a clip comes from: "download", the rink renders it, one
+      credit each, and with none left it waits for next month; "recording", cut
+      from the recording the job already reads, no credit; "auto" (the
+      default) downloads while credit lasts, then cuts. --since looks back
+      before ${SINCE}, once: those older games are cut from the recording only.
+
+  compare --game <id>
+      One game's clips, cut again from the recording and checked the way a
+      published clip is, with the rink's own download beside each when its link
+      still works — to see the difference before trusting the backup. Writes to
+      tmp/highlights/<id>/. Spends and uploads nothing.
 `;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -55,6 +69,19 @@ function loadGame(id: string): Game {
   const game = site.games.find((g) => g.id === id);
   if (!game) throw new Error(`No game ${id} in site.json`);
   if (!game.goals?.length) throw new Error(`Game ${id} has no goals on its scoresheet`);
+  return game;
+}
+
+const env = (k: string) => {
+  const v = process.env[k];
+  if (!v) throw new Error(`${k} is not set`);
+  return v;
+};
+
+function loadSiteGame(id: string): Options["games"][number] {
+  const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Options["games"] };
+  const game = site.games.find((g) => g.id === id);
+  if (!game) throw new Error(`No game ${id} in site.json`);
   return game;
 }
 
@@ -81,6 +108,8 @@ const { values } = parseArgs({
     "dry-run": { type: "boolean" },
     check: { type: "boolean" },
     wait: { type: "string" },
+    source: { type: "string" },
+    since: { type: "string" },
   },
 });
 
@@ -93,18 +122,28 @@ if (command === "locate" && values.game && values.readings) {
   fs.writeFileSync(path.join(outDir(game.id), "located.json"), JSON.stringify(location, null, 2) + "\n");
   report(location);
   process.exitCode = location.ready ? 0 : 1;
+} else if (command === "compare" && values.game) {
+  const game = loadSiteGame(values.game);
+  const ledger = JSON.parse(fs.readFileSync(LEDGER, "utf8")) as Ledger;
+  const highlights = JSON.parse(fs.readFileSync(HIGHLIGHTS, "utf8")) as Highlights;
+  const entry = ledger[game.id];
+  if (!entry) throw new Error(`No game ${game.id} in the ledger: nothing has been clipped from it`);
+  const failed = await compare({
+    game, entry, highlights: highlights[game.id], dir: outDir(game.id), log: (line) => console.log(line),
+    credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
+  });
+  process.exitCode = failed ? 1 : 0;
 } else if (command === "daily") {
-  const env = (k: string) => {
-    const v = process.env[k];
-    if (!v) throw new Error(`${k} is not set`);
-    return v;
-  };
   const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Parameters<typeof daily>[0]["games"] };
   const ledger = JSON.parse(fs.readFileSync(LEDGER, "utf8")) as Ledger;
   const highlights = JSON.parse(fs.readFileSync(HIGHLIGHTS, "utf8")) as Highlights;
   const dryRun = values["dry-run"] === true;
+  const source = (values.source ?? "auto") as Options["source"];
+  if (!["auto", "download", "recording"].includes(source)) throw new Error(`--source is auto, download or recording, not "${source}"`);
+  const since = values.since || SINCE;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(since)) throw new Error(`--since is a date, YYYY-MM-DD, not "${since}"`);
   if (values.check) {
-    const work = gamesWithWork({ since: SINCE, games: site.games, ledger, highlights });
+    const work = gamesWithWork({ since, games: site.games, ledger, highlights });
     console.log(work.length ? `Work on ${work.length} game(s): ${work.map((g) => `${g.date} ${g.id}`).join(", ")}` : "Nothing to do.");
     if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `work=${work.length > 0}\n`);
     process.exit(0);
@@ -121,7 +160,7 @@ if (command === "locate" && values.game && values.readings) {
   process.once("SIGINT", () => { write(); process.exit(1); });
   try {
     const report = await daily({
-      since: SINCE, games: site.games, ledger, highlights, dryRun,
+      since, seasonStart: SINCE, source, games: site.games, ledger, highlights, dryRun,
       today: new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" }),
       waitMinutes: values.wait ? Number(values.wait) : 25,
       credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
@@ -133,8 +172,8 @@ if (command === "locate" && values.game && values.readings) {
       },
       log: (line) => console.log(line),
     });
-    if (report.nothingToDo) console.log("Nothing to do: every goal of ours from " + SINCE + " is on its box score.");
-    else console.log(`${report.published} goal(s) published, ${report.requested} clip(s) asked for, ${report.queued} waiting for credit.`);
+    if (report.nothingToDo) console.log("Nothing to do: every goal of ours from " + since + " is on its box score.");
+    else console.log(`${report.published} goal(s) published, ${report.requested} clip(s) asked for, ${report.cut} cut from the recording, ${report.queued} waiting.`);
     for (const p of report.problems) console.log(`PROBLEM ${p}`);
     // Red once, for a new problem — the email is the notification. The ledger remembers it,
     // so tomorrow's run does not search that game again and stays green.

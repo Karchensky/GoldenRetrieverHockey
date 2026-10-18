@@ -12,7 +12,7 @@ import {
   CLIP_MAX, clipsCredit, createMoment, gameDetails, myMoments, ourTeams, recordedGames, requestDownload, signIn,
   type Moment, type RinkGame, type Session,
 } from "./rink.ts";
-import { openStream, type Stream } from "./stream.ts";
+import { cutClip, openStream, type Stream } from "./stream.ts";
 
 /**
  * The daily job: every game of ours from `since` on, each of OUR goals clipped
@@ -22,6 +22,15 @@ import { openStream, type Stream } from "./stream.ts";
  *   -> mark a clip of each of ours -> ask the rink to render it (ONE CREDIT)
  *   -> fetch it when ready -> check it is that goal, twice -> encode -> R2
  *   -> highlights.json
+ *
+ * THE BACKUP: a clip can instead be cut straight from the recording the job
+ * already reads (`cutClip`), which asks the rink for nothing and spends no
+ * download. `source` says when: "download" only ever downloads, and a clip
+ * with no download left waits for next month's; "auto", the workflow's, cuts
+ * from the recording only once the month's downloads are used up; "recording"
+ * always does. A game before `seasonStart` — the one-time look at older games —
+ * is only ever cut from the recording: downloads are for this season. A cut
+ * clip gets the same two checks as a download before it goes anywhere.
  *
  * The two checks are separate readings that must agree: the clip's own
  * scoreboard (`verifyClip`), and the clip compared frame by frame with the
@@ -63,6 +72,12 @@ export type ClipEntry = {
   seconds: number;
   moment: string | null;
   status: "queued" | "requested" | "published" | "failed";
+  /**
+   * What it was published from, or failed as: the rink's download, or cut from
+   * the recording. Absent on the clips from before the backup, all downloads.
+   * A queued clip has none — which it uses is decided each run.
+   */
+  source?: Source;
   /** The day its download was asked for. */
   asked?: string;
   /** Runs in which publishing it broke off with an error. */
@@ -81,12 +96,17 @@ export type GameEntry = {
   stale?: string[];
 };
 export type Ledger = Record<string, GameEntry>;
+export type Source = "download" | "recording";
 export type Highlights = Record<string, Highlight[]>;
 
 type SiteGame = { id: string; date: string; time: string | null; rink: string | null; status: string; gr: "home" | "away" | null; home: string; away: string; goals: ScoredGoal[] };
 
 export type Options = {
   since: string;
+  /** The first day the daily job covers. A game before it is the one-time look at older games, and is never downloaded. */
+  seasonStart: string;
+  /** Where a clip comes from — see the top of this file. */
+  source: Source | "auto";
   /** YYYY-MM-DD, in Buffalo. */
   today: string;
   games: SiteGame[];
@@ -102,7 +122,7 @@ export type Options = {
   log: (line: string) => void;
 };
 
-export type Report = { published: number; requested: number; queued: number; problems: string[]; nothingToDo: boolean };
+export type Report = { published: number; requested: number; cut: number; queued: number; problems: string[]; nothingToDo: boolean };
 
 const us = (g: SiteGame) => (g.gr === "home" ? g.home : g.away);
 const goalLabel = (g: ScoredGoal) => `${g.period} ${g.time}`;
@@ -134,6 +154,17 @@ export function planClips(goals: LocatedGoal[], ours: Set<number>, lead = LEAD, 
     }
   }
   return out;
+}
+
+/**
+ * Which way a queued clip goes this run, when no download of it was asked for
+ * yet: one of the month's downloads, cut from the recording, or wait. An older
+ * game — before the season the job covers — is never a download.
+ */
+export function routeClip(source: Options["source"], older: boolean, credit: number): Source | "wait" {
+  if (source === "download") return older || credit <= 0 ? "wait" : "download";
+  if (source === "recording" || older || credit <= 0) return "recording";
+  return "download";
 }
 
 /** The account's clip at this start and length, if one was already marked. */
@@ -223,7 +254,7 @@ export function gamesWithWork(o: Pick<Options, "since" | "games" | "ledger" | "h
 }
 
 export async function daily(o: Options): Promise<Report> {
-  const report: Report = { published: 0, requested: 0, queued: 0, problems: [], nothingToDo: false };
+  const report: Report = { published: 0, requested: 0, cut: 0, queued: 0, problems: [], nothingToDo: false };
   const problem = (p: string) => { if (!report.problems.includes(p)) report.problems.push(p); };
   const todo = gamesWithWork(o);
   if (!todo.length) { report.nothingToDo = true; return report; }
@@ -245,18 +276,44 @@ export async function daily(o: Options): Promise<Report> {
   // red, before anything is recorded. Everything after it is per game and per clip.
   const s: Session = await signIn(o.credentials().email, o.credentials().password);
   let rinkGames: RinkGame[] | null = null;
-  const streams = new Map<number, Promise<Stream | null>>();
-  const recording = (rink: number) => {
-    if (!streams.has(rink)) {
+  const streams = new Map<string, Promise<Stream | null>>();
+  /** The recording: its lightest variant to read the board on, its best to cut a clip from. */
+  const recording = (rink: number, pick: "lightest" | "best" = "lightest") => {
+    const key = `${rink} ${pick}`;
+    if (!streams.has(key)) {
       // Live, or posted but still growing, is no recording yet: a goal searched for in half a game is not found.
-      streams.set(rink, gameDetails(s, rink).then(async (d) => {
+      streams.set(key, gameDetails(s, rink).then(async (d) => {
         if (d.live || !d.streamUrl) return null;
-        const stream = await openStream(d.streamUrl);
+        const stream = await openStream(d.streamUrl, pick);
         return stream.ended ? stream : null;
       }));
     }
-    return streams.get(rink)!;
+    return streams.get(key)!;
   };
+  const brokeOff = new Set<ClipEntry>();
+  const whichOf = (c: ClipEntry) => c.labels?.join(", ") ?? `goal ${c.goals.join(",")}`;
+  const fail = (label: string, c: ClipEntry, p: string) => { c.status = "failed"; c.problem = p; problem(`${label}: ${whichOf(c)}: ${p}`); };
+
+  /** Publish one clip from `source`, and record how it went: published, failed a check, or broken off for the next run. */
+  async function attempt(game: SiteGame, rink: number, c: ClipEntry, source: Source, fetchRaw: (file: string) => Promise<void>): Promise<void> {
+    const label = labelOf(game);
+    try {
+      const r = await publish(game, rink, c, fetchRaw);
+      c.source = source;
+      if (r === true) {
+        c.status = "published";
+        delete c.tries;
+        report.published += c.goals.length;
+        o.log(`${label}: published ${whichOf(c)}${source === "recording" ? ", cut from the recording" : ""}`);
+      } else fail(label, c, r);
+    } catch (e) {
+      // Broke off — a download cut short, the recording not answering. Tomorrow tries again, up to a point.
+      brokeOff.add(c);
+      c.tries = (c.tries ?? 0) + 1;
+      if (c.tries >= TRIES) { c.source = source; fail(label, c, `publishing broke off ${TRIES} runs running, last: ${(e as Error).message}`); }
+      else problem(`${label}: ${whichOf(c)}: ${(e as Error).message} — tried again next run`);
+    }
+  }
 
   for (const game of online) {
     const label = labelOf(game);
@@ -267,6 +324,8 @@ export async function daily(o: Options): Promise<Report> {
       // Not recorded: whatever broke, the next run tries again.
       problem(`${label}: ${(e as Error).message}`);
     }
+    // An older game the rink has no recording of is the usual case, not a problem: nothing kept, so a later look tries again.
+    if (game.date < o.seasonStart && entry.rinkGame === null && !entry.clips.length && !entry.problem && !entry.stale) delete o.ledger[game.id];
   }
 
   async function findAndAsk(game: SiteGame, entry: GameEntry, label: string): Promise<void> {
@@ -285,6 +344,7 @@ export async function daily(o: Options): Promise<Report> {
         rinkGames ??= await recordedGames(await ourTeams(), o.since);
         const hit = matchRinkGame(game, rinkGames);
         if (hit) entry.rinkGame = hit.id;
+        else if (game.date < o.seasonStart) o.log(`${label}: not on the rink's video site — older than its recordings, or filed under another date`);
         else if (overdue) giveUp(`not on the rink's video site ${NOT_RECORDED_DAYS} days after it was played, by date, time or rink`);
         else o.log(`${label}: not on the rink's video site yet`);
       }
@@ -311,11 +371,14 @@ export async function daily(o: Options): Promise<Report> {
       }
     }
 
-    // Mark and ask for every queued clip there is a credit for.
+    // Mark and ask for every queued clip there is a credit for — or cut it from the recording, when that is the source.
     const queued = entry.clips.filter((c) => c.status === "queued");
     if (!queued.length || entry.rinkGame === null) return;
-    const existing = await myMoments(s, entry.rinkGame);
-    let credit = o.dryRun ? queued.length : await clipsCredit(s);
+    const rink = entry.rinkGame;
+    const older = game.date < o.seasonStart;
+    const existing = await myMoments(s, rink);
+    // Reading what is left spends nothing, so a dry run reads it too and says truly which way each clip would go.
+    let credit = routeClip(o.source, older, 1) === "download" ? await clipsCredit(s) : 0;
     for (const c of queued) {
       // The scoresheet may have been corrected since this was planned: a credit is only ever
       // spent on a goal that is still ours, at the time it was found at.
@@ -327,10 +390,28 @@ export async function daily(o: Options): Promise<Report> {
         continue;
       }
       let m = existing.find((x) => sameClip(x, c)) ?? null;
+      // A download already asked for is used, whatever the source: it is paid for.
       if (m?.download) { c.moment = m.id; c.status = "requested"; c.asked ??= o.today; continue; }
-      if (credit <= 0) { report.queued++; o.log(`${label}: no download credit left — ${c.labels?.join(", ")} waits for next month's`); continue; }
-      if (o.dryRun) { o.log(`${label}: would clip ${c.start}s +${c.seconds}s for ${c.labels?.join(", ")}`); continue; }
-      m ??= await createMoment(s, entry.rinkGame, c.start, c.seconds);
+      const route = routeClip(o.source, older, credit);
+      if (route === "wait") {
+        report.queued++;
+        o.log(older
+          ? `${label}: older than this season, so cut from the recording or not at all — ${whichOf(c)} waits for a run with --source auto or recording`
+          : `${label}: no download credit left — ${whichOf(c)} waits for next month's`);
+        continue;
+      }
+      if (route === "recording") {
+        if (o.dryRun) { o.log(`${label}: would cut ${c.start}s +${c.seconds}s for ${whichOf(c)} from the recording`); continue; }
+        await attempt(game, rink, c, "recording", async (file) => {
+          const best = await recording(rink, "best");
+          if (!best) throw new Error("the recording is not available to cut the clip from");
+          await cutClip(best, c.start, c.seconds, file);
+        });
+        if (c.status === "published") report.cut++;
+        continue;
+      }
+      if (o.dryRun) { credit--; o.log(`${label}: would clip ${c.start}s +${c.seconds}s for ${whichOf(c)} (${credit} credits left after)`); continue; }
+      m ??= await createMoment(s, rink, c.start, c.seconds);
       c.moment = m.id;
       await requestDownload(s, m.id);
       credit--;
@@ -342,7 +423,6 @@ export async function daily(o: Options): Promise<Report> {
   }
 
   // Fetch, check and publish whatever the rink has rendered — waiting a while for what it has not.
-  const brokeOff = new Set<ClipEntry>();
   const deadline = Date.now() + o.waitMinutes * 60_000;
   for (;;) {
     let pending = 0;
@@ -359,28 +439,17 @@ export async function daily(o: Options): Promise<Report> {
         continue;
       }
       for (const c of requested) {
-        const which = c.labels?.join(", ") ?? `goal ${c.goals.join(",")}`;
-        const fail = (p: string) => { c.status = "failed"; c.problem = p; problem(`${label}: ${which}: ${p}`); };
         const m = moments.find((x) => x.id === c.moment);
-        if (!m?.download) { fail("the rink has no download for this clip"); continue; }
+        if (!m?.download) { fail(label, c, "the rink has no download for this clip"); continue; }
         const status = m.download.status;
-        if (/fail|error|cancel|reject|expire/i.test(status)) { fail(`the rink's render ended ${status}`); continue; }
-        if (status !== "COMPLETE" || !m.download.url) {
-          if (c.asked && daysBetween(c.asked, o.today) > RENDER_DAYS) fail(`still ${status} at the rink ${RENDER_DAYS} days after it was asked for`);
+        if (/fail|error|cancel|reject|expire/i.test(status)) { fail(label, c, `the rink's render ended ${status}`); continue; }
+        const url = m.download.url;
+        if (status !== "COMPLETE" || !url) {
+          if (c.asked && daysBetween(c.asked, o.today) > RENDER_DAYS) fail(label, c, `still ${status} at the rink ${RENDER_DAYS} days after it was asked for`);
           else pending++;
           continue;
         }
-        try {
-          const r = await publish(game, entry.rinkGame, c, m.download.url);
-          if (r === true) { c.status = "published"; delete c.tries; report.published += c.goals.length; o.log(`${label}: published ${which}`); }
-          else fail(r);
-        } catch (e) {
-          // Broke off — a download cut short, the recording not answering. Tomorrow tries again, up to a point.
-          brokeOff.add(c);
-          c.tries = (c.tries ?? 0) + 1;
-          if (c.tries >= TRIES) fail(`publishing broke off ${TRIES} runs running, last: ${(e as Error).message}`);
-          else problem(`${label}: ${which}: ${(e as Error).message} — tried again next run`);
-        }
+        await attempt(game, entry.rinkGame, c, "download", (file) => download(url, file));
       }
     }
     if (!pending || Date.now() > deadline) {
@@ -392,35 +461,17 @@ export async function daily(o: Options): Promise<Report> {
   return report;
 
   /** Fetch, check twice, encode, upload. True, why not — or a throw, for the next run to try again. */
-  async function publish(game: SiteGame, rink: number, c: ClipEntry, url: string): Promise<true | string> {
+  async function publish(game: SiteGame, rink: number, c: ClipEntry, fetchRaw: (file: string) => Promise<void>): Promise<true | string> {
     const now = currentGoals(game, c);
     if (now.some((n) => n === null)) return "the scoresheet changed since it was asked for: a goal in it is no longer ours at that time";
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-clip-"));
     try {
       const raw = path.join(dir, "rink.mp4");
-      const r = await fetch(url, { signal: AbortSignal.timeout(180_000) });
-      if (!r.ok) throw new Error(`the rink's file would not download (${r.status})`);
-      fs.writeFileSync(raw, Buffer.from(await r.arrayBuffer()));
-
-      // One: the clip's own scoreboard shows each goal going in, at the score either side of it.
-      const picked = chooseLayout((l) => readClip(raw, l), loadLayouts());
-      if (!picked) return "no known scoreboard reads in the clip";
-      const scores = scoreline(game.goals, game.home, game.away);
-      const length = duration(raw);
-      const goals: { n: number; goal: ScoredGoal; goalAt: number; at: number | undefined }[] = [];
-      for (const [i, n] of (now as number[]).entries()) {
-        const goal = game.goals[n]!;
-        const v = verifyClip(picked.readings, goal, n === 0 ? { home: 0, away: 0 } : scores[n - 1]!, scores[n]!, picked.layout.name, length);
-        if (!v.ok) return v.problem;
-        goals.push({ n, goal, goalAt: v.goalAt, at: c.at?.[i] });
-      }
-
-      // Two: it is the stretch of the recording it was asked for, with the goal where the recording put it.
+      await fetchRaw(raw);
       const stream = await recording(rink);
       if (!stream) throw new Error("the recording is not available to check the clip against");
-      const x = crossCheck(clipThumbs(raw), await recordingThumbs(stream, c.start, c.seconds), c.start,
-        goals.filter((g) => g.at !== undefined).map((g) => ({ label: goalLabel(g.goal), at: g.at!, goalAt: g.goalAt })));
-      if (!x.ok) return x.problem;
+      const goals = await checkClip(game, c, now as number[], raw, stream);
+      if (typeof goals === "string") return goals;
 
       const entries: Highlight[] = [];
       for (const { n, goal, goalAt } of goals) {
@@ -445,4 +496,39 @@ export async function daily(o: Options): Promise<Report> {
       fs.rmSync(dir, { recursive: true, force: true });
     }
   }
+}
+
+/** The rink's rendered file, to `file`. The link is never printed. */
+export async function download(url: string, file: string): Promise<void> {
+  const r = await fetch(url, { signal: AbortSignal.timeout(180_000) });
+  if (!r.ok) throw new Error(`the rink's file would not download (${r.status})`);
+  fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));
+}
+
+export type Checked = { n: number; goal: ScoredGoal; goalAt: number }[];
+
+/**
+ * The two checks every clip gets before it is published, downloaded or cut:
+ * the goals in it and where — or why it is not that goal. `now` is where its
+ * goals are on the scoresheet (`currentGoals`); `stream` is the recording.
+ */
+export async function checkClip(game: SiteGame, c: Pick<ClipEntry, "at" | "start" | "seconds">, now: number[], raw: string, stream: Stream): Promise<Checked | string> {
+  // One: the clip's own scoreboard shows each goal going in, at the score either side of it.
+  const picked = chooseLayout((l) => readClip(raw, l), loadLayouts());
+  if (!picked) return "no known scoreboard reads in the clip";
+  const scores = scoreline(game.goals, game.home, game.away);
+  const length = duration(raw);
+  const goals: (Checked[number] & { at: number | undefined })[] = [];
+  for (const [i, n] of now.entries()) {
+    const goal = game.goals[n]!;
+    const v = verifyClip(picked.readings, goal, n === 0 ? { home: 0, away: 0 } : scores[n - 1]!, scores[n]!, picked.layout.name, length);
+    if (!v.ok) return v.problem;
+    goals.push({ n, goal, goalAt: v.goalAt, at: c.at?.[i] });
+  }
+
+  // Two: it is the stretch of the recording it was asked for, with the goal where the recording put it.
+  const x = crossCheck(clipThumbs(raw), await recordingThumbs(stream, c.start, c.seconds), c.start,
+    goals.filter((g) => g.at !== undefined).map((g) => ({ label: goalLabel(g.goal), at: g.at!, goalAt: g.goalAt })));
+  if (!x.ok) return x.problem;
+  return goals.map(({ n, goal, goalAt }) => ({ n, goal, goalAt }));
 }

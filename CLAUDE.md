@@ -78,6 +78,14 @@ something scarce**: each clip is one of the 20 downloads the rink account gets
 a month (the platform calls them credits; `clipsCredit` reads what is left).
 Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
 
+**The backup** cuts a clip straight from the recording the job already reads
+(`cutClip` in `stream.ts`) and spends nothing. `--source` picks: `auto` (the
+daily run: downloads while they last, then the recording), `download`,
+`recording`. A game before `SINCE` — only reached with `--since` — is never
+downloaded. A cut clip gets the same two checks as a download. `cli.ts compare
+--game <id>` puts a game's downloads beside the same clips cut from the
+recording, in `tmp/highlights/<id>/`, and spends nothing.
+
 The account, not the ledger, is what stops a download being used twice — the
 job reuses any clip of its own at the same start and length. Never set a ledger
 clip to `queued` by hand unless it should use another download; the recovery

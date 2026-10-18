@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import fs from "node:fs";
 import { thumbnail, type Thumb } from "./crosscheck.ts";
 import { loadLayouts, readOverlay, type Frame, type Layout, type OverlayReading } from "./overlay.ts";
 import { parseClock, type Score, type ScoredGoal } from "./locate.ts";
@@ -117,6 +118,12 @@ export function verifyClip(
 
 export function duration(video: string): number {
   return Number(run(FFPROBE, ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", video]).toString().trim());
+}
+
+/** "1920x1080, 30 fps, 23.0 s, 11.4 MB" — a file described for a person comparing two. */
+export function describe(video: string): string {
+  const size = run(FFPROBE, ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x", video]).toString().trim();
+  return `${size}, ${Math.round(frameRate(video))} fps, ${duration(video).toFixed(1)} s, ${(fs.statSync(video).size / 1e6).toFixed(1)} MB`;
 }
 
 /**
