@@ -280,8 +280,10 @@ const SEGMENTS: [string, [number, number], [number, number]][] = [
 
 function seg7(p: Part, height: number): string {
   const { w, h, ink } = p.mask;
-  // A bare upright is a '1', if it runs the digit's height.
-  if (w < h * 0.3) return h >= height * 0.8 ? "1" : "?";
+  // A bare upright is a '1', if it runs most of the digit's height. Most, not all: the Rink 1 board's
+  // dot-matrix 1 stops short of the bars on its other digits — 20 rows to their 26 on 2026-07-22, and
+  // at 80% one 1 in "11:38" read and the other did not.
+  if (w < h * 0.3) return h >= height * 0.7 ? "1" : "?";
   // Every seven-segment digit is well taller than it is wide. Anything squatter — a lone
   // bar, the edge of a box — would light every sampled segment and read as an 8.
   if (h < w * 1.4) return "?";
