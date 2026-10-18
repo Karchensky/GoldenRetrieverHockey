@@ -235,3 +235,20 @@ test("a warm-up countdown that fits the 1st period's goals is not taken for it, 
     .map((g) => ({ period: g.split(" ")[0]!, time: g.split(" ")[1]! }));
   assert.deepEqual(choosePeriods(clockRuns(sweep), goals).map((c) => [c.period, c.from]), [["1st", 1560], ["2nd", 2760], ["3rd", 3720]]);
 });
+
+test("a game gets its recap once its goals are searched, again for a corrected scoresheet, and not after one is given up on", () => {
+  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
+  const searched = { "1335913": { rinkGame: 42732, clips: [] } };
+  const recap = (sheet: string) => ({ "1335913": { clip: "1335913-recap-0123abcd.mp4", poster: "1335913-recap-0123abcd.jpg", seconds: 200, goals: 3, of: 3, shots: 0, whistles: 4, sheet } });
+  const work = (o: Partial<Parameters<typeof gamesWithWork>[0]>) => gamesWithWork({ since: "2026-10-07", games: [game], ledger: searched, highlights, ...o }).length;
+  // Every goal of ours clipped, no recap yet: that is work. Without recaps asked for, it is not.
+  assert.equal(work({ recaps: {} }), 1);
+  assert.equal(work({}), 0);
+  // Made for this scoresheet: nothing to do. Made for an older one: made again.
+  assert.equal(work({ recaps: recap(sheetOf(game)) }), 0);
+  assert.equal(work({ recaps: recap("an older sheet") }), 1);
+  // Given up on for this scoresheet — too few goals found — is for a person, not every run.
+  assert.equal(work({ recaps: {}, ledger: { "1335913": { ...searched["1335913"], recap: { sheet: sheetOf(game), problem: "only 1 of its 3 goals could be found" } } } }), 0);
+  // Not found on the rink's site yet: the goals are searched first.
+  assert.equal(work({ recaps: {}, ledger: { "1335913": { rinkGame: null, clips: [] } } }), 0);
+});

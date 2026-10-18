@@ -18,6 +18,14 @@
 # few minutes per clip; one still rendering after 25 minutes is collected by
 # tomorrow's run.
 #
+# Once a game's goals are searched it also makes the game's RECAP: its goals,
+# both teams', then its shots on goal where the board counts them and the
+# plays its whistles ended, cut from the recording into a few minutes of video
+# (apps/web/data/recaps.json). No download is spent on it. A game with more
+# than a quarter of its goals unfound gets none, reported once in the ledger's
+# "recap" — delete that to have it tried again. A corrected scoresheet makes
+# it again.
+#
 # Run by hand, it asks where clips come from: "auto", the daily run's (the
 # rink's downloads while the month's last, then the recording), "download"
 # (never the recording: with none left a clip waits for next month, as before
@@ -79,7 +87,8 @@ permissions:
 jobs:
   highlights:
     runs-on: ubuntu-latest
-    timeout-minutes: ${{ inputs.since && 300 || 60 }}
+    # Two hours a day: a recap reads the whole recording, ten-odd minutes a game, after the goals.
+    timeout-minutes: ${{ inputs.since && 300 || 120 }}
 
     steps:
       # main, not the SHA that triggered this: the refresh has just pushed to it.
@@ -126,13 +135,13 @@ jobs:
         id: commit
         if: always() && steps.check.outputs.work == 'true'
         run: |
-          if [ -z "$(git status --porcelain -- apps/web/data/highlights.json packages/highlights/ledger.json)" ]; then
+          if [ -z "$(git status --porcelain -- apps/web/data/highlights.json apps/web/data/recaps.json packages/highlights/ledger.json)" ]; then
             echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- apps/web/data/highlights.json packages/highlights/ledger.json
+          git add -- apps/web/data/highlights.json apps/web/data/recaps.json packages/highlights/ledger.json
           git commit -m "chore(highlights): goal clips
 
           Clipped from the rink's recording, checked against the scoresheet

@@ -71,3 +71,19 @@ test("every clip's files are named so the Worker will serve them", () => {
   assert.equal(isHighlight("/highlights/1335913-2-9F2C41AB.mp4"), false);
   assert.equal(isHighlight("/highlights/1335913-2-9f2c41ab/x.mp4"), false);
 });
+
+test("every recap is of a game on the site, named so the Worker will serve it, and says what is in it", () => {
+  const recaps = read("apps/web/data/recaps.json") as Record<string, { clip: string; poster: string; seconds: number; goals: number; of: number; sheet: string }>;
+  for (const [id, r] of Object.entries(recaps)) {
+    assert.ok(games.has(id), `recaps.json has game ${id}, which site.json does not`);
+    assert.match(r.clip, new RegExp(`^${id}-recap-[0-9a-f]{8}\\.mp4$`), `${id}: recap named ${r.clip}`);
+    assert.equal(r.poster, r.clip.replace(/\.mp4$/, ".jpg"));
+    assert.ok(isHighlight(`/highlights/${r.clip}`) && isHighlight(`/highlights/${r.poster}`));
+    assert.ok(r.goals <= r.of && r.seconds > 0, `${id}: ${r.goals} of ${r.of} goals in ${r.seconds}s`);
+  }
+  assert.ok(isHighlight("/highlights/1335913-recap-9f2c41ab.mp4"));
+  // A recap always carries its hash, and nothing else rides on the word.
+  assert.equal(isHighlight("/highlights/1335913-recap.mp4"), false);
+  assert.equal(isHighlight("/highlights/1335913-recap-9f2c41ab-1.mp4"), false);
+  assert.equal(isHighlight("/highlights/recap-9f2c41ab.mp4"), false);
+});

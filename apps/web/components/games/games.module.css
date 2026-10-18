@@ -184,6 +184,14 @@ a.row:focus-visible {
 .assist { font-size: 11px; color: var(--dim); }
 .us .scorer { color: var(--ink); }
 .them .scorer { color: var(--dim); }
+.recap {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--rule);
+}
+
 .clip {
   display: block;
   width: 100%;

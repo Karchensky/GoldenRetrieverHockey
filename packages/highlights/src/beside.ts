@@ -12,6 +12,14 @@
 
 export type Highlight = { goal: number; period: string; time: string; scorer: string; clip: string; poster: string; seconds: number };
 
+/**
+ * A game's recap as the page shows it: its files, how long it runs, what is
+ * in it, and the scoresheet it was made from — the daily job makes it again
+ * for a corrected one. Here, with the clip's shape, so the page never imports
+ * the job.
+ */
+export type Recap = { clip: string; poster: string; seconds: number; goals: number; of: number; shots: number; whistles: number; sheet: string };
+
 type Goal = { period: string; time: string; team: string };
 
 /** The clip beside goal `n` of this scoresheet, if any: only ever one of `us`, and only the one goal at that period and time. */
