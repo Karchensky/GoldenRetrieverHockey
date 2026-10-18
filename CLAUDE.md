@@ -73,24 +73,27 @@ When the till fails the reason is in that terminal, not the browser.
 ## The goal highlights
 
 `packages/highlights`, run daily by `.github/workflows/highlights.yml`, clips
-our goals from the rink's recordings onto the box scores. **It uses up
-something scarce**: each clip is one of the 20 downloads the rink account gets
-a month (the platform calls them credits; `clipsCredit` reads what is left).
-Run `cli.ts daily` anywhere but the workflow only with `--dry-run`.
+every goal of our games — ours and the other team's — from the rink's
+recordings onto the box scores. Run `cli.ts daily` anywhere but the workflow
+only with `--dry-run`: it publishes.
 
-**The backup** cuts a clip straight from the recording the job already reads
-(`cutClip` in `stream.ts`) and spends nothing. `--source` picks: `auto` (the
-daily run: downloads while they last, then the recording), `download`,
-`recording`. A game before `SINCE` — only reached with `--since` — is never
-downloaded. A cut clip gets the same two checks as a download. `cli.ts compare
---game <id>` puts a game's downloads beside the same clips cut from the
-recording, in `tmp/highlights/<id>/`, and spends nothing.
+**Clips are cut from the recording** the job already reads (`cutClip` in
+`stream.ts`) and spend nothing: `--source recording`, the daily run's since
+18 October 2026. **The rink's downloads use up something scarce** — 20 a month
+(the platform calls them credits; `clipsCredit` reads what is left) — and are
+only ever asked for by hand: `--source download`, or `auto` (downloads while
+they last, then the recording). A goal against, and a game before `SINCE` —
+only reached with `--since` — are never downloaded. A cut clip gets the same
+two checks as a download. `cli.ts compare --game <id>` puts a game's downloads
+beside the same clips cut from the recording, in `tmp/highlights/<id>/`, and
+spends nothing.
 
 **The recap** (`recap.ts`) is a few minutes of each game: every goal found,
-both teams', then shots on goal (the Rink 1 board counts them; each rise is a
-shot, about 2 s late), the plays whistles in a zone ended, and the chances no
-one counted — rushes and spells of pressure — the best first, up to eight
-minutes. Chances, and which whistles were offsides and icings in the neutral
+both teams', then its penalties (each at the whistle within half a minute
+after the scoresheet's time — a delayed call is blown late), shots on goal
+(the Rink 1 board counts them; each rise is a shot, about 2 s late), the plays
+whistles in a zone ended, and the chances no one counted — rushes and spells
+of pressure — the best first, up to eight minutes. Chances, and which whistles were offsides and icings in the neutral
 zone (left out), come from where the camera looks (`view.ts`): the blue lines
 on the ice say the zone, the camera's turn how deep. Nothing finds the net
 itself; its frame is too thin on video. The daily job makes it once a game's
@@ -149,7 +152,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (636, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (637, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

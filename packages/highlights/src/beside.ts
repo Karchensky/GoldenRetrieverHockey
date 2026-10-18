@@ -6,8 +6,8 @@
  * clipped, and names the files; it is NOT how a clip is found. A scoresheet can
  * be corrected after the fact — a missing goal added, the order changed — and
  * a clip attached by position would then sit beside somebody else's goal. So a
- * clip is shown beside the goal of ours with its period and time, and beside
- * nothing at all if no such goal is left.
+ * clip is shown beside the goal with its period and time — ours or the other
+ * team's — and beside nothing at all if no such goal is left.
  */
 
 export type Highlight = { goal: number; period: string; time: string; scorer: string; clip: string; poster: string; seconds: number };
@@ -20,16 +20,16 @@ export type Highlight = { goal: number; period: string; time: string; scorer: st
  */
 export type Recap = {
   clip: string; poster: string; seconds: number; goals: number; of: number; shots: number; whistles: number; sheet: string;
-  /** Chances no one counted (`view.ts`), and the edition of the job that made it: both from edition 2 on. */
-  chances?: number; edition?: number;
+  /** Penalties, chances no one counted (`view.ts`), and the edition of the job that made it: from edition 2 on. */
+  penalties?: number; chances?: number; edition?: number;
 };
 
 type Goal = { period: string; time: string; team: string };
 
-/** The clip beside goal `n` of this scoresheet, if any: only ever one of `us`, and only the one goal at that period and time. */
-export function clipBeside(clips: readonly Highlight[] | undefined, goals: readonly Goal[], n: number, us: string): Highlight | undefined {
+/** The clip beside goal `n` of this scoresheet, if any: only the one goal at that period and time. */
+export function clipBeside(clips: readonly Highlight[] | undefined, goals: readonly Goal[], n: number): Highlight | undefined {
   const goal = goals[n];
-  if (!goal || goal.team !== us) return undefined;
+  if (!goal) return undefined;
   // Two goals at one period and time would make it a guess: neither gets it.
   if (goals.filter((x) => x.period === goal.period && x.time === goal.time).length !== 1) return undefined;
   return clips?.find((h) => h.period === goal.period && h.time === goal.time);

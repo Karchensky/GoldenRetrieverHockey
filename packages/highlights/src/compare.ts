@@ -61,7 +61,7 @@ export async function compare(o: {
       o.log(`  the rink's download     no link from the rink any more`);
     }
     for (const n of now as number[]) {
-      const shown = clipBeside(o.highlights, game.goals, n, game.gr === "home" ? game.home : game.away);
+      const shown = clipBeside(o.highlights, game.goals, n);
       if (shown) o.log(`  on the site             /highlights/${shown.clip}`);
     }
 

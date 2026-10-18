@@ -38,21 +38,24 @@ const USAGE = `
       Find every goal of that game in the overlay readings. Writes located.json.
       Exits 1 unless every goal is found once and confirmed by the score.
 
-  daily [--dry-run] [--wait 25] [--check] [--source auto|download|recording] [--since YYYY-MM-DD]
-      The scheduled job: clip every one of OUR goals from ${SINCE} on, from the
-      rink's recording, onto its line on the box score. Needs HARBORCENTER_EMAIL
-      and HARBORCENTER_PASSWORD, and for the upload CLOUDFLARE_API_TOKEN and
-      CLOUDFLARE_ACCOUNT_ID. Writes packages/highlights/ledger.json and
-      apps/web/data/highlights.json, and a recap of each game once its goals are
-      searched to apps/web/data/recaps.json. --dry-run spends and uploads nothing —
-      run it that way anywhere but the workflow: without it, it spends the
-      month's REAL download credits. --check only says whether there is anything to do, from the files alone —
+  daily [--dry-run] [--wait 25] [--check] [--source recording|auto|download] [--since YYYY-MM-DD]
+      The scheduled job: clip every goal of our games from ${SINCE} on, ours and
+      the other team's, from the rink's recording, onto its line on the box
+      score. Needs HARBORCENTER_EMAIL and HARBORCENTER_PASSWORD, and for the
+      upload CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID. Writes
+      packages/highlights/ledger.json and apps/web/data/highlights.json, and a
+      recap of each game once its goals are searched to
+      apps/web/data/recaps.json. --dry-run uploads and spends nothing — run it
+      that way anywhere but the workflow: without it, it publishes, and with
+      --source auto or download it spends the month's REAL download credits.
+      --check only says whether there is anything to do, from the files alone —
       no sign-in, no network, no dependencies — for the workflow to stop early.
-      --source is where a clip comes from: "download", the rink renders it, one
-      credit each, and with none left it waits for next month; "recording", cut
-      from the recording the job already reads, no credit; "auto" (the
-      default) downloads while credit lasts, then cuts. --since looks back
-      before ${SINCE}, once: those older games are cut from the recording only.
+      --source is where a clip comes from: "recording" (the default), cut from
+      the recording the job already reads, no credit; "download", the rink
+      renders it, one credit each, and with none left it waits for next month;
+      "auto" downloads while credit lasts, then cuts. A goal against is never a
+      download. --since looks back before ${SINCE}, once: those older games are
+      cut from the recording only.
 
   compare --game <id>
       One game's clips, cut again from the recording and checked the way a
@@ -165,7 +168,7 @@ if (command === "locate" && values.game && values.readings) {
     credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
   });
   if (typeof made === "string") { console.log(`No recap: ${made}`); process.exitCode = 1; }
-  else console.log(`Wrote ${path.relative(ROOT, out)}: ${made.seconds}s, ${made.goals} of ${made.of} goals, ${made.shots} shots, ${made.chances} chances, ${made.whistles} whistles`);
+  else console.log(`Wrote ${path.relative(ROOT, out)}: ${made.seconds}s, ${made.goals} of ${made.of} goals, ${made.penalties} penalties, ${made.shots} shots, ${made.chances} chances, ${made.whistles} whistles`);
 } else if (command === "survey" && values.since) {
   const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Options["games"] };
   const until = values.until ?? "9999";
@@ -187,8 +190,8 @@ if (command === "locate" && values.game && values.readings) {
   const highlights = JSON.parse(fs.readFileSync(HIGHLIGHTS, "utf8")) as Highlights;
   const recaps = JSON.parse(fs.readFileSync(RECAPS, "utf8")) as Recaps;
   const dryRun = values["dry-run"] === true;
-  const source = (values.source ?? "auto") as Options["source"];
-  if (!["auto", "download", "recording"].includes(source)) throw new Error(`--source is auto, download or recording, not "${source}"`);
+  const source = (values.source ?? "recording") as Options["source"];
+  if (!["recording", "auto", "download"].includes(source)) throw new Error(`--source is recording, auto or download, not "${source}"`);
   const since = values.since || SINCE;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(since)) throw new Error(`--since is a date, YYYY-MM-DD, not "${since}"`);
   if (values.check) {

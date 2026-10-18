@@ -155,15 +155,15 @@ export function shotLag(goals: { t: number; side: Side }[], marks: ShotMark[]): 
   return lags.length ? lags[lags.length >> 1]! : null;
 }
 
-export type Play = { start: number; end: number; kind: "goal" | "shot" | "chance" | "whistle"; label: string };
+export type Play = { start: number; end: number; kind: "goal" | "penalty" | "shot" | "chance" | "whistle"; label: string };
 /**
  * A play that is not a goal, and how much it is worth: a shot the clock
- * stopped on 3, a shot 2, a whistle in a zone 1.5 — on 22 July three in four
- * came straight after a shot — a chance (`view.ts`) 1.2, a whistle whose zone
- * the camera could not tell 1. `lead` and `tail`, where given, are how much
- * of the play to show either side of `t`.
+ * stopped on 3, a penalty 2.5, a shot 2, a whistle in a zone 1.5 — on 22 July
+ * three in four came straight after a shot — a chance (`view.ts`) 1.2, a
+ * whistle whose zone the camera could not tell 1. `lead` and `tail`, where
+ * given, are how much of the play to show either side of `t`.
  */
-export type Candidate = { t: number; kind: "shot" | "chance" | "whistle"; label: string; worth: number; lead?: number; tail?: number };
+export type Candidate = { t: number; kind: "penalty" | "shot" | "chance" | "whistle"; label: string; worth: number; lead?: number; tail?: number };
 
 /** A goal's play: the rush, the goal, the start of the celebration. */
 export const GOAL_LEAD = 10, GOAL_TAIL = 5;
@@ -171,6 +171,15 @@ export const GOAL_LEAD = 10, GOAL_TAIL = 5;
 export const SHOT_LEAD = 6, SHOT_TAIL = 3;
 /** A whistle's: the play that ended in it — a save held, a scramble, the puck out. */
 export const WHISTLE_LEAD = 8, WHISTLE_TAIL = 1;
+/**
+ * A penalty's, from the whistle that called it: the infraction, and a delayed
+ * call's play on until the offending side touched the puck. Where no whistle
+ * fits, the moment the clock showed the penalty's time, with the seconds after
+ * it for the whistle to come.
+ */
+export const PENALTY_LEAD = 15, PENALTY_TAIL = 4, PENALTY_UNTIMED_LEAD = 8, PENALTY_UNTIMED_TAIL = 12;
+/** How long after the scoresheet's time its whistle may come: a delayed call is blown once the offending side touches the puck. */
+export const PENALTY_DELAY = 30;
 /** The longest a recap runs, title aside. */
 export const MAX_SECONDS = 480;
 
@@ -196,18 +205,55 @@ export function planRecap(goals: { t: number; label: string }[], others: Candida
   return merge(plays);
 }
 
-/** Plays within two seconds of each other become one, a goal's label winning over a shot's, a shot's over a chance's. */
+/** Plays within two seconds of each other become one, a goal's label winning over a penalty's, a penalty's over a shot's, a shot's over a chance's. */
 function merge(plays: Play[]): Play[] {
   const out: Play[] = [];
   for (const p of [...plays].sort((a, b) => a.start - b.start)) {
     const last = out.at(-1);
     if (last && p.start <= last.end + 2) {
       last.end = Math.max(last.end, p.end);
-      const rank = { goal: 4, shot: 3, chance: 2, whistle: 1 };
+      const rank = { goal: 5, penalty: 4, shot: 3, chance: 2, whistle: 1 };
       if (rank[p.kind] > rank[last.kind]) { last.kind = p.kind; last.label = p.label; }
     } else out.push({ ...p });
   }
   return out;
+}
+
+/** A penalty as the scoresheet has it: "#28 John Rein Tripping (Minor) 02:00". */
+export type Penalty = { period: string; time: string; team: string; detail: string };
+
+/**
+ * Where each penalty is on the recording: the whistle in its period at the
+ * scoresheet's time, or up to `PENALTY_DELAY` seconds after it — the nearest
+ * — and failing one, the moment the board's clock passed that time. Penalties
+ * at one moment (coincidental minors, roughing both ways) are one play. The
+ * scoresheet's "OT1" is whatever overtime the clock found.
+ */
+export function placePenalties(
+  penalties: Penalty[], whistles: Whistle[], periods: ClockRun[], readings: { t: number; clock: number | null }[],
+): { t: number; label: string; lead: number; tail: number }[] {
+  const placed: { t: number; details: string[]; teams: Set<string>; period: string; time: string; whistle: boolean }[] = [];
+  for (const p of penalties) {
+    const run = periods.find((r) => r.period === p.period || (/^OT/.test(p.period) && /^OT/.test(r.period ?? "")));
+    const m = /^(\d+):(\d{2})$/.exec(p.time);
+    if (!run || !m) continue;
+    const clock = Number(m[1]) * 60 + Number(m[2]);
+    const inRun = (t: number) => t >= run.from - 10 && t <= run.to + 10;
+    const w = whistles.filter((x) => inRun(x.t) && x.clock <= clock + 3 && x.clock >= clock - PENALTY_DELAY)
+      .sort((a, b) => Math.abs(a.clock - clock) - Math.abs(b.clock - clock))[0];
+    const passed = readings.filter((r) => r.clock !== null && inRun(r.t) && r.clock <= clock).sort((a, b) => a.t - b.t)[0];
+    const t = w?.t ?? passed?.t;
+    if (t === undefined) continue;
+    const detail = p.detail.replace(/\s+\d{1,2}:\d{2}\s*$/, "").replace(/\s*\(Minor\)$/i, "");
+    const same = placed.find((x) => Math.abs(x.t - t) < 1);
+    if (same) { same.details.push(detail); same.teams.add(p.team); continue; }
+    placed.push({ t, details: [detail], teams: new Set([p.team]), period: p.period, time: p.time, whistle: w !== undefined });
+  }
+  return placed.map((x) => ({
+    t: x.t,
+    label: `PENALTY  ${x.details.join(", ")}${x.teams.size === 1 ? `  ·  ${[...x.teams][0]}` : ""}  ·  ${x.period} ${x.time}`,
+    lead: x.whistle ? PENALTY_LEAD : PENALTY_UNTIMED_LEAD, tail: x.whistle ? PENALTY_TAIL : PENALTY_UNTIMED_TAIL,
+  }));
 }
 
 const hasAudio = (file: string) =>
@@ -248,7 +294,8 @@ export async function renderRecap(best: Stream, plays: Play[], title: string[], 
       const k = n + 1, idx = 2 + n;
       inputs.push("-i", joined);
       filters.push(`[${idx}:v]trim=start=${offset.toFixed(3)}:duration=${len.toFixed(3)},setpts=PTS-STARTPTS,scale=${W}:${H},fps=30,` +
-        `drawbox=x=0:y=${H - 70}:w=${W}:h=70:color=black@0.55:t=fill,${draw(text(`label${n}.txt`, p.label), 28, `${H - 52}`)},` +
+        // A long label — two penalties at once — a size down, so it stays on the picture.
+        `drawbox=x=0:y=${H - 70}:w=${W}:h=70:color=black@0.55:t=fill,${draw(text(`label${n}.txt`, p.label), p.label.length > 70 ? 22 : 28, `${H - (p.label.length > 70 ? 48 : 52)}`)},` +
         `fade=t=in:st=0:d=${FADE},fade=t=out:st=${(len - FADE).toFixed(2)}:d=${FADE},format=yuv420p[v${k}];` +
         // The rink's sound where the recording has it; silence of the same length where it has none.
         (hasAudio(joined)
@@ -294,15 +341,16 @@ export function overtimeOf(coarse: { t: number; clock: number | null }[], last: 
 
 const DAY = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
 
-type RecapGame = Options["games"][number] & { homeScore?: string | number | null; awayScore?: string | number | null; ot?: boolean };
+type RecapGame = Options["games"][number] & { homeScore?: string | number | null; awayScore?: string | number | null; ot?: boolean; penalties?: Penalty[] };
 
 /** What a recap holds, for the page: how long, and of what. */
-export type RecapSummary = { seconds: number; goals: number; of: number; shots: number; chances: number; whistles: number; edition: number };
+export type RecapSummary = { seconds: number; goals: number; of: number; penalties: number; shots: number; chances: number; whistles: number; edition: number };
 
 /**
  * Which way of making a recap a recap was made by. A recap of an earlier
  * edition is made again, as one of a corrected scoresheet is. 2: chances
- * from where the camera looks, and no whistles from the neutral zone.
+ * from where the camera looks, no whistles from the neutral zone, and the
+ * penalties.
  */
 export const RECAP_EDITION = 2;
 
@@ -381,7 +429,10 @@ export async function recapGame(o: {
   const stopped = kept.filter((w) => w.zone !== "neutral");
   const chancesFound = chances(views, inPlay).filter((c) => !nearGoal(c.t) && !shots.some((x) => Math.abs(x.t - c.t) <= 6));
   o.log(`${kept.length - stopped.length} whistles in the neutral zone left out; ${chancesFound.filter((c) => c.kind === "rush").length} rushes, ${chancesFound.filter((c) => c.kind === "pressure").length} spells of pressure`);
+  const penalties = placePenalties(game.penalties ?? [], whistles, periods, [...coarse, ...dense]);
+  if (game.penalties?.length) o.log(`${penalties.length} of ${game.penalties.length} penalties placed`);
   const others: Candidate[] = [
+    ...penalties.map((p) => ({ ...p, kind: "penalty" as const, worth: 2.5 })),
     ...shots,
     ...stopped.map((w) => ({ t: w.t, kind: "whistle" as const, worth: w.zone ? 1.5 : 1, label: when(w.t) })),
     // All worth the same: a longer swing or spell was no likelier to hold a shot, and equals are spread over the game.
@@ -398,7 +449,7 @@ export async function recapGame(o: {
     o.budget,
   );
   const seconds = plays.reduce((n, p) => n + p.end - p.start, 0);
-  o.log(`${plays.filter((p) => p.kind === "goal").length} goal plays, ${plays.filter((p) => p.kind === "shot").length} shots, ${plays.filter((p) => p.kind === "chance").length} chances, ${plays.filter((p) => p.kind === "whistle").length} whistles: ${Math.round(seconds)}s`);
+  o.log(`${plays.filter((p) => p.kind === "goal").length} goal plays, ${plays.filter((p) => p.kind === "penalty").length} penalties, ${plays.filter((p) => p.kind === "shot").length} shots, ${plays.filter((p) => p.kind === "chance").length} chances, ${plays.filter((p) => p.kind === "whistle").length} whistles: ${Math.round(seconds)}s`);
   o.log(`chances in it: ${plays.filter((p) => p.kind === "chance").map((p) => p.label.replace(/^Chance\s+·\s+/, "")).join(", ") || "none"}`);
 
   const best = await openStream(d.streamUrl, "best");
@@ -411,7 +462,7 @@ export async function recapGame(o: {
   const r = spawnSync(process.env.FFMPEG ?? "ffmpeg", ["-hide_banner", "-loglevel", "error", "-nostdin", "-y", "-ss", at.toFixed(2), "-i", o.out, "-frames:v", "1", "-q:v", "4", o.poster]);
   if (r.status !== 0) throw new Error(`recap poster failed: ${r.stderr.toString().slice(-300)}`);
   return {
-    seconds: Math.round(TITLE + seconds), goals: goals.length, of: game.goals.length,
+    seconds: Math.round(TITLE + seconds), goals: goals.length, of: game.goals.length, penalties: plays.filter((p) => p.kind === "penalty").length,
     shots: plays.filter((p) => p.kind === "shot").length, chances: plays.filter((p) => p.kind === "chance").length,
     whistles: plays.filter((p) => p.kind === "whistle").length, edition: RECAP_EDITION,
   };
