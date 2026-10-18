@@ -37,3 +37,104 @@ export function normalizePeriods(rows: (OverlayReading & { t: number })[]): Read
     return { t: r.t, period, clock: r.clock, home: r.home, away: r.away };
   });
 }
+
+/**
+ * What the CLOCK says the periods are, for boards whose label cannot be
+ * trusted. Summer 2026 on Rink 2 showed "1st" all game in June, "OT2" and
+ * "OT3" for the 1st and 3rd on 2026-07-01, and opened every recording on the
+ * last game's label. The clock was right throughout.
+ *
+ * A period is a stretch of the clock counting down, ended by a reset to a
+ * higher time. The recording has more such stretches than the game has
+ * periods — the end of the game before, a warm-up countdown, the next game's
+ * warm-up — so the game's periods are the stretches, in order, that its
+ * scoresheet fits best: each goal's time inside its period's stretch of the
+ * clock, with longer stretches preferred and the board's own label, where it
+ * agrees, as the tie-break.
+ */
+
+export type ClockRun = { from: number; to: number; first: number; last: number; samples: number; period: string | null };
+
+/** How far the clock may climb between two samples and still be one stretch: a misread digit, not a reset. */
+const RESET = 60;
+
+export function clockRuns(sweep: { t: number; clock: number | null }[]): ClockRun[] {
+  const rows = [...sweep].filter((r) => r.clock !== null).sort((a, b) => a.t - b.t) as { t: number; clock: number }[];
+  const runs: ClockRun[] = [];
+  for (const [i, r] of rows.entries()) {
+    const run = runs.at(-1);
+    if (run && r.clock <= run.last + RESET) {
+      run.to = r.t; run.last = Math.min(run.last, r.clock); run.samples++;
+      continue;
+    }
+    // Up, and the next reading back down where the run was: a misread digit, not a reset.
+    const next = rows[i + 1];
+    if (run && next && next.clock <= run.last + RESET) continue;
+    runs.push({ from: r.t, to: r.t, first: r.clock, last: r.clock, samples: 1, period: null });
+  }
+  return runs;
+}
+
+/** How far past the last sample a period's clock may have run before the next sample missed it. */
+const SLACK = 130;
+
+/**
+ * Which runs are the game's periods: `periods` of them, in order, the
+ * scoresheet's goals fitting as many as possible. Labels are the board's,
+ * taken at their word (`labelled`), only to break a tie.
+ */
+export function choosePeriods(runs: ClockRun[], goals: { period: string; time: string }[], labelled: Reading[] = []): ClockRun[] {
+  const clock = (t: string) => { const [m, s] = t.split(":").map(Number); return m! * 60 + s!; };
+  const count = Math.max(3, ...goals.map((g) => ORDER.indexOf(g.period) + 1));
+  const periods = ORDER.slice(0, count);
+  const worth = (run: ClockRun, period: string) => {
+    let w = 0.2 * run.samples;
+    for (const g of goals.filter((g) => g.period === period)) {
+      const c = clock(g.time);
+      if (c <= run.first + SLACK && c >= run.last - SLACK) w += 10;
+    }
+    w += 0.1 * labelled.filter((r) => r.period === period && r.t >= run.from && r.t <= run.to).length;
+    return w;
+  };
+  // Longest chain: best[k][i] — periods 0..k with period k on run i.
+  const best: { w: number; prev: number }[][] = periods.map(() => runs.map(() => ({ w: -Infinity, prev: -1 })));
+  for (const [k, period] of periods.entries()) {
+    for (const [i, run] of runs.entries()) {
+      const here = worth(run, period);
+      if (k === 0) { best[k]![i] = { w: here, prev: -1 }; continue; }
+      for (let j = 0; j < i; j++) {
+        const w = best[k - 1]![j]!.w + here;
+        if (w > best[k]![i]!.w) best[k]![i] = { w, prev: j };
+      }
+    }
+  }
+  const last = best[count - 1]!;
+  let i = last.reduce((b, x, n) => (x.w > last[b]!.w ? n : b), 0);
+  if (!runs.length || last[i]!.w === -Infinity) return [];
+  const chosen: ClockRun[] = [];
+  for (let k = count - 1; k >= 0 && i >= 0; k--) {
+    chosen.unshift({ ...runs[i]!, period: periods[k]! });
+    i = best[k]![i]!.prev;
+  }
+  return chosen;
+}
+
+/**
+ * Every reading's period, by the chosen runs. Between two runs — the end of a
+ * period after its last sample, or the start of the next before its first —
+ * the clock says which: still at or under where the one before got to, or
+ * already up near where the next began.
+ */
+export function periodsByClock(rows: Reading[], chosen: ClockRun[]): Reading[] {
+  return rows.map((r) => {
+    let period: string | null = null;
+    const inside = chosen.find((c) => r.t >= c.from && r.t <= c.to);
+    if (inside) period = inside.period;
+    else if (r.clock !== null) {
+      const before = [...chosen].reverse().find((c) => c.to < r.t), after = chosen.find((c) => c.from > r.t);
+      if (before && r.t - before.to <= SLACK && r.clock <= before.last + 2) period = before.period;
+      else if (after && after.from - r.t <= SLACK && r.clock >= after.first - 2) period = after.period;
+    }
+    return { ...r, period };
+  });
+}

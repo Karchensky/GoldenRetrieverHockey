@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { compare } from "./compare.ts";
 import { daily, gamesWithWork, type Highlights, type Ledger, type Options } from "./daily.ts";
+import { survey } from "./survey.ts";
 import { locateGoals, type Location, type Reading, type ScoredGoal } from "./locate.ts";
 
 /**
@@ -12,6 +13,7 @@ import { locateGoals, type Location, type Reading, type ScoredGoal } from "./loc
  *
  *   daily   the scheduled job — see daily.ts and .github/workflows/highlights.yml
  *   compare one game's downloaded clips beside the same clips cut from the recording
+ *   survey  how well the goal search holds up over a stretch of games, read only
  *   locate  overlay readings + scoresheet -> where every goal is, for looking into one game by hand
  *
  * Anything written for a person lands in tmp/highlights/<game>/ — gitignored,
@@ -54,6 +56,14 @@ const USAGE = `
       published clip is, with the rink's own download beside each when its link
       still works — to see the difference before trusting the backup. Writes to
       tmp/highlights/<id>/. Spends and uploads nothing.
+
+  survey --since YYYY-MM-DD [--until YYYY-MM-DD] [--clips]
+      Every played game of ours in those dates searched the way the daily job
+      does, each goal — ours and theirs — reported found or why not. Writes
+      each game's readings to tmp/highlights/<id>/ and the table to
+      tmp/highlights/survey.json. --clips also cuts each goal found from the
+      recording, as the backup would, and puts it through the clip checks,
+      keeping the clips there to watch. Spends and uploads nothing.
 `;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -110,6 +120,8 @@ const { values } = parseArgs({
     wait: { type: "string" },
     source: { type: "string" },
     since: { type: "string" },
+    until: { type: "string" },
+    clips: { type: "boolean" },
   },
 });
 
@@ -133,6 +145,21 @@ if (command === "locate" && values.game && values.readings) {
     credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
   });
   process.exitCode = failed ? 1 : 0;
+} else if (command === "survey" && values.since) {
+  const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Options["games"] };
+  const until = values.until ?? "9999";
+  const games = site.games.filter((g) => g.date >= values.since! && g.date <= until && g.gr !== null && /^final/i.test(g.status) && g.goals.length);
+  const rows = await survey({
+    games, dir: outDir, log: (line) => console.log(line), clips: values.clips === true,
+    credentials: () => ({ email: env("HARBORCENTER_EMAIL"), password: env("HARBORCENTER_PASSWORD") }),
+  });
+  fs.writeFileSync(path.join(ROOT, "tmp/highlights/survey.json"), JSON.stringify(rows, null, 2) + "\n");
+  const ok = (r: (typeof rows)[number]) => r.t !== null && r.confirmed;
+  for (const r of rows.filter((r) => !ok(r))) console.log(`!! ${r.date} ${r.game} ${r.label}${r.ours ? " (ours)" : ""}: ${r.problem ?? "not confirmed"}`);
+  for (const r of rows.filter((r) => typeof r.clip === "string")) console.log(`!! clip ${r.date} ${r.game} ${r.label}${r.ours ? " (ours)" : ""}: ${r.clip}`);
+  if (values.clips) console.log(`${rows.filter((r) => r.clip === true).length} of ${rows.filter(ok).length} clips cut from the recording pass both checks.`);
+  const ours = rows.filter((r) => r.ours);
+  console.log(`${rows.filter(ok).length} of ${rows.length} goals found and confirmed; ours ${ours.filter(ok).length} of ${ours.length}, in ${games.length} games.`);
 } else if (command === "daily") {
   const site = JSON.parse(fs.readFileSync(path.join(ROOT, "apps/web/data/site.json"), "utf8")) as { games: Parameters<typeof daily>[0]["games"] };
   const ledger = JSON.parse(fs.readFileSync(LEDGER, "utf8")) as Ledger;

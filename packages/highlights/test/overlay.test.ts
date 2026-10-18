@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { loadLayouts, parseClockText, readOverlay, type Frame, type Layout } from "../src/overlay.ts";
+import { calibrate, loadLayouts, parseClockText, readOverlay, shifted, type Frame, type Layout } from "../src/overlay.ts";
 
 /**
  * The reader against frames drawn here, because the rink's frames are its
@@ -115,4 +115,38 @@ test("every layout is complete enough to read", () => {
     }
     if (l.period === "word") assert.ok(Object.keys(l.words).length > 0, `${l.name} reads period words but has none`);
   }
+});
+
+test("the edge of the clock's box, caught in the crop, is not a leading 1", () => {
+  // Summer 2026 on Rink 1: 8:43 read as 18:43, and 47.6 as 147.6.
+  for (const clock of ["8:43", "47.6"]) {
+    const f = blank();
+    const [x0, , y0, y1] = led.fields.clock.box;
+    rect(f, Math.trunc(W * x0), Math.trunc(H * y0), 2, Math.trunc(H * y1) - Math.trunc(H * y0), [200, 200, 200]);
+    write(f, led, "clock", clock, YELLOW);
+    assert.equal(readOverlay(f, led).clockText, clock);
+  }
+  // A real 1 well inside the box is still read.
+  const f = blank();
+  write(f, led, "clock", "18:43", YELLOW);
+  assert.equal(readOverlay(f, led).clockText, "18:43");
+});
+
+test("a board painted a few pixels off where its layout says is found, and read", () => {
+  // As far off as summer 2026's Rink 1 clock box was from October's, and more.
+  const off = shifted(led, 14, -8);
+  const frames = [["7:11", "4", "4"], ["10:28", "1", "2"], ["4:57", "3", "0"], ["0:59", "2", "5"]].map(([clock, home, away]) => {
+    const f = blank();
+    write(f, off, "clock", clock!, YELLOW);
+    write(f, off, "home", home!, RED);
+    write(f, off, "away", away!, RED);
+    write(f, off, "period", "2", YELLOW);
+    return f;
+  });
+  assert.ok(frames.some((f) => readOverlay(f, led).clock === null), "the boxes as they are should miss this board");
+  const { layout, clocks } = calibrate(frames, led);
+  assert.equal(clocks, frames.length);
+  const [dx, dy] = layout.offset!;
+  assert.ok(Math.abs(dx - 14) <= 4 && Math.abs(dy + 8) <= 4, `found at ${dx}, ${dy}`);
+  assert.deepEqual(frames.map((f) => readOverlay(f, layout).clockText), ["7:11", "10:28", "4:57", "0:59"]);
 });

@@ -100,6 +100,17 @@ lets browsers cache them for a year. Never upload over an existing name.
 The scoreboard reader knows two boards, `layouts/*.json`. A recording on a
 board it does not know is reported, never guessed at, and costs nothing.
 
+**Measure the search on many games, not one.** `cli.ts survey --since <date>
+[--clips]` runs it over every game in a range, reads only, and reports each
+goal found or why not. Tuned on two October games it found 4 of summer 2026's
+104 goals. What the summer taught it: the board sits a few pixels differently
+per recording (`calibrate`), its period label can be anything (periods come
+from the clock, `choosePeriods`), and on Rink 2 the graphic's SCORE is kept by
+hand and was stuck at 0–0, wrong, or a goal behind on most summer nights. A
+goal whose score change the graphic never shows is refused, which is right.
+Set `GRH_SEGMENT_CACHE=<dir>` to keep the segments read, so a second run is
+quick.
+
 ## Safety
 
 Never read, print or commit anything under `.secrets/`. Report a credential's

@@ -71,7 +71,7 @@ test("a clip that misses the goal, or shows another game, is refused", () => {
 
 
 const located = (index: number, t: number | null, confirmed = true): LocatedGoal => ({
-  index, t, confirmed, candidates: [], before: { home: 0, away: 0 }, after: { home: 0, away: 0 },
+  index, t, confirmed, clock: t === null ? null : 600 - index, candidates: [], before: { home: 0, away: 0 }, after: { home: 0, away: 0 },
   goal: { period: "1st", time: "05:00", team: "x", scorer: "x", assists: [], strength: "" },
 });
 
@@ -80,9 +80,9 @@ test("only our goals are clipped, and two of ours close together share one clip"
   // Ours: 1, 3, 4 and 5. Theirs at 0 and 2 are never clipped; 5 was never confirmed by the score.
   const plan = planClips(goals, new Set([1, 3, 4, 5]));
   assert.deepEqual(plan, [
-    { goals: [1], at: [130], start: 115, seconds: 23 },
+    { goals: [1], at: [130], clocks: [599], start: 115, seconds: 23 },
     // 400 and 420: 385 to 428, 43 seconds — under the rink's one-minute limit, so one credit.
-    { goals: [3, 4], at: [400, 420], start: 385, seconds: 43 },
+    { goals: [3, 4], at: [400, 420], clocks: [597, 596], start: 385, seconds: 43 },
   ]);
 });
 
@@ -90,7 +90,7 @@ test("goals too far apart for one clip get one each — and a gap alone does not
   // 100 and 160: 85 to 168 would be 83 seconds, over the minute.
   assert.deepEqual(planClips([located(0, 100), located(1, 160)], new Set([0, 1])).map((c) => c.goals), [[0], [1]]);
   // 100 and 130: separate windows, 85-108 and 115-138, but 85 to 138 is 53 seconds — one clip, one credit.
-  assert.deepEqual(planClips([located(0, 100), located(1, 130)], new Set([0, 1])), [{ goals: [0, 1], at: [100, 130], start: 85, seconds: 53 }]);
+  assert.deepEqual(planClips([located(0, 100), located(1, 130)], new Set([0, 1])), [{ goals: [0, 1], at: [100, 130], clocks: [600, 599], start: 85, seconds: 53 }]);
 });
 
 test("a box score is matched to a rink game by date, time and rink, or not at all", () => {
@@ -188,4 +188,36 @@ test("the page shows a clip beside one goal of ours only, and never a guess", ()
   const twice = [game.goals[0]!, game.goals[1]!, { ...game.goals[2]!, time: "06:42" }];
   assert.equal(clipBeside(clips, twice, 1, game.home), undefined);
   assert.equal(clipBeside(clips, twice, 2, game.home), undefined);
+});
+
+import { choosePeriods, clockRuns, periodsByClock } from "../src/periods.ts";
+
+/** 2026-08-12 on Rink 2, as the sweep read it: one frame every two minutes, the clock only. */
+const AUG12 = [
+  [240, 48], [360, 7], [480, 401], [600, 281], [720, 472], [840, 352], [960, 232], [1080, 112], [1320, 113], [1440, 0],
+  [1560, 704], [1680, 645], [1800, 525], [1920, 419], [2040, 317], [2160, 237], [2280, 140], [2400, 56],
+  [2640, 679], [2760, 587], [2880, 526], [3000, 406], [3120, 342], [3360, 145], [3480, 87], [3600, 23],
+  [3720, 1079], [3960, 843], [4320, 483], [4560, 282], [4680, 162],
+  [4920, 513], [5040, 393], [5160, 273],
+].map(([t, clock]) => ({ t: t!, clock: clock! }));
+const aug12Goals = [
+  { period: "1st", time: "03:45" }, { period: "1st", time: "00:05" }, { period: "2nd", time: "06:12" },
+  { period: "2nd", time: "00:54" }, { period: "3rd", time: "15:45" }, { period: "3rd", time: "13:40" }, { period: "3rd", time: "04:28" },
+];
+
+test("the periods are where the clock says, whatever the board's label: warm-ups and the games either side left out", () => {
+  // The tile called these periods "OT2" and "OT3", and opened on the last game's "1st".
+  const runs = clockRuns(AUG12);
+  const chosen = choosePeriods(runs, aug12Goals);
+  assert.deepEqual(chosen.map((c) => [c.period, c.from, c.to]), [["1st", 1560, 2400], ["2nd", 2640, 3600], ["3rd", 3720, 4680]]);
+  const rows = (t: number, clock: number) => ({ t, period: "OT2", clock, home: null, away: null });
+  // After the 1st's last sample, still running down: the 1st. Just before the 2nd's first, reset: the 2nd.
+  // The warm-up, and the next game's, are no period at all.
+  assert.deepEqual(periodsByClock([rows(2450, 10), rows(2600, 720), rows(900, 300), rows(5000, 450)], chosen).map((r) => r.period),
+    ["1st", "2nd", null, null]);
+});
+
+test("a misread high clock in the middle of a period does not split it", () => {
+  const runs = clockRuns([{ t: 0, clock: 700 }, { t: 120, clock: 600 }, { t: 240, clock: 1600 }, { t: 360, clock: 450 }, { t: 480, clock: 300 }]);
+  assert.equal(runs.length, 1);
 });

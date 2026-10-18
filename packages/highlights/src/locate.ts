@@ -51,6 +51,8 @@ export type LocatedGoal = {
   t: number | null;
   /** The overlay's score changed from `before` to `after` right there. */
   confirmed: boolean;
+  /** What the board's clock showed at `t` — the scoresheet's time, give or take what the scorekeeper wrote down. */
+  clock: number | null;
   /** Every place the clock reached this goal's time, for the report. */
   candidates: Candidate[];
   problem?: string;
@@ -199,8 +201,7 @@ function settle(
   const s = scoreChange(readings, before, after, t0 - 120, t0 + scoreLagSeconds);
   if (s === null) return { t: t0, confirmed: false };
   const clock = parseClock(goal.time);
-  const near = stops(readings, goal.period, stoppedSeconds)
-    .filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds);
+  const near = stops(readings, goal.period, stoppedSeconds).filter((x) => x.start <= s && x.start >= s - 300 && Math.abs(x.clock - clock) <= snapSeconds);
   const stop = near.find((x) => s <= x.end + 3) ?? [...near].sort((a, b) => b.end - b.start - (a.end - a.start))[0];
   if (stop) return { t: stop.start, confirmed: true };
   return t0 <= s ? { t: t0, confirmed: true } : { t: t0, confirmed: false };
@@ -243,10 +244,15 @@ export function locateGoals(
       .map((t0) => settle(sorted, goal, before, after, t0, options));
     // Two crossings either side of one stoppage settle on the same whistle.
     const candidates = settled.filter((c, i) => settled.findIndex((d) => d.t === c.t) === i);
-    return { index, goal, before, after, t: null, confirmed: false, candidates };
+    return { index, goal, before, after, t: null, confirmed: false, clock: null, candidates };
   });
 
   choose(located);
+  for (const g of located) {
+    if (g.t === null) continue;
+    // The clock as the board showed it there: the first reading of this period from the goal on.
+    g.clock = sorted.find((r) => r.t >= g.t! - 0.01 && r.period === g.goal.period && r.clock !== null)?.clock ?? null;
+  }
   for (const g of located) {
     if (g.problem || g.t === null) continue;
     if (!g.confirmed) {

@@ -3,11 +3,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { clipBeside, type Highlight } from "./beside.ts";
-import { chooseLayout, clipThumbs, duration, encodeForWeb, readClip, verifyClip } from "./clip.ts";
+import { clipThumbs, duration, encodeForWeb, readBoard, verifyClip } from "./clip.ts";
 import { crossCheck, recordingThumbs } from "./crosscheck.ts";
 import { findGoals } from "./find.ts";
 import { locateGoals, scoreline, type LocatedGoal, type ScoredGoal } from "./locate.ts";
-import { loadLayouts } from "./overlay.ts";
 import {
   CLIP_MAX, clipsCredit, createMoment, gameDetails, myMoments, ourTeams, recordedGames, requestDownload, signIn,
   type Moment, type RinkGame, type Session,
@@ -68,6 +67,8 @@ export type ClipEntry = {
   labels?: string[];
   /** Seconds into the recording where the search found each goal: what the downloaded clip is checked against. */
   at?: number[];
+  /** The board's clock at each goal, where the search found it — the clip's own clock is checked against this, not the scoresheet's time. */
+  clocks?: (number | null)[];
   start: number;
   seconds: number;
   moment: string | null;
@@ -140,17 +141,20 @@ export const sheetOf = (g: SiteGame) => g.goals.map((x) => `${goalLabel(x)} ${x.
  * share one clip whenever that clip stays within the rink's minute — even with a
  * gap between them that a clip of each would not have shown.
  */
-export function planClips(goals: LocatedGoal[], ours: Set<number>, lead = LEAD, tail = TAIL): { goals: number[]; at: number[]; start: number; seconds: number }[] {
+type Plan = { goals: number[]; at: number[]; clocks: (number | null)[]; start: number; seconds: number };
+
+export function planClips(goals: LocatedGoal[], ours: Set<number>, lead = LEAD, tail = TAIL): Plan[] {
   const placed = goals.filter((g) => ours.has(g.index) && g.t !== null && g.confirmed).sort((a, b) => a.t! - b.t!);
-  const out: { goals: number[]; at: number[]; start: number; seconds: number }[] = [];
+  const out: Plan[] = [];
   for (const g of placed) {
     const start = Math.max(0, g.t! - lead), end = g.t! + tail, last = out.at(-1);
     if (last && end - last.start <= CLIP_MAX) {
       last.seconds = round1(end - last.start);
       last.goals.push(g.index);
       last.at.push(round1(g.t!));
+      last.clocks.push(g.clock);
     } else {
-      out.push({ goals: [g.index], at: [round1(g.t!)], start: round1(start), seconds: lead + tail });
+      out.push({ goals: [g.index], at: [round1(g.t!)], clocks: [g.clock], start: round1(start), seconds: lead + tail });
     }
   }
   return out;
@@ -512,16 +516,16 @@ export type Checked = { n: number; goal: ScoredGoal; goalAt: number }[];
  * the goals in it and where — or why it is not that goal. `now` is where its
  * goals are on the scoresheet (`currentGoals`); `stream` is the recording.
  */
-export async function checkClip(game: SiteGame, c: Pick<ClipEntry, "at" | "start" | "seconds">, now: number[], raw: string, stream: Stream): Promise<Checked | string> {
+export async function checkClip(game: SiteGame, c: Pick<ClipEntry, "at" | "clocks" | "start" | "seconds">, now: number[], raw: string, stream: Stream): Promise<Checked | string> {
   // One: the clip's own scoreboard shows each goal going in, at the score either side of it.
-  const picked = chooseLayout((l) => readClip(raw, l), loadLayouts());
+  const picked = readBoard(raw);
   if (!picked) return "no known scoreboard reads in the clip";
   const scores = scoreline(game.goals, game.home, game.away);
   const length = duration(raw);
   const goals: (Checked[number] & { at: number | undefined })[] = [];
   for (const [i, n] of now.entries()) {
     const goal = game.goals[n]!;
-    const v = verifyClip(picked.readings, goal, n === 0 ? { home: 0, away: 0 } : scores[n - 1]!, scores[n]!, picked.layout.name, length);
+    const v = verifyClip(picked.readings, goal, n === 0 ? { home: 0, away: 0 } : scores[n - 1]!, scores[n]!, picked.layout.name, length, c.clocks?.[i] ?? undefined);
     if (!v.ok) return v.problem;
     goals.push({ n, goal, goalAt: v.goalAt, at: c.at?.[i] });
   }

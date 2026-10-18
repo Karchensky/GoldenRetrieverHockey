@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -65,12 +66,27 @@ export async function openStream(streamUrl: string, pick: "lightest" | "best" = 
   return { segments, ended: /^#EXT-X-ENDLIST/m.test(playlist), variant, fetched: { segments: 0, bytes: 0 } };
 }
 
+/**
+ * For looking into games by hand: with GRH_SEGMENT_CACHE set to a directory,
+ * every segment read is kept there, named by a hash of its address, so a
+ * second look at a game fetches nothing. Never set in the workflow.
+ */
+const CACHE = process.env.GRH_SEGMENT_CACHE;
+
 async function segmentBytes(stream: Stream, index: number): Promise<Buffer> {
-  const r = await fetch(stream.segments[index]!.uri, { signal: AbortSignal.timeout(TIMEOUT) });
-  if (!r.ok) throw new Error(`recording segment ${index}: ${r.status}`);
-  const bytes = Buffer.from(await r.arrayBuffer());
+  const uri = stream.segments[index]!.uri;
+  const cached = CACHE && path.join(CACHE, crypto.createHash("sha256").update(uri.split("?")[0]!).digest("hex").slice(0, 32) + ".ts");
+  if (cached && fs.existsSync(cached)) return fs.readFileSync(cached);
+  // One stalled segment once cost a whole game's search: it is asked for twice before that.
+  const get = async () => {
+    const r = await fetch(uri, { signal: AbortSignal.timeout(TIMEOUT) });
+    if (!r.ok) throw new Error(`recording segment ${index}: ${r.status}`);
+    return Buffer.from(await r.arrayBuffer());
+  };
+  const bytes = await get().catch(get);
   stream.fetched.segments++;
   stream.fetched.bytes += bytes.length;
+  if (cached) { fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cached, bytes); }
   return bytes;
 }
 

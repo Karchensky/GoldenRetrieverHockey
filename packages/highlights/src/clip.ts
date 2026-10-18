@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { thumbnail, type Thumb } from "./crosscheck.ts";
-import { loadLayouts, readOverlay, type Frame, type Layout, type OverlayReading } from "./overlay.ts";
+import { calibrate, loadLayouts, readOverlay, type Frame, type Layout, type OverlayReading } from "./overlay.ts";
 import { parseClock, type Score, type ScoredGoal } from "./locate.ts";
 
 /**
@@ -63,7 +63,17 @@ function clipFrames<T>(video: string, perSecond: number, each: (t: number, frame
   return out;
 }
 
-/** Of the known boards, the one this video's clock reads cleanly on — or null, a board not seen before. */
+/**
+ * Of the known boards, each lined up with this clip (`calibrate`), the one its
+ * clock reads cleanly on — or null, a board not seen before.
+ */
+export function readBoard(video: string, layouts = loadLayouts(), perSecond = 2): { layout: Layout; readings: ClipReading[] } | null {
+  const frames = clipFrames(video, perSecond, (t, frame) => ({ t, frame }));
+  return chooseLayout((l) => frames.map(({ t, frame }) => ({ t, ...readOverlay(frame, l) })),
+    layouts.map((l) => calibrate(frames.map((f) => f.frame), l).layout));
+}
+
+/** Of the boards given, the one this video's clock reads cleanly on — or null, a board not seen before. */
 export function chooseLayout(read: (l: Layout) => ClipReading[], layouts = loadLayouts()): { layout: Layout; readings: ClipReading[] } | null {
   let best: { layout: Layout; readings: ClipReading[]; score: number } | null = null;
   for (const layout of layouts) {
@@ -89,9 +99,10 @@ export type Verdict =
  * "OT2" all through 2026-10-15. The clock and the score are what pin it.
  */
 export function verifyClip(
-  readings: ClipReading[], goal: ScoredGoal, before: Score, after: Score, layout: string, duration: number,
+  readings: ClipReading[], goal: ScoredGoal, before: Score, after: Score, layout: string, duration: number, at?: number,
 ): Verdict {
-  const clock = parseClock(goal.time);
+  // Where the search found the board's clock at the goal, when it has it: the scoresheet's time can be out by most of a minute.
+  const clock = at ?? parseClock(goal.time);
   const timed = readings.filter((r) => r.clock !== null);
   if (timed.length < readings.length / 2) return { ok: false, problem: `the clock reads in only ${timed.length} of ${readings.length} frames` };
   // Two readings in a row at or below the time, after two above it: one misread is not a crossing.
@@ -102,7 +113,8 @@ export function verifyClip(
   }
   if (goalAt === null) {
     const seen = timed.map((r) => r.clockText);
-    return { ok: false, problem: `the clock never reaches ${goal.time}; it shows ${seen[0]} to ${seen.at(-1)}` };
+    const shown = `${Math.floor(clock / 60)}:${String(clock % 60).padStart(2, "0")}`;
+    return { ok: false, problem: `the clock never reaches ${at === undefined ? goal.time : shown}; it shows ${seen[0]} to ${seen.at(-1)}` };
   }
   if (goalAt < 3 || goalAt > duration - 3) return { ok: false, problem: `the goal is at ${goalAt.toFixed(1)}s of ${duration.toFixed(1)}s — no build-up or no finish` };
   const scored = readings.filter((r) => r.home !== null && r.away !== null);
