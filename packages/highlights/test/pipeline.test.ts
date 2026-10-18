@@ -6,6 +6,7 @@ import { verifyClip, type ClipReading } from "../src/clip.ts";
 import { clipBeside } from "../src/beside.ts";
 import { gamesWithWork, matchRinkGame, minuteOfDay, movedSincePlanned, planClips, sheetOf } from "../src/daily.ts";
 import type { LocatedGoal, ScoredGoal } from "../src/locate.ts";
+import { RECAP_EDITION } from "../src/recap.ts";
 
 const row = (t: number, period: string | null, clock: number | null, home: number | null = 0, away: number | null = 0) =>
   ({ t, period, clock, clockText: "", home, away });
@@ -131,11 +132,14 @@ const game = {
 const clipOf = (goal: number, period: string, time: string, scorer: string) =>
   ({ goal, period, time, scorer, clip: `1335913-${goal}.mp4`, poster: `1335913-${goal}.jpg`, seconds: 23 });
 
-test("a day with every goal of ours on its box score is nothing to do — before signing in to anything", () => {
-  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
+const everyClip = () => [clipOf(0, "1st", "11:52", "Mike Kline"), clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")];
+
+test("a day with every goal on its box score, theirs too, is nothing to do — before signing in to anything", () => {
+  const highlights = { "1335913": everyClip() };
   assert.deepEqual(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights }), []);
-  // A goal of ours with no clip is work; a game before the start date never is.
-  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights: { "1335913": [highlights["1335913"][0]!] } }).length, 1);
+  // A goal of ours with no clip is work, and so is one of theirs; a game before the start date never is.
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights: { "1335913": everyClip().slice(1) } }).length, 1);
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: {}, highlights: { "1335913": everyClip().slice(0, 2) } }).length, 1);
   assert.equal(gamesWithWork({ since: "2026-10-16", games: [game], ledger: {}, highlights: {} }).length, 0);
 });
 
@@ -147,25 +151,30 @@ test("an overtime game is clipped like any other; one not played, or not ours, n
 });
 
 test("a game it could not finish is left for a person — until its scoresheet is corrected", () => {
-  const stuck = { rinkGame: 42732, clips: [], problem: "1st 06:42 Jason Kaplewicz: not found", sheet: sheetOf(game) };
+  const stuck = { rinkGame: 42732, clips: [], problem: "1st 06:42 Jason Kaplewicz: not found", sheet: sheetOf(game), covers: "every" as const };
   assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: { "1335913": stuck }, highlights: {} }).length, 0);
   const corrected = { ...game, goals: [game.goals[0]!, { ...game.goals[1]!, time: "06:12" }, game.goals[2]!] };
   assert.equal(gamesWithWork({ since: "2026-10-07", games: [corrected], ledger: { "1335913": stuck }, highlights: {} }).length, 1);
+  // A problem from before goals against were clipped was about ours: theirs are still looked for, once.
+  const before = { rinkGame: 42732, clips: [], problem: "1st 06:42 Jason Kaplewicz: not found", sheet: sheetOf(game) };
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: { "1335913": before }, highlights: {} }).length, 1);
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [game], ledger: { "1335913": before }, highlights: { "1335913": [everyClip()[0]!] } }).length, 0);
 });
 
 test("a corrected scoresheet: a clip follows its goal, and one with no goal left is reported once", () => {
-  // The league adds a goal it missed, at the top: ours move down one place each.
+  // The league adds a goal it missed, at the top: the rest move down one place each.
   const corrected = { ...game, goals: [{ ...game.goals[0]!, time: "14:10" }, ...game.goals] };
-  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
-  // Found by period and time, both clips still have their goal: nothing to do, nothing to report.
-  assert.deepEqual(gamesWithWork({ since: "2026-10-07", games: [corrected], ledger: {}, highlights }), []);
+  const highlights = { "1335913": everyClip() };
+  // Found by period and time, every clip still has its goal: nothing to report — only the new goal to clip.
+  assert.deepEqual(gamesWithWork({ since: "2026-10-07", games: [corrected], ledger: {}, highlights: { "1335913": [...everyClip(), clipOf(9, "1st", "14:10", "Mike Kline")] } }), []);
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [corrected], ledger: {}, highlights }).length, 1);
   // The time of one is corrected instead: that clip matches no goal of ours, which is work — once.
   const retimed = { ...game, goals: [game.goals[0]!, { ...game.goals[1]!, time: "06:41" }, game.goals[2]!] };
   assert.equal(gamesWithWork({ since: "2026-10-07", games: [retimed], ledger: { "1335913": { rinkGame: 42732, clips: [{ goals: [1], start: 0, seconds: 23, moment: "m", status: "published" }] } }, highlights }).length, 1);
   assert.equal(gamesWithWork({ since: "2026-10-07", games: [retimed], ledger: { "1335913": { rinkGame: 42732, clips: [{ goals: [1], start: 0, seconds: 23, moment: "m", status: "published" }], stale: ["1335913-1.mp4"] } }, highlights }).length, 0);
 });
 
-test("no credit is spent on a clip whose goal moved, or is not ours, since it was found", () => {
+test("nothing is spent on a clip whose goal moved since it was found", () => {
   const planned = { goals: [1], labels: ["1st 06:42"] };
   assert.deepEqual(movedSincePlanned(game, planned), []);
   // A goal added above it: it is further down the scoresheet, still ours at 06:42 — the same moment of the same recording.
@@ -173,21 +182,24 @@ test("no credit is spent on a clip whose goal moved, or is not ours, since it wa
   assert.deepEqual(movedSincePlanned(added, planned), []);
   // Time corrected: the clip was found for a moment the scoresheet no longer has.
   assert.deepEqual(movedSincePlanned({ ...game, goals: [game.goals[0]!, { ...game.goals[1]!, time: "06:41" }, game.goals[2]!] }, planned), [1]);
-  // Given to the other team.
-  assert.deepEqual(movedSincePlanned({ ...game, goals: [game.goals[0]!, { ...game.goals[1]!, team: "Buffalo Cigars" }, game.goals[2]!] }, planned), [1]);
+  // Given to the other team: the same moment, still — cut from the recording, never a download, now it is theirs.
+  assert.deepEqual(movedSincePlanned({ ...game, goals: [game.goals[0]!, { ...game.goals[1]!, team: "Buffalo Cigars" }, game.goals[2]!] }, planned), []);
+  // Two goals at that moment: which one it is would be a guess.
+  assert.deepEqual(movedSincePlanned({ ...game, goals: [game.goals[0]!, game.goals[1]!, { ...game.goals[2]!, time: "06:42" }] }, planned), [1]);
 });
 
-test("the page shows a clip beside one goal of ours only, and never a guess", () => {
-  const clips = [clipOf(1, "1st", "06:42", "Jason Kaplewicz")];
-  assert.equal(clipBeside(clips, game.goals, 1, game.home), clips[0]);
-  assert.equal(clipBeside(clips, game.goals, 2, game.home), undefined);
-  // Corrected to theirs: shown beside nothing.
+test("the page shows a clip beside the one goal at its moment, ours or theirs, and never a guess", () => {
+  const clips = [clipOf(0, "1st", "11:52", "Mike Kline"), clipOf(1, "1st", "06:42", "Jason Kaplewicz")];
+  assert.equal(clipBeside(clips, game.goals, 0), clips[0]);
+  assert.equal(clipBeside(clips, game.goals, 1), clips[1]);
+  assert.equal(clipBeside(clips, game.goals, 2), undefined);
+  // Corrected to theirs: the clip is of that moment still, and stays beside it.
   const theirs = [game.goals[0]!, { ...game.goals[1]!, team: "Buffalo Cigars" }, game.goals[2]!];
-  assert.equal(clipBeside(clips, theirs, 1, game.home), undefined);
+  assert.equal(clipBeside(clips, theirs, 1), clips[1]);
   // Two goals at that moment: neither gets it.
   const twice = [game.goals[0]!, game.goals[1]!, { ...game.goals[2]!, time: "06:42" }];
-  assert.equal(clipBeside(clips, twice, 1, game.home), undefined);
-  assert.equal(clipBeside(clips, twice, 2, game.home), undefined);
+  assert.equal(clipBeside(clips, twice, 1), undefined);
+  assert.equal(clipBeside(clips, twice, 2), undefined);
 });
 
 import { choosePeriods, clockRuns, periodsByClock } from "../src/periods.ts";
@@ -236,17 +248,21 @@ test("a warm-up countdown that fits the 1st period's goals is not taken for it, 
   assert.deepEqual(choosePeriods(clockRuns(sweep), goals).map((c) => [c.period, c.from]), [["1st", 1560], ["2nd", 2760], ["3rd", 3720]]);
 });
 
-test("a game gets its recap once its goals are searched, again for a corrected scoresheet, and not after one is given up on", () => {
-  const highlights = { "1335913": [clipOf(1, "1st", "06:42", "Jason Kaplewicz"), clipOf(2, "1st", "02:22", "Anthony Christy")] };
+test("a game gets its recap once its goals are searched, again for a corrected scoresheet or a new edition, and not after one is given up on", () => {
+  const highlights = { "1335913": everyClip() };
   const searched = { "1335913": { rinkGame: 42732, clips: [] } };
-  const recap = (sheet: string) => ({ "1335913": { clip: "1335913-recap-0123abcd.mp4", poster: "1335913-recap-0123abcd.jpg", seconds: 200, goals: 3, of: 3, shots: 0, whistles: 4, sheet } });
+  const recap = (sheet: string, edition: number | null = RECAP_EDITION) =>
+    ({ "1335913": { clip: "1335913-recap-0123abcd.mp4", poster: "1335913-recap-0123abcd.jpg", seconds: 200, goals: 3, of: 3, shots: 0, whistles: 4, sheet, ...(edition === null ? {} : { edition }) } });
   const work = (o: Partial<Parameters<typeof gamesWithWork>[0]>) => gamesWithWork({ since: "2026-10-07", games: [game], ledger: searched, highlights, ...o }).length;
-  // Every goal of ours clipped, no recap yet: that is work. Without recaps asked for, it is not.
+  // Every goal clipped, no recap yet: that is work. Without recaps asked for, it is not.
   assert.equal(work({ recaps: {} }), 1);
   assert.equal(work({}), 0);
   // Made for this scoresheet: nothing to do. Made for an older one: made again.
   assert.equal(work({ recaps: recap(sheetOf(game)) }), 0);
   assert.equal(work({ recaps: recap("an older sheet") }), 1);
+  // Made by an earlier edition of the job — the first wrote none down — made again.
+  assert.equal(work({ recaps: recap(sheetOf(game), null) }), 1);
+  assert.equal(work({ recaps: recap(sheetOf(game), RECAP_EDITION - 1) }), 1);
   // Given up on for this scoresheet — too few goals found — is for a person, not every run.
   assert.equal(work({ recaps: {}, ledger: { "1335913": { ...searched["1335913"], recap: { sheet: sheetOf(game), problem: "only 1 of its 3 goals could be found" } } } }), 0);
   // Not found on the rink's site yet: the goals are searched first.

@@ -14,19 +14,21 @@ export const totals = data.totals;
 export const gameById = (id: string) => games.find((g) => g.id === id);
 
 /**
- * Our goals, clipped from the rink's recording by the daily highlights job.
+ * The goals, ours and theirs, clipped from the rink's recording by the daily
+ * highlights job.
  * Which clip goes beside which goal is `clipBeside`'s rule — by the goal's
  * period and time, never its place on a scoresheet that can be corrected. The
  * files are served from R2 by the Worker, never from this repository.
  */
 const highlights = highlightsJson as Record<string, Highlight[]>;
 
-/** The clip beside goal `n` of this game, if it is one of ours and has one. */
-export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside(highlights[g.id], g.goals, n, grSide(g));
+/** The clip beside goal `n` of this game, if it has one. */
+export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside(highlights[g.id], g.goals, n);
 
 /**
  * The game's recap, if the daily job has made one: its goals, both teams',
- * its shots and the plays its whistles ended, a few minutes of the recording.
+ * its penalties, shots, chances and the plays its whistles ended, a few
+ * minutes of the recording.
  * Served from R2 by the Worker like the clips.
  */
 const recaps = recapsJson as Record<string, Recap>;

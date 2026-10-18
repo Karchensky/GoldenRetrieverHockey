@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  GOAL_LEAD, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
+  boardClock, GOAL_LEAD, PENALTY_LEAD, PENALTY_UNTIMED_LEAD, placePenalties, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
   type Candidate,
 } from "../src/recap.ts";
 
@@ -60,4 +60,55 @@ test("among plays of equal worth, the one furthest from what is in goes first", 
   const goals = [{ t: 100, label: "GOAL" }];
   const one = planRecap(goals, [shot(130), shot(900)], GOAL_LEAD + GOAL_TAIL + SHOT_LEAD + SHOT_TAIL + 1);
   assert.deepEqual(one.map((p) => p.start), [100 - GOAL_LEAD, 900 - SHOT_LEAD]);
+});
+
+test("a chance shows its own stretch of play, and a whistle it runs into is the same play, under the chance's name", () => {
+  const goals = [{ t: 100, label: "GOAL" }];
+  const rush: Candidate = { t: 500, kind: "chance", label: "Chance", worth: 1.2, lead: 4, tail: 9 };
+  const plays = planRecap(goals, [rush, { ...whistle(512), label: "2nd 4:00" }], 1000);
+  assert.deepEqual(plays.map((p) => [p.kind, p.start, p.end, p.label]), [["goal", 100 - GOAL_LEAD, 100 + GOAL_TAIL, "GOAL"], ["chance", 496, 513, "Chance"]]);
+  // Worth more than a whistle the zone of which is unknown, less than a shot.
+  const tight = planRecap(goals, [whistle(800), rush, shot(300)], GOAL_LEAD + GOAL_TAIL + SHOT_LEAD + SHOT_TAIL + 14);
+  assert.deepEqual(tight.map((p) => p.kind), ["goal", "shot", "chance"]);
+});
+
+test("the clock between two readings: running, the time between them; stopped, the time they share", () => {
+  const at = boardClock([{ t: 0, clock: 600 }, { t: 6, clock: 594 }, { t: 12, clock: 590 }, { t: 18, clock: 590 }, { t: 24, clock: null }, { t: 30, clock: 590 }]);
+  assert.deepEqual(at(3), { clock: 597, running: true });
+  // A whistle inside the six seconds: the clock runs on until it reaches the stopped time, and no further.
+  assert.deepEqual(at(8), { clock: 592, running: true });
+  assert.deepEqual(at(11), { clock: 590, running: true });
+  assert.deepEqual(at(15), { clock: 590, running: false });
+  // A reading missed is bridged, up to eight seconds either side; past that, nothing is said.
+  assert.deepEqual(at(25), { clock: 590, running: false });
+  assert.equal(at(40), null);
+  // The clock set back up for a new period is not running time.
+  assert.equal(boardClock([{ t: 0, clock: 2 }, { t: 6, clock: 900 }])(3)?.running, false);
+});
+
+test("a penalty is the whistle that called it — on time, or a delayed call blown seconds later — or else the moment the clock showed its time", () => {
+  const periods = [
+    { from: 1000, to: 2000, first: 900, last: 0, samples: 160, period: "2nd" },
+    { from: 2100, to: 2500, first: 420, last: 0, samples: 60, period: "OT" },
+  ];
+  const whistles = [{ t: 1300, clock: 600 }, { t: 1520, clock: 372 }, { t: 2200, clock: 330 }];
+  const readings = [{ t: 1700, clock: 210 }, { t: 1706, clock: 204 }];
+  const pen = (period: string, time: string, team: string, detail: string) => ({ period, time, team, detail });
+  const placed = placePenalties([
+    pen("2nd", "10:00", "Buffalo Cigars", "#28 Christian Nati Hooking (Minor) 02:00"),
+    // Delayed: the infraction at 6:30, the whistle at 6:12 once they touched the puck.
+    pen("2nd", "06:30", "The Golden Retrievers", "#28 John Rein Tripping (Minor) 02:00"),
+    // No whistle within half a minute after: the moment the clock passed 3:25.
+    pen("2nd", "03:25", "The Golden Retrievers", "#4 Anthony Galante Roughing (Major) 05:00"),
+    // The scoresheet's OT1 is the overtime the clock found.
+    pen("OT1", "05:30", "The Golden Retrievers", "#96 Adam Kaplewicz Hooking (Minor) 02:00"),
+    // A period the recording never showed is left out.
+    pen("3rd", "01:00", "Buffalo Cigars", "#9 Someone Slashing (Minor) 02:00"),
+  ], whistles, periods, readings);
+  assert.deepEqual(placed.map((p) => [p.t, p.lead]), [[1300, PENALTY_LEAD], [1520, PENALTY_LEAD], [1706, PENALTY_UNTIMED_LEAD], [2200, PENALTY_LEAD]]);
+  assert.equal(placed[0]!.label, "PENALTY  #28 Christian Nati Hooking  ·  Buffalo Cigars  ·  2nd 10:00");
+  assert.equal(placed[2]!.label, "PENALTY  #4 Anthony Galante Roughing (Major)  ·  The Golden Retrievers  ·  2nd 03:25");
+  // Roughing both ways at one whistle: one play, both named.
+  const both = placePenalties([pen("2nd", "10:00", "A", "#4 Anthony Galante Roughing (Minor) 02:00"), pen("2nd", "10:00", "B", "#77 Kevin Hoddick Roughing (Minor) 02:00")], whistles, periods, readings);
+  assert.deepEqual(both.map((p) => p.label), ["PENALTY  #4 Anthony Galante Roughing, #77 Kevin Hoddick Roughing  ·  2nd 10:00"]);
 });

@@ -27,15 +27,13 @@ type Game = { id: string; gr: "home" | "away" | null; home: string; away: string
 const games = new Map((read("apps/web/data/site.json").games as Game[]).map((g) => [g.id, g]));
 const highlights = read("apps/web/data/highlights.json") as Record<string, Highlight[]>;
 
-test("a clip is only ever shown beside one goal, and that goal is ours", () => {
+test("a clip is only ever shown beside one goal", () => {
   for (const [id, clips] of Object.entries(highlights)) {
     const game = games.get(id);
     assert.ok(game, `highlights.json has game ${id}, which site.json does not`);
-    const us = game.gr === "home" ? game.home : game.away;
     for (const h of clips) {
-      const beside = game.goals.flatMap((g, n) => (clipBeside(clips, game.goals, n, us) === h ? [g] : []));
+      const beside = game.goals.flatMap((g, n) => (clipBeside(clips, game.goals, n) === h ? [g] : []));
       assert.ok(beside.length <= 1, `${id}: clip ${h.clip} is shown beside ${beside.length} goals`);
-      assert.ok(beside.every((g) => g.team === us), `${id}: clip ${h.clip} is shown beside ${beside[0]?.team}'s goal`);
     }
     // Two clips at one moment: the page would show the first and the job would never write it.
     const keys = clips.map((h) => `${h.period} ${h.time}`);

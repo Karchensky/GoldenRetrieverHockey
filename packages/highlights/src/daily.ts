@@ -11,26 +11,27 @@ import {
   CLIP_MAX, clipsCredit, createMoment, gameDetails, myMoments, ourTeams, recordedGames, requestDownload, signIn,
   type Moment, type RinkGame, type Session,
 } from "./rink.ts";
-import { MAX_SECONDS, recapGame } from "./recap.ts";
+import { MAX_SECONDS, RECAP_EDITION, recapGame } from "./recap.ts";
 import { cutClip, openStream, type Stream } from "./stream.ts";
 
 /**
- * The daily job: every game of ours from `since` on, each of OUR goals clipped
- * from the rink's recording and put beside its line on the box score.
+ * The daily job: every game of ours from `since` on, each of its goals — ours
+ * and the other team's — clipped from the rink's recording and put beside its
+ * line on the box score.
  *
  *   find the game on the rink's platform -> read its recording for the goals
- *   -> mark a clip of each of ours -> ask the rink to render it (ONE CREDIT)
- *   -> fetch it when ready -> check it is that goal, twice -> encode -> R2
- *   -> highlights.json
+ *   -> cut a clip of each from the recording -> check it is that goal, twice
+ *   -> encode -> R2 -> highlights.json
  *
- * THE BACKUP: a clip can instead be cut straight from the recording the job
- * already reads (`cutClip`), which asks the rink for nothing and spends no
- * download. `source` says when: "download" only ever downloads, and a clip
- * with no download left waits for next month's; "auto", the workflow's, cuts
- * from the recording only once the month's downloads are used up; "recording"
- * always does. A game before `seasonStart` — the one-time look at older games —
- * is only ever cut from the recording: downloads are for this season. A cut
- * clip gets the same two checks as a download before it goes anywhere.
+ * Or a clip can be the rink's own download: marked on the platform, rendered
+ * by the rink, ONE CREDIT of the month's twenty each. `source` says which:
+ * "recording", the workflow's since 18 October 2026, always cuts (`cutClip`)
+ * and asks the rink for nothing; "download" only ever downloads, and a clip
+ * with no download left waits for next month's; "auto" downloads while the
+ * month's last, then cuts. A game before `seasonStart` — the one-time look at
+ * older games — and a goal against us are only ever cut: downloads are for
+ * our goals this season. A cut clip gets the same two checks as a download
+ * before it goes anywhere.
  *
  * The two checks are separate readings that must agree: the clip's own
  * scoreboard (`verifyClip`), and the clip compared frame by frame with the
@@ -44,9 +45,10 @@ import { cutClip, openStream, type Stream } from "./stream.ts";
  * clip that already has a download is used, never asked for again. A run that
  * dies halfway cannot double-spend.
  *
- * Nothing is clipped that is not ours, and nothing is asked for unless the goal
- * was found and its score change seen on the board. A goal it cannot pin down
- * is reported and left alone — a credit spent on the wrong goal is gone.
+ * Nothing is clipped unless the goal was found and its score change seen on
+ * the board. A goal it cannot pin down is reported and left alone — a clip of
+ * the wrong goal beside a name is worse than none, and a credit spent on one is
+ * gone.
  *
  * Every state a game or clip can be left in ends: reported once and left for a
  * person, or retried by the next run. None turns the job red day after day for
@@ -92,6 +94,12 @@ export type GameEntry = {
   clips: ClipEntry[];
   /** Why its goals are not being looked for — reported once. */
   problem?: string;
+  /**
+   * Which goals `problem` stops the search for: every one, or — absent, as on
+   * every problem from before goals against were clipped — ours only, so the
+   * other team's are still looked for once.
+   */
+  covers?: "every";
   /** The scoresheet `problem` was found on. A corrected one is looked at again. */
   sheet?: string;
   /** Published clips a corrected scoresheet no longer has a goal for, already reported. */
@@ -133,7 +141,8 @@ export type Report = { published: number; requested: number; cut: number; queued
 
 const us = (g: SiteGame) => (g.gr === "home" ? g.home : g.away);
 const goalLabel = (g: ScoredGoal) => `${g.period} ${g.time}`;
-const ourGoals = (g: SiteGame) => g.goals.map((x, n) => ({ x, n })).filter(({ x }) => x.team === us(g)).map(({ n }) => n);
+const ours = (g: SiteGame, n: number) => g.goals[n]?.team === us(g);
+const everyGoal = (g: SiteGame) => g.goals.map((_, n) => n);
 /** "Final", and "Final/OT" — the overtime games are ours too. */
 const played = (g: SiteGame) => /^final/i.test(g.status);
 const daysBetween = (from: string, to: string) => (Date.parse(to) - Date.parse(from)) / 86_400_000;
@@ -143,14 +152,15 @@ const round1 = (x: number) => Math.round(x * 10) / 10;
 export const sheetOf = (g: SiteGame) => g.goals.map((x) => `${goalLabel(x)} ${x.team}`).join("; ");
 
 /**
- * Windows around our located goals. Credits are what is scarce, so two of ours
- * share one clip whenever that clip stays within the rink's minute — even with a
- * gap between them that a clip of each would not have shown.
+ * Windows around located goals — `wanted` of them, all of one side. Credits
+ * are what is scarce, so two goals share one clip whenever that clip stays
+ * within the rink's minute — even with a gap between them that a clip of each
+ * would not have shown.
  */
 type Plan = { goals: number[]; at: number[]; clocks: (number | null)[]; start: number; seconds: number };
 
-export function planClips(goals: LocatedGoal[], ours: Set<number>, lead = LEAD, tail = TAIL): Plan[] {
-  const placed = goals.filter((g) => ours.has(g.index) && g.t !== null && g.confirmed).sort((a, b) => a.t! - b.t!);
+export function planClips(goals: LocatedGoal[], wanted: Set<number>, lead = LEAD, tail = TAIL): Plan[] {
+  const placed = goals.filter((g) => wanted.has(g.index) && g.t !== null && g.confirmed).sort((a, b) => a.t! - b.t!);
   const out: Plan[] = [];
   for (const g of placed) {
     const start = Math.max(0, g.t! - lead), end = g.t! + tail, last = out.at(-1);
@@ -168,12 +178,12 @@ export function planClips(goals: LocatedGoal[], ours: Set<number>, lead = LEAD, 
 
 /**
  * Which way a queued clip goes this run, when no download of it was asked for
- * yet: one of the month's downloads, cut from the recording, or wait. An older
- * game — before the season the job covers — is never a download.
+ * yet: one of the month's downloads, cut from the recording, or wait. A clip
+ * that may never be a download — an older game's, a goal against us — is cut.
  */
-export function routeClip(source: Options["source"], older: boolean, credit: number): Source | "wait" {
-  if (source === "download") return older || credit <= 0 ? "wait" : "download";
-  if (source === "recording" || older || credit <= 0) return "recording";
+export function routeClip(source: Options["source"], neverDownload: boolean, credit: number): Source | "wait" {
+  if (source === "download") return neverDownload || credit <= 0 ? "wait" : "download";
+  if (source === "recording" || neverDownload || credit <= 0) return "recording";
   return "download";
 }
 
@@ -210,54 +220,76 @@ export function matchRinkGame(game: SiteGame, rinkGames: RinkGame[]): RinkGame |
 /**
  * Each goal of a planned clip, where it is on the scoresheet now — found by its
  * period and time, which a goal added or removed elsewhere does not change — or
- * null for one no longer there, or no longer ours.
+ * null for one no longer there, or two at that moment. A clip from before
+ * labels was of a goal of ours, and is found only as one.
  */
 export function currentGoals(game: SiteGame, clip: Pick<ClipEntry, "goals" | "labels">): (number | null)[] {
   return clip.goals.map((n, i) => {
     const label = clip.labels?.[i];
-    if (label === undefined) return game.goals[n]?.team === us(game) ? n : null;
-    const at = ourGoals(game).filter((k) => goalLabel(game.goals[k]!) === label);
+    if (label === undefined) return ours(game, n) ? n : null;
+    const at = everyGoal(game).filter((k) => goalLabel(game.goals[k]!) === label);
     return at.length === 1 ? at[0]! : null;
   });
 }
 
-/** The planned goals of a clip that are no longer ours at the time they were found. A credit is only ever spent when this is empty. */
+/** The planned goals of a clip the scoresheet no longer has at the time they were found. Nothing is spent unless this is empty. */
 export function movedSincePlanned(game: SiteGame, clip: Pick<ClipEntry, "goals" | "labels">): number[] {
   const now = currentGoals(game, clip);
   return clip.goals.filter((_, i) => now[i] === null);
 }
 
 /** A goal is done when the page shows a clip beside it — by the page's own rule. */
-const done = (o: Pick<Options, "highlights">, g: SiteGame, n: number) => clipBeside(o.highlights[g.id], g.goals, n, us(g)) !== undefined;
-/** Our goals that already have a clip planned, asked for, or given up on — found by where they are now. */
+const done = (o: Pick<Options, "highlights">, g: SiteGame, n: number) => clipBeside(o.highlights[g.id], g.goals, n) !== undefined;
+/** The goals that already have a clip planned, asked for, or given up on — found by where they are now. */
 const covered = (o: Pick<Options, "ledger">, g: SiteGame) =>
   new Set((o.ledger[g.id]?.clips ?? []).flatMap((c) => currentGoals(g, c)).filter((n): n is number => n !== null));
 /** Published clips the page shows beside no goal any more — a scoresheet corrected since — not yet reported. */
 const staleClips = (o: Pick<Options, "highlights" | "ledger">, g: SiteGame) => {
-  const shown = new Set(g.goals.map((_, n) => clipBeside(o.highlights[g.id], g.goals, n, us(g))));
+  const shown = new Set(g.goals.map((_, n) => clipBeside(o.highlights[g.id], g.goals, n)));
   return (o.highlights[g.id] ?? []).filter((h) => !shown.has(h) && !(o.ledger[g.id]?.stale ?? []).includes(h.clip));
 };
 
 /**
  * Does the game want its recap made: found on the rink's site, none on the
- * site for this scoresheet, and not given up on for it. The goals are always
- * searched first — a game the rink has not posted yet waits for that.
+ * site for this scoresheet — or one of an earlier edition (`RECAP_EDITION`) —
+ * and not given up on for it. The goals are always searched first — a game
+ * the rink has not posted yet waits for that.
  */
 const wantsRecap = (o: Pick<Options, "ledger" | "recaps">, g: SiteGame) => {
   const entry = o.ledger[g.id];
   if (!o.recaps || !entry || entry.rinkGame === null) return false;
-  if (o.recaps[g.id]?.sheet === sheetOf(g)) return false;
+  const made = o.recaps[g.id];
+  if (made?.sheet === sheetOf(g) && (made.edition ?? 1) >= RECAP_EDITION) return false;
   return !(entry.recap?.problem && entry.recap.sheet === sheetOf(g));
+};
+
+/**
+ * Recaps made again for a new edition, at most, in one daily run: each reads a
+ * whole recording, a quarter of an hour, and a daily run has two hours. A look
+ * back (`since` before `seasonStart`) has six and makes them all. A game with
+ * no recap at all goes first and is never held back by this.
+ */
+export const REMAKES_PER_RUN = 3;
+
+/**
+ * Is goal `n` not to be looked for: a problem is reported once and is for a
+ * person — unless the scoresheet it was found on has been corrected. One from
+ * before goals against were clipped stops ours only.
+ */
+const blocked = (entry: GameEntry | undefined, g: SiteGame, n: number) =>
+  !!entry?.problem && entry.sheet === sheetOf(g) && (entry.covers === "every" || ours(g, n));
+
+/** The goals still to look for: no clip on the page, none planned, none given up on. */
+const missingGoals = (o: Pick<Options, "ledger" | "highlights">, g: SiteGame) => {
+  const planned = covered(o, g);
+  return everyGoal(g).filter((n) => !done(o, g, n) && !planned.has(n) && !blocked(o.ledger[g.id], g, n));
 };
 
 /** What there is to do for one game, from the files alone. */
 function workOn(o: Pick<Options, "ledger" | "highlights" | "recaps">, g: SiteGame) {
   const entry = o.ledger[g.id];
-  // A problem is reported once and is for a person — unless the scoresheet it was found on has been corrected.
-  const blocked = !!entry?.problem && entry.sheet === sheetOf(g);
-  const planned = covered(o, g);
   return {
-    locate: !blocked && ourGoals(g).some((n) => !done(o, g, n) && !planned.has(n)),
+    locate: missingGoals(o, g).length > 0,
     collect: (entry?.clips ?? []).some((c) => c.status === "queued" || c.status === "requested"),
     stale: staleClips(o, g),
     recap: wantsRecap(o, g),
@@ -286,7 +318,7 @@ export async function daily(o: Options): Promise<Report> {
   // Reported once each, and never undone by the job: a person decides what the clip should be beside.
   for (const game of todo) {
     for (const h of workOn(o, game).stale) {
-      problem(`${labelOf(game)}: clip ${h.clip} (${h.period} ${h.time}, ${h.scorer}) matches no single goal of ours on the corrected scoresheet, so it is not shown`);
+      problem(`${labelOf(game)}: clip ${h.clip} (${h.period} ${h.time}, ${h.scorer}) matches no single goal on the corrected scoresheet, so it is not shown`);
       const entry = (o.ledger[game.id] ??= { rinkGame: null, clips: [] });
       (entry.stale ??= []).push(h.clip);
     }
@@ -357,12 +389,17 @@ export async function daily(o: Options): Promise<Report> {
       delete entry.problem;
       delete entry.sheet;
     }
-    const giveUp = (p: string) => { entry.problem = p; entry.sheet = sheetOf(game); problem(`${label}: ${p}`); };
+    const giveUp = (p: string) => {
+      // One kept from before goals against were clipped is about ours: kept beside this one, now about every goal.
+      entry.problem = entry.problem && entry.sheet === sheetOf(game) ? `${entry.problem}; ${p}` : p;
+      entry.sheet = sheetOf(game);
+      entry.covers = "every";
+      problem(`${label}: ${p}`);
+    };
     const overdue = daysBetween(game.date, o.today) > NOT_RECORDED_DAYS;
 
-    const planned = covered(o, game);
-    const missing = ourGoals(game).filter((n) => !planned.has(n) && !done(o, game, n));
-    if (missing.length && !entry.problem) {
+    const missing = missingGoals(o, game);
+    if (missing.length) {
       if (entry.rinkGame === null) {
         rinkGames ??= await recordedGames(await ourTeams(), o.since);
         const hit = matchRinkGame(game, rinkGames);
@@ -386,8 +423,10 @@ export async function daily(o: Options): Promise<Report> {
           o.log(`${label}: read ${found.fetched.segments} of ${stream.segments.length} segments of the recording, board ${found.layout.name}`);
           const unsure = located.goals.filter((g) => missing.includes(g.index) && !(g.t !== null && g.confirmed));
           if (unsure.length) giveUp(unsure.map((g) => `${g.goal.period} ${g.goal.time} ${g.goal.scorer}: ${g.problem ?? "not found"}`).join("; "));
-          const wanted = new Set(missing.filter((n) => !unsure.some((g) => g.index === n)));
-          for (const p of planClips(located.goals, wanted)) {
+          const wanted = missing.filter((n) => !unsure.some((g) => g.index === n));
+          // Ours and theirs never share a clip: a goal against is never a download, ours may be.
+          const plans = [true, false].flatMap((side) => planClips(located.goals, new Set(wanted.filter((n) => ours(game, n) === side))));
+          for (const p of plans) {
             entry.clips.push({ ...p, labels: p.goals.map((n) => goalLabel(game.goals[n]!)), moment: null, status: "queued" });
           }
         }
@@ -403,8 +442,8 @@ export async function daily(o: Options): Promise<Report> {
     // Reading what is left spends nothing, so a dry run reads it too and says truly which way each clip would go.
     let credit = routeClip(o.source, older, 1) === "download" ? await clipsCredit(s) : 0;
     for (const c of queued) {
-      // The scoresheet may have been corrected since this was planned: a credit is only ever
-      // spent on a goal that is still ours, at the time it was found at.
+      // The scoresheet may have been corrected since this was planned: nothing is spent
+      // on a goal no longer at the time it was found at.
       const moved = movedSincePlanned(game, c);
       if (moved.length) {
         c.status = "failed";
@@ -415,11 +454,13 @@ export async function daily(o: Options): Promise<Report> {
       let m = existing.find((x) => sameClip(x, c)) ?? null;
       // A download already asked for is used, whatever the source: it is paid for.
       if (m?.download) { c.moment = m.id; c.status = "requested"; c.asked ??= o.today; continue; }
-      const route = routeClip(o.source, older, credit);
+      // A credit is only ever spent on goals of ours, as the scoresheet has them now.
+      const against = !currentGoals(game, c).every((n) => n !== null && ours(game, n));
+      const route = routeClip(o.source, older || against, credit);
       if (route === "wait") {
         report.queued++;
-        o.log(older
-          ? `${label}: older than this season, so cut from the recording or not at all — ${whichOf(c)} waits for a run with --source auto or recording`
+        o.log(older || against
+          ? `${label}: ${older ? "older than this season" : "a goal against"}, so cut from the recording or not at all — ${whichOf(c)} waits for a run with --source auto or recording`
           : `${label}: no download credit left — ${whichOf(c)} waits for next month's`);
         continue;
       }
@@ -481,9 +522,14 @@ export async function daily(o: Options): Promise<Report> {
     }
     await new Promise((r) => setTimeout(r, 30_000));
   }
-  // The recaps, last: a few minutes of each game, once its goals have been searched.
-  for (const game of online) {
+  // The recaps, last: a few minutes of each game, once its goals have been searched. Games with none first.
+  let remakes = 0;
+  for (const game of [...online].sort((a, b) => Number(Boolean(o.recaps?.[a.id])) - Number(Boolean(o.recaps?.[b.id])))) {
     if (!wantsRecap(o, game)) continue;
+    if (o.recaps?.[game.id]?.sheet === sheetOf(game)) {
+      if (remakes >= REMAKES_PER_RUN && o.since >= o.seasonStart) { o.log(`${labelOf(game)}: its recap is made again on a later run`); continue; }
+      remakes++;
+    }
     const entry = o.ledger[game.id]!, label = labelOf(game), sheet = sheetOf(game);
     if (o.dryRun) { o.log(`${label}: would make its recap`); continue; }
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-recap-"));
@@ -521,7 +567,7 @@ export async function daily(o: Options): Promise<Report> {
   /** Fetch, check twice, encode, upload. True, why not — or a throw, for the next run to try again. */
   async function publish(game: SiteGame, rink: number, c: ClipEntry, fetchRaw: (file: string) => Promise<void>): Promise<true | string> {
     const now = currentGoals(game, c);
-    if (now.some((n) => n === null)) return "the scoresheet changed since it was asked for: a goal in it is no longer ours at that time";
+    if (now.some((n) => n === null)) return "the scoresheet changed since it was asked for: a goal in it is no longer at that time";
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "grh-clip-"));
     try {
       const raw = path.join(dir, "rink.mp4");
