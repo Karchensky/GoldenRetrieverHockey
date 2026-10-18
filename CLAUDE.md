@@ -99,8 +99,9 @@ on the ice say the zone, the camera's turn how deep. Nothing finds the net
 itself; its frame is too thin on video. The daily job makes it once a game's
 goals are searched, to `apps/web/data/recaps.json` and R2 as
 `<game>-recap-<hash>.mp4`. It reads the whole recording, so it costs the job a
-quarter of an hour a game and no download. None is made for a game with over a
-quarter of its goals unfound. Raising `RECAP_EDITION` makes every recap again,
+quarter of an hour a game and no download. One goal found is enough to know
+the recording is the game — the page says how many the recap is missing — and
+a 0–0 game gets one too; none found gets none. Raising `RECAP_EDITION` makes every recap again,
 `REMAKES_PER_RUN` a run. `cli.ts recap --game <id>` makes one locally.
 
 The account, not the ledger, is what stops a download being used twice — the
@@ -152,7 +153,7 @@ Nothing here may publish a product. There is no `publishProduct()`, and
 
 ## Before claiming something works
 
-Run it — `npm test` (637, 26 skipped), `npm run typecheck`, and for anything touching the
+Run it — `npm test` (639, 26 skipped), `npm run typecheck`, and for anything touching the
 shop a live check that proves it. Say what was verified and what was not.
 
 **One successful probe does not mean a deploy has landed.** A new URL was

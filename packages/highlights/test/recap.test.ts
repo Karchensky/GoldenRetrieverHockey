@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  boardClock, GOAL_LEAD, PENALTY_LEAD, PENALTY_UNTIMED_LEAD, placePenalties, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
+  boardClock, GOAL_LEAD, PENALTY_LEAD, PENALTY_UNTIMED_LEAD, placePenalties, recapRefusal, GOAL_TAIL, planRecap, SHOT_LEAD, SHOT_TAIL, shotLag, stoppages, stoppedAt, WHISTLE_LEAD, WHISTLE_TAIL,
   type Candidate,
 } from "../src/recap.ts";
 
@@ -111,4 +111,16 @@ test("a penalty is the whistle that called it — on time, or a delayed call blo
   // Roughing both ways at one whistle: one play, both named.
   const both = placePenalties([pen("2nd", "10:00", "A", "#4 Anthony Galante Roughing (Minor) 02:00"), pen("2nd", "10:00", "B", "#77 Kevin Hoddick Roughing (Minor) 02:00")], whistles, periods, readings);
   assert.deepEqual(both.map((p) => p.label), ["PENALTY  #4 Anthony Galante Roughing, #77 Kevin Hoddick Roughing  ·  2nd 10:00"]);
+});
+
+test("a recap needs one goal found to know the recording is the game — or, at 0–0, a board that never shows a score", () => {
+  const periods = [{ from: 1000, to: 2000, first: 900, last: 0, samples: 160, period: "3rd" }];
+  const board = (home: number, away: number) => [1100, 1300, 1500, 1700].map((t) => ({ t, period: "3rd", clock: 600, home, away }));
+  // 2–1 with one goal not found: a recap, which says so.
+  assert.equal(recapRefusal(2, 3, [], periods), null);
+  assert.match(recapRefusal(0, 3, [], periods)!, /none of its 3 goals/);
+  assert.equal(recapRefusal(0, 0, board(0, 0), periods), null);
+  // Too little read to say: taken as this game.
+  assert.equal(recapRefusal(0, 0, board(2, 1).slice(0, 2), periods), null);
+  assert.match(recapRefusal(0, 0, board(2, 1), periods)!, /shows 1–2 through the last period/);
 });

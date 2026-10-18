@@ -25,9 +25,10 @@
 # both teams', its penalties, its shots on goal where the board counts them,
 # the plays its whistles in a zone ended and the chances the camera followed,
 # cut from the recording into a few minutes of video (apps/web/data/recaps.json). No
-# download is spent on it. A game with more than a quarter of its goals
-# unfound gets none, reported once in the ledger's "recap" — delete that to
-# have it tried again. A corrected scoresheet makes it again, and so does a
+# download is spent on it. One goal found is enough, and a 0–0 game gets
+# one; a game with none of its goals found gets none, reported once in the
+# ledger's "recap" — delete that to have it tried again. A corrected
+# scoresheet makes it again, and so does a
 # new RECAP_EDITION, three games a daily run and all of them on a look back.
 #
 # Run by hand, it asks where clips come from: "recording", the daily run's

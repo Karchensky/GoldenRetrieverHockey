@@ -104,15 +104,22 @@ export type GameEntry = {
   sheet?: string;
   /** Published clips a corrected scoresheet no longer has a goal for, already reported. */
   stale?: string[];
-  /** The recap's last outcome short of one: why there is none, or how many runs broke off making it. For the scoresheet it was made from. */
-  recap?: { sheet: string; problem?: string; tries?: number };
+  /**
+   * The recap's last outcome short of one: why there is none, or how many runs
+   * broke off making it. For the scoresheet, and the edition of the job, it was
+   * found by: a new edition of the rules tries again.
+   */
+  recap?: { sheet: string; problem?: string; tries?: number; edition?: number };
 };
 export type Ledger = Record<string, GameEntry>;
 export type Source = "download" | "recording";
 export type Highlights = Record<string, Highlight[]>;
 export type Recaps = Record<string, Recap>;
 
-type SiteGame = { id: string; date: string; time: string | null; rink: string | null; status: string; gr: "home" | "away" | null; home: string; away: string; goals: ScoredGoal[] };
+type SiteGame = {
+  id: string; date: string; time: string | null; rink: string | null; status: string; gr: "home" | "away" | null; home: string; away: string; goals: ScoredGoal[];
+  homeScore?: string | number | null; awayScore?: string | number | null;
+};
 
 export type Options = {
   since: string;
@@ -145,6 +152,8 @@ const ours = (g: SiteGame, n: number) => g.goals[n]?.team === us(g);
 const everyGoal = (g: SiteGame) => g.goals.map((_, n) => n);
 /** "Final", and "Final/OT" — the overtime games are ours too. */
 const played = (g: SiteGame) => /^final/i.test(g.status);
+/** Final at 0–0: no goal to clip, and a recap still to make. A score with no goals listed is a scoresheet without its detail, not this. */
+const shutout = (g: SiteGame) => g.goals.length === 0 && g.homeScore !== null && g.homeScore !== undefined && Number(g.homeScore) === 0 && Number(g.awayScore) === 0;
 const daysBetween = (from: string, to: string) => (Date.parse(to) - Date.parse(from)) / 86_400_000;
 const round1 = (x: number) => Math.round(x * 10) / 10;
 
@@ -260,7 +269,7 @@ const wantsRecap = (o: Pick<Options, "ledger" | "recaps">, g: SiteGame) => {
   if (!o.recaps || !entry || entry.rinkGame === null) return false;
   const made = o.recaps[g.id];
   if (made?.sheet === sheetOf(g) && (made.edition ?? 1) >= RECAP_EDITION) return false;
-  return !(entry.recap?.problem && entry.recap.sheet === sheetOf(g));
+  return !(entry.recap?.problem && entry.recap.sheet === sheetOf(g) && (entry.recap.edition ?? 1) >= RECAP_EDITION);
 };
 
 /**
@@ -285,11 +294,17 @@ const missingGoals = (o: Pick<Options, "ledger" | "highlights">, g: SiteGame) =>
   return everyGoal(g).filter((n) => !done(o, g, n) && !planned.has(n) && !blocked(o.ledger[g.id], g, n));
 };
 
+/** A game with no goal to search for whose rink game is still to find, for its recap: a 0–0 game. */
+const unfound = (o: Pick<Options, "ledger" | "recaps">, g: SiteGame) => {
+  const entry = o.ledger[g.id];
+  return !!o.recaps && shutout(g) && (entry?.rinkGame ?? null) === null && !(entry?.problem && entry.sheet === sheetOf(g));
+};
+
 /** What there is to do for one game, from the files alone. */
 function workOn(o: Pick<Options, "ledger" | "highlights" | "recaps">, g: SiteGame) {
   const entry = o.ledger[g.id];
   return {
-    locate: missingGoals(o, g).length > 0,
+    locate: missingGoals(o, g).length > 0 || unfound(o, g),
     collect: (entry?.clips ?? []).some((c) => c.status === "queued" || c.status === "requested"),
     stale: staleClips(o, g),
     recap: wantsRecap(o, g),
@@ -302,7 +317,7 @@ function workOn(o: Pick<Options, "ledger" | "highlights" | "recaps">, g: SiteGam
  */
 export function gamesWithWork(o: Pick<Options, "since" | "games" | "ledger" | "highlights" | "recaps">): SiteGame[] {
   return o.games.filter((g) => {
-    if (g.date < o.since || g.gr === null || !played(g) || g.goals.length === 0) return false;
+    if (g.date < o.since || g.gr === null || !played(g) || (g.goals.length === 0 && !shutout(g))) return false;
     const w = workOn(o, g);
     return w.locate || w.collect || w.stale.length > 0 || w.recap;
   });
@@ -399,7 +414,7 @@ export async function daily(o: Options): Promise<Report> {
     const overdue = daysBetween(game.date, o.today) > NOT_RECORDED_DAYS;
 
     const missing = missingGoals(o, game);
-    if (missing.length) {
+    if (missing.length || unfound(o, game)) {
       if (entry.rinkGame === null) {
         rinkGames ??= await recordedGames(await ourTeams(), o.since);
         const hit = matchRinkGame(game, rinkGames);
@@ -413,7 +428,8 @@ export async function daily(o: Options): Promise<Report> {
         if (overdue) giveUp(`no recording on the rink's video site ${NOT_RECORDED_DAYS} days after it was played`);
         else o.log(`${label}: no recording yet`);
       }
-      if (stream) {
+      // A 0–0 game has no goal to find: its rink game is all it wanted, for the recap.
+      if (stream && missing.length) {
         const found = await findGoals(stream, game.goals, game.home, game.away);
         if ("problem" in found) {
           giveUp(found.problem);
@@ -540,7 +556,7 @@ export async function daily(o: Options): Promise<Report> {
         log: (line) => o.log(`${label}: recap: ${line}`),
       });
       if (typeof made === "string") {
-        entry.recap = { sheet, problem: made };
+        entry.recap = { sheet, problem: made, edition: RECAP_EDITION };
         problem(`${label}: no recap — ${made}`);
         continue;
       }
@@ -555,7 +571,7 @@ export async function daily(o: Options): Promise<Report> {
     } catch (e) {
       // Broke off — the recording stalled, a render failed. Another run tries again, up to a point.
       const tries = (entry.recap?.sheet === sheet ? entry.recap.tries ?? 0 : 0) + 1;
-      entry.recap = tries >= TRIES ? { sheet, problem: `making it broke off ${TRIES} runs running, last: ${(e as Error).message}` } : { sheet, tries };
+      entry.recap = tries >= TRIES ? { sheet, problem: `making it broke off ${TRIES} runs running, last: ${(e as Error).message}`, edition: RECAP_EDITION } : { sheet, tries };
       problem(`${label}: recap: ${(e as Error).message}${tries >= TRIES ? "" : " — tried again next run"}`);
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });

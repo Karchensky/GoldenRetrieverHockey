@@ -117,7 +117,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
               preload="none"
               aria-label={`Recap of ${g.away} at ${g.home}`}
             />
-            {/* A recap is only made with most of the goals in it; say which are not. */}
+            {/* A recap can be missing goals the search could not find on the recording; say how many. */}
             {recap.goals < recap.of && (
               <p className="lede" style={{ margin: "12px 0 0", color: "var(--dim)" }}>
                 {plural(recap.of - recap.goals, "goal")} could not be found in the rink&apos;s recording, so

@@ -263,8 +263,25 @@ test("a game gets its recap once its goals are searched, again for a corrected s
   // Made by an earlier edition of the job — the first wrote none down — made again.
   assert.equal(work({ recaps: recap(sheetOf(game), null) }), 1);
   assert.equal(work({ recaps: recap(sheetOf(game), RECAP_EDITION - 1) }), 1);
-  // Given up on for this scoresheet — too few goals found — is for a person, not every run.
-  assert.equal(work({ recaps: {}, ledger: { "1335913": { ...searched["1335913"], recap: { sheet: sheetOf(game), problem: "only 1 of its 3 goals could be found" } } } }), 0);
+  // Given up on for this scoresheet — no goal found — is for a person, not every run. One given up on by an
+  // earlier edition's rules (three goals in four, until 18 October 2026) is tried again, once.
+  const gaveUp = (edition?: number) => ({ "1335913": { ...searched["1335913"], recap: { sheet: sheetOf(game), problem: "none of its 3 goals could be found", ...(edition ? { edition } : {}) } } });
+  assert.equal(work({ recaps: {}, ledger: gaveUp(RECAP_EDITION) }), 0);
+  assert.equal(work({ recaps: {}, ledger: gaveUp() }), 1);
   // Not found on the rink's site yet: the goals are searched first.
   assert.equal(work({ recaps: {}, ledger: { "1335913": { rinkGame: null, clips: [] } } }), 0);
+});
+
+test("a 0–0 game has no goal to clip and still gets its recap; a score with no goals listed is not one", () => {
+  const nil = { ...game, goals: [], homeScore: 0, awayScore: "0" };
+  // Its rink game to find first, for the recap — only when recaps are made.
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [nil], ledger: {}, highlights: {}, recaps: {} }).length, 1);
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [nil], ledger: {}, highlights: {} }).length, 0);
+  // Found, and its recap made: nothing more.
+  const found = { "1335913": { rinkGame: 42732, clips: [] } };
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [nil], ledger: found, highlights: {}, recaps: {} }).length, 1);
+  const made = { "1335913": { clip: "1335913-recap-0123abcd.mp4", poster: "1335913-recap-0123abcd.jpg", seconds: 200, goals: 0, of: 0, shots: 0, whistles: 4, sheet: sheetOf(nil), edition: RECAP_EDITION } };
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [nil], ledger: found, highlights: {}, recaps: made }).length, 0);
+  // 3–2 on the scoresheet with no goal detail: nothing to clip, and no 0–0 to recap.
+  assert.equal(gamesWithWork({ since: "2026-10-07", games: [{ ...nil, homeScore: 3, awayScore: 2 }], ledger: {}, highlights: {}, recaps: {} }).length, 0);
 });
