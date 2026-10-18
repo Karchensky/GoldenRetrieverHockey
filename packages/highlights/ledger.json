@@ -267,11 +267,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "recap": {
-      "sheet": "1st 08:43 Tall Boys Love Em; 1st 07:52 Tall Boys Love Em; 2nd 08:59 The Golden Retrievers; 2nd 05:39 The Golden Retrievers; 2nd 03:28 Tall Boys Love Em; 2nd 01:56 The Golden Retrievers; 2nd 00:39 Tall Boys Love Em; 3rd 05:22 The Golden Retrievers",
-      "tries": 1
-    }
+    "board": "rink1-led"
   },
   "1288580": {
     "rinkGame": 40391,
@@ -343,7 +339,7 @@
     "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
     "recap": {
       "sheet": "1st 07:53 The Golden Retrievers; 1st 04:40 Lumber Lions; 1st 02:19 The Golden Retrievers; 1st 01:52 The Golden Retrievers; 2nd 10:12 Lumber Lions; 2nd 08:43 The Golden Retrievers; 3rd 09:15 Lumber Lions; 3rd 04:40 The Golden Retrievers; 3rd 00:01 The Golden Retrievers",
-      "tries": 1
+      "problem": "only 6 of its 9 goals could be found"
     }
   },
   "1289161": {
@@ -426,11 +422,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "recap": {
-      "sheet": "1st 10:30 Tioga Tavern; 1st 06:35 Tioga Tavern; 1st 05:58 Tioga Tavern; 1st 00:49 The Golden Retrievers; 1st 00:25 The Golden Retrievers; 2nd 11:38 Tioga Tavern; 2nd 11:26 The Golden Retrievers; 2nd 07:39 The Golden Retrievers; 2nd 07:04 Tioga Tavern; 2nd 02:06 Tioga Tavern; 3rd 11:59 Tioga Tavern",
-      "tries": 1
-    }
+    "board": "rink1-led"
   },
   "1289345": {
     "rinkGame": 40433,
@@ -516,11 +508,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink1-led",
-    "recap": {
-      "sheet": "2nd 11:10 Tall Boys Love Em; 2nd 04:59 The Golden Retrievers; 2nd 01:24 The Golden Retrievers; 2nd 01:04 The Golden Retrievers; 3rd 16:20 The Golden Retrievers; 3rd 05:25 Tall Boys Love Em; 3rd 01:25 The Golden Retrievers",
-      "tries": 1
-    }
+    "board": "rink1-led"
   },
   "1290297": {
     "rinkGame": 40483,
@@ -530,7 +518,7 @@
     "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
     "recap": {
       "sheet": "1st 06:18 The Golden Retrievers; 1st 03:19 The Golden Retrievers; 1st 01:54 The Golden Retrievers; 1st 00:19 The Golden Retrievers; 2nd 06:52 Lumber Lions; 2nd 04:03 The Golden Retrievers; 2nd 02:55 Lumber Lions; 2nd 01:09 Lumber Lions; 2nd 00:58 The Golden Retrievers; 3rd 17:31 The Golden Retrievers; 3rd 17:19 Lumber Lions; 3rd 13:32 The Golden Retrievers; 3rd 13:01 The Golden Retrievers; 3rd 07:17 The Golden Retrievers; 3rd 04:35 The Golden Retrievers; 3rd 00:33 The Golden Retrievers",
-      "tries": 1
+      "problem": "only 0 of its 16 goals could be found"
     }
   },
   "1306734": {
@@ -556,11 +544,7 @@
         "source": "recording"
       }
     ],
-    "board": "rink2-tile",
-    "recap": {
-      "sheet": "1st 03:45 Big Kats Kittens; 1st 00:05 Big Kats Kittens; 2nd 06:12 Big Kats Kittens; 2nd 00:54 The Golden Retrievers; 3rd 15:45 Big Kats Kittens; 3rd 13:40 Big Kats Kittens; 3rd 04:28 Big Kats Kittens",
-      "tries": 1
-    }
+    "board": "rink2-tile"
   },
   "1306888": {
     "rinkGame": 41671,
@@ -645,7 +629,7 @@
     "board": "rink1-led",
     "recap": {
       "sheet": "1st 09:49 Rivermen; 1st 07:32 Rivermen; 1st 03:43 Rivermen; 2nd 10:37 The Golden Retrievers; 2nd 01:00 Rivermen; 2nd 00:10 Rivermen; 3rd 18:00 Rivermen; 3rd 14:51 The Golden Retrievers; 3rd 14:29 The Golden Retrievers; 3rd 10:58 Rivermen; 3rd 06:05 The Golden Retrievers",
-      "tries": 1
+      "problem": "only 8 of its 11 goals could be found"
     }
   },
   "1335891": {
@@ -667,11 +651,7 @@
         "moment": "01M55P3AW63RVS1JHJ4GZWZRKK",
         "status": "published"
       }
-    ],
-    "recap": {
-      "sheet": "1st 02:45 The Golden Retrievers; 1st 00:11 Mediak Construction Kings; 2nd 11:30 Mediak Construction Kings; 2nd 02:55 Mediak Construction Kings",
-      "tries": 1
-    }
+    ]
   },
   "1335913": {
     "rinkGame": 42732,
@@ -737,10 +717,6 @@
         "moment": "01M55P36Z83ZESKFPD968DDEKQ",
         "status": "published"
       }
-    ],
-    "recap": {
-      "sheet": "1st 11:52 Buffalo Cigars; 1st 06:56 Buffalo Cigars; 1st 06:42 The Golden Retrievers; 1st 02:22 The Golden Retrievers; 2nd 04:36 Buffalo Cigars; 3rd 07:24 Buffalo Cigars; 3rd 05:34 The Golden Retrievers; 3rd 02:46 The Golden Retrievers",
-      "tries": 1
-    }
+    ]
   }
 }
