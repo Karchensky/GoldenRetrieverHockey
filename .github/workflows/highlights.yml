@@ -1,19 +1,39 @@
 # Our goals, clipped onto the box scores, daily.
 #
 # Runs when the morning's refresh finishes — the refresh is what brings in last
-# night's scoresheet — and does nothing on a day with no new goal of ours: it
-# reads site.json, finds every goal already on its box score, and stops before
-# signing in to anything.
+# night's scoresheet. On a day with no new goal of ours it reads three files,
+# finds nothing to do and stops: no install, no sign-in, about ten seconds.
 #
 # On a day with one, it signs in to the rink's video site as the account owner,
 # finds the game and reads its recording for the goals, marks a clip of each of
-# OURS and asks the rink to render it — ONE DOWNLOAD CREDIT EACH, of twenty a
-# month — then checks each clip is that goal, encodes it for the web and puts
-# it in the grh-highlights R2 bucket. The rink takes a few minutes per clip; a
-# clip still rendering after 25 minutes is collected by tomorrow's run.
+# OURS and asks the rink to render it — ONE OF THE ACCOUNT'S 20 DOWNLOADS A
+# MONTH EACH (the platform calls them credits), two goals sharing one when they
+# fit in a minute. With none left, a clip waits in the ledger for next month's. A rendered clip is checked twice before
+# it goes anywhere: its own scoreboard must show the goal going in at the score
+# either side of it, and it must match, frame by frame, the stretch of the
+# recording it was asked for, with the goal where the search put it. Then it is
+# encoded for the web and put in the grh-highlights R2 bucket. The rink takes a
+# few minutes per clip; one still rendering after 25 minutes is collected by
+# tomorrow's run.
 #
 # Kept apart from the refresh deliberately: different secrets, a long wait on
-# the rink, and nothing it does can ever cost a day's data capture.
+# the rink, and nothing it does can ever cost a day's data capture. Nothing it
+# does can take a page down either: the box score shows a clip only once the
+# clip is uploaded.
+#
+# RED means something for a person, said once in the log's PROBLEM lines; the
+# ledger (packages/highlights/ledger.json) remembers it, so the next run is
+# green and does not repeat it. Most are cleared by editing the ledger on main:
+#   - a game "not found", "no recording" or with a goal it could not pin down:
+#     the game's "problem" — delete it (and "sheet") to have it looked at again.
+#     A corrected scoresheet does this by itself.
+#   - a clip that failed its checks: its "status" is "failed". The download is
+#     used, but while the rink still has the download, setting it back to
+#     "requested" (and deleting any "tries") re-checks that same download for
+#     nothing. Never set one to "queued" unless it should use another download.
+# Red every day is a different thing: the sign-in failing (the password, or the
+# subscription ended) or the rink's site changed. To stop it for good, disable
+# this workflow; the clips already up stay up.
 #
 # THE LOGS ARE PUBLIC. The job prints game ids, goals and counts — never a
 # token, the recording's address or a clip's download link.
@@ -49,17 +69,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
 
-      - run: npm ci
+      # From the files alone, with nothing installed: is there a goal of ours to
+      # clip, a clip to collect, or a corrected scoresheet to report?
+      - name: Anything to do?
+        id: check
+        run: node packages/highlights/src/cli.ts daily --check
+
+      - if: steps.check.outputs.work == 'true'
+        run: npm ci
 
       - name: Install ffmpeg
+        if: steps.check.outputs.work == 'true'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
       # Red only for a NEW problem — a goal it could not pin down, a clip that
       # failed its check — and the email that turns red is the notification.
       # The ledger records it, so the next run does not search that game again.
       - name: Clip our goals
+        if: steps.check.outputs.work == 'true'
         env:
           HARBORCENTER_EMAIL: ${{ secrets.HARBORCENTER_EMAIL }}
           HARBORCENTER_PASSWORD: ${{ secrets.HARBORCENTER_PASSWORD }}
@@ -71,7 +99,7 @@ jobs:
       # losing it would leave tomorrow's run not knowing.
       - name: Commit
         id: commit
-        if: always()
+        if: always() && steps.check.outputs.work == 'true'
         run: |
           if [ -z "$(git status --porcelain -- apps/web/data/highlights.json packages/highlights/ledger.json)" ]; then
             echo "pushed=false" >> "$GITHUB_OUTPUT"

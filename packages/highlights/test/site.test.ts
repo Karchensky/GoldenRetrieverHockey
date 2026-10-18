@@ -4,14 +4,18 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { isHighlight } from "../../../workers/checkout/highlight-name.ts";
+import { clipBeside, type Highlight } from "../src/beside.ts";
 
 /**
  * The clips on the box scores, held to the box scores.
  *
  * `apps/web/data/highlights.json` is written by the daily job and read by
- * /games/[id]. A clip is attached by the goal's place on the scoresheet, so a
- * corrected scoresheet could otherwise slide one goal's clip onto the next
- * line — and only our goals are clipped, so a clip on theirs is a bug.
+ * /games/[id] through `clipBeside`, the same rule used here. These run in the
+ * refresh job too, after every capture — so they fail for what would be WRONG
+ * on the page, and only that. A clip whose goal a corrected scoresheet no
+ * longer has is shown beside nothing, which is not wrong, and is not a failure
+ * here: the highlights job reports it, so a scoresheet correction never turns
+ * the refresh red.
  */
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -19,51 +23,51 @@ const read = (p: string) => JSON.parse(fs.readFileSync(path.join(ROOT, p), "utf8
 
 type Goal = { period: string; time: string; team: string; scorer: string };
 type Game = { id: string; gr: "home" | "away" | null; home: string; away: string; goals: Goal[] };
-type Highlight = { goal: number; period: string; time: string; scorer: string; clip: string; poster: string; seconds: number };
 
 const games = new Map((read("apps/web/data/site.json").games as Game[]).map((g) => [g.id, g]));
 const highlights = read("apps/web/data/highlights.json") as Record<string, Highlight[]>;
 
-test("every clip sits beside one of our goals, the one it was cut for", () => {
+test("a clip is only ever shown beside one goal, and that goal is ours", () => {
   for (const [id, clips] of Object.entries(highlights)) {
     const game = games.get(id);
     assert.ok(game, `highlights.json has game ${id}, which site.json does not`);
     const us = game.gr === "home" ? game.home : game.away;
-    const seen = new Set<number>();
     for (const h of clips) {
-      const goal: Goal | undefined = game.goals[h.goal];
-      assert.ok(goal, `${id}: no goal ${h.goal} on the scoresheet`);
-      assert.equal(goal.team, us, `${id}: goal ${h.goal} is ${goal.team}'s, and only ours are clipped`);
-      assert.deepEqual(
-        { period: h.period, time: h.time, scorer: h.scorer },
-        { period: goal.period, time: goal.time, scorer: goal.scorer },
-        `${id}: clip ${h.clip} was cut for a different goal than the scoresheet now has at ${h.goal}`,
-      );
-      assert.ok(!seen.has(h.goal), `${id}: goal ${h.goal} has two clips`);
-      seen.add(h.goal);
-      assert.ok(h.seconds >= 20 && h.seconds <= 60, `${id}: a ${h.seconds}s clip — the rink cuts 20 to 60`);
+      const beside = game.goals.flatMap((g, n) => (clipBeside(clips, game.goals, n, us) === h ? [g] : []));
+      assert.ok(beside.length <= 1, `${id}: clip ${h.clip} is shown beside ${beside.length} goals`);
+      assert.ok(beside.every((g) => g.team === us), `${id}: clip ${h.clip} is shown beside ${beside[0]?.team}'s goal`);
     }
+    // Two clips at one moment: the page would show the first and the job would never write it.
+    const keys = clips.map((h) => `${h.period} ${h.time}`);
+    assert.equal(new Set(keys).size, keys.length, `${id}: two clips for one moment — ${keys.join(", ")}`);
   }
 });
 
-test("the job's ledger only ever names our goals", () => {
-  const ledger = read("packages/highlights/ledger.json") as Record<string, { clips: { goals: number[] }[] }>;
+test("the job's ledger is well formed", () => {
+  const ledger = read("packages/highlights/ledger.json") as Record<string, { rinkGame: number | null; clips: { goals: number[]; labels?: string[]; at?: number[]; seconds: number; status: string }[] }>;
   for (const [id, entry] of Object.entries(ledger)) {
-    const game = games.get(id);
-    assert.ok(game, `ledger has game ${id}, which site.json does not`);
-    const us = game.gr === "home" ? game.home : game.away;
-    for (const c of entry.clips) for (const n of c.goals) assert.equal(game.goals[n]?.team, us, `${id}: ledger clip for goal ${n}, which is not ours`);
+    assert.ok(games.has(id), `ledger has game ${id}, which site.json does not`);
+    for (const c of entry.clips) {
+      assert.ok(["queued", "requested", "published", "failed"].includes(c.status), `${id}: clip status "${c.status}"`);
+      assert.ok(c.goals.length > 0 && c.seconds >= 20 && c.seconds <= 60, `${id}: clip of ${c.seconds}s for goals ${c.goals}`);
+      assert.ok(!c.labels || c.labels.length === c.goals.length, `${id}: ${c.labels?.length} labels for ${c.goals.length} goals`);
+      assert.ok(!c.at || c.at.length === c.goals.length, `${id}: ${c.at?.length} goal times for ${c.goals.length} goals`);
+    }
   }
 });
 
 test("every clip's files are named so the Worker will serve them", () => {
   for (const [id, clips] of Object.entries(highlights)) {
     for (const h of clips) {
-      assert.equal(h.clip, `${id}-${h.goal}.mp4`);
-      assert.equal(h.poster, `${id}-${h.goal}.jpg`);
+      const stem = new RegExp(`^${id}-${h.goal}(-[0-9a-f]{8})?\\.mp4$`).exec(h.clip);
+      assert.ok(stem, `${id}: clip named ${h.clip}`);
+      assert.equal(h.poster, h.clip.replace(/\.mp4$/, ".jpg"));
       assert.ok(isHighlight(`/highlights/${h.clip}`) && isHighlight(`/highlights/${h.poster}`));
     }
   }
+  assert.ok(isHighlight("/highlights/1335913-2-9f2c41ab.mp4"));
   assert.equal(isHighlight("/highlights/../site.json"), false);
   assert.equal(isHighlight("/highlights/1335913-2.mp4.exe"), false);
+  assert.equal(isHighlight("/highlights/1335913-2-9F2C41AB.mp4"), false);
+  assert.equal(isHighlight("/highlights/1335913-2-9f2c41ab/x.mp4"), false);
 });

@@ -2,6 +2,7 @@ import site from "../../data/site.json";
 import highlightsJson from "../../data/highlights.json";
 import type { SiteData, Game, Session } from "../../../../packages/build/src/types";
 import type { GameRow } from "./GameList";
+import { clipBeside, type Highlight } from "../../../../packages/highlights/src/beside";
 
 const data = site as unknown as SiteData;
 
@@ -12,29 +13,15 @@ export const totals = data.totals;
 export const gameById = (id: string) => games.find((g) => g.id === id);
 
 /**
- * One of our goals, clipped from the rink's recording.
- *
- * `goal` is the goal's place on the scoresheet, from 0 — the same order
- * `game.goals` is in. The period, time and scorer are carried too, and a test
- * holds them to that goal, so a clip cannot come to sit beside the wrong line
- * if a scoresheet is ever corrected. The files are served from R2 by the
- * Worker, never from this repository.
+ * Our goals, clipped from the rink's recording by the daily highlights job.
+ * Which clip goes beside which goal is `clipBeside`'s rule — by the goal's
+ * period and time, never its place on a scoresheet that can be corrected. The
+ * files are served from R2 by the Worker, never from this repository.
  */
-export type Highlight = {
-  goal: number;
-  period: string;
-  time: string;
-  scorer: string;
-  clip: string;
-  poster: string;
-  seconds: number;
-};
-
 const highlights = highlightsJson as Record<string, Highlight[]>;
 
-/** A game's clips, keyed by the goal's place on the scoresheet. */
-export const highlightsFor = (id: string): Map<number, Highlight> =>
-  new Map((highlights[id] ?? []).map((h) => [h.goal, h]));
+/** The clip beside goal `n` of this game, if it is one of ours and has one. */
+export const clipFor = (g: Game, n: number): Highlight | undefined => clipBeside(highlights[g.id], g.goals, n, grSide(g));
 
 /**
  * Spell a small number.

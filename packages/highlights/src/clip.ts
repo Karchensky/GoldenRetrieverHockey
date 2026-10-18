@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
-import { loadLayouts, readOverlay, type Layout, type OverlayReading } from "./overlay.ts";
+import { thumbnail, type Thumb } from "./crosscheck.ts";
+import { loadLayouts, readOverlay, type Frame, type Layout, type OverlayReading } from "./overlay.ts";
 import { parseClock, type Score, type ScoredGoal } from "./locate.ts";
 
 /**
@@ -38,6 +39,15 @@ export type ClipReading = OverlayReading & { t: number };
  * clock that was not on the screen.
  */
 export function readClip(video: string, layout: Layout, perSecond = 2): ClipReading[] {
+  return clipFrames(video, perSecond, (t, frame) => ({ t, ...readOverlay(frame, layout) }));
+}
+
+/** The clip as thumbnails, two a second, for comparing with the recording — see `crosscheck.ts`. */
+export function clipThumbs(video: string, perSecond = 2): Thumb[] {
+  return clipFrames(video, perSecond, (t, frame) => ({ t, v: thumbnail(frame) }));
+}
+
+function clipFrames<T>(video: string, perSecond: number, each: (t: number, frame: Frame) => T): T[] {
   const fps = frameRate(video);
   const every = Math.max(1, Math.round(fps / perSecond));
   const raw = run(FFMPEG, [
@@ -45,10 +55,9 @@ export function readClip(video: string, layout: Layout, perSecond = 2): ClipRead
     "-vf", `select='not(mod(n\\,${every}))',scale=${W}:${H}`, "-vsync", "0",
     "-f", "rawvideo", "-pix_fmt", "rgb24", "-",
   ]);
-  const size = W * H * 3, out: ClipReading[] = [];
+  const size = W * H * 3, out: T[] = [];
   for (let i = 0; (i + 1) * size <= raw.length; i++) {
-    const rgb = new Uint8Array(raw.buffer, raw.byteOffset + i * size, size);
-    out.push({ t: (i * every) / fps, ...readOverlay({ width: W, height: H, rgb }, layout) });
+    out.push(each((i * every) / fps, { width: W, height: H, rgb: new Uint8Array(raw.buffer, raw.byteOffset + i * size, size) }));
   }
   return out;
 }

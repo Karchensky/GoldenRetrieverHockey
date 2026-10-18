@@ -26,7 +26,7 @@ export async function serveHighlight(request: Request, bucket: R2Bucket | undefi
   object.writeHttpMetadata(headers);
   headers.set("ETag", object.httpEtag);
   headers.set("Accept-Ranges", "bytes");
-  // A clip is written once under a name that is never reused.
+  // A clip is written once under a name that carries its own hash, so it is never reused.
   headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
   // `onlyIf` failed: the browser's copy is current.
